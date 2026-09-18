@@ -11,7 +11,8 @@ Built to demonstrate a pattern any organization can adopt, large or small.
 | [`docs/01-research-landscape.md`](docs/01-research-landscape.md) | How organizations are doing this today — the four architectural patterns, measured accuracy results, MCP's real role, standards, security incidents, evaluation practice. With sources. | Practitioners, architects |
 | [`docs/02-executive-summary.md`](docs/02-executive-summary.md) | **The Five-Layer Insight Stack** in plain terms, with the actual technology named, cost, a 90-day path, and how to tell it's working. | Senior leadership |
 | [`docs/03-reference-architecture.md`](docs/03-reference-architecture.md) | The build specification: component specs, the semantic contract, MCP tool surface, template schema, eval harness, security controls, and three adoption paths by org size. | Implementation team |
-| [`demo/insight-stack-demo.html`](demo/insight-stack-demo.html) | Interactive demo — a worked example on a fictional industrial distributor, showing all five layers producing real business artifacts. | Everyone |
+| [`demo/question-to-artifact.html`](demo/question-to-artifact.html) | **Executive demo** — the short version. One idea (Snowflake owns the number, the model owns the story), three worked requests, the SQL and MCP plumbing, and what you actually build. | Senior leadership |
+| [`demo/insight-stack-demo.html`](demo/insight-stack-demo.html) | Full demo — five worked examples including a refusal, with tool traces and provenance blocks on every artifact. | Practitioners |
 
 ## The model in one picture
 

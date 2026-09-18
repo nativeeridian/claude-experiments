@@ -1,0 +1,712 @@
+<title>Question to Artifact</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Libre+Franklin:wght@500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500&display=swap">
+<style>
+:root{
+  --ground:#f5f5f3; --surface:#ffffff; --surface-2:#faf9f7; --sunken:#edece9;
+  --ink:#12151a; --ink-2:#4e535c; --muted:#838890;
+  --rule:#e1e0db; --rule-soft:#eceae5;
+  --det-mark:#2a78d6; --det-ink:#1a559b; --det-soft:#e9f1fb;
+  --gen-mark:#eb6834; --gen-ink:#ab4715; --gen-soft:#fbeee7;
+  --good:#0ca30c; --warn:#fab219; --crit:#d03b3b;
+  --good-ink:#006300; --warn-ink:#7a5405; --crit-ink:#a32222;
+  --grid:#e6e5e0; --axis:#c8c6c0;
+  --sans:"Libre Franklin",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ground:#0e1114; --surface:#171b1f; --surface-2:#1d2227; --sunken:#12161a;
+  --ink:#eef1f4; --ink-2:#aeb4bc; --muted:#7f858d;
+  --rule:#2b3138; --rule-soft:#232930;
+  --det-mark:#3987e5; --det-ink:#84b8f2; --det-soft:#14263a;
+  --gen-mark:#d95926; --gen-ink:#f0906a; --gen-soft:#2f1d13;
+  --good-ink:#0ca30c; --warn-ink:#e0a020; --crit-ink:#e57373;
+  --grid:#242a30; --axis:#39414a;
+}}
+:root[data-theme="dark"]{
+  --ground:#0e1114; --surface:#171b1f; --surface-2:#1d2227; --sunken:#12161a;
+  --ink:#eef1f4; --ink-2:#aeb4bc; --muted:#7f858d;
+  --rule:#2b3138; --rule-soft:#232930;
+  --det-mark:#3987e5; --det-ink:#84b8f2; --det-soft:#14263a;
+  --gen-mark:#d95926; --gen-ink:#f0906a; --gen-soft:#2f1d13;
+  --good-ink:#0ca30c; --warn-ink:#e0a020; --crit-ink:#e57373;
+  --grid:#242a30; --axis:#39414a;
+}
+
+*{box-sizing:border-box}
+body{background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1000px;margin:0 auto;padding-inline:22px}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-.02em;text-wrap:balance}
+p{margin:0}
+:focus-visible{outline:2px solid var(--det-mark);outline-offset:3px;border-radius:3px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+/* masthead */
+.mast{padding-block:56px 40px;border-bottom:1px solid var(--rule)}
+.mast h1{font-size:clamp(32px,5.6vw,52px);line-height:1.04;font-weight:700;max-width:19ch;margin-top:14px}
+.mast .lede{margin-top:20px;max-width:58ch;font-size:18px;line-height:1.6;color:var(--ink-2)}
+.mast .lede b{color:var(--ink);font-weight:600}
+
+/* section frame */
+section{padding-block:52px}
+section + section{border-top:1px solid var(--rule)}
+.shead{max-width:62ch;margin-bottom:28px}
+.shead h2{font-size:clamp(22px,3vw,29px);line-height:1.2}
+.shead p{margin-top:11px;font-size:16.5px;color:var(--ink-2)}
+
+/* the split — core idea */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.col{border:1px solid var(--rule);border-radius:10px;background:var(--surface);padding:22px 22px 24px;display:flex;flex-direction:column;gap:14px}
+.col.det{border-top:3px solid var(--det-mark)}
+.col.gen{border-top:3px solid var(--gen-mark)}
+.col .who{display:flex;align-items:center;gap:9px}
+.col .whoname{font-size:19px;font-weight:600}
+.col .whatfor{font-size:14.5px;color:var(--ink-2);min-height:44px}
+.col ul{margin:0;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:10px}
+.col li{display:grid;grid-template-columns:14px 1fr;gap:10px;font-size:15px;line-height:1.5}
+.col li::before{content:"";width:6px;height:6px;border-radius:50%;margin-top:9px}
+.col.det li::before{background:var(--det-mark)}
+.col.gen li::before{background:var(--gen-mark)}
+.col .foot{margin-top:auto;padding-top:14px;border-top:1px solid var(--rule-soft);font-size:13.5px;color:var(--ink-2)}
+.neither{margin-top:16px;border:1px dashed var(--rule);border-radius:10px;padding:16px 20px;background:var(--surface-2);font-size:16px;text-align:center}
+.neither b{font-weight:600}
+
+.dot{width:10px;height:10px;border-radius:50%;flex:none}
+.dot.d{background:var(--det-mark)} .dot.g{background:var(--gen-mark)}
+.tag{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;padding:3px 8px;border-radius:4px;border:1px solid;white-space:nowrap}
+.tag.d{color:var(--det-ink);border-color:var(--det-mark);background:var(--det-soft)}
+.tag.g{color:var(--gen-ink);border-color:var(--gen-mark);background:var(--gen-soft)}
+.tag.n{color:var(--ink-2);border-color:var(--rule);background:var(--surface-2)}
+
+/* demo */
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-bottom:18px}
+.chip{all:unset;cursor:pointer;border:1px solid var(--rule);background:var(--surface);border-radius:99px;padding:9px 17px;font-size:14.5px;line-height:1.35;transition:border-color .12s,background .12s}
+.chip:hover{border-color:var(--ink-2)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--ground);border-color:var(--ink);font-weight:600}
+
+.panel{border:1px solid var(--rule);border-radius:10px;background:var(--surface);overflow:hidden}
+.ask{padding:20px 24px;border-bottom:1px solid var(--rule);display:flex;flex-wrap:wrap;gap:10px 20px;justify-content:space-between;align-items:baseline}
+.ask .q{font-family:var(--serif);font-size:23px;line-height:1.3;max-width:46ch}
+.ask .qm{font-family:var(--mono);font-size:11.5px;color:var(--muted);text-align:right}
+
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule-soft);border-bottom:1px solid var(--rule)}
+.stp{background:var(--surface-2);padding:15px 17px 17px;display:flex;flex-direction:column;gap:8px}
+.stp .sn{font-family:var(--mono);font-size:10.5px;color:var(--muted);letter-spacing:.1em}
+.stp .st{font-size:15px;font-weight:600;line-height:1.3}
+.stp .sd{font-size:13.5px;color:var(--ink-2);line-height:1.5}
+.stp code{font-family:var(--mono);font-size:12px;color:var(--ink)}
+
+.sqlwrap{border-bottom:1px solid var(--rule);background:var(--sunken)}
+.sqlhead{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;justify-content:space-between;padding:12px 24px 0}
+.sqlnote{font-size:13px;color:var(--ink-2)}
+pre{margin:0;padding:12px 24px 18px;overflow-x:auto;font-family:var(--mono);font-size:12.5px;line-height:1.7;color:var(--ink-2)}
+pre b{color:var(--det-ink);font-weight:500}
+pre i{color:var(--muted);font-style:normal}
+
+.art{padding:26px 24px 28px;display:flex;flex-direction:column;gap:22px}
+.artline{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.headline{font-family:var(--serif);font-size:clamp(21px,2.9vw,27px);line-height:1.28;font-weight:500;max-width:36ch}
+.narr{font-family:var(--serif);font-size:17px;line-height:1.65;color:var(--ink-2);max-width:64ch}
+.narr b{color:var(--ink);font-weight:500}
+
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--rule-soft);border:1px solid var(--rule-soft);border-radius:8px;overflow:hidden}
+.kpi{background:var(--surface);padding:13px 15px;display:flex;flex-direction:column;gap:2px}
+.kpi .kl{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.kpi .kv{font-size:25px;font-weight:600;letter-spacing:-.025em;line-height:1.15}
+.kpi .kd{font-size:12.5px}
+.kd.up{color:var(--good-ink)} .kd.down{color:var(--crit-ink)} .kd.flat{color:var(--ink-2)}
+
+.fig{display:flex;flex-direction:column;gap:9px}
+.figt{font-size:14.5px;font-weight:600}
+.cbox{position:relative;border:1px solid var(--rule-soft);border-radius:8px;padding:14px 12px 10px;background:var(--surface)}
+.cbox svg{display:block;width:100%;height:auto;max-width:100%;overflow:visible}
+.lg{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:12.5px;color:var(--ink-2);padding-top:4px}
+.lg span{display:inline-flex;align-items:center;gap:7px}
+.lg i{width:15px;border-top:3px solid;border-radius:2px;display:inline-block}
+.tip{position:absolute;pointer-events:none;opacity:0;transform:translate(-50%,-118%);background:var(--ink);color:var(--ground);font-family:var(--mono);font-size:11px;line-height:1.5;padding:6px 9px;border-radius:5px;white-space:nowrap;transition:opacity .1s;z-index:4}
+
+.pts{display:flex;flex-direction:column;gap:10px}
+.pt{display:grid;grid-template-columns:18px 1fr;gap:12px;font-size:15px;line-height:1.55}
+.pt .pn{font-family:var(--mono);font-size:11.5px;color:var(--gen-ink);padding-top:3px}
+.pt .po{display:block;font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:3px}
+.srcline{border-top:1px solid var(--rule-soft);padding-top:14px;font-size:13.5px;color:var(--ink-2);display:flex;flex-wrap:wrap;gap:8px 12px;align-items:baseline}
+.srcline code{font-family:var(--mono);font-size:12px;color:var(--ink)}
+
+/* self serve box */
+.selfserve{margin-top:16px;border:1px solid var(--rule);border-radius:10px;background:var(--surface);padding:16px 20px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between}
+.selfserve .ssl{font-size:14.5px;color:var(--ink-2);flex:1 1 300px}
+.selfserve .ssl b{color:var(--ink);font-weight:600}
+.ssrow{display:flex;gap:9px;flex:1 1 340px;min-width:0}
+.ssrow input{flex:1;min-width:0;background:var(--sunken);color:var(--ink);border:1px solid var(--rule);border-radius:7px;padding:10px 12px;font-family:var(--sans);font-size:14.5px}
+.btn{all:unset;cursor:pointer;background:var(--ink);color:var(--ground);font-size:14px;font-weight:600;padding:10px 18px;border-radius:7px;white-space:nowrap}
+.btn[disabled]{opacity:.4;cursor:not-allowed}
+.ssnote{flex-basis:100%;font-family:var(--mono);font-size:11px;color:var(--muted)}
+
+/* build table */
+.build{display:flex;flex-direction:column;gap:1px;background:var(--rule);border:1px solid var(--rule);border-radius:10px;overflow:hidden}
+.brow{display:grid;grid-template-columns:150px 1fr 1fr;gap:0 22px;background:var(--surface);padding:15px 20px;align-items:start}
+.brow.h{background:var(--surface-2)}
+.brow.h span{font-family:var(--mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.brow .bn{font-size:15px;font-weight:600}
+.brow .bw{font-size:14.5px;color:var(--ink-2);line-height:1.5}
+.brow .bt{font-family:var(--mono);font-size:12.5px;color:var(--det-ink);line-height:1.6}
+
+/* before after */
+.ba{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.bacard{border:1px solid var(--rule);border-radius:10px;padding:20px 22px;background:var(--surface);display:flex;flex-direction:column;gap:12px}
+.bacard.now{background:var(--surface-2)}
+.bacard h3{font-size:17px}
+.bacard .t{font-family:var(--mono);font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.balist{display:flex;flex-direction:column;gap:9px;font-size:14.5px;line-height:1.5;color:var(--ink-2)}
+.balist div{display:grid;grid-template-columns:auto 1fr;gap:10px}
+.balist .step{font-family:var(--mono);font-size:11.5px;color:var(--muted);padding-top:3px;white-space:nowrap}
+.bigstat{font-size:30px;font-weight:600;letter-spacing:-.02em}
+
+footer{border-top:1px solid var(--rule)}
+footer .wrap{padding-block:22px 34px;display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;font-size:13px;color:var(--muted)}
+footer .mono{font-family:var(--mono);font-size:11.5px}
+
+@media (max-width:860px){
+  .split,.ba{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+  .brow{grid-template-columns:1fr;gap:5px}
+  .brow.h{display:none}
+  .brow .bt{color:var(--det-ink)}
+}
+@media (max-width:520px){ .steps{grid-template-columns:1fr} .mast{padding-block:40px 32px} section{padding-block:40px} }
+</style>
+
+<header class="wrap mast">
+  <div class="eyebrow">Analytics operating model · demonstration</div>
+  <h1>Snowflake decides the number. The model decides the story.</h1>
+  <p class="lede">Anyone asks in plain language. Metric definitions stay where they already are — <b>in the warehouse, in SQL, under change control</b>. The model picks the right one, fills an approved template, and delivers a finished artifact in minutes instead of days.</p>
+</header>
+
+<main>
+<section class="wrap">
+  <div class="shead">
+    <h2>The division of labor</h2>
+    <p>This is the whole idea. Once leadership agrees to this split, the rest is procurement and plumbing.</p>
+  </div>
+  <div class="split">
+    <div class="col det">
+      <div class="who"><span class="dot d"></span><span class="whoname">Snowflake &amp; SQL</span><span class="tag d">Deterministic</span></div>
+      <p class="whatfor">Owns every number. Same question, same answer, every time — and the same answer your finance close produces.</p>
+      <ul>
+        <li>What “gross margin” means</li>
+        <li>Which tables join to which</li>
+        <li>How the number is aggregated</li>
+        <li>Which rows each person may see</li>
+      </ul>
+      <p class="foot">Changing any of these is a reviewed, versioned code change — exactly as it is today. <b>The model cannot alter them.</b></p>
+    </div>
+    <div class="col gen">
+      <div class="who"><span class="dot g"></span><span class="whoname">The model</span><span class="tag g">Judgment</span></div>
+      <p class="whatfor">Owns the interpretation. Every choice it makes is printed on the artifact, so it can be challenged by anyone reading it.</p>
+      <ul>
+        <li>Which metric answers this question</li>
+        <li>Which template fits — or what to build when none does</li>
+        <li>What the movement means for the business</li>
+        <li>What to recommend, and to whom</li>
+      </ul>
+      <p class="foot">Wrong judgment is visible and arguable. <b>Wrong arithmetic is not possible</b> — it never touches the arithmetic.</p>
+    </div>
+  </div>
+  <div class="neither">Neither one is ever allowed to <b>invent a number</b>. If the metric isn't defined, the answer is “I can't compute that yet” — never a plausible guess.</div>
+</section>
+
+<section class="wrap">
+  <div class="shead">
+    <h2>What it looks like in practice</h2>
+    <p>Three requests a business user could make today. Same machinery each time; the output changes because the question does.</p>
+  </div>
+  <div class="chips" id="chips"></div>
+  <div class="panel" id="panel"></div>
+  <div class="selfserve">
+    <p class="ssl"><b>Self-service, for real.</b> No ticket, no queue, no analyst. Type a request and watch the same four steps run.</p>
+    <div class="ssrow">
+      <input id="askin" type="text" placeholder="e.g. Which region has the strongest margin?" aria-label="Ask your own question">
+      <button class="btn" id="askbtn" disabled>Ask</button>
+    </div>
+    <span class="ssnote" id="asknote">checking availability…</span>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="shead">
+    <h2>What you actually build</h2>
+    <p>Six components. Most organizations already own three of them, and nothing here requires moving your data.</p>
+  </div>
+  <div class="build">
+    <div class="brow h"><span>Component</span><span>What it does, in plain terms</span><span>What it is technically</span></div>
+    <div class="brow"><span class="bn">Semantic views</span><span class="bw">Holds the agreed definition of every metric, so the number is computed the same way for everyone.</span><span class="bt">Snowflake semantic views · dbt Semantic Layer · Unity Catalog metrics</span></div>
+    <div class="brow"><span class="bn">MCP servers</span><span class="bw">One governed doorway per system, opened as the person asking — never as an administrator.</span><span class="bt">Model Context Protocol · OAuth 2.1 · one per source</span></div>
+    <div class="brow"><span class="bn">SQL execution</span><span class="bw">The warehouse runs the query it generated from the definition. The model never writes it.</span><span class="bt">warehouse compute · row access policies applied at compile time</span></div>
+    <div class="brow"><span class="bn">Template library</span><span class="bw">The base designs. Reviewed once by finance, then every artifact built from them inherits that approval.</span><span class="bt">version-controlled layouts · fixed sections · allowed-metric list</span></div>
+    <div class="brow"><span class="bn">Agent host</span><span class="bw">The model, plus written-down method for how your analysts actually do the work.</span><span class="bt">Claude + Skills + connectors</span></div>
+    <div class="brow"><span class="bn">Audit log</span><span class="bw">Every request, every query, every artifact — who asked, what ran, what came back.</span><span class="bt">immutable trace store · feeds the accuracy test suite</span></div>
+  </div>
+</section>
+
+<section class="wrap">
+  <div class="shead">
+    <h2>What changes</h2>
+    <p>The work doesn't disappear. It moves from being repeated per request to being defined once.</p>
+  </div>
+  <div class="ba">
+    <div class="bacard">
+      <span class="t">Today</span>
+      <h3>A data request</h3>
+      <div class="balist">
+        <div><span class="step">Day 0</span><span>Executive asks a question in a meeting.</span></div>
+        <div><span class="step">Day 1</span><span>Request goes into the analytics queue.</span></div>
+        <div><span class="step">Day 3–7</span><span>Analyst finds the tables, writes the SQL, builds the chart.</span></div>
+        <div><span class="step">Day 8</span><span>Answer arrives. Definition differs slightly from finance's. Debate follows.</span></div>
+        <div><span class="step">Next month</span><span>Someone asks the same question. It is built again from scratch.</span></div>
+      </div>
+      <p class="bigstat">3–10 days</p>
+    </div>
+    <div class="bacard now">
+      <span class="t">With the model in place</span>
+      <h3>The same request</h3>
+      <div class="balist">
+        <div><span class="step">Minute 0</span><span>Executive types the question themselves.</span></div>
+        <div><span class="step">Minute 0</span><span>Model maps it to a defined metric and the warehouse computes it.</span></div>
+        <div><span class="step">Minute 2</span><span>Finished artifact, on an approved template, with the definition printed on it.</span></div>
+        <div><span class="step">Minute 2</span><span>No debate — the number came from the same definition finance closes on.</span></div>
+        <div><span class="step">Next month</span><span>It runs itself, or is asked again for free.</span></div>
+      </div>
+      <p class="bigstat">Under 5 minutes</p>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap">
+  <span>Illustrative demonstration. Meridian Industrial Supply is fictional; all figures are synthetic.</span>
+  <span class="mono">Question to Artifact</span>
+</div></footer>
+
+<script>
+(function(){
+"use strict";
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e;}
+function esc(s){return String(s).replace(/[&<>"]/g,function(m){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m];});}
+function css(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
+function fmt(n,d){return Number(n).toFixed(d==null?1:d);}
+
+/* ---------- data ---------- */
+var DCS=[{name:"Memphis",v:97.4},{name:"Columbus",v:96.8},{name:"Dallas",v:96.1},
+ {name:"Reno",v:94.2},{name:"Charlotte",v:93.6},{name:"Newark",v:91.8}];
+var WEEKS=["W23","W24","W25","W26","W27","W28","W29","W30","W31","W32","W33","W34"];
+var ACTUAL=[8.95,9.35,9.10,9.60,9.55,9.20,9.85,9.70,9.45,10.05,9.60,9.84];
+var PLAN=[9.10,9.20,9.20,9.35,9.35,9.50,9.50,9.40,9.40,9.45,9.45,9.45];
+var BRIDGE=[{name:"Freight surcharge not passed on",v:-85},{name:"Mix shift to commodity pipe",v:-62},
+ {name:"Rebate accrual timing",v:-47},{name:"Price realization",v:14}];
+var REGIONS=[{name:"Southeast",rev:27.8,gm:22.3},{name:"Great Lakes",rev:25.6,gm:24.6},
+ {name:"Gulf Coast",rev:21.4,gm:23.8},{name:"Mountain West",rev:17.4,gm:25.1},
+ {name:"Northeast",rev:16.2,gm:23.2},{name:"Pacific",rev:13.4,gm:24.9}];
+
+/* ---------- svg helpers ---------- */
+var NS="http://www.w3.org/2000/svg";
+function svg(w,h){var s=document.createElementNS(NS,"svg");s.setAttribute("viewBox","0 0 "+w+" "+h);s.setAttribute("role","img");return s;}
+function sn(t,a){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);return e;}
+function tx(x,y,s,o){o=o||{};var t=sn("text",{x:x,y:y,fill:o.fill||css("--muted"),"font-size":o.size||11,"text-anchor":o.anchor||"start","font-family":o.family||css("--mono"),"font-weight":o.weight||400});if(o.mid)t.setAttribute("dominant-baseline","middle");t.textContent=s;return t;}
+function mkTip(box){var t=el("div","tip");box.appendChild(t);return t;}
+function tipAt(t,box,vx,vy,vw,html){t.innerHTML=html;var k=box.clientWidth/vw;t.style.left=(vx*k)+"px";t.style.top=(vy*k)+"px";t.style.opacity=1;}
+
+function chartDots(box,data,target){
+  var W=720,rowH=36,H=data.length*rowH+42,L=126,R=642,dmin=88,dmax=100;
+  var s=svg(W,H); s.setAttribute("aria-label","Fill rate by distribution center against a 96 percent target");
+  var X=function(v){return L+(v-dmin)/(dmax-dmin)*(R-L);};
+  [88,94,100].forEach(function(t){
+    s.appendChild(sn("line",{x1:X(t),y1:8,x2:X(t),y2:H-30,stroke:css("--grid"),"stroke-width":1}));
+    s.appendChild(tx(X(t),H-12,t+"%",{anchor:"middle",size:10.5}));
+  });
+  s.appendChild(sn("line",{x1:X(target),y1:4,x2:X(target),y2:H-30,stroke:css("--ink-2"),"stroke-width":1.5,"stroke-dasharray":"4 3"}));
+  s.appendChild(tx(X(target),H-12,"target "+fmt(target,1)+"%",{anchor:"middle",size:10.5,fill:css("--ink-2"),weight:500}));
+  data.forEach(function(d,i){
+    var y=20+i*rowH, ok=d.v>=target, near=d.v>=target-2;
+    var col=ok?css("--good"):near?css("--warn"):css("--crit");
+    s.appendChild(tx(L-14,y,d.name,{anchor:"end",size:13.5,family:css("--sans"),fill:css("--ink"),weight:500,mid:1}));
+    s.appendChild(sn("line",{x1:L,y1:y,x2:R,y2:y,stroke:css("--rule-soft"),"stroke-width":1}));
+    var c=sn("circle",{cx:X(d.v),cy:y,r:7,fill:col,stroke:css("--surface"),"stroke-width":2});
+    c.setAttribute("data-i",i); s.appendChild(c);
+    /* position against the target line carries the meaning; color only reinforces it */
+    s.appendChild(tx(R+8,y,fmt(d.v,1),{anchor:"start",size:13,fill:css("--ink"),weight:500,mid:1}));
+  });
+  box.appendChild(s);
+  var tip=mkTip(box);
+  s.querySelectorAll("circle[data-i]").forEach(function(c){
+    c.style.cursor="crosshair";
+    c.addEventListener("pointerenter",function(){var i=+c.getAttribute("data-i"),d=data[i];
+      tipAt(tip,box,X(d.v),20+i*rowH,W,esc(d.name)+" · "+fmt(d.v,1)+"%<br>"+(d.v>=target?"+":"")+fmt((d.v-target)*100,0)+" bps vs target");});
+    c.addEventListener("pointerleave",function(){tip.style.opacity=0;});
+  });
+}
+
+function chartLines(box){
+  var W=720,H=256,L=54,R=628,T=18,B=40;
+  var s=svg(W,H); s.setAttribute("aria-label","Weekly net revenue against plan, twelve weeks");
+  var all=ACTUAL.concat(PLAN),mn=Math.min.apply(null,all),mx=Math.max.apply(null,all);
+  var pad=(mx-mn)*0.26; mn-=pad; mx+=pad*0.55;
+  var X=function(i){return L+i/(WEEKS.length-1)*(R-L);},Y=function(v){return T+(1-(v-mn)/(mx-mn))*(H-T-B);};
+  [mn,(mn+mx)/2,mx].forEach(function(t){
+    s.appendChild(sn("line",{x1:L,y1:Y(t),x2:R,y2:Y(t),stroke:css("--grid"),"stroke-width":1}));
+    s.appendChild(tx(L-10,Y(t),"$"+fmt(t,1)+"M",{anchor:"end",size:10.5,mid:1}));
+  });
+  WEEKS.forEach(function(l,i){ if(i%2===0) s.appendChild(tx(X(i),H-18,l,{anchor:"middle",size:10.5})); });
+  function p(a){return a.map(function(v,i){return (i?"L":"M")+X(i)+","+Y(v);}).join(" ");}
+  s.appendChild(sn("path",{d:p(PLAN),fill:"none",stroke:css("--muted"),"stroke-width":2,"stroke-dasharray":"5 4","stroke-linecap":"round"}));
+  s.appendChild(sn("path",{d:p(ACTUAL),fill:"none",stroke:css("--det-mark"),"stroke-width":2.2,"stroke-linejoin":"round","stroke-linecap":"round"}));
+  s.appendChild(tx(R+8,Y(PLAN[11]),"Plan",{anchor:"start",size:12,fill:css("--ink-2"),weight:500,mid:1}));
+  s.appendChild(sn("circle",{cx:X(11),cy:Y(ACTUAL[11]),r:4.5,fill:css("--det-mark"),stroke:css("--surface"),"stroke-width":2}));
+  s.appendChild(tx(R+8,Y(ACTUAL[11])-13,"Actual",{anchor:"start",size:12,fill:css("--ink"),weight:600,mid:1}));
+  s.appendChild(tx(R+8,Y(ACTUAL[11])+3,"$9.84M",{anchor:"start",size:12,fill:css("--ink-2"),mid:1}));
+  var cr=sn("line",{x1:0,y1:T,x2:0,y2:H-B,stroke:css("--axis"),"stroke-width":1,opacity:0});
+  var mk=sn("circle",{cx:0,cy:0,r:4,fill:css("--det-mark"),stroke:css("--surface"),"stroke-width":2,opacity:0});
+  s.appendChild(cr); s.appendChild(mk); box.appendChild(s);
+  var tip=mkTip(box);
+  s.addEventListener("pointermove",function(e){
+    var r=s.getBoundingClientRect(),vx=(e.clientX-r.left)/r.width*W;
+    if(vx<L-14||vx>R+14){cr.setAttribute("opacity",0);mk.setAttribute("opacity",0);tip.style.opacity=0;return;}
+    var i=Math.max(0,Math.min(11,Math.round((vx-L)/(R-L)*11)));
+    cr.setAttribute("x1",X(i));cr.setAttribute("x2",X(i));cr.setAttribute("opacity",1);
+    mk.setAttribute("cx",X(i));mk.setAttribute("cy",Y(ACTUAL[i]));mk.setAttribute("opacity",1);
+    var d=(ACTUAL[i]-PLAN[i])/PLAN[i]*100;
+    tipAt(tip,box,X(i),Y(ACTUAL[i]),W,WEEKS[i]+" · $"+fmt(ACTUAL[i],2)+"M<br>vs plan "+(d>=0?"+":"")+fmt(d,1)+"%");
+  });
+  s.addEventListener("pointerleave",function(){cr.setAttribute("opacity",0);mk.setAttribute("opacity",0);tip.style.opacity=0;});
+  var lg=el("div","lg");
+  var a=el("span"),ai=el("i");ai.style.borderTopColor=css("--det-mark");a.appendChild(ai);a.appendChild(document.createTextNode("Actual"));lg.appendChild(a);
+  var pl=el("span"),pi=el("i");pi.style.borderTopColor=css("--muted");pi.style.borderTopStyle="dashed";pl.appendChild(pi);pl.appendChild(document.createTextNode("Plan"));lg.appendChild(pl);
+  box.appendChild(lg);
+}
+
+function chartBridge(box){
+  var W=720,rowH=40,H=BRIDGE.length*rowH+32,L=250,R=640;
+  var s=svg(W,H); s.setAttribute("aria-label","Drivers of the margin decline in basis points");
+  var vs=BRIDGE.map(function(d){return d.v;}),mn=Math.min.apply(null,vs.concat([0])),mx=Math.max.apply(null,vs.concat([0]));
+  var pd=(mx-mn)*0.16; mn-=pd; mx+=pd;
+  var X=function(v){return L+(v-mn)/(mx-mn)*(R-L);},z=X(0);
+  s.appendChild(sn("line",{x1:z,y1:6,x2:z,y2:H-24,stroke:css("--axis"),"stroke-width":1}));
+  s.appendChild(tx(z,H-9,"0",{anchor:"middle",size:10.5}));
+  BRIDGE.forEach(function(d,i){
+    var y=12+i*rowH,h=20,neg=d.v<0,col=neg?css("--crit"):css("--det-mark"),x1=X(d.v);
+    s.appendChild(tx(L-14,y+h/2,d.name,{anchor:"end",size:13.5,family:css("--sans"),fill:css("--ink"),weight:500,mid:1}));
+    var r=4,dir=neg?-1:1,len=Math.abs(x1-z),rr=Math.min(r,len,h/2);
+    var path=dir>0
+      ? "M"+z+","+y+" H"+(x1-rr)+" a"+rr+","+rr+" 0 0 1 "+rr+","+rr+" V"+(y+h-rr)+" a"+rr+","+rr+" 0 0 1 "+(-rr)+","+rr+" H"+z+" Z"
+      : "M"+z+","+y+" H"+(x1+rr)+" a"+rr+","+rr+" 0 0 0 "+(-rr)+","+rr+" V"+(y+h-rr)+" a"+rr+","+rr+" 0 0 0 "+rr+","+rr+" H"+z+" Z";
+    var p=sn("path",{d:path,fill:col}); p.setAttribute("data-i",i); s.appendChild(p);
+    /* long bars carry their label inside, so it never collides with the driver name */
+    var lbl=(d.v>0?"+":"\u2212")+Math.abs(d.v)+" bps", inside=len>=56;
+    s.appendChild(inside
+      ? tx(x1+(neg?11:-11),y+h/2,lbl,{anchor:neg?"start":"end",size:12.5,fill:css("--surface"),weight:600,mid:1})
+      : tx(x1+(neg?-9:9),y+h/2,lbl,{anchor:neg?"end":"start",size:12.5,fill:css("--ink"),weight:600,mid:1}));
+  });
+  box.appendChild(s);
+  var tip=mkTip(box);
+  s.querySelectorAll("path[data-i]").forEach(function(p){
+    p.style.cursor="crosshair";
+    p.addEventListener("pointerenter",function(){var i=+p.getAttribute("data-i"),d=BRIDGE[i];
+      tipAt(tip,box,(z+X(d.v))/2,12+i*rowH+10,W,esc(d.name)+"<br>"+(d.v>0?"+":"")+d.v+" of the −180 bps");});
+    p.addEventListener("pointerleave",function(){tip.style.opacity=0;});
+  });
+}
+
+function chartBars(box,pts,unit){
+  var W=720,H=232,L=54,R=694,T=24,B=48,n=pts.length;
+  var s=svg(W,H); s.setAttribute("aria-label","Generated comparison");
+  var mx=Math.max.apply(null,pts.map(function(p){return p.value;}))||1;
+  var Y=function(v){return T+(1-v/mx)*(H-T-B);},step=(R-L)/n,bw=Math.min(66,step*0.6);
+  [0,mx/2,mx].forEach(function(t){
+    s.appendChild(sn("line",{x1:L,y1:Y(t),x2:R,y2:Y(t),stroke:css("--grid"),"stroke-width":1}));
+    s.appendChild(tx(L-10,Y(t),fmt(t,mx<20?1:0),{anchor:"end",size:10.5,mid:1}));
+  });
+  pts.forEach(function(p,i){
+    var cx=L+step*i+step/2,y=Y(p.value);
+    s.appendChild(sn("rect",{x:cx-bw/2,y:y,width:bw,height:Math.max(2,Y(0)-y),fill:css("--det-mark"),rx:4}));
+    s.appendChild(tx(cx,y-7,fmt(p.value,mx<20?1:0)+(unit||""),{anchor:"middle",size:12,fill:css("--ink"),weight:600}));
+    var nm=String(p.name); if(nm.length>15)nm=nm.slice(0,14)+"…";
+    s.appendChild(tx(cx,H-28,nm,{anchor:"middle",size:11,family:css("--sans"),fill:css("--ink-2")}));
+  });
+  box.appendChild(s);
+}
+
+/* ---------- the three requests ---------- */
+var REQS=[
+{
+ chip:"A quick number",
+ q:"What's our fill rate by distribution center this month?",
+ meta:"self-service request · 8 seconds",
+ steps:[
+  {who:"g",n:"Step 1",t:"Understand the ask",d:"Maps “fill rate” to the defined metric <code>fill_rate_pct</code>, at month × distribution-center grain."},
+  {who:"d",n:"Step 2",t:"Compute in Snowflake",d:"The semantic view generates the SQL and the warehouse runs it. Six rows come back."},
+  {who:"n",n:"Step 3",t:"Pick the base design",d:"Recurring shape, so an approved template fits: <code>answer_card</code>."},
+  {who:"g",n:"Step 4",t:"Write it up",d:"Adds the comparison to target and the one sentence a leader needs."}],
+ sqlnote:"Written by Snowflake from the metric definition — not by the model.",
+ sql:'<i>-- resolved from the semantic view, not composed by the model</i>\nSELECT * FROM <b>SEMANTIC_VIEW</b>(\n    MERIDIAN.OPS.FULFILLMENT\n    <b>DIMENSIONS</b>  dc.name\n    <b>METRICS</b>     fulfillment.fill_rate_pct\n  )\nWHERE period_month = \'2026-09\'\nORDER BY fill_rate_pct DESC;',
+ tmpl:"answer_card",tmplTag:"Approved template",
+ headline:"Three of six distribution centers are below the 96% target, and Newark is half of the gap.",
+ narr:"Network fill rate is <b>94.6%</b> against a 96.0% target. Memphis, Columbus and Dallas are at or above it. <b>Newark is 420 basis points short</b> — on its own, about half the network's total shortfall.",
+ kpis:[{l:"Network fill rate",v:"94.6%",d:"−140 bps vs target",c:"down"},{l:"At target",v:"3 of 6",d:"unchanged",c:"flat"},{l:"Largest gap",v:"Newark",d:"−420 bps",c:"down"}],
+ fig:{t:"Fill rate by distribution center, September 2026",kind:"dots"},
+ pts:[], src:"<code>fill_rate_pct v3</code> · owner Supply Chain · certified · lines shipped complete ÷ lines ordered"
+},
+{
+ chip:"A recurring report",
+ q:"Build the Monday executive brief.",
+ meta:"scheduled 06:00 ET · 2 minutes",
+ steps:[
+  {who:"n",n:"Step 1",t:"Load the base design",d:"<code>exec_brief</code> defines four fixed KPIs, a twelve-week trend and an exceptions section."},
+  {who:"d",n:"Step 2",t:"Compute in Snowflake",d:"One query returns all four metrics at weekly grain. Definitions are identical to the finance close."},
+  {who:"g",n:"Step 3",t:"Find what's exceptional",d:"Scans regions and product lines, keeps only movements above the 75 bps materiality threshold."},
+  {who:"g",n:"Step 4",t:"Write it up",d:"Ranks the three exceptions by dollar impact and names the owner of each."}],
+ sqlnote:"One query, four metrics, all governed by the same definitions finance closes on.",
+ sql:'SELECT * FROM <b>SEMANTIC_VIEW</b>(\n    MERIDIAN.FINANCE.COMMERCIAL\n    <b>DIMENSIONS</b>  calendar.fiscal_week\n    <b>METRICS</b>     finance.net_revenue,\n                finance.gross_margin_pct,\n                ops.fill_rate_pct,\n                treasury.dso_days\n  )\nWHERE calendar.fiscal_week BETWEEN \'FY26-W23\' AND \'FY26-W34\';',
+ tmpl:"exec_brief · v6",tmplTag:"Approved template",
+ headline:"Revenue is 4.1% ahead of plan and margin is 90 basis points behind it. The gap is freight, in one region.",
+ narr:"Week 34 closed at <b>$9.84M against a $9.45M plan</b> — the eighth week in twelve above plan. Margin moved the other way, <b>23.1% against 24.0%</b>. Three exceptions clear the materiality threshold, and two of them trace to the same carrier surcharge.",
+ kpis:[{l:"Net revenue",v:"$9.84M",d:"+4.1% vs plan",c:"up"},{l:"Gross margin",v:"23.1%",d:"−90 bps vs plan",c:"down"},{l:"Fill rate",v:"94.6%",d:"−140 bps",c:"down"},{l:"DSO",v:"47.2 days",d:"+2.1 days",c:"down"}],
+ fig:{t:"Net revenue against plan, last twelve weeks",kind:"lines"},
+ pts:[{t:"<b>Southeast margin.</b> Down 180 bps; roughly $1.4M annualised. Two thirds recoverable.",o:"Commercial · open"},
+      {t:"<b>Newark fill rate.</b> 420 bps below target and cited by two accounts now in renewal.",o:"Supply Chain · open"},
+      {t:"<b>Carrier surcharge, network-wide.</b> Gulf Coast has the same lane exposure and hasn't re-priced.",o:"Commercial · new this week"}],
+ src:"<code>net_revenue v7</code> · <code>gross_margin_pct v4</code> · <code>fill_rate_pct v3</code> · <code>dso_days v2</code> — all certified"
+},
+{
+ chip:"Something new",
+ q:"Why did Southeast margin drop, and what should we do about it?",
+ meta:"no template fits · 40 seconds",
+ steps:[
+  {who:"g",n:"Step 1",t:"Understand the ask",d:"A causal question, not a metric lookup. Needs a decomposition plus sources outside the warehouse."},
+  {who:"d",n:"Step 2",t:"Compute in Snowflake",d:"Margin by region, quarter and product line. The quarter-over-quarter move is exactly −180 bps."},
+  {who:"d",n:"Step 3",t:"Read what isn't modeled",d:"Two files via MCP: the carrier rebate workbook and a surcharge notice PDF. Cited, never merged into the governed number."},
+  {who:"g",n:"Step 4",t:"Build the artifact",d:"No template matches, so it assembles one from approved components and labels it as generated."}],
+ sqlnote:"Governed numbers from Snowflake; the two files are read separately and cited, never blended in.",
+ sql:'SELECT * FROM <b>SEMANTIC_VIEW</b>(\n    MERIDIAN.FINANCE.COMMERCIAL\n    <b>DIMENSIONS</b>  region.name, product_line.name, calendar.fiscal_quarter\n    <b>METRICS</b>     finance.gross_margin_pct, finance.net_revenue\n  )\nWHERE region.name = \'Southeast\'\n  AND calendar.fiscal_quarter IN (\'FY26-Q2\', \'FY26-Q3\');\n\n<i>-- then, over MCP, outside the warehouse:</i>\n<i>--   files.read("FY26Q3_carrier_rebates.xlsx")</i>\n<i>--   docs.search("Ridgeline fuel surcharge notice")</i>',
+ tmpl:"generated · no template matched",tmplTag:"Built on the fly",
+ headline:"Two thirds of the decline is freight the region absorbed instead of passing on — and a third of it isn't a real loss.",
+ narr:"Southeast margin moved from <b>24.10% to 22.30%</b>. The largest driver is a fuel surcharge introduced on 1 May that was never reflected in pricing for the longer lanes. The second is mix — commodity pipe grew to <b>31% of volume against a 24% plan</b>. The third, <b>47 basis points of rebate timing</b>, is an accounting artifact that reverses next quarter.",
+ kpis:[{l:"Gross margin Q3",v:"22.30%",d:"−180 bps",c:"down"},{l:"Recoverable",v:"132 bps",d:"of the 180",c:"flat"},{l:"Not a real loss",v:"47 bps",d:"timing only",c:"flat"}],
+ fig:{t:"What moved the 180 basis points",kind:"bridge"},
+ pts:[{t:"Re-price the 214 SKUs on the affected lanes. Competitors took the same increase in June.",o:"Commercial · 30 days · 85 bps"},
+      {t:"Move rebate recognition to the month it's earned. Presentation, not economics — but it's distorting the region by 47 bps.",o:"Controller · next close · 47 bps"},
+      {t:"Revisit the regional incentive before the QBR. Pipe is being sold to a plan that rewards revenue, not margin.",o:"Regional GM · QBR"}],
+ src:"<code>gross_margin_pct v4</code>, <code>net_revenue v7</code> — certified &nbsp;·&nbsp; carrier rebate workbook and surcharge notice — read live, <b>not certified</b>"
+}];
+
+/* ---------- render ---------- */
+var panel=document.getElementById("panel"),chips=document.getElementById("chips");
+var whoTag={d:["d","Snowflake"],g:["g","Model"],n:["n","Template"]};
+
+function render(r){
+  panel.innerHTML="";
+  var ask=el("div","ask");
+  ask.appendChild(el("div","q","“"+r.q+"”"));
+  ask.appendChild(el("div","qm",r.meta));
+  panel.appendChild(ask);
+
+  var st=el("div","steps");
+  r.steps.forEach(function(s){
+    var c=el("div","stp");
+    var top=el("div");top.style.display="flex";top.style.justifyContent="space-between";top.style.gap="8px";top.style.alignItems="center";
+    top.appendChild(el("span","sn",s.n));
+    top.appendChild(el("span","tag "+whoTag[s.who][0],whoTag[s.who][1]));
+    c.appendChild(top);
+    c.appendChild(el("div","st",s.t));
+    var d=el("div","sd");d.innerHTML=s.d;c.appendChild(d);
+    st.appendChild(c);
+  });
+  panel.appendChild(st);
+
+  var sq=el("div","sqlwrap");
+  var sh=el("div","sqlhead");
+  sh.appendChild(el("span","tag d","SQL · generated by Snowflake"));
+  sh.appendChild(el("span","sqlnote",r.sqlnote));
+  sq.appendChild(sh);
+  var pre=el("pre");pre.innerHTML=r.sql;sq.appendChild(pre);
+  panel.appendChild(sq);
+
+  var a=el("div","art");
+  var line=el("div","artline");
+  line.appendChild(el("span","tag "+(r.tmplTag==="Approved template"?"n":"g"),r.tmplTag));
+  line.appendChild(el("span","sqlnote",r.tmpl));
+  a.appendChild(line);
+  a.appendChild(el("h3","headline",r.headline));
+  var n=el("p","narr");n.innerHTML=r.narr;a.appendChild(n);
+
+  var k=el("div","kpis");
+  r.kpis.forEach(function(x){
+    var b=el("div","kpi");
+    b.appendChild(el("span","kl",x.l));b.appendChild(el("span","kv",x.v));b.appendChild(el("span","kd "+x.c,x.d));
+    k.appendChild(b);
+  });
+  a.appendChild(k);
+
+  if(r.fig){
+    var f=el("div","fig");f.appendChild(el("div","figt",r.fig.t));
+    var box=el("div","cbox");
+    if(r.fig.kind==="dots")chartDots(box,DCS,96.0);
+    else if(r.fig.kind==="lines")chartLines(box);
+    else if(r.fig.kind==="bridge")chartBridge(box);
+    f.appendChild(box);a.appendChild(f);
+  }
+  if(r.pts&&r.pts.length){
+    var f2=el("div","fig");
+    f2.appendChild(el("div","figt",r.tmpl.indexOf("exec_brief")===0?"Exceptions worth your attention":"What to do"));
+    var pl=el("div","pts");
+    r.pts.forEach(function(p,i){
+      var row=el("div","pt");
+      row.appendChild(el("span","pn",String(i+1)));
+      var bd=el("div");var t=el("span");t.innerHTML=p.t;bd.appendChild(t);
+      bd.appendChild(el("span","po",p.o));row.appendChild(bd);pl.appendChild(row);
+    });
+    f2.appendChild(pl);a.appendChild(f2);
+  }
+  var sl=el("div","srcline");
+  sl.appendChild(el("span","tag n","Definitions used"));
+  var sv=el("span");sv.innerHTML=r.src;sl.appendChild(sv);
+  a.appendChild(sl);
+  panel.appendChild(a);
+}
+
+REQS.forEach(function(r,i){
+  var b=el("button","chip",r.chip);b.type="button";b.setAttribute("aria-pressed",i===0?"true":"false");
+  b.addEventListener("click",function(){
+    chips.querySelectorAll(".chip").forEach(function(x){x.setAttribute("aria-pressed","false");});
+    b.setAttribute("aria-pressed","true");render(r);
+  });
+  chips.appendChild(b);
+});
+render(REQS[0]);
+
+/* ---------- self-service live lane ---------- */
+var askIn=document.getElementById("askin"),askBtn=document.getElementById("askbtn"),askNote=document.getElementById("asknote"),sampler=null;
+
+var CONTEXT=[
+"You are the reasoning layer of a governed analytics stack for Meridian Industrial Supply, a fictional US industrial/MRO distributor (FY26 revenue $487M, 6 distribution centers, 4 product lines).",
+"Metric definitions live in Snowflake semantic views. You NEVER compute or invent a number — you may only use the figures given below.",
+"",
+"DEFINED METRICS (the only ones that exist):",
+"net_revenue v7 (FP&A) - gross invoiced less returns, credits, discounts. Grains: week, quarter x region, product_line.",
+"gross_margin_pct v4 (FP&A) - (net revenue - landed COGS) / net revenue. Grains: quarter x region, product_line.",
+"fill_rate_pct v3 (Supply Chain) - lines shipped complete / lines ordered. Target 96.0%. Grains: month x distribution_center.",
+"dso_days v2 (Treasury) - days sales outstanding. Company grain only.",
+"freight_cost_per_order v2 (Supply Chain) - Grains: quarter x region.",
+"NOT DEFINED (must refuse): compensation, headcount, employee data, customer satisfaction, market share, competitor pricing, inventory turns, forecasts beyond the locked FY26 plan.",
+"",
+"THE DATA:",
+"FY26 Q3 by region - net revenue $M and gross margin %: "+REGIONS.map(function(r){return r.name+" $"+r.rev+"M "+r.gm+"%";}).join("; ")+".",
+"September fill rate by DC: "+DCS.map(function(d){return d.name+" "+d.v+"%";}).join("; ")+". Network 94.6%, target 96.0%.",
+"Weekly net revenue $M, W23-W34 actual: "+ACTUAL.join(", ")+"; plan: "+PLAN.join(", ")+".",
+"Southeast Q3 margin bridge vs Q2 (24.10% to 22.30%, -180 bps): "+BRIDGE.map(function(b){return b.name+" "+b.v+" bps";}).join("; ")+".",
+"Company: gross margin 23.1% vs 24.0% plan; DSO 47.2 days, up 2.1; Southeast freight cost per order $41.60, up $3.10.",
+"",
+"RULES: Answer only from the data above. If the question needs an undefined metric, or a grain a metric does not support, REFUSE - that is a correct outcome, not a failure. Be brief and quantitative; use basis points for margin moves and $M for revenue. Write for a senior executive.",
+"",
+"Reply with JSON only.",
+"Answerable: {\"ok\":true,\"headline\":\"one sentence naming magnitude and direction\",\"narrative\":\"2-3 sentences\",\"kpis\":[{\"l\":\"short label\",\"v\":\"value\",\"d\":\"comparison\"}],\"chart\":{\"t\":\"title\",\"unit\":\"%|M|\",\"points\":[{\"name\":\"...\",\"value\":0}]},\"actions\":[\"...\"],\"sources\":\"metric names and versions used\"}",
+"Include chart only when comparing 3-8 named items; otherwise omit. Max 4 kpis, max 3 actions.",
+"Refusal: {\"ok\":false,\"headline\":\"I can't compute that yet.\",\"narrative\":\"why, naming the nearest defined metric if one exists\",\"needed\":\"what it would take to make this answerable\"}"
+].join("\n");
+
+function renderLive(q,state,d){
+  panel.innerHTML="";
+  var ask=el("div","ask");
+  ask.appendChild(el("div","q","“"+q+"”"));
+  ask.appendChild(el("div","qm",state==="run"?"self-service request · running":"self-service request · answered live"));
+  panel.appendChild(ask);
+
+  var st=el("div","steps");
+  [{who:"g",n:"Step 1",t:"Understand the ask",d:"Maps the request onto the defined metric set."},
+   {who:"d",n:"Step 2",t:"Resolve the numbers",d:"Figures come from the governed definitions — none are invented."},
+   {who:"n",n:"Step 3",t:"Pick the shape",d:"Answer card, or a refusal if the metric isn't defined."},
+   {who:"g",n:"Step 4",t:"Write it up",d:state==="run"?"Working…":"Done."}].forEach(function(s){
+    var c=el("div","stp");
+    var top=el("div");top.style.display="flex";top.style.justifyContent="space-between";top.style.gap="8px";top.style.alignItems="center";
+    top.appendChild(el("span","sn",s.n));top.appendChild(el("span","tag "+whoTag[s.who][0],whoTag[s.who][1]));
+    c.appendChild(top);c.appendChild(el("div","st",s.t));
+    var dd=el("div","sd");dd.innerHTML=s.d;c.appendChild(dd);st.appendChild(c);
+  });
+  panel.appendChild(st);
+
+  var a=el("div","art");
+  if(state==="run"){a.appendChild(el("p","narr","Working…"));panel.appendChild(a);return;}
+  if(state==="err"){
+    a.appendChild(el("h3","headline","That didn't run"));
+    var e=el("p","narr");e.innerHTML=d;a.appendChild(e);panel.appendChild(a);return;
+  }
+  var line=el("div","artline");
+  line.appendChild(el("span","tag "+(d.ok===false?"n":"g"),d.ok===false?"Refused":"Generated live"));
+  line.appendChild(el("span","sqlnote",d.ok===false?"the metric isn't defined — so there is no answer to give":"answer_card · built just now"));
+  a.appendChild(line);
+  a.appendChild(el("h3","headline",d.headline||""));
+  if(d.narrative)a.appendChild(el("p","narr",d.narrative));
+  if(d.ok===false){
+    if(d.needed){var nb=el("p","narr");nb.innerHTML="<b>What it would take:</b> "+esc(d.needed);a.appendChild(nb);}
+    panel.appendChild(a);return;
+  }
+  if(Array.isArray(d.kpis)&&d.kpis.length){
+    var k=el("div","kpis");
+    d.kpis.slice(0,4).forEach(function(x){
+      var b=el("div","kpi");
+      b.appendChild(el("span","kl",x.l||""));b.appendChild(el("span","kv",x.v||""));
+      if(x.d)b.appendChild(el("span","kd flat",x.d));
+      k.appendChild(b);
+    });
+    a.appendChild(k);
+  }
+  if(d.chart&&Array.isArray(d.chart.points)&&d.chart.points.length>1){
+    var f=el("div","fig");f.appendChild(el("div","figt",d.chart.t||"Comparison"));
+    var box=el("div","cbox");
+    chartBars(box,d.chart.points.slice(0,8).map(function(p){return {name:p.name,value:Number(p.value)||0};}),d.chart.unit==="%"?"%":"");
+    f.appendChild(box);a.appendChild(f);
+  }
+  if(Array.isArray(d.actions)&&d.actions.length){
+    var f2=el("div","fig");f2.appendChild(el("div","figt","What to do"));
+    var pl=el("div","pts");
+    d.actions.slice(0,3).forEach(function(t,i){
+      var row=el("div","pt");row.appendChild(el("span","pn",String(i+1)));
+      var bd=el("div");bd.appendChild(el("span",null,t));row.appendChild(bd);pl.appendChild(row);
+    });
+    f2.appendChild(pl);a.appendChild(f2);
+  }
+  var sl=el("div","srcline");
+  sl.appendChild(el("span","tag n","Definitions used"));
+  sl.appendChild(el("span",null,d.sources||"the defined metric set"));
+  a.appendChild(sl);
+  panel.appendChild(a);
+}
+
+function ask(){
+  var q=(askIn.value||"").trim();
+  if(!q||!sampler)return;
+  askBtn.disabled=true;askNote.textContent="thinking…";
+  chips.querySelectorAll(".chip").forEach(function(x){x.setAttribute("aria-pressed","false");});
+  renderLive(q,"run");
+  sampler.json([{role:"user",content:CONTEXT+"\n\nREQUEST: "+q}],{modelTier:"default"})
+   .then(function(d){renderLive(q,"done",d);askNote.textContent="answered · ask another, or pick an example above";})
+   .catch(function(e){
+     var c=(e&&e.code)||"error";
+     renderLive(q,"err",c==="rate_limited"?"Rate limited — wait a moment and try again."
+       :c==="not_granted"?"This needs your permission to ask Claude. Reload and allow it, or use the three examples above."
+       :"Couldn't complete the request. The three examples above run without it.");
+     askNote.textContent="not run";
+   })
+   .then(function(){askBtn.disabled=false;});
+}
+askBtn.addEventListener("click",ask);
+askIn.addEventListener("keydown",function(e){if(e.key==="Enter")ask();});
+
+if(window.claude&&typeof window.claude.use==="function"){
+  window.claude.use("sample").then(function(s){
+    if(s){sampler=s;askBtn.disabled=false;askNote.textContent="ready — answers come from the metric definitions above, and it will refuse anything undefined";}
+    else askNote.textContent="live requests aren't available in this view — the three examples above run without them";
+  }).catch(function(){askNote.textContent="live requests aren't available in this view";});
+}else askNote.textContent="live requests run on the published page";
+})();
+</script>
