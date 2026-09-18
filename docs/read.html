@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Analytics Operating Model — Reading</title>
+<meta name="description" content="Written documentation for an LLM-native analytics operating model: landscape research, executive summary, and reference architecture.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Analytics Operating Model">
+<meta property="og:description" content="Landscape research, executive summary, and reference architecture for delivering analytics through an LLM.">
+<meta name="twitter:card" content="summary">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Libre+Franklin:wght@500;600;700&family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&display=swap">
+<style>
+:root{
+  --ground:#f5f5f3; --surface:#ffffff; --surface-2:#faf9f7; --sunken:#edece9;
+  --ink:#12151a; --ink-2:#3f444c; --muted:#838890;
+  --rule:#e1e0db; --rule-soft:#eceae5;
+  --det-ink:#1a559b; --det-mark:#2a78d6;
+  --sans:"Libre Franklin",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  color-scheme:light;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){ :root:not([data-theme="light"]){
+  --ground:#0e1114; --surface:#171b1f; --surface-2:#1d2227; --sunken:#12161a;
+  --ink:#eef1f4; --ink-2:#c2c8cf; --muted:#7f858d;
+  --rule:#2b3138; --rule-soft:#232930;
+  --det-ink:#84b8f2; --det-mark:#3987e5;
+  color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --ground:#0e1114; --surface:#171b1f; --surface-2:#1d2227; --sunken:#12161a;
+  --ink:#eef1f4; --ink-2:#c2c8cf; --muted:#7f858d;
+  --rule:#2b3138; --rule-soft:#232930;
+  --det-ink:#84b8f2; --det-mark:#3987e5;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%} [hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--det-mark);outline-offset:3px;border-radius:3px}
+
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--surface);border-bottom:1px solid var(--rule)}
+.bar .in{max-width:800px;margin:0 auto;padding:12px 22px;display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between}
+.bar a.home{font-family:var(--mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);text-decoration:none}
+.bar a.home:hover{color:var(--ink)}
+.bar a.home::before{content:"← "}
+.picks{display:flex;flex-wrap:wrap;gap:7px}
+.picks a{font-size:12.5px;text-decoration:none;color:var(--ink-2);border:1px solid var(--rule);border-radius:99px;padding:4px 11px;white-space:nowrap}
+.picks a:hover{border-color:var(--ink-2)}
+.picks a[aria-current="page"]{background:var(--ink);color:var(--ground);border-color:var(--ink);font-weight:600}
+
+main{max-width:800px;margin:0 auto;padding:36px 22px 72px}
+#doc{font-family:var(--serif);font-size:18px;line-height:1.7;color:var(--ink-2)}
+#doc > *:first-child{margin-top:0}
+#doc h1,#doc h2,#doc h3,#doc h4{font-family:var(--sans);color:var(--ink);letter-spacing:-.02em;line-height:1.25;text-wrap:balance}
+#doc h1{font-size:clamp(28px,4.4vw,40px);font-weight:700;margin:0 0 18px}
+#doc h2{font-size:clamp(21px,2.8vw,27px);font-weight:600;margin:52px 0 14px;padding-top:22px;border-top:1px solid var(--rule)}
+#doc h3{font-size:18.5px;font-weight:600;margin:32px 0 10px}
+#doc h4{font-size:16px;font-weight:600;margin:24px 0 8px}
+#doc p{margin:0 0 16px}
+#doc strong{color:var(--ink);font-weight:600}
+#doc em{font-style:italic}
+#doc a{color:var(--det-ink);text-decoration:underline;text-underline-offset:2px;text-decoration-thickness:1px}
+#doc ul,#doc ol{margin:0 0 16px;padding-left:24px}
+#doc li{margin-bottom:8px}
+#doc li::marker{color:var(--muted)}
+#doc hr{border:0;border-top:1px solid var(--rule);margin:36px 0}
+#doc blockquote{margin:0 0 16px;padding:2px 0 2px 18px;border-left:3px solid var(--det-mark);color:var(--ink-2)}
+#doc code{font-family:var(--mono);font-size:.82em;background:var(--sunken);border:1px solid var(--rule-soft);border-radius:4px;padding:1px 5px;color:var(--ink)}
+#doc pre{background:var(--sunken);border:1px solid var(--rule-soft);border-radius:8px;padding:16px 18px;overflow-x:auto;margin:0 0 18px}
+#doc pre code{background:none;border:0;padding:0;font-size:12.5px;line-height:1.65;color:var(--ink-2)}
+.tablewrap{overflow-x:auto;margin:0 0 20px;border:1px solid var(--rule-soft);border-radius:8px}
+#doc table{border-collapse:collapse;width:100%;font-family:var(--sans);font-size:14.5px;min-width:440px}
+#doc th{text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);font-weight:500;padding:10px 14px;background:var(--surface-2);border-bottom:1px solid var(--rule-soft);vertical-align:bottom}
+#doc td{padding:10px 14px;border-bottom:1px solid var(--rule-soft);color:var(--ink-2);vertical-align:top;line-height:1.5}
+#doc tr:last-child td{border-bottom:0}
+.state{font-family:var(--sans);font-size:15px;color:var(--ink-2);border:1px dashed var(--rule);border-radius:10px;padding:20px 22px;background:var(--surface-2)}
+.state a{color:var(--det-ink)}
+</style>
+</head>
+<body>
+<nav class="bar"><div class="in">
+  <a class="home" href="./">Analytics Operating Model</a>
+  <span class="picks" id="picks"></span>
+</div></nav>
+<main><article id="doc"><p class="state">Loading…</p></article></main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+<script>
+(function(){
+  "use strict";
+  var DOCS=[
+    {id:"02-executive-summary",label:"Executive summary"},
+    {id:"01-research-landscape",label:"Landscape research"},
+    {id:"03-reference-architecture",label:"Reference architecture"}
+  ];
+  var REPO="https://github.com/nativeeridian/claude-experiments/blob/HEAD/docs/";
+  var params=new URLSearchParams(location.search);
+  var want=params.get("doc")||DOCS[0].id;
+  var doc=DOCS.filter(function(d){return d.id===want;})[0]||DOCS[0];
+
+  var picks=document.getElementById("picks");
+  DOCS.forEach(function(d){
+    var a=document.createElement("a");
+    a.href="read.html?doc="+d.id; a.textContent=d.label;
+    if(d.id===doc.id)a.setAttribute("aria-current","page");
+    picks.appendChild(a);
+  });
+
+  var out=document.getElementById("doc");
+  function fail(msg){
+    out.innerHTML='<p class="state">'+msg+' You can read it on <a href="'+REPO+doc.id+'.md">GitHub</a> instead.</p>';
+  }
+  if(typeof marked==="undefined"){ fail("The Markdown renderer could not load."); return; }
+
+  fetch(doc.id+".md")
+    .then(function(r){ if(!r.ok)throw new Error(r.status); return r.text(); })
+    .then(function(md){
+      out.innerHTML=marked.parse(md,{gfm:true,breaks:false});
+      document.title=(out.querySelector("h1")?out.querySelector("h1").textContent:doc.label)+" — Analytics Operating Model";
+      /* tables need their own scroll container so the page never scrolls sideways */
+      out.querySelectorAll("table").forEach(function(t){
+        var w=document.createElement("div"); w.className="tablewrap";
+        t.parentNode.insertBefore(w,t); w.appendChild(t);
+      });
+      out.querySelectorAll('a[href^="http"]').forEach(function(a){
+        a.target="_blank"; a.rel="noopener noreferrer";
+      });
+      /* in-repo links between the documents stay inside this reader */
+      out.querySelectorAll('a[href$=".md"]').forEach(function(a){
+        var h=a.getAttribute("href");
+        if(/^https?:/.test(h))return;
+        a.setAttribute("href","read.html?doc="+h.replace(/^.*\//,"").replace(/\.md$/,""));
+      });
+    })
+    .catch(function(){ fail("That document could not be loaded."); });
+})();
+</script>
+</body>
+</html>
