@@ -1,0 +1,5 @@
+anthropic>=1.11
+numpy>=2.0
+pandas>=2.2
+pyarrow>=17
+pytest>=8  # tests only
