@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import json
+import re
 import sys
+from collections.abc import Iterator
 from typing import Literal, Optional
 
 import anthropic
@@ -12,12 +14,13 @@ from anthropic import beta_tool
 from .search import MAX_LIMIT, RecipeIndex
 
 MODEL = "claude-opus-5-5"
+_RECIPE_LINK = re.compile(r"food\.com/recipe/[\w-]*-(\d+)(?![\w-])")
 DEFAULT_EFFORT = "medium"
 
 SYSTEM_PROMPT = """\
-You help someone choose and cook great meals from a database of about 268,000 Food.com \
-recipes. Every recipe has a star rating from home cooks, a review count, ingredients, \
-steps, times and nutrition, and well-reviewed recipes include a few reviews.
+You help someone choose and cook great meals from a database of tens of thousands of \
+well-reviewed Food.com recipes. Every recipe has a star rating from home cooks, a review \
+count, ingredients, steps, times, nutrition and a few reviews.
 
 How to work:
 - Ground every recommendation in the tools. Only recommend recipes that search_recipes \
@@ -47,8 +50,8 @@ from get_recipe too, and tell them to confirm against the full recipe at the lin
 - You may suggest swaps (for example chicken thighs for breasts, with timing changes), \
 clearly marked as your suggestion rather than part of the recipe.
 - When asked for a full recipe, give the ingredients and numbered steps from get_recipe.
-- Replies are shown in a terminal: use plain text with light markdown (bold, bullets, \
-numbered steps). No tables and no # headings.
+- Keep replies easy to scan on a phone: light markdown only (bold, bullets, numbered \
+steps, plain URLs). No tables and no # headings.
 """
 
 
@@ -131,15 +134,128 @@ def make_tools(index: RecipeIndex) -> list:
     return [search_recipes, get_recipe]
 
 
-def _describe_call(name: str, args: dict) -> str:
+def _describe_call(index: RecipeIndex, name: str, args: dict) -> str:
+    """A short, human-readable line for a tool call, shown while Claude works."""
     if name == "get_recipe":
-        return f"opening recipe {args.get('recipe_id')}"
-    parts = [f"{k}={v}" for k, v in args.items() if v not in (None, [], "")]
-    return "searching " + ", ".join(parts)
+        card = index.card(args.get("recipe_id", -1))
+        return f"Reading reviews of {card['name']}" if card else "Opening a recipe"
+    parts = []
+    if args.get("ingredients") or args.get("require"):
+        parts.append("with " + ", ".join([*(args.get("require") or []), *(args.get("ingredients") or [])]))
+    if args.get("query"):
+        parts.append(f"matching \"{args['query']}\"")
+    if args.get("exclude"):
+        parts.append("without " + ", ".join(args["exclude"]))
+    if args.get("max_minutes"):
+        parts.append(f"under {args['max_minutes']} min")
+    return "Searching recipes " + " · ".join(parts) if parts else "Searching recipes"
+
+
+def to_jsonable(messages: list) -> list:
+    """Conversation history as plain JSON, exactly as the API expects it back.
+
+    Assistant turns hold SDK objects (thinking blocks with signatures, tool calls); they
+    are dumped the way the SDK itself sends them in a request.
+    """
+
+    def dump(value):
+        if hasattr(value, "model_dump"):
+            exclude = getattr(value, "__api_exclude__", None)
+            return value.model_dump(mode="json", by_alias=True, exclude_unset=True, exclude=exclude)
+        if isinstance(value, dict):
+            return {k: dump(v) for k, v in value.items()}
+        if isinstance(value, (list, tuple)):
+            return [dump(v) for v in value]
+        return value
+
+    return dump(messages)
+
+
+def _mentioned_ids(index: RecipeIndex, text: str, seen: dict[int, str]) -> list[int]:
+    """Recipes the reply recommends, in order of appearance: any Food.com recipe link to a
+    recipe in the index, plus recipes seen this turn whose exact name appears."""
+    found: dict[int, int] = {}
+    for m in _RECIPE_LINK.finditer(text):
+        rid = int(m.group(1))
+        if index.card(rid) is not None:
+            found.setdefault(rid, m.start())
+    lowered = text.lower()
+    for rid, name in seen.items():
+        pos = lowered.find(name.lower())
+        if pos >= 0 and pos < found.get(rid, len(text)):
+            found[rid] = pos
+    return sorted(found, key=found.get)
+
+
+def run_turn(
+    client: anthropic.Anthropic,
+    index: RecipeIndex,
+    messages: list,
+    text: str,
+    model: str = MODEL,
+    effort: str = DEFAULT_EFFORT,
+) -> Iterator[dict]:
+    """Send one user message and stream back what happens, as event dicts:
+
+    {"type": "status", "text": ...}    a search or recipe lookup is running
+    {"type": "text", "text": ...}      a piece of Claude's reply
+    {"type": "recipes", "recipes": [...]}  cards for the recipes the reply recommends
+    {"type": "notice", "text": ...}    the reply was cut short or declined
+
+    `messages` is the conversation so far; this turn is appended to it in place, never
+    editing earlier entries, so it can be passed back unchanged next turn.
+    """
+    messages.append({"role": "user", "content": text})
+    runner = client.beta.messages.tool_runner(
+        model=model,
+        max_tokens=16000,
+        system=SYSTEM_PROMPT,
+        tools=make_tools(index),
+        messages=messages,
+        output_config={"effort": effort},
+        # If a safety classifier declines, the API retries on a fallback model.
+        betas=["server-side-fallback-2026-07-01"],
+        fallbacks="default",
+        cache_control={"type": "ephemeral"},
+        max_iterations=12,
+        stream=True,
+    )
+    reply: list[str] = []
+    seen: dict[int, str] = {}  # recipes Claude saw this turn, for the cards
+    for stream in runner:
+        for event in stream:
+            if event.type == "content_block_delta" and event.delta.type == "text_delta":
+                reply.append(event.delta.text)
+                yield {"type": "text", "text": event.delta.text}
+        message = stream.get_final_message()
+        # The runner keeps its own copy of the history; mirror it here.
+        messages.append(message.to_param())
+        for block in message.content:
+            if block.type == "tool_use":
+                yield {"type": "status", "text": _describe_call(index, block.name, block.input)}
+        tool_results = runner.generate_tool_call_response()
+        if tool_results is not None:
+            messages.append(tool_results)
+            for result in tool_results["content"]:
+                content = result.get("content")
+                payload = content[0].get("text", "") if isinstance(content, list) and content else content
+                try:
+                    data = json.loads(payload or "{}")
+                except (TypeError, json.JSONDecodeError):
+                    continue
+                for r in data.get("recipes", []) + ([data] if "id" in data else []):
+                    seen[int(r["id"])] = r["name"]
+        if message.stop_reason == "refusal":
+            yield {"type": "notice", "text": "Claude declined to answer this request."}
+        elif message.stop_reason == "max_tokens":
+            yield {"type": "notice", "text": "The reply was cut off at the length limit."}
+    cards = [index.card(rid) for rid in _mentioned_ids(index, "".join(reply), seen)]
+    if cards:
+        yield {"type": "recipes", "recipes": cards}
 
 
 class RecipeChat:
-    """A multi-turn conversation with Claude over the recipe index."""
+    """A terminal conversation with Claude over the recipe index."""
 
     def __init__(
         self,
@@ -151,7 +267,7 @@ class RecipeChat:
         status=sys.stderr,
     ):
         self.client = client or anthropic.Anthropic()
-        self.tools = make_tools(index)
+        self.index = index
         self.model = model
         self.effort = effort
         self.messages: list = []
@@ -160,42 +276,14 @@ class RecipeChat:
 
     def send(self, text: str) -> str:
         """Send one user message, stream Claude's reply to `out`, and return the reply text."""
-        self.messages.append({"role": "user", "content": text})
-        runner = self.client.beta.messages.tool_runner(
-            model=self.model,
-            max_tokens=16000,
-            system=SYSTEM_PROMPT,
-            tools=self.tools,
-            messages=self.messages,
-            output_config={"effort": self.effort},
-            # If a safety classifier declines, the API retries on a fallback model.
-            betas=["server-side-fallback-2026-07-01"],
-            fallbacks="default",
-            cache_control={"type": "ephemeral"},
-            max_iterations=12,
-            stream=True,
-        )
-        reply: list[str] = []
-        for stream in runner:
-            for event in stream:
-                if event.type == "content_block_delta" and event.delta.type == "text_delta":
-                    self.out.write(event.delta.text)
-                    self.out.flush()
-                    reply.append(event.delta.text)
-            message = stream.get_final_message()
-            # Mirror the runner's history (it keeps its own copy) so later turns see
-            # every tool call and result, appended in order and never edited.
-            self.messages.append(message.to_param())
-            for block in message.content:
-                if block.type == "tool_use":
-                    self.status.write(f"  [{_describe_call(block.name, block.input)}]\n")
-                    self.status.flush()
-            tool_results = runner.generate_tool_call_response()
-            if tool_results is not None:
-                self.messages.append(tool_results)
-            if message.stop_reason == "refusal":
-                self.out.write("\n(Claude declined to answer this request.)\n")
-            elif message.stop_reason == "max_tokens":
-                self.out.write("\n(Reply was cut off at the length limit.)\n")
+        reply = []
+        for event in run_turn(self.client, self.index, self.messages, text, self.model, self.effort):
+            if event["type"] == "text":
+                self.out.write(event["text"])
+                self.out.flush()
+                reply.append(event["text"])
+            elif event["type"] in ("status", "notice"):
+                self.status.write(f"  [{event['text']}]\n")
+                self.status.flush()
         self.out.write("\n")
         return "".join(reply)

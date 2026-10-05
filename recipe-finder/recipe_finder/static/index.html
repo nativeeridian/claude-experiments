@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Recipe Finder</title>
+<meta name="description" content="Highly rated Food.com recipes for what's in your kitchen, picked by Claude.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🍲</text></svg>">
+<style>
+  :root {
+    --bg: #faf7f2;
+    --surface: #ffffff;
+    --surface-2: #f3eee6;
+    --text: #22201c;
+    --muted: #6f685e;
+    --border: #e6dfd3;
+    --accent: #c4552d;
+    --accent-ink: #ffffff;
+    --accent-soft: #fbe9e1;
+    --star: #d9902a;
+    --shadow: 0 1px 2px rgba(40, 30, 20, .06), 0 4px 16px rgba(40, 30, 20, .06);
+    --radius: 16px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #181613;
+      --surface: #221f1b;
+      --surface-2: #2b2722;
+      --text: #f1ece4;
+      --muted: #a89f92;
+      --border: #3a342d;
+      --accent: #e7794f;
+      --accent-ink: #1b1209;
+      --accent-soft: #3a2419;
+      --star: #f0b04a;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .3), 0 4px 16px rgba(0, 0, 0, .25);
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+  }
+  a { color: var(--accent); }
+  header {
+    position: sticky; top: 0; z-index: 2;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .bar { max-width: 760px; margin: 0 auto; padding: 12px 16px; display: flex; align-items: center; gap: 12px; }
+  .brand { font-weight: 700; font-size: 18px; letter-spacing: -.01em; }
+  .brand span { color: var(--muted); font-weight: 400; font-size: 14px; margin-left: 6px; }
+  .spacer { flex: 1; }
+  button { font: inherit; cursor: pointer; }
+  .ghost {
+    background: none; border: 1px solid var(--border); color: var(--text);
+    border-radius: 999px; padding: 6px 14px; font-size: 14px;
+  }
+  .ghost:hover { background: var(--surface-2); }
+  main { flex: 1; width: 100%; max-width: 760px; margin: 0 auto; padding: 20px 16px 8px; }
+  .hero { text-align: center; padding: 32px 0 8px; }
+  .hero h1 { font-size: 28px; line-height: 1.2; margin: 0 0 8px; letter-spacing: -.02em; }
+  .hero p { color: var(--muted); margin: 0 auto 24px; max-width: 520px; }
+  .chips { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px; text-align: left; }
+  .chip {
+    background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+    padding: 12px 14px; color: var(--text); text-align: left; font-size: 15px; box-shadow: var(--shadow);
+  }
+  .chip:hover { border-color: var(--accent); }
+  .msg { margin: 18px 0; }
+  .msg.user { display: flex; justify-content: flex-end; }
+  .msg.user .bubble {
+    background: var(--accent); color: var(--accent-ink); border-radius: var(--radius) var(--radius) 4px var(--radius);
+    padding: 10px 14px; max-width: 85%; white-space: pre-wrap; overflow-wrap: anywhere;
+  }
+  .msg.bot .bubble { overflow-wrap: anywhere; }
+  .bubble p { margin: 0 0 10px; }
+  .bubble ul, .bubble ol { margin: 0 0 12px; padding-left: 22px; }
+  .bubble li { margin: 3px 0; }
+  .bubble li > ul, .bubble li > ol { margin: 4px 0 0; }
+  .bubble code { background: var(--surface-2); border-radius: 4px; padding: 1px 5px; font-size: .92em; }
+  .steps:not(:empty) { margin-bottom: 10px; }
+  .status { color: var(--muted); font-size: 14px; display: flex; align-items: center; gap: 8px; margin: 4px 0; }
+  .status.done::before { content: "✓"; color: var(--accent); width: 14px; text-align: center; }
+  .status.live::before {
+    content: ""; width: 12px; height: 12px; margin: 0 1px; border-radius: 50%;
+    border: 2px solid var(--border); border-top-color: var(--accent); animation: spin .8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .notice, .error {
+    border-radius: 12px; padding: 10px 14px; font-size: 15px; margin-top: 8px;
+    background: var(--accent-soft); border: 1px solid var(--border);
+  }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin-top: 14px; }
+  .card {
+    display: flex; flex-direction: column; text-decoration: none; color: var(--text);
+    background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow);
+  }
+  .card:hover { border-color: var(--accent); }
+  .card .img { position: relative; aspect-ratio: 4 / 3; background: var(--surface-2); display: grid; place-items: center; font-size: 36px; overflow: hidden; }
+  .card .img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  @media (max-width: 560px) {
+    .cards { grid-template-columns: 1fr; gap: 10px; }
+    .card { flex-direction: row; align-items: center; }
+    .card .img { width: 88px; aspect-ratio: 1; flex: none; font-size: 28px; }
+    .card .body { padding: 10px 12px; }
+  }
+  .card .body { padding: 10px 12px 12px; }
+  .card .name { font-weight: 600; line-height: 1.3; margin-bottom: 4px; }
+  .card .meta { color: var(--muted); font-size: 13px; }
+  .card .stars { color: var(--star); }
+  footer { max-width: 760px; width: 100%; margin: 0 auto; padding: 0 16px 6px; color: var(--muted); font-size: 12px; text-align: center; }
+  .composer {
+    position: sticky; bottom: 0; background: linear-gradient(transparent, var(--bg) 30%);
+    padding: 16px 16px calc(12px + env(safe-area-inset-bottom));
+  }
+  .composer form {
+    max-width: 728px; margin: 0 auto; display: flex; gap: 8px; align-items: flex-end;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 22px; padding: 6px 6px 6px 16px; box-shadow: var(--shadow);
+  }
+  .composer form:focus-within { border-color: var(--accent); }
+  textarea {
+    flex: 1; border: 0; outline: none; resize: none; background: transparent; color: var(--text);
+    font: inherit; padding: 8px 0; max-height: 160px; min-height: 24px;
+  }
+  .send {
+    width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--accent); color: var(--accent-ink);
+    display: grid; place-items: center; flex: none;
+  }
+  .send:disabled { opacity: .45; cursor: default; }
+  .gate { max-width: 380px; margin: 12vh auto 0; text-align: center; }
+  .gate h1 { font-size: 24px; margin: 0 0 6px; }
+  .gate p { color: var(--muted); margin: 0 0 20px; }
+  .gate form { display: flex; gap: 8px; }
+  .gate input {
+    flex: 1; min-width: 0; font: inherit; padding: 10px 14px; border-radius: 12px;
+    border: 1px solid var(--border); background: var(--surface); color: var(--text);
+  }
+  .gate button { border: 0; border-radius: 12px; padding: 10px 16px; background: var(--accent); color: var(--accent-ink); font-weight: 600; }
+  .gate .err { color: var(--accent); min-height: 1.5em; margin-top: 10px; font-size: 14px; }
+  [hidden] { display: none !important; }
+</style>
+</head>
+<body>
+<header>
+  <div class="bar">
+    <div class="brand">🍲 Recipe Finder <span>with Claude</span></div>
+    <div class="spacer"></div>
+    <button class="ghost" id="new-chat" type="button" hidden>New chat</button>
+  </div>
+</header>
+
+<section class="gate" id="gate" hidden>
+  <h1>🍲 Recipe Finder</h1>
+  <p>This kitchen is private. Enter the password to start cooking.</p>
+  <form id="gate-form">
+    <input id="gate-password" type="password" placeholder="Password" autocomplete="current-password" required>
+    <button type="submit">Enter</button>
+  </form>
+  <div class="err" id="gate-error" role="alert"></div>
+</section>
+
+<main id="chat" hidden>
+  <section class="hero" id="hero">
+    <h1>What are we cooking?</h1>
+    <p>Tell me what's in your kitchen and what you're in the mood for. I'll find the best-loved Food.com recipes that fit, and tell you what reviewers changed to make them even better.</p>
+    <div class="chips">
+      <button class="chip" type="button">I have chicken thighs, a lemon, feta and spinach. Something cozy under 45 minutes.</button>
+      <button class="chip" type="button">Ground beef, black beans and tortillas. Family-friendly Mexican.</button>
+      <button class="chip" type="button">Best-rated chocolate chip cookies that stay chewy.</button>
+      <button class="chip" type="button">Vegetarian dinner with chickpeas and coconut milk, under 30 minutes.</button>
+    </div>
+  </section>
+  <div id="log" aria-live="polite"></div>
+</main>
+
+<div class="composer" id="composer" hidden>
+  <form id="ask">
+    <textarea id="input" rows="1" placeholder="Ingredients, cravings, time limits…" maxlength="2000" aria-label="Message"></textarea>
+    <button class="send" id="send" type="submit" aria-label="Send" disabled>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    </button>
+  </form>
+</div>
+<footer id="footer" hidden>Recipes, ratings and reviews from Food.com home cooks. Always check allergens against the full recipe.</footer>
+
+<script>
+(() => {
+  const $ = (id) => document.getElementById(id);
+  const store = {
+    get(key, fallback) { try { const v = localStorage.getItem(key); return v === null ? fallback : JSON.parse(v); } catch { return fallback; } },
+    set(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); } catch {} },
+    del(key) { try { localStorage.removeItem(key); } catch {} },
+  };
+
+  let password = store.get("rf.password", "");
+  let history = store.get("rf.history", []);   // conversation as the API sees it
+  let transcript = store.get("rf.transcript", []);  // what the page shows
+  let busy = false;
+
+  // ---- Markdown (small, safe subset: everything is escaped first) ----
+  const esc = (s) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  function inline(s) {
+    s = esc(s);
+    const links = [];
+    s = s.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, (_, t, u) => { links.push(`<a href="${u}" target="_blank" rel="noopener">${t}</a>`); return `\u0000${links.length - 1}\u0000`; });
+    s = s.replace(/(https?:\/\/[^\s<]+[^\s<.,;:!?)\]])/g, (u) => { links.push(`<a href="${u}" target="_blank" rel="noopener">${u.replace(/^https?:\/\/(www\.)?/, "")}</a>`); return `\u0000${links.length - 1}\u0000`; });
+    s = s.replace(/`([^`]+)`/g, "<code>$1</code>")
+         .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+         .replace(/(^|[^*\w])\*([^*\n]+)\*(?!\w)/g, "$1<em>$2</em>");
+    return s.replace(/\u0000(\d+)\u0000/g, (_, i) => links[+i]);
+  }
+  function markdown(src) {
+    const out = [];
+    const stack = [];  // open lists: {type, indent}
+    let para = [];
+    const flushPara = () => { if (para.length) { out.push(`<p>${para.map(inline).join("<br>")}</p>`); para = []; } };
+    const closeTo = (indent) => { while (stack.length && stack[stack.length - 1].indent >= indent) out.push(`</li></${stack.pop().type}>`); };
+    for (const raw of src.replace(/\r/g, "").split("\n")) {
+      const line = raw.replace(/^#{1,6}\s+/, "");  // headings render as plain bold-less lines
+      const m = line.match(/^(\s*)([-*•]|\d+[.)])\s+(.*)$/);
+      if (m) {
+        flushPara();
+        const indent = m[1].length, type = /\d/.test(m[2]) ? "ol" : "ul";
+        const top = stack[stack.length - 1];
+        if (top && indent > top.indent) { stack.push({ type, indent }); out.push(`<${type}><li>`); }
+        else {
+          closeTo(indent + 1);
+          const cur = stack[stack.length - 1];
+          if (cur && cur.indent === indent && cur.type === type) out.push("</li><li>");
+          else { closeTo(indent); stack.push({ type, indent }); out.push(`<${type}><li>`); }
+        }
+        out.push(inline(m[3]));
+      } else if (!line.trim()) {
+        flushPara(); closeTo(0);
+      } else if (stack.length && /^\s+/.test(line)) {
+        out.push("<br>" + inline(line.trim()));
+      } else {
+        closeTo(0); para.push(line.trim());
+      }
+    }
+    flushPara(); closeTo(0);
+    return out.join("");
+  }
+
+  // ---- Rendering ----
+  const log = $("log");
+  function addUser(text) {
+    const el = document.createElement("div");
+    el.className = "msg user";
+    el.innerHTML = `<div class="bubble"></div>`;
+    el.firstChild.textContent = text;
+    log.append(el);
+    return el;
+  }
+  function addBot() {
+    const el = document.createElement("div");
+    el.className = "msg bot";
+    el.innerHTML = `<div class="steps"></div><div class="bubble"></div><div class="extra"></div>`;
+    log.append(el);
+    return el;
+  }
+  function stars(r) { return `<span class="stars">★</span> ${r.toFixed(1)}`; }
+  function renderCards(el, recipes) {
+    if (!recipes || !recipes.length) return;
+    const wrap = document.createElement("div");
+    wrap.className = "cards";
+    for (const r of recipes) {
+      const a = document.createElement("a");
+      a.className = "card"; a.href = r.url; a.target = "_blank"; a.rel = "noopener";
+      const time = r.total_minutes ? ` · ${r.total_minutes >= 120 ? Math.round(r.total_minutes / 60) + " hr" : r.total_minutes + " min"}` : "";
+      a.innerHTML = `<div class="img">🍽️</div><div class="body"><div class="name"></div><div class="meta">${stars(r.rating)} (${r.reviews.toLocaleString()})${time}</div></div>`;
+      if (r.image) {  // the plate emoji stays behind the photo, and shows if it fails to load
+        const img = document.createElement("img");
+        img.alt = ""; img.loading = "lazy"; img.referrerPolicy = "no-referrer"; img.src = r.image;
+        img.onerror = () => img.remove();
+        a.querySelector(".img").append(img);
+      }
+      a.querySelector(".name").textContent = r.name;
+      wrap.append(a);
+    }
+    el.querySelector(".extra").append(wrap);
+  }
+  function addNote(el, cls, text) {
+    const d = document.createElement("div");
+    d.className = cls; d.textContent = text;
+    el.querySelector(".extra").append(d);
+  }
+  function renderTranscript() {
+    log.innerHTML = "";
+    for (const t of transcript) {
+      if (t.role === "user") { addUser(t.text); continue; }
+      const el = addBot();
+      el.querySelector(".bubble").innerHTML = markdown(t.text || "");
+      renderCards(el, t.recipes);
+      if (t.error) addNote(el, "error", t.error);
+    }
+    $("hero").hidden = transcript.length > 0;
+    $("new-chat").hidden = transcript.length === 0;
+  }
+  const scrollDown = () => window.scrollTo({ top: document.body.scrollHeight });
+
+  // ---- Talking to the server ----
+  async function send(text) {
+    if (busy || !text.trim()) return;
+    busy = true; updateSend();
+    $("hero").hidden = true; $("new-chat").hidden = false;
+    addUser(text);
+    const el = addBot();
+    const steps = el.querySelector(".steps"), bubble = el.querySelector(".bubble");
+    // `live` is the step in progress; it starts as a "Thinking…" placeholder.
+    let live = document.createElement("div"), placeholder = true;
+    live.className = "status live"; live.textContent = "Thinking…";
+    steps.append(live);
+    const settle = () => {  // the current step finished (a placeholder just goes away)
+      if (!live) return;
+      if (placeholder) live.remove(); else live.className = "status done";
+      live = null;
+    };
+    scrollDown();
+    const entry = { role: "bot", text: "" };
+    let reply = "", finished = false;
+
+    const step = (text) => {
+      settle();
+      live = document.createElement("div"); placeholder = false;
+      live.className = "status live"; live.textContent = text;
+      steps.append(live);
+    };
+    try {
+      const res = await fetch("/api/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "X-App-Password": encodeURIComponent(password) },
+        body: JSON.stringify({ message: text, history }),
+      });
+      if (!res.ok) {
+        const detail = (await res.json().catch(() => ({}))).detail || `Server error ${res.status}`;
+        if (res.status === 401) { store.del("rf.password"); password = ""; }
+        throw new Error(typeof detail === "string" ? detail : "Request rejected.");
+      }
+      const reader = res.body.getReader(), dec = new TextDecoder();
+      let buf = "";
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buf += dec.decode(value, { stream: true });
+        let nl;
+        while ((nl = buf.indexOf("\n")) >= 0) {
+          const line = buf.slice(0, nl); buf = buf.slice(nl + 1);
+          if (!line.trim()) continue;
+          const ev = JSON.parse(line);
+          if (ev.type === "status") step(ev.text);
+          else if (ev.type === "text") {
+            settle();
+            reply += ev.text; bubble.innerHTML = markdown(reply);
+          } else if (ev.type === "recipes") { entry.recipes = ev.recipes; renderCards(el, ev.recipes); }
+          else if (ev.type === "notice") addNote(el, "notice", ev.text);
+          else if (ev.type === "error") throw new Error(ev.text);
+          else if (ev.type === "done") { history = ev.history; finished = true; }
+        }
+        if (reply) scrollDown();
+      }
+      if (!finished) throw new Error("The connection closed early. Try again.");
+    } catch (err) {
+      entry.error = err.message || String(err);
+      addNote(el, "error", entry.error);
+    } finally {
+      settle();
+      entry.text = reply;
+      transcript.push({ role: "user", text }, entry);
+      // Only a finished turn becomes part of the conversation Claude sees.
+      store.set("rf.history", history);
+      store.set("rf.transcript", transcript);
+      busy = false; updateSend(); scrollDown();
+      if (!password && passwordRequired) showGate("Enter the password again.");
+    }
+  }
+
+  // ---- Composer ----
+  const input = $("input");
+  function updateSend() { $("send").disabled = busy || !input.value.trim(); }
+  function autosize() { input.style.height = "auto"; input.style.height = Math.min(input.scrollHeight, 160) + "px"; }
+  input.addEventListener("input", () => { autosize(); updateSend(); });
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" && !e.shiftKey && !e.isComposing) { e.preventDefault(); $("ask").requestSubmit(); }
+  });
+  $("ask").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text || busy) return;
+    input.value = ""; autosize(); send(text);
+  });
+  document.querySelectorAll(".chip").forEach((c) => c.addEventListener("click", () => send(c.textContent)));
+  $("new-chat").addEventListener("click", () => {
+    if (busy) return;
+    history = []; transcript = [];
+    store.del("rf.history"); store.del("rf.transcript");
+    renderTranscript(); input.focus();
+  });
+
+  // ---- Password gate ----
+  let passwordRequired = false;
+  function showChat() {
+    $("gate").hidden = true;
+    $("chat").hidden = $("composer").hidden = $("footer").hidden = false;
+    renderTranscript(); scrollDown(); input.focus();
+  }
+  function showGate(message) {
+    $("chat").hidden = $("composer").hidden = $("footer").hidden = true;
+    $("gate").hidden = false;
+    $("gate-error").textContent = message || "";
+    $("gate-password").focus();
+  }
+  async function login(pw) {
+    const res = await fetch("/api/login", { method: "POST", headers: { "X-App-Password": encodeURIComponent(pw) } });
+    if (res.ok) return null;
+    return (await res.json().catch(() => ({}))).detail || "That didn't work.";
+  }
+  $("gate-form").addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const pw = $("gate-password").value;
+    const err = await login(pw);
+    if (err) { $("gate-error").textContent = err; return; }
+    password = pw; store.set("rf.password", pw); showChat();
+  });
+
+  (async () => {
+    try {
+      passwordRequired = (await (await fetch("/api/status")).json()).password_required;
+    } catch { passwordRequired = false; }
+    if (!passwordRequired) return showChat();
+    if (password && !(await login(password))) return showChat();
+    showGate();
+  })();
+})();
+</script>
+</body>
+</html>

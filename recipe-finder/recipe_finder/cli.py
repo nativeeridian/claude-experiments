@@ -10,8 +10,8 @@ from .search import SORTS
 
 EXAMPLES = """\
 examples:
-  python -m recipe_finder build
   python -m recipe_finder chat
+  python -m recipe_finder serve
   python -m recipe_finder ask "I have chicken thighs, lemon, feta and spinach. Something cozy under 45 minutes."
   python -m recipe_finder search --have "chicken thighs,lemon,feta" --max-minutes 45
   python -m recipe_finder show 49414
@@ -35,7 +35,14 @@ def _load_index():
 def cmd_build(args) -> None:
     from .data import build
 
-    build(force_download=args.force_download)
+    build(min_ratings=args.min_ratings, force_download=args.force_download)
+
+
+def cmd_serve(args) -> None:
+    import uvicorn
+
+    print(f"Recipe Finder running at http://localhost:{args.port}", file=sys.stderr)
+    uvicorn.run("recipe_finder.web:app", host=args.host, port=args.port)
 
 
 def cmd_search(args) -> None:
@@ -158,9 +165,15 @@ def main(argv: list[str] | None = None) -> None:
     )
     sub = parser.add_subparsers(dest="command", required=True)
 
-    p = sub.add_parser("build", help="download Food.com data from Kaggle and build the index")
+    p = sub.add_parser("build", help="download Food.com data from Kaggle and build the recipe bundle")
+    p.add_argument("--min-ratings", type=int, default=5, help="skip recipes with fewer star ratings")
     p.add_argument("--force-download", action="store_true")
     p.set_defaults(func=cmd_build)
+
+    p = sub.add_parser("serve", help="run the web app locally")
+    p.add_argument("--host", default="127.0.0.1")
+    p.add_argument("--port", type=int, default=8000)
+    p.set_defaults(func=cmd_serve)
 
     p = sub.add_parser("search", help="search recipes directly (no AI)")
     p.add_argument("--have", type=_csv, default=[], help="comma-separated ingredients you have")

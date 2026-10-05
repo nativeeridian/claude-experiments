@@ -124,3 +124,24 @@ def test_get_returns_details_and_reviews(index):
     assert snippets and all(s["stars"] > 0 for s in snippets)
     assert snippets[0]["text"].startswith("I added extra garlic")  # tweak reviews first
     assert index.get(999) is None
+
+
+def test_bundle_reads_across_blocks_and_shards(tmp_path, monkeypatch):
+    import pandas as pd
+
+    from conftest import RAW, REVIEWS
+    from recipe_finder import bundle, data
+    from recipe_finder.search import RecipeIndex
+
+    monkeypatch.setattr(bundle, "BLOCK_SIZE", 2)
+    monkeypatch.setattr(bundle, "SHARD_BYTES", 1)  # every block in its own file
+    reviews = pd.DataFrame(
+        {"RecipeId": [r[0] for r in REVIEWS], "Rating": [r[1] for r in REVIEWS],
+         "Review": [r[2] for r in REVIEWS], "DateSubmitted": pd.Timestamp("2015-06-01", tz="UTC")}
+    )
+    data.build_bundle(pd.DataFrame(RAW), reviews, tmp_path, min_ratings=1)
+    assert len(list(tmp_path.glob("details-*.bin"))) == 3
+    idx = RecipeIndex(tmp_path)
+    assert [idx.get(i)["name"] for i in (1, 2, 3, 4, 5)] == [
+        "Lemon Garlic Chicken Thighs", "Greek Chicken With Feta", "Chicken Noodle Soup", "Lemonade", "Peanut Chicken",
+    ]

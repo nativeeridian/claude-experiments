@@ -3,78 +3,8 @@
 import io
 import json
 
-import anthropic
-import httpx2
-
-from recipe_finder.assistant import RecipeChat
-
-
-def _sse(*events) -> bytes:
-    return "".join(f"event: {e['type']}\ndata: {json.dumps(e)}\n\n" for e in events).encode()
-
-
-def _reply(blocks, stop_reason):
-    events = [
-        {
-            "type": "message_start",
-            "message": {
-                "id": "msg_test", "type": "message", "role": "assistant", "model": "claude-opus-5-5",
-                "content": [], "stop_reason": None, "stop_sequence": None,
-                "usage": {"input_tokens": 10, "output_tokens": 1},
-            },
-        }
-    ]
-    for i, block in enumerate(blocks):
-        if block["type"] == "thinking":
-            start = {"type": "thinking", "thinking": "", "signature": ""}
-            deltas = [{"type": "signature_delta", "signature": block["signature"]}]
-        elif block["type"] == "tool_use":
-            start = {"type": "tool_use", "id": block["id"], "name": block["name"], "input": {}}
-            deltas = [{"type": "input_json_delta", "partial_json": json.dumps(block["input"])}]
-        else:
-            start = {"type": "text", "text": ""}
-            deltas = [{"type": "text_delta", "text": block["text"]}]
-        events.append({"type": "content_block_start", "index": i, "content_block": start})
-        events += [{"type": "content_block_delta", "index": i, "delta": d} for d in deltas]
-        events.append({"type": "content_block_stop", "index": i})
-    events.append(
-        {"type": "message_delta", "delta": {"stop_reason": stop_reason, "stop_sequence": None},
-         "usage": {"output_tokens": 20}}
-    )
-    events.append({"type": "message_stop"})
-    return _sse(*events)
-
-
-SCRIPT = [
-    _reply(
-        [
-            {"type": "thinking", "signature": "sig-1"},
-            {"type": "tool_use", "id": "toolu_1", "name": "search_recipes",
-             "input": {"ingredients": ["chicken thighs", "lemon", "feta"], "min_reviews": 0, "limit": 3}},
-        ],
-        "tool_use",
-    ),
-    _reply(
-        [{"type": "tool_use", "id": "toolu_2", "name": "get_recipe", "input": {"recipe_id": 2}}],
-        "tool_use",
-    ),
-    _reply([{"type": "text", "text": "Make the **Greek Chicken With Feta**."}], "end_turn"),
-    _reply([{"type": "text", "text": "Here are the steps."}], "end_turn"),
-]
-
-
-def _fake_client(requests):
-    replies = iter(SCRIPT)
-
-    def handler(request: httpx2.Request) -> httpx2.Response:
-        requests.append((request.headers, json.loads(request.content)))
-        return httpx2.Response(200, headers={"content-type": "text/event-stream"}, content=next(replies))
-
-    return anthropic.Anthropic(
-        api_key="test-key",
-        base_url="http://fake-api.test",
-        http_client=anthropic.DefaultHttpxClient(transport=httpx2.MockTransport(handler)),
-    )
+from fake_api import fake_client as _fake_client
+from recipe_finder.assistant import RecipeChat, run_turn, to_jsonable
 
 
 def test_chat_runs_tools_and_keeps_append_only_history(index):
@@ -86,7 +16,8 @@ def test_chat_runs_tools_and_keeps_append_only_history(index):
 
     assert reply == "Make the **Greek Chicken With Feta**."
     assert "Greek Chicken With Feta" in out.getvalue()
-    assert "searching" in status.getvalue() and "opening recipe 2" in status.getvalue()
+    assert "Searching recipes with chicken thighs, lemon, feta" in status.getvalue()
+    assert "Reading reviews of Greek Chicken With Feta" in status.getvalue()
     assert len(requests) == 3
 
     headers, first = requests[0]
@@ -117,3 +48,24 @@ def test_chat_runs_tools_and_keeps_append_only_history(index):
     assert fourth["messages"][:5] == third["messages"]
     assert fourth["messages"][5]["role"] == "assistant"
     assert fourth["messages"][6] == {"role": "user", "content": "Great, give me the full recipe."}
+
+
+def test_run_turn_events_and_json_history(index):
+    requests = []
+    client = _fake_client(requests)
+    messages: list = []
+    events = list(run_turn(client, index, messages, "chicken thighs, lemon, feta?"))
+
+    kinds = [e["type"] for e in events]
+    assert kinds.count("status") == 2 and "text" in kinds
+    assert events[-1]["type"] == "recipes"
+    card = events[-1]["recipes"][0]
+    assert card["id"] == 2 and card["name"] == "Greek Chicken With Feta"
+    assert card["url"].endswith("-2")
+
+    # History survives a JSON round trip (as the web app stores it in the browser) and
+    # matches what the SDK itself sent, so the next turn resends it byte-for-byte.
+    history = json.loads(json.dumps(to_jsonable(messages)))
+    assert history[:5] == requests[2][1]["messages"]
+    list(run_turn(client, index, history, "Full recipe please."))
+    assert requests[3][1]["messages"][:6] == json.loads(json.dumps(to_jsonable(messages)))

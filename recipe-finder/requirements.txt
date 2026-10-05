@@ -1,5 +1,4 @@
+# What the app needs at runtime (and what Vercel installs).
 anthropic>=1.11
+fastapi>=0.115
 numpy>=2.0
-pandas>=2.2
-pyarrow>=17
-pytest>=8  # tests only

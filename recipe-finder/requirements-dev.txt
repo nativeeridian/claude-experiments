@@ -1,0 +1,7 @@
+# Building the recipe bundle, running locally, and tests.
+-r requirements.txt
+pandas>=2.2
+pyarrow>=17
+uvicorn>=0.30
+httpx>=0.27
+pytest>=8

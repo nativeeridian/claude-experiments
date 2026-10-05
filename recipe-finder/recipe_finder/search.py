@@ -8,13 +8,9 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 import numpy as np
-import pandas as pd
-import pyarrow as pa
-import pyarrow.compute as pc
-import pyarrow.parquet as pq
 
 from . import ingredients as ing
-from .data import CORE_COLUMNS, DEFAULT_DATA_DIR, PROCESSED_FILE, REVIEWS_FILE
+from .bundle import Bundle, text_tokens
 
 # Bayesian prior: every recipe is treated as if it also had this many reviews at
 # the dataset-wide average rating. A 5.0 from 2 reviews no longer beats a 4.8
@@ -30,9 +26,6 @@ MISSING_PENALTY = 0.02
 SORTS = ("best", "rating", "fewest_missing", "quickest")
 MAX_LIMIT = 25
 
-_WORD = re.compile(r"[a-z0-9]+")
-
-
 def weighted_rating(rating: np.ndarray, reviews: np.ndarray, mean: float, m: float = PRIOR_REVIEWS):
     return (reviews * rating + m * mean) / (reviews + m)
 
@@ -40,10 +33,6 @@ def weighted_rating(rating: np.ndarray, reviews: np.ndarray, mean: float, m: flo
 def recipe_url(recipe_id: int, name: str) -> str:
     slug = re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
     return f"https://www.food.com/recipe/{slug}-{recipe_id}"
-
-
-def _text_tokens(text: str) -> list[str]:
-    return [ing.singularize(w) for w in _WORD.findall(text.lower())]
 
 
 def _num(value, digits: int = 0):
@@ -67,70 +56,36 @@ class SearchResult:
 
 class RecipeIndex:
     def __init__(self, path: Path | str | None = None):
-        self.path = Path(path) if path else DEFAULT_DATA_DIR / PROCESSED_FILE
-        if not self.path.exists():
-            raise FileNotFoundError(
-                f"{self.path} not found. Run `python -m recipe_finder build` first."
-            )
-        self.reviews_path = self.path.with_name(REVIEWS_FILE)
-        core = pq.read_table(self.path, columns=CORE_COLUMNS)
-        self.n = core.num_rows
-
-        def floats(col: str) -> np.ndarray:
-            return core[col].to_numpy().astype(float)
-
-        self.ids = core["id"].to_numpy()
-        self.names = np.array(core["name"].to_pylist(), dtype=object)
-        self.category = np.array(core["category"].to_pylist(), dtype=object)
-        self.rating = floats("rating")
-        self.reviews = floats("reviews")
-        self.minutes = floats("total_minutes")
-        self.calories = floats("calories")
-        self.servings = floats("servings")
-        self.mean_rating = float(self.rating.mean())
+        self.bundle = Bundle(path)
+        a = self.bundle.arrays
+        self.n = len(a["ids"])
+        self.ids = a["ids"]
+        self.names = self.bundle.names
+        self.category = [self.bundle.categories[c] if c >= 0 else None for c in a["category"]]
+        self.rating = a["rating"].astype(float)
+        self.reviews = a["reviews"].astype(float)
+        self.minutes = a["minutes"].astype(float)
+        self.calories = a["calories"].astype(float)
+        self.servings = a["servings"].astype(float)
+        self.mean_rating = float(self.bundle.meta["mean_rating"])
         self.wr = weighted_rating(self.rating, self.reviews, self.mean_rating)
         self._row_of_id = {int(rid): i for i, rid in enumerate(self.ids)}
-        self._build_ingredient_index(core["ingredients"])
-        self._build_text_index(core)
 
-    # -- index construction -------------------------------------------------
-
-    def _build_ingredient_index(self, lists: pa.ChunkedArray) -> None:
-        lists = lists.combine_chunks()
-        # Recipes are stored in row order, so each recipe's ingredients are a slice.
-        self.flat_rows = pc.list_parent_indices(lists).to_numpy()
-        self._row_bounds = np.searchsorted(self.flat_rows, np.arange(self.n + 1))
-        raw = pc.list_flatten(lists).dictionary_encode()
-        # Collapse spelling variants ("Garlic Cloves", "garlic cloves") into one vocab entry.
-        cleaned = [ing.clean_name(u) for u in raw.dictionary.to_pylist()]
-        vocab_codes, vocab = pd.factorize(pd.Series(cleaned, dtype=object), sort=False)
-        self.vocab = list(vocab)
-        self.flat_vocab = vocab_codes[raw.indices.to_numpy()]
-        counts = np.bincount(self.flat_vocab, minlength=len(self.vocab))
+        # Ingredients: recipe row r uses vocab ids flat_vocab[row_bounds[r]:row_bounds[r+1]].
+        self.vocab = self.bundle.vocab
+        self.flat_vocab = a["flat_vocab"]
+        self._row_bounds = a["row_bounds"]
+        self.flat_rows = np.repeat(np.arange(self.n), np.diff(self._row_bounds))
         order = np.argsort(self.flat_vocab, kind="stable")
+        counts = np.bincount(self.flat_vocab, minlength=len(self.vocab))
         self.postings = np.split(self.flat_rows[order], np.cumsum(counts)[:-1])
         self.pantry_mask = self._vocab_mask_pantry(ing.DEFAULT_PANTRY)
 
-    def _build_text_index(self, core: pa.Table) -> None:
-        """Token -> recipe rows, over name, category and Food.com keyword tags."""
-        tags = pc.binary_join(core["keywords"], " ")
-        text = pc.binary_join_element_wise(
-            *(pc.fill_null(col.cast(pa.large_string()), "") for col in (core["name"], core["category"], tags)),
-            pa.scalar(" ", pa.large_string()),
-        )
-        words = pc.split_pattern_regex(pc.utf8_lower(text), r"[^a-z0-9]+").combine_chunks()
-        rows = pc.list_parent_indices(words).to_numpy()
-        encoded = pc.list_flatten(words).dictionary_encode()
-        tok_codes, toks = pd.factorize(
-            pd.Series([ing.singularize(w) for w in encoded.dictionary.to_pylist()], dtype=object)
-        )
-        # One sorted key per distinct (token, row) pair, then split per token.
-        keys = np.sort(tok_codes[encoded.indices.to_numpy()].astype(np.int64) * self.n + rows)
-        keys = keys[np.r_[True, keys[1:] != keys[:-1]]]
-        tok_of, rows = np.divmod(keys, self.n)
-        starts = np.flatnonzero(np.r_[True, tok_of[1:] != tok_of[:-1]])
-        self.text_postings = dict(zip(toks[tok_of[starts]], np.split(rows, starts[1:])))
-        self.text_postings.pop("", None)
+        # Keywords: token -> rows whose name, category or tags contain it.
+        rows, bounds = a["tok_rows"], a["tok_bounds"]
+        self.text_postings = {
+            tok: rows[bounds[i] : bounds[i + 1]] for i, tok in enumerate(self.bundle.tokens)
+        }
 
     # -- matching helpers -----------------------------------------------------
 
@@ -194,7 +149,7 @@ class RecipeIndex:
             mask &= self.calories <= max_calories
 
         if query:
-            for tok in dict.fromkeys(_text_tokens(query)):
+            for tok in dict.fromkeys(text_tokens(query)):
                 rows = self.text_postings.get(tok)
                 if rows is None:
                     notes.append(f"No recipe names or tags contain '{tok}'.")
@@ -280,32 +235,31 @@ class RecipeIndex:
         out["url"] = recipe_url(out["id"], out["name"])
         return out
 
+    def card(self, recipe_id: int) -> dict | None:
+        """The few fields a recipe card in the web UI shows."""
+        row = self._row_of_id.get(int(recipe_id))
+        if row is None:
+            return None
+        return {
+            "id": int(recipe_id),
+            "name": self.names[row],
+            "rating": round(float(self.rating[row]), 2),
+            "reviews": int(self.reviews[row]),
+            "total_minutes": _num(self.minutes[row]),
+            "image": self.bundle.details(row).get("image"),
+            "url": recipe_url(int(recipe_id), self.names[row]),
+        }
+
     def get(self, recipe_id: int) -> dict | None:
-        """Full recipe details, read from disk on demand."""
-        if int(recipe_id) not in self._row_of_id:
+        """Full recipe details and review snippets."""
+        row = self._row_of_id.get(int(recipe_id))
+        if row is None:
             return None
-        table = pq.read_table(self.path, filters=[("id", "=", int(recipe_id))])
-        if table.num_rows == 0:
-            return None
-        rec = table.to_pylist()[0]
+        rec = self.bundle.details(row)
         # Food.com amounts were scraped without units ("1/4" feta might be cups or
         # ounces) and only line up with the names for ~25% of recipes.
         rec["amounts_without_units"] = rec.pop("quantities")
-        for key, value in list(rec.items()):
-            if isinstance(value, float) and math.isnan(value):
-                rec[key] = None
         rec["rating"] = round(rec["rating"], 2)
-        rec["weighted_rating"] = round(float(self.wr[self._row_of_id[int(recipe_id)]]), 3)
+        rec["weighted_rating"] = round(float(self.wr[row]), 3)
         rec["url"] = recipe_url(rec["id"], rec["name"])
-        rec["review_snippets"] = self.review_snippets(int(recipe_id))
         return rec
-
-    def review_snippets(self, recipe_id: int) -> list[dict]:
-        """A few reviews for the recipe: tweak-heavy positive ones plus one critical one."""
-        if not self.reviews_path.exists():
-            return []
-        table = pq.read_table(self.reviews_path, filters=[("recipe_id", "=", recipe_id)])
-        return [
-            {"stars": r["stars"], "date": r["date"], "text": r["text"]}
-            for r in table.drop(["recipe_id"]).to_pylist()
-        ]

@@ -1,16 +1,14 @@
-"""Download the Food.com dataset and build the processed files the app searches.
+"""Download the Food.com dataset and build the recipe bundle the app searches.
 
 Source: "Food.com - Recipes and Reviews" on Kaggle (irkaal/foodcom-recipes-and-reviews):
 ~522K recipes and ~1.4M reviews scraped from Food.com. Kaggle serves public datasets
-without a login.
-
-Outputs (in data/):
-  recipes_clean.parquet  one row per rated recipe, sorted by id
-  reviews_top.parquet    a few informative reviews per well-reviewed recipe
+without a login. Building needs pandas and pyarrow; the app itself only needs the bundle
+(see bundle.py).
 """
 
 from __future__ import annotations
 
+import datetime
 import html
 import re
 import shutil
@@ -20,27 +18,21 @@ from pathlib import Path
 
 import numpy as np
 import pandas as pd
-import pyarrow as pa
-import pyarrow.parquet as pq
+
+from . import bundle
 
 KAGGLE_URL = "https://www.kaggle.com/api/v1/datasets/download/irkaal/foodcom-recipes-and-reviews/{}"
 DEFAULT_DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 RAW_RECIPES = "recipes.parquet"
 RAW_REVIEWS = "reviews.parquet"
-PROCESSED_FILE = "recipes_clean.parquet"
-REVIEWS_FILE = "reviews_top.parquet"
 
-# Columns kept in memory for search; everything else is read per recipe on demand.
-CORE_COLUMNS = [
-    "id", "name", "category", "keywords", "rating", "reviews", "total_minutes",
-    "calories", "servings", "ingredients",
-]
+# Recipes need this many star ratings to be included. 5 keeps ~61K proven recipes and
+# a bundle small enough to commit and deploy; use 1 locally to include everything rated.
+DEFAULT_MIN_RATINGS = 5
 
 # Food.com files a few non-food things (cleaning sprays, home remedies) as recipes.
 NON_FOOD_CATEGORIES = {"Household Cleaner", "Homeopathy/Remedies"}
 
-# Review snippets are kept for recipes with at least this many star ratings.
-SNIPPET_MIN_RATINGS = 3
 SNIPPET_MAX_CHARS = 450
 
 _DURATION = re.compile(r"^P(?:(\d+)D)?T?(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$")
@@ -194,25 +186,41 @@ def top_reviews(reviews: pd.DataFrame, recipe_ids: pd.Series) -> pd.DataFrame:
     ).reset_index(drop=True)
 
 
-def _write(df: pd.DataFrame, dest: Path, row_group_size: int) -> None:
-    # Sorted by recipe id with small row groups, so reading one recipe touches one group.
-    pq.write_table(pa.Table.from_pandas(df, preserve_index=False), dest, row_group_size=row_group_size)
+def build_bundle(
+    raw_recipes: pd.DataFrame, reviews: pd.DataFrame, bundle_dir: Path, min_ratings: int
+) -> int:
+    """Process the raw Kaggle frames and write a bundle; returns the recipe count."""
+    clean = process(raw_recipes, rating_stats(reviews))
+    mean_rating = float(clean["rating"].mean())  # prior for the weighted rating
+    clean = clean[clean["reviews"] >= min_ratings]
+    snippets: dict[int, list[dict]] = {}
+    for r in top_reviews(reviews, clean["id"]).itertuples(index=False):
+        snippets.setdefault(r.recipe_id, []).append({"stars": int(r.stars), "date": r.date, "text": r.text})
+    bundle.write(
+        clean,
+        snippets,
+        bundle_dir,
+        meta={
+            "source": "Food.com - Recipes and Reviews (kaggle.com/datasets/irkaal/foodcom-recipes-and-reviews)",
+            "min_ratings": min_ratings,
+            "mean_rating": mean_rating,
+            "built": datetime.date.today().isoformat(),
+        },
+    )
+    return len(clean)
 
 
-def build(data_dir: Path = DEFAULT_DATA_DIR, force_download: bool = False) -> Path:
+def build(
+    data_dir: Path = DEFAULT_DATA_DIR,
+    bundle_dir: Path = bundle.DEFAULT_BUNDLE_DIR,
+    min_ratings: int = DEFAULT_MIN_RATINGS,
+    force_download: bool = False,
+) -> Path:
     download(data_dir, force=force_download)
-    print("Computing ratings from reviews ...")
-    reviews = pd.read_parquet(data_dir / RAW_REVIEWS)
-    stats = rating_stats(reviews)
-    print("Processing recipes ...")
-    clean = process(pd.read_parquet(data_dir / RAW_RECIPES), stats)
-    dest = data_dir / PROCESSED_FILE
-    _write(clean, dest, row_group_size=5000)
-    print(f"Wrote {len(clean):,} rated recipes to {dest}")
-
-    print("Selecting review snippets ...")
-    well_reviewed = clean.loc[clean["reviews"] >= SNIPPET_MIN_RATINGS, "id"]
-    snippets = top_reviews(reviews, well_reviewed)
-    _write(snippets, data_dir / REVIEWS_FILE, row_group_size=20000)
-    print(f"Wrote {len(snippets):,} review snippets to {data_dir / REVIEWS_FILE}")
-    return dest
+    print("Processing recipes and reviews (about a minute) ...")
+    count = build_bundle(
+        pd.read_parquet(data_dir / RAW_RECIPES), pd.read_parquet(data_dir / RAW_REVIEWS), bundle_dir, min_ratings
+    )
+    size = sum(f.stat().st_size for f in bundle_dir.iterdir()) / 1e6
+    print(f"Wrote {count:,} recipes with {min_ratings}+ ratings to {bundle_dir} ({size:.0f} MB)")
+    return bundle_dir

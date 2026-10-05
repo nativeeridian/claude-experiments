@@ -67,7 +67,7 @@ REVIEWS = [
 
 @pytest.fixture(scope="session")
 def index(tmp_path_factory):
-    tmp = tmp_path_factory.mktemp("data")
+    tmp = tmp_path_factory.mktemp("bundle")
     reviews = pd.DataFrame(
         {
             "RecipeId": [r[0] for r in REVIEWS],
@@ -76,7 +76,5 @@ def index(tmp_path_factory):
             "DateSubmitted": pd.Timestamp("2015-06-01", tz="UTC"),
         }
     )
-    clean = data.process(pd.DataFrame(RAW), data.rating_stats(reviews))
-    data._write(clean, tmp / data.PROCESSED_FILE, row_group_size=2)
-    data._write(data.top_reviews(reviews, clean["id"]), tmp / data.REVIEWS_FILE, row_group_size=2)
-    return RecipeIndex(tmp / data.PROCESSED_FILE)
+    data.build_bundle(pd.DataFrame(RAW), reviews, tmp, min_ratings=1)
+    return RecipeIndex(tmp)
