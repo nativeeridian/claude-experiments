@@ -1,33 +1,51 @@
 # Recipe Finder
 
-Tell Claude what's in your kitchen and what you're in the mood for. It searches 61,000
-well-reviewed Food.com recipes, picks the best-loved ones that fit, and passes along what
-reviewers changed to make them even better. Use it as a web app (deployable to Vercel) or
-from the terminal.
+Find the best-loved Food.com recipes for what's in your kitchen. Search 61,000
+well-reviewed recipes by ingredient for free, or ask Claude, which picks recipes that fit
+your request and passes along what reviewers changed to make them even better.
 
-## Deploy to Vercel
+## Two versions in one app
 
-The recipe data ships in `bundle/` (53 MB), so there's no build step and no database.
+| | **Search** (free, public) | **Ask Claude** |
+|---|---|---|
+| What it does | Type ingredients and filters; get top-rated recipes with full steps and reviews | Describe what you want in plain words; Claude searches, reads reviews and recommends |
+| Needs | Nothing | An Anthropic API key (roughly 10 to 30 cents per question, by my estimate) |
+| Who can use it | Anyone who opens the site | You, plus anyone you give the password to |
 
-1. **Get an Anthropic API key** at [console.anthropic.com](https://console.anthropic.com).
-   Setting a monthly spend limit there (Settings → Limits) is a good idea.
-2. **Import the repo:** on [vercel.com/new](https://vercel.com/new), import
-   `claude-experiments`.
-   - **Root Directory:** `recipe-finder`. Vercel detects the FastAPI app on its own.
-   - **Environment Variables:**
-     - `ANTHROPIC_API_KEY`: your key
-     - `APP_PASSWORD`: a password you choose. Anyone who opens the site needs it, which
-       stops strangers from spending your API credits. Chat stays off until it's set.
-3. **Deploy.** Open the URL, enter the password, and start cooking. The browser remembers
-   the password.
+Both are tabs on the same site. With no API key configured, the site is search-only, and
+the Ask Claude tab offers a button for visitors to deploy their own copy with their own
+key. The key is never in the code (this repository is public); it lives in the hosting
+settings.
 
-Never put the API key in the code: this repository is public. Vercel keeps environment
-variables secret, and you can change them under Project → Settings → Environment
-Variables (then redeploy).
+## Deploy your own copy
 
-Optional variables: `CLAUDE_MODEL` (default `claude-opus-5-5`) and `CLAUDE_EFFORT`
-(`low`, `medium` (default), `high`, `xhigh` or `max`; higher is more thorough but slower
-and costs more).
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fnativeeridian%2Fclaude-experiments%2Ftree%2Fmain%2Frecipe-finder&project-name=recipe-finder&repository-name=recipe-finder&env=ANTHROPIC_API_KEY,APP_PASSWORD&envDescription=Your%20Anthropic%20API%20key%20%28console.anthropic.com%29,%20and%20a%20password%20visitors%20must%20enter%20to%20chat%20so%20others%20can%27t%20spend%20your%20credits.&envLink=https%3A%2F%2Fgithub.com%2Fnativeeridian%2Fclaude-experiments%2Ftree%2Fmain%2Frecipe-finder%23deploy-your-own-copy)
+
+The button copies this folder into a new repository in your GitHub account and sets it
+up on Vercel (the free Hobby plan is enough). It asks for two values:
+
+- `ANTHROPIC_API_KEY`: your key from [console.anthropic.com](https://console.anthropic.com).
+  Setting a monthly spend limit there (Settings → Limits) is a good idea.
+- `APP_PASSWORD`: a password you choose. Anyone using Ask Claude on your site must enter
+  it, so strangers can't spend your credits. Search stays open to everyone.
+
+Then open your new URL. The recipe data ships in `bundle/` (53 MB), so there is no
+database or build step.
+
+## Deploy this repository's public site
+
+To publish this repository itself (the free, search-only version):
+
+1. On [vercel.com/new](https://vercel.com/new), import `claude-experiments` and set
+   **Root Directory** to `recipe-finder`. Vercel detects the FastAPI app on its own.
+2. Deploy with no environment variables. Search works for everyone; Ask Claude shows the
+   "deploy your own copy" button.
+3. To turn on Ask Claude for yourself later, add `ANTHROPIC_API_KEY` and `APP_PASSWORD`
+   under Project → Settings → Environment Variables, then redeploy.
+
+Optional variables: `CLAUDE_MODEL` (default `claude-opus-5-5`; `claude-sonnet-5-5` is about
+half the price) and `CLAUDE_EFFORT` (`low`, `medium` (default), `high`, `xhigh` or `max`;
+higher is more thorough but slower and costs more).
 
 ## Run locally
 
@@ -35,7 +53,7 @@ and costs more).
 cd recipe-finder
 pip install -r requirements-dev.txt
 export ANTHROPIC_API_KEY=sk-ant-...
-python -m recipe_finder serve          # web app at http://localhost:8000 (no password locally)
+python -m recipe_finder serve          # web app at http://localhost:8000 (chat open locally)
 python -m recipe_finder chat           # or chat in the terminal
 ```
 
@@ -94,10 +112,12 @@ into server-side refusal fallbacks (`fallbacks: "default"`), so a rare false-pos
 safety decline is retried on another model instead of failing.
 
 **Web app** (`recipe_finder/web.py`, `recipe_finder/static/index.html`). One FastAPI
-function serves the page and a streaming chat endpoint. The browser keeps the
-conversation and sends it back each turn, so the server stores nothing. Progress
-("Searching recipes with…", "Reading reviews of…") and the reply stream in as they
-happen, followed by cards for the recommended recipes.
+function serves the page, a free search API (`/api/search`, `/api/recipe/{id}`, cached
+by Vercel's CDN), and a streaming chat endpoint. Chat is *open* when run locally,
+*password*-protected when `APP_PASSWORD` is set, and *off* on Vercel otherwise, so a
+deployment never spends credits without a password in front. The browser keeps the
+conversation and sends it back each turn, so the server stores nothing. Search results
+are shareable links (`/?have=salmon,asparagus&max_minutes=45`).
 
 ## Known limitations
 

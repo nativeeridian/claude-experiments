@@ -1,11 +1,14 @@
-"""Web app: a chat page plus a streaming JSON API over the recipe index.
+"""Web app: free recipe search for everyone, plus an optional Claude chat.
 
 Run locally with `python -m recipe_finder serve`; on Vercel, ../app.py exposes `app`.
 
+Search (/api/search, /api/recipe) never calls Claude, so it's open to anyone at no cost.
+Chat (/api/chat) spends the deployer's Anthropic credits, so on Vercel it only turns on
+when both of these are set; otherwise the page offers a link to deploy your own copy.
+
 Environment variables:
-  ANTHROPIC_API_KEY  required for chat
-  APP_PASSWORD       visitors must enter this to chat; required when deployed on Vercel,
-                     so a public URL can't spend your API credits
+  ANTHROPIC_API_KEY  the deployer's Anthropic API key
+  APP_PASSWORD       visitors must enter this to chat (required on Vercel)
   CLAUDE_MODEL       default claude-opus-5-5
   CLAUDE_EFFORT      low | medium | high | xhigh | max (default medium)
 """
@@ -18,20 +21,39 @@ import logging
 import os
 import threading
 from pathlib import Path
-from urllib.parse import unquote
+from typing import Literal
+from urllib.parse import quote, unquote
 
 import anthropic
-from fastapi import Depends, FastAPI, HTTPException, Request
+from fastapi import Depends, FastAPI, HTTPException, Query, Request, Response
 from fastapi.responses import HTMLResponse, StreamingResponse
 from pydantic import BaseModel, Field
 
 from .assistant import DEFAULT_EFFORT, MODEL, run_turn, to_jsonable
-from .search import RecipeIndex
+from .search import MAX_LIMIT, SORTS, RecipeIndex
 
 log = logging.getLogger(__name__)
 
 PAGE = Path(__file__).parent / "static" / "index.html"
 MAX_HISTORY_BYTES = 2_000_000  # Vercel caps request bodies at 4.5 MB
+MAX_TERMS = 15
+MAX_TERM_CHARS = 60
+
+SOURCE_URL = "https://github.com/nativeeridian/claude-experiments/tree/main/recipe-finder"
+# Vercel's deploy button: clones this folder into the visitor's own GitHub account and
+# asks for their own API key and password while setting up their copy.
+DEPLOY_URL = "https://vercel.com/new/clone?" + "&".join(
+    f"{k}={quote(v, safe=',')}"
+    for k, v in {
+        "repository-url": "https://github.com/nativeeridian/claude-experiments/tree/main/recipe-finder",
+        "project-name": "recipe-finder",
+        "repository-name": "recipe-finder",
+        "env": "ANTHROPIC_API_KEY,APP_PASSWORD",
+        "envDescription": "Your Anthropic API key (console.anthropic.com), and a password "
+        "visitors must enter to chat so others can't spend your credits.",
+        "envLink": SOURCE_URL + "#deploy-your-own-copy",
+    }.items()
+)
 
 app = FastAPI(title="Recipe Finder", docs_url=None, redoc_url=None, openapi_url=None)
 
@@ -52,29 +74,30 @@ def get_client() -> anthropic.Anthropic:
     return anthropic.Anthropic()
 
 
-def _password() -> str:
-    return os.environ.get("APP_PASSWORD", "")
-
-
-def _password_required() -> bool:
-    return bool(_password()) or bool(os.environ.get("VERCEL"))
+def chat_mode() -> Literal["open", "password", "off"]:
+    """open: anyone can chat (local runs only); password: APP_PASSWORD needed; off: no chat."""
+    if os.environ.get("APP_PASSWORD"):
+        return "password"
+    if os.environ.get("VERCEL"):
+        return "off"  # never spend a deployer's credits without a password in front
+    return "open"
 
 
 def check_password(request: Request) -> None:
-    expected = _password()
-    if not expected:
-        if os.environ.get("VERCEL"):
-            raise HTTPException(503, "Chat is off until APP_PASSWORD is set in the Vercel project settings.")
-        return  # running locally without a password
+    mode = chat_mode()
+    if mode == "off":
+        raise HTTPException(503, "Chat isn't turned on for this site.")
+    if mode == "open":
+        return
     # The page URL-encodes the password, since headers can't carry non-ASCII text.
     given = unquote(request.headers.get("x-app-password", ""))
-    if not hmac.compare_digest(given.encode(), expected.encode()):
+    if not hmac.compare_digest(given.encode(), os.environ["APP_PASSWORD"].encode()):
         raise HTTPException(401, "Wrong password.")
 
 
-class ChatRequest(BaseModel):
-    message: str = Field(min_length=1, max_length=2000)
-    history: list[dict] = Field(default_factory=list)
+def _terms(csv: str) -> list[str]:
+    terms = [t.strip()[:MAX_TERM_CHARS] for t in csv.split(",") if t.strip()]
+    return terms[:MAX_TERMS]
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -84,12 +107,55 @@ def page() -> str:
 
 @app.get("/api/status")
 def status() -> dict:
-    return {"password_required": _password_required()}
+    return {"chat": chat_mode(), "deploy_url": DEPLOY_URL, "source_url": SOURCE_URL}
+
+
+@app.get("/api/search")
+def search(
+    response: Response,
+    have: str = "",
+    avoid: str = "",
+    q: str = Query("", max_length=100),
+    max_minutes: int | None = Query(None, ge=1),
+    max_missing: int | None = Query(None, ge=0),
+    sort: str = Query("best", pattern="^(" + "|".join(SORTS) + ")$"),
+    limit: int = Query(20, ge=1, le=MAX_LIMIT),
+    index: RecipeIndex = Depends(get_index),
+) -> dict:
+    """Ingredient search without AI; free for anyone to use."""
+    result = index.search(
+        ingredients=_terms(have),
+        exclude=_terms(avoid),
+        query=q.strip() or None,
+        max_minutes=max_minutes,
+        max_missing=max_missing,
+        sort=sort,
+        limit=limit,
+    ).to_dict()
+    for recipe in result["recipes"]:
+        recipe["image"] = index.card(recipe["id"])["image"]
+    # Results only change when the bundle does, so let Vercel's CDN cache them.
+    response.headers["Cache-Control"] = "public, max-age=300, s-maxage=86400"
+    return result
+
+
+@app.get("/api/recipe/{recipe_id}")
+def recipe(recipe_id: int, response: Response, index: RecipeIndex = Depends(get_index)) -> dict:
+    found = index.get(recipe_id)
+    if found is None:
+        raise HTTPException(404, "No such recipe.")
+    response.headers["Cache-Control"] = "public, max-age=3600, s-maxage=86400"
+    return found
 
 
 @app.post("/api/login", dependencies=[Depends(check_password)])
 def login() -> dict:
     return {"ok": True}
+
+
+class ChatRequest(BaseModel):
+    message: str = Field(min_length=1, max_length=2000)
+    history: list[dict] = Field(default_factory=list)
 
 
 def _error_text(exc: Exception) -> str:
