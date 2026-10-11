@@ -39,11 +39,17 @@ Four rules are Musts:
 
 All four can be checked mechanically and can almost always be met. The rest of the baseline is Should.
 
-### 4. Per-person targets
+### 4. Per-person targets, calculated from inputs
 
-- **Each person has a profile.** Each profile has optional nutrition targets: a daily protein target and eating occasions per day.
-- **The partner's targets are blank for now.** Until they are filled in, the baseline alone applies to the partner.
-- **Who can change targets.** Target changes follow the approval policy in decision 0001.
+- **Each person has a profile.** Each profile has optional nutrition inputs.
+- **Targets are calculated, not stored.** The profile stores the inputs; code calculates the targets from them:
+  - **Inputs:** body weight, current training phase, and eating occasions per day.
+  - **Coefficients:** a protein amount in g/kg for each training phase. The household sets these, for example from a coach or training plan.
+  - **Daily target** = body weight × that phase's g/kg.
+  - **Per-meal target** = daily target ÷ eating occasions.
+- **Why calculate.** A stored number like "118 g" goes stale silently when weight or training changes. A calculated target updates as soon as its inputs change.
+- **The partner's inputs are blank for now.** Until they are filled in, only the baseline applies to the partner.
+- **Who can change what.** The agent may propose changes to inputs or coefficients, for example a new training phase or a weight update the user mentions. Every change follows the approval policy in decision 0001.
 
 ## Consequences
 

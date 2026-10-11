@@ -26,7 +26,7 @@ A Must that often can't be satisfied makes the agent loop forever: save, rejecte
 
 ### 2. Protein uses a per-meal target, scored as a Should
 
-- **The target.** Planned meals aim for a per-meal protein target on the user's plate. The per-meal target is the daily target divided by the number of eating occasions per day. Both numbers live in the profile.
+- **The target.** Planned meals aim for a per-meal protein target on the user's plate. The per-meal target is the daily target divided by the number of eating occasions per day. Decision 0003 replaces the fixed daily number with one calculated from body weight and training phase.
   - This makes the planned share follow from how the user actually eats, not an arbitrary percentage.
   - It also matches common sports-nutrition guidance: spread protein across meals, roughly 0.25–0.4 g per kg of body weight per meal, rather than loading one meal.
 - **Measurement.** Protein for each meal is computed from nutrition data (from Stage 5 on). A weekly scorecard reports two things: the share of planned meals that hit the per-meal target, and the planned protein per day against the daily target.
