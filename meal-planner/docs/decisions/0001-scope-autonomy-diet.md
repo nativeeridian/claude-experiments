@@ -5,7 +5,7 @@
 
 ## Context
 
-Two people share the cooking. One eats meat and has health and fitness goals; the other is vegetarian. Weeknight time is limited. The agent plans meals through chat. Every decision below sets how much the agent does on its own versus how much the user reviews.
+Two people share the cooking. Both have health and fitness goals. One eats meat; the other is vegetarian. Weeknight time is limited. The agent plans meals through chat. Every decision below sets how much the agent does on its own versus how much the user reviews.
 
 ## Decisions
 

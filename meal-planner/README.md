@@ -5,6 +5,7 @@ A chat agent that plans a two-person household's weekly dinners and leftover lun
 ## Design docs
 
 - [`docs/spec/good-week.md`](docs/spec/good-week.md): what a good plan is. These rules drive the validators and the evals.
+- [`docs/spec/health-baseline.md`](docs/spec/health-baseline.md): health rules that apply to both people. The agent reads them but can't edit them.
 - [`docs/spec/sample-conversations.md`](docs/spec/sample-conversations.md): how the agent should feel to use, and the requirements those conversations imply.
 - [`docs/decisions/`](docs/decisions/): design decision records.
 

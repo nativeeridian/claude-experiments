@@ -32,7 +32,7 @@ A Must that often can't be satisfied makes the agent loop forever: save, rejecte
 - **Measurement.** Protein for each meal is computed from nutrition data (from Stage 5 on). A weekly scorecard reports two things: the share of planned meals that hit the per-meal target, and the planned protein per day against the daily target.
 - **Why a Should.** Nutrition values are estimates, and eating out or skipped meals are outside the agent's control.
 - **Changing the target.** It adapts to fitness goals by proposal only. When the training phase changes (a marathon build, recovery, a strength block), the agent may propose a new daily target or a carbohydrate emphasis for certain day types. The user approves the change (decision 0001).
-- **Partner.** The partner has no nutrition target for now.
+- **Partner.** Each person has their own profile with optional targets. The partner's targets are left blank for now, and until they are filled in only the health baseline applies to the partner (decision 0003).
 
 ### 3. Propose first, then ask
 

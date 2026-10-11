@@ -11,6 +11,8 @@ This is the quality bar for a week's plan. It serves three purposes:
 | **Must** | Code checks it before a plan is saved. A plan that breaks a Must is rejected, and the violations go back to the agent so it can fix the plan. |
 | **Should** | The agent weighs it. Evals score it. A plan can still be saved while it misses a Should. |
 
+Every plan must also pass the [health baseline](health-baseline.md) (rules H1–H10), which applies to both people. That file also sets the priority order when rules conflict.
+
 Personal numbers (protein target, body weight, training schedule) live in the profile (`data/profile.json`, not committed to git). The criteria below refer to them by name.
 
 ## Criteria
@@ -23,7 +25,7 @@ Personal numbers (protein target, body weight, training schedule) live in the pr
 | 4 | Leftover lunches are eaten within the leftover window | Must | 1–2 days after cooking | Code: lunch date minus cook date |
 | 5 | Every dinner and lunch says who is eating it | Must | — | Code: the plan's structure requires it |
 | 6 | The grocery list covers every ingredient in the plan | Must | — | Code: the list is generated from the plan |
-| 7 | Planned meals meet the per-meal protein target on your plate | Should | Per-meal target = daily target ÷ eating occasions (see decision 0002) | Code: protein computed from nutrition data, scored weekly |
+| 7 | Planned meals meet each person's per-meal protein target, for each person who has one | Should | Per-meal target = daily target ÷ eating occasions (see decisions 0002 and 0003) | Code: protein computed from nutrition data, scored weekly |
 | 8 | Meat meals per week stay within your range | Should | 2–4 | Code: count |
 | 9 | At least two eating-out nights are reserved | Should | ≥ 2, usually near or on the weekend | Code: count of eating-out slots |
 | 10 | Variety | Should | No dish twice in a week; no main protein or cuisine more than 3 times | Code: counts |
