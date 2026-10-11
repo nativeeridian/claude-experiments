@@ -1,6 +1,6 @@
 # 0001: Scope, autonomy, and dietary rules
 
-- **Status:** Draft
+- **Status:** Accepted
 - **Date:** 2026-10-10
 
 ## Context
