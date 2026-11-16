@@ -133,43 +133,53 @@
   },
   "playbook-1": {
    "file": "playbook-1.mp3",
-   "h": "73ca27c172f2",
-   "sec": 10.87
+   "h": "4cd0882df856",
+   "sec": 16.88
   },
   "playbook-2": {
    "file": "playbook-2.mp3",
-   "h": "0e5f420d781c",
-   "sec": 21.74
-  },
-  "keynote-0": {
-   "file": "keynote-0.mp3",
-   "h": "9ae852742fb7",
-   "sec": 4.94
-  },
-  "keynote-1": {
-   "file": "keynote-1.mp3",
-   "h": "ff50a7661af7",
-   "sec": 23.52
-  },
-  "keynote-2": {
-   "file": "keynote-2.mp3",
    "h": "57a1346ba7f7",
-   "sec": 11.43
+   "sec": 11.35
   },
-  "keynote-3": {
-   "file": "keynote-3.mp3",
-   "h": "aec53c4a8b7d",
-   "sec": 23.99
+  "playbook-3": {
+   "file": "playbook-3.mp3",
+   "h": "c1b3584a6d7e",
+   "sec": 11.68
   },
-  "keynote-4": {
-   "file": "keynote-4.mp3",
-   "h": "62079d3cd681",
-   "sec": 13.2
+  "playbook-4": {
+   "file": "playbook-4.mp3",
+   "h": "cd1e73f143a9",
+   "sec": 4.55
+  },
+  "playbook-5": {
+   "file": "playbook-5.mp3",
+   "h": "11eda7c5eea2",
+   "sec": 7.74
+  },
+  "playbook-6": {
+   "file": "playbook-6.mp3",
+   "h": "0c9934d3160e",
+   "sec": 9.51
+  },
+  "playbook-7": {
+   "file": "playbook-7.mp3",
+   "h": "823dd0d9c325",
+   "sec": 8.08
+  },
+  "playbook-8": {
+   "file": "playbook-8.mp3",
+   "h": "cee5195ab8cc",
+   "sec": 9.28
+  },
+  "playbook-9": {
+   "file": "playbook-9.mp3",
+   "h": "09b29dca396d",
+   "sec": 11.58
   },
   "finance-0": {
    "file": "finance-0.mp3",
-   "h": "07f3ec5f4a87",
-   "sec": 3.58
+   "h": "8afdd4adacc4",
+   "sec": 5.75
   },
   "finance-1": {
    "file": "finance-1.mp3",
@@ -198,8 +208,8 @@
   },
   "scale-0": {
    "file": "scale-0.mp3",
-   "h": "0b09d6958117",
-   "sec": 4.0
+   "h": "0cda60546a6b",
+   "sec": 4.08
   },
   "scale-1": {
    "file": "scale-1.mp3",
@@ -263,8 +273,8 @@
   },
   "drop-0": {
    "file": "drop-0.mp3",
-   "h": "0f001d7fccd6",
-   "sec": 2.54
+   "h": "d85d21839ccd",
+   "sec": 2.62
   },
   "drop-1": {
    "file": "drop-1.mp3",
@@ -283,7 +293,7 @@
   },
   "ramp-0": {
    "file": "ramp-0.mp3",
-   "h": "f6b9c5c06f01",
+   "h": "1d502a8d2dd2",
    "sec": 5.28
   },
   "ramp-1": {
@@ -321,60 +331,10 @@
    "h": "ca4649403e12",
    "sec": 19.83
   },
-  "records-0": {
-   "file": "records-0.mp3",
-   "h": "b5b74142a5e6",
-   "sec": 6.64
-  },
-  "records-1": {
-   "file": "records-1.mp3",
-   "h": "5b9422313967",
-   "sec": 22.78
-  },
-  "records-2": {
-   "file": "records-2.mp3",
-   "h": "aa272be285f0",
-   "sec": 11.34
-  },
-  "records-3": {
-   "file": "records-3.mp3",
-   "h": "2962a40bc183",
-   "sec": 14.14
-  },
-  "identity-0": {
-   "file": "identity-0.mp3",
-   "h": "8ac9d9526a43",
-   "sec": 3.35
-  },
-  "identity-1": {
-   "file": "identity-1.mp3",
-   "h": "19410fdf958c",
-   "sec": 9.44
-  },
-  "identity-2": {
-   "file": "identity-2.mp3",
-   "h": "2afef9cf6570",
-   "sec": 16.46
-  },
-  "identity-3": {
-   "file": "identity-3.mp3",
-   "h": "1867f2e01e5c",
-   "sec": 29.26
-  },
-  "identity-4": {
-   "file": "identity-4.mp3",
-   "h": "e388d8b00131",
-   "sec": 4.24
-  },
-  "identity-5": {
-   "file": "identity-5.mp3",
-   "h": "e8a8c48d2e7d",
-   "sec": 9.28
-  },
   "lineage-0": {
    "file": "lineage-0.mp3",
-   "h": "a4d80d8e5ed3",
-   "sec": 3.27
+   "h": "9c85f1d5858c",
+   "sec": 5.28
   },
   "lineage-1": {
    "file": "lineage-1.mp3",
@@ -398,13 +358,13 @@
   },
   "takeaways-0": {
    "file": "takeaways-0.mp3",
-   "h": "f78974162174",
-   "sec": 3.74
+   "h": "b10db71fc3a3",
+   "sec": 2.96
   },
   "takeaways-1": {
    "file": "takeaways-1.mp3",
-   "h": "e5df4d032850",
-   "sec": 5.02
+   "h": "f3c2bb18536c",
+   "sec": 6.14
   },
   "takeaways-2": {
    "file": "takeaways-2.mp3",
@@ -462,5 +422,5 @@
    "sec": 7.92
   }
  },
- "v": "08e1854a"
+ "v": "1ccd571b"
 }
