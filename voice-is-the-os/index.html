@@ -25,7 +25,7 @@
 <meta name="twitter:title" content="Voice Is the OS">
 <meta name="twitter:description" content="A recap and marketing case study of the ElevenLabs Summit in New York (11.11.2026), read through a financial-services lens. Part album, part field notes.">
 <meta name="twitter:image" content="https://nativeeridian.github.io/claude-experiments/voice-is-the-os/share-card.jpg">
-<title>Voice Is the OS</title>
+<title>Voice Is the OS · ElevenLabs Summit NYC</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -79,9 +79,9 @@ a{color:var(--accent-ink);text-underline-offset:3px}
 .wrap{max-width:1140px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 
 /* ── Player: iPod side rail (wide screens) + mini player (phones) ── */
-.ipod{position:fixed;z-index:30;left:max(20px,env(safe-area-inset-left,0px));top:max(20px,calc(50% - 268px));width:252px;display:none}
+.ipod{position:fixed;z-index:30;left:max(20px,env(safe-area-inset-left,0px),calc(50vw - 866px));top:max(20px,calc(50% - 290px));width:272px;display:none}
 .ip-shell{background:linear-gradient(160deg,var(--ipod-1),var(--ipod-2));border-radius:30px;padding:16px 16px 22px;display:grid;gap:18px;box-shadow:0 24px 50px -18px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.14),inset 0 0 0 1px rgba(255,255,255,.05)}
-.ip-screen{height:272px;border-radius:10px;background:linear-gradient(var(--lcd-1),var(--lcd-2));color:var(--lcd-ink);border:2px solid rgba(0,0,0,.55);box-shadow:inset 0 2px 6px rgba(0,0,0,.35);overflow:hidden;display:flex;flex-direction:column}
+.ip-screen{height:304px;border-radius:10px;background:linear-gradient(var(--lcd-1),var(--lcd-2));color:var(--lcd-ink);border:2px solid rgba(0,0,0,.55);box-shadow:inset 0 2px 6px rgba(0,0,0,.35);overflow:hidden;display:flex;flex-direction:column}
 .ip-top{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:4px 8px;font:700 11.5px/1.3 var(--body);border-bottom:1px solid rgba(127,127,127,.4);background:rgba(255,255,255,.06)}
 .ip-icons{display:flex;align-items:center;gap:6px}
 .ip-batt{width:18px;height:8px;border:1.5px solid currentColor;border-radius:2px;position:relative;opacity:.8}
@@ -90,8 +90,8 @@ a{color:var(--accent-ink);text-underline-offset:3px}
 .themebtn svg{width:13px;height:13px;fill:currentColor;display:block}
 .ip-view{flex:1;min-height:0;display:flex;flex-direction:column}
 .ip-np{padding:4px 10px 8px;gap:6px}
-.orbwrap{height:96px;display:grid;place-items:center;flex:none}
-.orb{--lvl:0;position:relative;width:78px;height:78px;border-radius:50%;overflow:hidden;transform:scale(calc(.84 + var(--lvl) * .44));box-shadow:0 0 calc(4px + var(--lvl) * 30px) rgba(93,118,255,.6),inset 0 -6px 16px rgba(0,0,0,.28)}
+.orbwrap{flex:1 1 92px;min-height:76px;display:grid;place-items:center}
+.orb{--lvl:0;position:relative;width:86px;height:86px;border-radius:50%;overflow:hidden;transform:scale(calc(.84 + var(--lvl) * .44));box-shadow:0 0 calc(4px + var(--lvl) * 30px) rgba(93,118,255,.6),inset 0 -6px 16px rgba(0,0,0,.28)}
 .orb::before{content:"";position:absolute;inset:-35%;background:conic-gradient(from 0deg,var(--s2),var(--s3),var(--s5),var(--s4),var(--s2));animation:orbspin 10s linear infinite;filter:blur(7px)}
 .orb::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.7),rgba(255,255,255,0) 40%)}
 .orb.idle{animation:breathe 4.5s ease-in-out infinite}
@@ -104,7 +104,27 @@ a{color:var(--accent-ink);text-underline-offset:3px}
 .ip-prog{display:flex;align-items:center;gap:6px;font:400 15px/1 var(--lcdf);font-variant-numeric:tabular-nums}
 .ip-prog .bar{flex:1;height:6px;border:1px solid currentColor;border-radius:4px;position:relative;overflow:hidden}
 .ip-prog .bar i,.mm-bar i{position:absolute;left:0;top:0;bottom:0;width:0;background:currentColor}
-.ip-voice{display:flex;align-items:center;gap:6px;font:700 10.5px var(--body);letter-spacing:.08em;text-transform:uppercase}
+.ip-voice{display:grid;gap:4px;flex:none}
+.ip-vlabel{display:flex;justify-content:space-between;align-items:baseline;font:800 10px var(--body);letter-spacing:.12em;text-transform:uppercase}
+.ip-vlabel span{font-weight:600;letter-spacing:.02em;text-transform:none;opacity:.8}
+.ip-vrow,.sh-voice{display:flex;gap:6px;align-items:center}
+.selwrap{position:relative;flex:1;min-width:0;border-radius:7px}
+.selwrap::after{content:"";position:absolute;right:10px;top:50%;width:6px;height:6px;border-right:2px solid currentColor;border-bottom:2px solid currentColor;transform:translateY(-70%) rotate(45deg);pointer-events:none}
+.selwrap .voicesel{-webkit-appearance:none;appearance:none;display:block;width:100%;padding:5px 26px 5px 9px;font:700 12.5px var(--body);border:1.5px solid currentColor;border-radius:7px;background:rgba(255,255,255,.14);cursor:pointer}
+.selwrap .voicesel:hover{background:rgba(255,255,255,.24)}
+.selwrap.nudge{animation:nudge 1.7s ease-in-out 4}
+@keyframes nudge{0%,100%{box-shadow:0 0 0 0 rgba(44,198,228,0)}50%{box-shadow:0 0 0 4px rgba(44,198,228,.75)}}
+.sh-voice{padding:10px 14px;border-bottom:1px solid rgba(127,127,127,.35);font:800 10.5px var(--body);letter-spacing:.1em;text-transform:uppercase}
+.sh-voice .selwrap .voicesel{font-size:14px;padding:7px 28px 7px 10px;text-transform:none;letter-spacing:0}
+.coach{position:fixed;z-index:40;max-width:240px;display:flex;align-items:flex-start;gap:8px;background:var(--s5);color:#121530;font:700 13px/1.35 var(--body);padding:9px 10px 9px 12px;border-radius:10px;box-shadow:0 10px 26px rgba(0,0,0,.35)}
+.coach::before{content:"";position:absolute;width:12px;height:12px;background:var(--s5);transform:rotate(45deg);left:-5px;top:calc(50% - 6px)}
+.coach.down::before{left:var(--ax,50%);top:auto;bottom:-5px}
+.coach button{appearance:none;border:0;background:none;color:inherit;font:700 16px/1 var(--body);cursor:pointer;padding:0 2px}
+.hero-sign{max-width:380px;margin:0 0 26px}
+.hero-sign .print{--rot:-2.4deg}
+.hsub{font:500 clamp(17px,1.9vw,21px)/1.35 var(--display);letter-spacing:-.01em;margin:-8px 0 20px;color:var(--ink)}
+.hsub b{font-weight:700;color:var(--accent)}
+@media (prefers-reduced-motion:reduce){.selwrap.nudge{animation:none}}
 .voicesel{min-width:0;flex:1;font:600 12px var(--body);color:inherit;background:rgba(255,255,255,.12);border:1px solid rgba(127,127,127,.55);border-radius:5px;padding:3px 4px;text-transform:none;letter-spacing:0}
 .voicesel option{color:#121530;background:#ffffff}
 .ratebtn{appearance:none;flex:none;border:1px solid currentColor;background:none;color:inherit;font:700 11.5px/1 var(--body);border-radius:999px;padding:4px 7px;cursor:pointer;font-variant-numeric:tabular-nums;min-width:40px}
@@ -119,15 +139,15 @@ a{color:var(--accent-ink);text-underline-offset:3px}
 .ls-d{font:400 13px/1 var(--lcdf);opacity:.8;font-variant-numeric:tabular-nums}
 .ls-item[aria-current="true"]{background:var(--lcd-ink);color:var(--lcd-1)}
 .ls-item.playing .ls-t::before{content:"\25B6\00A0"}
-.wheel{position:relative;width:186px;height:186px;margin:0 auto;border-radius:50%;background:var(--wheel);box-shadow:inset 0 1px 2px rgba(255,255,255,.08),0 1px 0 rgba(255,255,255,.06),inset 0 -2px 6px rgba(0,0,0,.25)}
+.wheel{position:relative;width:200px;height:200px;margin:0 auto;border-radius:50%;background:var(--wheel);box-shadow:inset 0 1px 2px rgba(255,255,255,.08),0 1px 0 rgba(255,255,255,.06),inset 0 -2px 6px rgba(0,0,0,.25)}
 .wb{position:absolute;appearance:none;border:0;background:none;color:var(--wheel-ink);cursor:pointer;display:grid;place-items:center;width:54px;height:44px;padding:0;font:800 11px var(--body);letter-spacing:.12em;border-radius:10px}
 .wb svg{width:16px;height:16px;fill:currentColor;display:block}
-.wb.menu{top:8px;left:66px}
-.wb.prev{left:6px;top:71px}
-.wb.next{right:6px;top:71px}
-.wb.play{bottom:8px;left:66px}
+.wb.menu{top:8px;left:73px}
+.wb.prev{left:6px;top:78px}
+.wb.next{right:6px;top:78px}
+.wb.play{bottom:8px;left:73px}
 .wb.play svg{width:22px}
-.wc{position:absolute;left:58px;top:58px;width:70px;height:70px;border-radius:50%;appearance:none;border:1px solid rgba(0,0,0,.25);background:linear-gradient(var(--wheel-c),var(--wheel));color:var(--wheel-ink);display:grid;place-items:center;align-content:center;gap:1px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.3);padding:0}
+.wc{position:absolute;left:63px;top:63px;width:74px;height:74px;border-radius:50%;appearance:none;border:1px solid rgba(0,0,0,.25);background:linear-gradient(var(--wheel-c),var(--wheel));color:var(--wheel-ink);display:grid;place-items:center;align-content:center;gap:1px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.3);padding:0}
 .wc svg{width:18px;height:18px;display:block}
 .wc small{font:800 8.5px/1 var(--body);letter-spacing:.14em}
 .wb:hover,.wc:hover{color:var(--ipod-ink)}
@@ -148,7 +168,7 @@ a{color:var(--accent-ink);text-underline-offset:3px}
 .sheet .followbtn{margin:8px auto 0}
 .sheet .tl{overflow-y:auto;padding-bottom:8px}
 .sheet .ls-item{font-size:14.5px;padding:9px 14px}
-@media (min-width:1100px){body{padding-left:292px}.ipod{display:block}}
+@media (min-width:1100px){body{padding-left:clamp(0px,calc(1772px - 100vw),316px)}.ipod{display:block}}
 @media (max-width:1099px){.mini{display:flex}body{padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}}
 @media (max-width:420px){.mbtn.hide-s{display:none}}
 @media (prefers-reduced-motion:reduce){.orb::before,.orb.idle{animation:none}}
@@ -403,7 +423,10 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
         <div class="orbwrap"><div class="orb idle" aria-hidden="true"></div></div>
         <div class="ip-meta"><b id="ip-t">00 · Voice Is the OS</b><span id="ip-a"></span></div>
         <div class="ip-prog"><span id="ip-e">0:00</span><span class="bar" aria-hidden="true"><i id="ip-f"></i></span><span id="ip-r">-0:00</span></div>
-        <div class="ip-voice"><label for="voice-sel">Voice</label><select class="voicesel" id="voice-sel" disabled><option>Loading…</option></select><button class="ratebtn" type="button">1×</button></div>
+        <div class="ip-voice">
+          <div class="ip-vlabel"><label for="voice-sel">Narrator</label><span id="voice-count"></span></div>
+          <div class="ip-vrow"><span class="selwrap nudge"><select class="voicesel" id="voice-sel" disabled><option>Loading…</option></select></span><button class="ratebtn" type="button">1×</button></div>
+        </div>
         <button class="followbtn" type="button" hidden>Jump to the line being read</button>
       </div>
       <div class="ip-view ip-list" id="ip-list" hidden><ol class="tl" id="ip-tracks"></ol></div>
@@ -429,8 +452,10 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
   <button class="mbtn" id="m-reset" type="button" aria-label="Reset: stop and go back to the start"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.3 6.3A5.1 5.1 0 1 1 3.1 9.6"/><path d="M2.7 2.8v3.7h3.7"/></svg></button>
   <button class="mbtn" id="m-list" type="button" aria-label="Tracks and voice" aria-expanded="false"><svg viewBox="0 0 16 16"><path d="M2 3.4h12V5H2zM2 7.2h12v1.6H2zM2 11h12v1.6H2z"/></svg></button>
 </div>
+<div class="coach" id="coach" hidden role="status"><span id="coach-t"></span><button type="button" id="coach-x" aria-label="Dismiss tip">×</button></div>
 <div class="sheet" id="sheet" hidden role="dialog" aria-label="Tracks and voice">
-  <div class="sh-head"><b>Tracks</b><label for="voice-sel-m">Voice <select class="voicesel" id="voice-sel-m" disabled><option>Loading…</option></select></label><button class="ratebtn" type="button">1×</button><button class="themebtn" type="button"><svg viewBox="0 0 16 16"></svg></button><button class="sh-x" id="sh-x" type="button">Close</button></div>
+  <div class="sh-head"><b>Tracks</b><button class="themebtn" type="button"><svg viewBox="0 0 16 16"></svg></button><button class="sh-x" id="sh-x" type="button">Close</button></div>
+  <div class="sh-voice"><label for="voice-sel-m">Narrator</label><span class="selwrap nudge"><select class="voicesel" id="voice-sel-m" disabled><option>Loading…</option></select></span><button class="ratebtn" type="button">1×</button></div>
   <button class="followbtn" type="button" hidden>Jump to the line being read</button>
   <ol class="tl" id="sh-tracks"></ol>
 </div>
@@ -442,9 +467,11 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 <header class="hero" id="intro" data-track="00" data-side="INTRO" data-title="Voice Is the OS" data-artist="Recap + case study · ElevenLabs Summit NYC" data-intro="Voice is the OS. A recap and case study of the ElevenLabs Summit in New York.">
   <div class="wrap">
     <div class="hero-txt">
+      <figure class="prints one hero-sign"><button class="print" type="button" aria-label="Enlarge photo: Greetings from the ElevenLabs Summit"><span class="ph"><img src="photos/summit-sign.jpg" width="756" height="377" alt="The stage screen at David Geffen Hall reading Welcome to ElevenLabs Summit NYC" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">Greetings from the ElevenLabs Summit</span></button></figure>
       <p class="kick">Recap + case study · ElevenLabs Summit · David Geffen Hall, Lincoln Center · 11.11.2026</p>
       <h1>Voice is the&nbsp;<span>OS.</span></h1>
-      <p class="stand say" data-say>I went to Lincoln Center for a voice company's product day and watched two things at once. One was a company pitching the operating layer for how we'll use software: you talk, it listens, and then it acts. The other was a masterclass in how to launch it. This is part recap, part case study, read with one question in mind: what does all of this mean if you work somewhere a regulator reads the transcripts?</p>
+      <p class="hsub">A recap of the <b>ElevenLabs Summit</b> · New York · November 11, 2026</p>
+      <p class="stand say" data-say>I went to the ElevenLabs Summit at Lincoln Center expecting a product day, and watched two things at once. One was a company pitching the operating layer for how we'll use software: you talk, it listens, and then it acts. The other was a masterclass in how to launch it. This is part recap, part case study, read with one question in mind: what does all of this mean if you work somewhere a regulator reads the transcripts?</p>
       <div class="byline">
         <button class="playbig" id="playbig" type="button"><span class="pi"><svg viewBox="0 0 16 16"><path d="M4 2.5v11l9.5-5.5z"/></svg></span><span id="playbig-l">Play the album</span></button>
         <span><b>Carson Boykin</b></span><span class="dot"></span><span>Recap + case study</span><span class="dot"></span><span>4 sides · 11 tracks</span><span class="dot"></span><span id="runtime">Run time ≈ 14 min</span>
@@ -1195,6 +1222,7 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
     }
     highlight(cur.el);
     setState("speaking");
+    if (!coachShown) setTimeout(showCoach, 1400);
   }
   function togglePlay(fromStart){
     if (state === "idle"){ playFrom(fromStart ? 0 : currentByScroll()); return; }
@@ -1320,6 +1348,34 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
   });
   $("#sh-x").addEventListener("click", closeSheet);
 
+  /* first-visit tip: point people at the narrator picker */
+  var coach = $("#coach"), coachShown = false;
+  function coachSeen(){ try { return localStorage.getItem("vito-coach") === "1"; } catch (e) { return false; } }
+  function coachDone(){
+    coach.hidden = true;
+    $$(".selwrap").forEach(function(w){ w.classList.remove("nudge"); });
+    try { localStorage.setItem("vito-coach", "1"); } catch (e) {}
+  }
+  if (coachSeen()) $$(".selwrap").forEach(function(w){ w.classList.remove("nudge"); });
+  function showCoach(){
+    if (coachShown || coachSeen() || voices.length < 2) return;
+    coachShown = true;
+    var desktop = window.innerWidth >= 1100, target = desktop ? $(".ipod .selwrap") : $("#m-list");
+    $("#coach-t").textContent = desktop ? "Prefer a different voice? Pick a narrator here." : "Tap here to pick a narrator or change the speed.";
+    coach.classList.toggle("down", !desktop);
+    coach.hidden = false;
+    var r = target.getBoundingClientRect(), c = coach.getBoundingClientRect();
+    if (desktop){ coach.style.left = (r.right + 16) + "px"; coach.style.top = (r.top + r.height / 2 - c.height / 2) + "px"; }
+    else {
+      var left = Math.max(8, Math.min(window.innerWidth - c.width - 8, r.left + r.width / 2 - c.width + 22));
+      coach.style.left = left + "px"; coach.style.top = (r.top - c.height - 12) + "px";
+      coach.style.setProperty("--ax", (r.left + r.width / 2 - left - 6) + "px");
+    }
+    setTimeout(function(){ coach.hidden = true; }, 9000);
+  }
+  $("#coach-x").addEventListener("click", coachDone);
+  window.addEventListener("resize", function(){ coach.hidden = true; });
+
   /* playback speed */
   function applyRate(){
     A.forEach(function(a){ a.defaultPlaybackRate = rate; a.playbackRate = rate; });
@@ -1354,11 +1410,15 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
       .then(function(m){ if (m && m.lines){ manifests[key] = m; apply(m); } })
       .catch(function(){});
   }
-  $$(".voicesel").forEach(function(sel){ sel.addEventListener("change", function(){ setVoice(sel.value, true); }); });
+  $$(".voicesel").forEach(function(sel){
+    sel.addEventListener("change", function(){ setVoice(sel.value, true); coachDone(); });
+    sel.addEventListener("focus", coachDone);
+  });
   if (window.fetch){
     fetch("audio/voices.json", { cache: "no-cache" }).then(function(r){ return r.ok ? r.json() : null; }).then(function(v){
       if (!v || !v.voices || !v.voices.length) return;
       voices = v.voices;
+      $("#voice-count").textContent = "Choose from " + voices.length;
       var saved = null; try { saved = localStorage.getItem("vito-voice"); } catch (e) {}
       var key = voices.some(function(x){ return x.key === saved; }) ? saved : (v.default || voices[0].key);
       $$(".voicesel").forEach(function(sel){
