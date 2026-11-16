@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self'; object-src 'none'; frame-src https://www.youtube-nocookie.com; worker-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <style>:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <meta name="theme-color" content="#0a0c18">
@@ -70,8 +70,8 @@
   color-scheme:light}
 
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+html.smooth{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html.smooth{scroll-behavior:auto}}
 body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--paper)}
 a{color:var(--accent-ink);text-underline-offset:3px}
@@ -377,6 +377,40 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 .lbox p{margin:12px 0 0;text-align:center;font:500 14px var(--body);color:#ffffff}
 .lbox .x{display:block;margin:0 0 10px auto;appearance:none;border:1px solid rgba(255,255,255,.55);background:rgba(0,0,0,.45);color:#ffffff;font:600 13px var(--body);border-radius:999px;padding:6px 14px;cursor:pointer}
 @media (prefers-reduced-motion:reduce){.print{transition:none}}
+
+/* ── Hidden track: video facade + secret door ── */
+.vid{margin:30px 0 34px;max-width:620px}
+.vid-frame{position:relative;aspect-ratio:16/9;border-radius:14px;overflow:hidden;background:#05060a;border:8px solid #15171f;box-shadow:0 18px 40px -20px rgba(0,0,0,.7),inset 0 0 0 1px rgba(255,255,255,.06)}
+.vid-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.vid-go{appearance:none;position:absolute;inset:0;width:100%;border:0;padding:0;cursor:pointer;color:#fff;font:inherit;text-align:left;background:radial-gradient(120% 90% at 30% 20%,#28305e 0%,#0b0d1c 60%,#05060a 100%)}
+.vid-go::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px);pointer-events:none}
+.vid-bars{position:absolute;left:0;right:0;top:47%;display:flex;flex-direction:column;gap:5px;transform:skewY(-6deg);opacity:.9}
+.vid-bars i{display:block;height:7px}
+.vid-bars .f1{background:var(--s1)}.vid-bars .f2{background:var(--s2)}.vid-bars .f3{background:var(--s3)}.vid-bars .f4{background:var(--s4)}.vid-bars .f5{background:var(--s5)}
+.vid-play{position:absolute;left:50%;top:34%;width:74px;height:74px;margin:-37px 0 0 -37px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(#86dbff 0%,#2c9de9 49%,#1676cf 51%,#3fa9ef 100%);box-shadow:0 6px 20px rgba(22,119,207,.5),inset 0 1px 0 rgba(255,255,255,.65);transition:transform .2s}
+.vid-play svg{width:26px;height:26px;fill:#fff;margin-left:4px}
+.vid-go:hover .vid-play{transform:scale(1.07)}
+.vid-t{position:absolute;left:18px;bottom:14px;display:grid;gap:2px;text-shadow:0 1px 4px rgba(0,0,0,.6)}
+.vid-t b{font:700 clamp(16px,2vw,20px)/1.2 var(--display);letter-spacing:-.015em}
+.vid-t span{font-size:13px;opacity:.85}
+.vid-rec{position:absolute;right:16px;top:12px;font:400 20px/1 var(--lcdf);letter-spacing:.08em;color:#8be6ff}
+.vid figcaption{margin-top:10px;font-size:14px;line-height:1.5;color:var(--ink-3)}
+a.door{color:var(--ink);text-decoration:none;border-radius:6px;padding:0 3px;margin:0 -3px;animation:glint 7s ease-in-out infinite;transition:transform .3s}
+a.door:hover,a.door:focus-visible{color:var(--s3);text-shadow:0 0 12px var(--s3);transform:rotate(-14deg) scale(1.15);animation:none}
+@keyframes glint{0%,86%,100%{text-shadow:none}91%{text-shadow:0 0 10px var(--s3),0 0 2px var(--s5)}}
+.tl li.has-door{position:relative}
+.ls-door{position:absolute;left:5px;top:50%;transform:translateY(-50%);width:26px;height:24px;display:grid;place-items:center;font:400 16px/1 var(--lcdf);color:inherit;text-decoration:none;border-radius:4px;z-index:1}
+.ls-door:hover,.ls-door:focus-visible{background:var(--s3);color:#05060a}
+.has-door .ls-item[aria-current="true"] + .ls-door{color:var(--lcd-1)}
+.sheet .ls-door{left:9px;width:30px;height:30px;font-size:19px}
+.warp{position:fixed;inset:0;z-index:80;pointer-events:none;visibility:hidden;--rs:60px;background:repeating-radial-gradient(circle at var(--wx,50%) var(--wy,50%),var(--s1) 0 calc(var(--rs) * .12),var(--s2) 0 calc(var(--rs) * .24),var(--s3) 0 calc(var(--rs) * .36),var(--s4) 0 calc(var(--rs) * .48),var(--s5) 0 calc(var(--rs) * .6),var(--paper) 0 var(--rs));clip-path:circle(0px at var(--wx,50%) var(--wy,50%))}
+@property --rs{syntax:"<length>";inherits:false;initial-value:60px}
+html.falling .warp{visibility:visible;animation:warp .75s cubic-bezier(.55,0,.85,.45) forwards}
+html.falling #album{transition:transform .75s cubic-bezier(.6,0,.9,.6),filter .75s;transform:scale(1.25) rotate(-4deg);filter:blur(4px)}
+html.falling .liner{transition:filter .75s;filter:blur(4px)}
+html.falling .coach{display:none}
+@keyframes warp{0%{clip-path:circle(0px at var(--wx,50%) var(--wy,50%));--rs:90px}100%{clip-path:circle(150vmax at var(--wx,50%) var(--wy,50%));--rs:14px}}
+@media (prefers-reduced-motion:reduce){a.door{animation:none;transition:none}.vid-play{transition:none}}
 
 /* ── Phone width ─────────────────────────────────────────────── */
 @media (max-width:759px){
@@ -893,15 +927,28 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 </section>
 
 <!-- Hidden track -->
-<section class="track l" id="encore" data-track="11" data-hidden data-side="SIDE D" data-title="Two voices, returned" data-artist="Impact Program · 4:00 PM" data-intro="Hidden track. Two voices, returned.">
+<section class="track l" id="encore" data-track="11" data-hidden data-side="SIDE D" data-title="Two voices, found" data-artist="Impact Program · 4:00 PM" data-intro="Hidden track. Two voices, found.">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">∞</span><span>Side D · Hidden track</span><span>4:00 PM · Impact Program</span></p>
-      <h2>Two voices, returned</h2>
-      <p class="say" data-say>The moment that stayed with me had nothing to do with banking. In the Impact Program session, led by ElevenLabs' Gabi Leibowitz, Greg Kelner and Abdi Omar, who both lost their voices to illness, performed on stage using voices they rebuilt with ElevenLabs.</p>
-      <figure class="prints one"><button class="print" type="button" aria-label="Enlarge photo: The Impact Program session, 4:00 PM"><span class="ph"><img src="photos/impact.jpg" width="1200" height="1024" alt="Gabi Leibowitz, Greg Kelner and Abdi Omar on stage for the ElevenLabs Impact Program, with music stands and instruments set up behind them" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">The Impact Program session, 4:00 PM</span></button></figure>
+      <p class="tk"><a class="no door" href="bonus/" title="Hmm. A door?" aria-label="Secret bonus track: the merch line">∞</a><span>Side D · Hidden track</span><span>4:00 PM · Impact Program</span></p>
+      <h2>Two voices, found</h2>
+      <p class="say" data-say>The moment that stayed with me had nothing to do with banking. In the Impact Program session, led by ElevenLabs' Gabi Leibowitz, two artists took the stage and performed new songs in voices made with ElevenLabs.</p>
+      <figure class="prints one"><button class="print" type="button" aria-label="Enlarge photo: The Impact Program session, 4:00 PM"><span class="ph"><img src="photos/impact.jpg" width="1200" height="1024" alt="Gabi Leibowitz, Greg Kellner and Abdi Omar on stage for the ElevenLabs Impact Program, with music stands and instruments set up behind them" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">The Impact Program session, 4:00 PM</span></button></figure>
+      <p class="say" data-say>Greg Kellner, a New York educator and community music leader, rebuilt his singing voice from old recordings. Abdi Omar never had a spoken voice at all. He has communicated with AAC devices for more than 18 years, and with ElevenLabs he designed the voice he had always wanted, then made music with it.</p>
+      <blockquote class="q say" data-say data-voice="airy"><p>It is what we could make possible for millions of other people who deserve to be heard.</p><cite>Abdi Omar, writing on LinkedIn after the summit</cite></blockquote>
+      <figure class="vid" id="abdi-vid">
+        <div class="vid-frame">
+          <button class="vid-go" type="button" aria-label="Play the video of Abdi Omar's story. Loads YouTube.">
+            <span class="vid-bars" aria-hidden="true"><i class="f1"></i><i class="f2"></i><i class="f3"></i><i class="f4"></i><i class="f5"></i></span>
+            <span class="vid-play" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M4.5 2.5v11l9-5.5z"/></svg></span>
+            <span class="vid-t"><b>Abdi Omar's story</b><span>Video · not from the summit</span></span>
+            <span class="vid-rec" aria-hidden="true">PLAY ▶</span>
+          </button>
+        </div>
+        <figcaption>Not from the summit, but it fills in the story the stage didn't have time for. Pressing play loads the video from YouTube in privacy-enhanced mode. <a href="https://www.youtube.com/watch?v=GglOMy4tuEc" target="_blank" rel="noopener">Watch on YouTube</a></figcaption>
+      </figure>
       <p class="say" data-say>ElevenLabs used the moment to widen its Impact Program: free, lifetime voice restoration for people with permanent voice loss, free ElevenMusic for songwriters through Songwriters of North America, a partnership with the Wounded Warrior Project, and a path for patients at NYU Langone's Rusk Rehabilitation.</p>
-      <p class="pull say" data-say>The same technology that makes a voice forgeable gave two people theirs back.</p>
+      <p class="pull say" data-say>The same technology that makes a voice forgeable gave one man his singing voice back, and gave another a voice for the very first time.</p>
       <p class="say" data-say>Both things are true. That's exactly why the industries I care about need to get the controls right, so that we get to keep the good part.</p>
     </div>
     <div class="art end" data-stop="dm" data-lane=".5" data-lane-m=".72" data-end="-16" aria-hidden="true">
@@ -957,6 +1004,9 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
         <li><a href="https://www.cbsnews.com/newyork/news/david-geffen-hall-lincoln-center-reopens-550-million-renovation-new-york-philharmonic/" target="_blank" rel="noopener">CBS News on the $550 million reopening</a></li>
         <li><a href="https://www.dezeen.com/2022/11/01/new-york-philharmonics-david-geffen-hall-renovation/" target="_blank" rel="noopener">Dezeen on the renovation and its sound-wave panels</a></li>
       </ul></div>
+      <div><h3>Hidden track</h3><ul>
+        <li><a href="https://www.youtube.com/watch?v=GglOMy4tuEc" target="_blank" rel="noopener">Abdi Omar's story (YouTube)</a></li>
+      </ul></div>
       <div><h3>From the room</h3><ul>
         <li><a href="https://x.com/michuk/status/2120539838998814793" target="_blank" rel="noopener">Borys Musielak on the opening keynote</a></li>
         <li><a href="https://x.com/ElevenLabs/status/2113616436170240103" target="_blank" rel="noopener">ElevenLabs on the finance panel lineup</a></li>
@@ -964,6 +1014,8 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
     </div>
   </div>
 </footer>
+
+<div class="warp" aria-hidden="true"></div>
 
 <dialog class="lbox" id="lbox" aria-label="Photo"><button class="x" id="lbox-x" type="button">Close</button><img id="lbox-img" alt=""><p id="lbox-cap"></p></dialog>
 
@@ -1314,12 +1366,19 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
       b.type = "button"; b.className = "ls-item"; b.dataset.i = i;
       b.innerHTML = '<span class="ls-no"></span><span class="ls-t"></span><span class="ls-d"></span>';
       b.querySelector(".ls-no").textContent = label(t);
+      if (t.hasAttribute("data-hidden")){
+        var door = document.createElement("a");
+        door.className = "ls-door"; door.href = "bonus/"; door.textContent = "∞"; door.title = "Hmm. A door?";
+        door.setAttribute("aria-label", "Secret bonus track: the merch line");
+        b.querySelector(".ls-no").textContent = "";
+        li.className = "has-door";
+      }
       b.querySelector(".ls-t").textContent = t.getAttribute("data-title");
       b.addEventListener("click", function(){
         if (state !== "idle") playFrom(i); else goTrack(i);
         if (closeAfter) closeSheet();
       });
-      li.appendChild(b); ol.appendChild(li);
+      li.appendChild(b); if (door) li.appendChild(door); ol.appendChild(li);
     });
   }
   buildList($("#ip-tracks"), false);
@@ -1440,6 +1499,8 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleBuild);
   if (mobileMQ.addEventListener) mobileMQ.addEventListener("change", scheduleBuild);
   window.addEventListener("load", scheduleBuild);
+  // smooth in-page scrolling only after load, so arriving at #encore from the bonus track jumps straight there
+  window.addEventListener("load", function(){ setTimeout(function(){ document.documentElement.classList.add("smooth"); }, 50); });
 
   /* ───────────── The Drop: covers ───────────── */
   var STICK = {
@@ -1756,6 +1817,37 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
     $("#lbox-x").addEventListener("click", function(){ lbox.close(); });
     lbox.addEventListener("click", function(e){ if (e.target === lbox) lbox.close(); });
   }
+
+  /* ───────────── Secret door: fall through the ∞ into the bonus track ───────────── */
+  document.addEventListener("click", function(e){
+    var a = e.target.closest && e.target.closest("a.door, a.ls-door");
+    if (!a || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    if (state !== "idle") finish();
+    if (reduce.matches) return;
+    e.preventDefault();
+    var r = a.getBoundingClientRect(), root = document.documentElement, ab = album.getBoundingClientRect();
+    album.style.transformOrigin = Math.round(r.left + r.width / 2 - ab.left) + "px " + Math.round(r.top + r.height / 2 - ab.top) + "px";
+    root.style.setProperty("--wx", Math.round(r.left + r.width / 2) + "px");
+    root.style.setProperty("--wy", Math.round(r.top + r.height / 2) + "px");
+    root.classList.add("falling");
+    setTimeout(function(){ window.location.href = a.href; }, 720);
+  });
+  window.addEventListener("pageshow", function(){ document.documentElement.classList.remove("falling"); album.style.transformOrigin = ""; });
+
+  /* ───────────── Abdi's video: nothing loads from YouTube until you press play ───────────── */
+  var vid = $("#abdi-vid");
+  if (vid) $(".vid-go", vid).addEventListener("click", function(){
+    if (state === "speaking") togglePlay();
+    var f = document.createElement("iframe");
+    f.src = "https://www.youtube-nocookie.com/embed/GglOMy4tuEc?autoplay=1&rel=0&playsinline=1";
+    f.title = "Abdi Omar's story (YouTube video)";
+    f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+    f.referrerPolicy = "strict-origin-when-cross-origin";
+    f.setAttribute("sandbox", "allow-scripts allow-same-origin allow-presentation allow-popups allow-popups-to-escape-sandbox");
+    var frame = $(".vid-frame", vid);
+    while (frame.firstChild) frame.removeChild(frame.firstChild);
+    frame.appendChild(f); f.focus();
+  });
 
   layoutCovers();
   buildRibbon();
