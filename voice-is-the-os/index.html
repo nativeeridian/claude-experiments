@@ -17,7 +17,7 @@
   --lcd-1:#e7eff1; --lcd-2:#c9d7dc; --lcd-ink:#15232b; --lcd-edge:#9aacb4;
   --board:#2f46e8; --board-ink:#ffffff; --board-ink-2:rgba(255,255,255,.8);
   --bib:#ffffff; --bib-ink:#121530;
-  --zebra:#eaf0fb; --sel:#3a6fd8; --gloss:rgba(255,255,255,.55);
+  --zebra:#eaf0fb; --sel:#3a6fd8; --gloss:rgba(255,255,255,.55); --print:#ffffff; --print-ink:#2a2f4d;
   --live-bg:#daf5e4; --live-fg:#0f6338; --ea-bg:#fff0c4; --ea-fg:#765000;
   --pre-bg:#d6f1f7; --pre-fg:#0a5b6e; --road-fg:#474e6b; --sign-bg:#ffe0ee; --sign-fg:#8a1b4d;
   --display:"Unbounded","Arial Black",system-ui,sans-serif;
@@ -25,7 +25,7 @@
   --lcdf:"VT323",ui-monospace,Menlo,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --gloss:rgba(255,255,255,.06);
+  --gloss:rgba(255,255,255,.06); --print:#e9e7e0; --print-ink:#23283f;
   --paper:#0a0c18; --paper-2:#10132a; --card:#131731; --ink:#e9ecf8; --ink-2:#a9afca; --ink-3:#8389a6;
   --hair:rgba(233,236,248,.11); --hair-2:rgba(233,236,248,.22);
   --s1:#d7dcfb; --s2:#5d76ff; --s3:#2cc6e4; --s4:#ff6748; --s5:#ffbd2e;
@@ -40,7 +40,7 @@
   --pre-bg:#0d3442; --pre-fg:#82def2; --road-fg:#a9afca; --sign-bg:#3d1428; --sign-fg:#ff9fc9;
   color-scheme:dark}}
 :root[data-theme="dark"]{
-  --gloss:rgba(255,255,255,.06);
+  --gloss:rgba(255,255,255,.06); --print:#e9e7e0; --print-ink:#23283f;
   --paper:#0a0c18; --paper-2:#10132a; --card:#131731; --ink:#e9ecf8; --ink-2:#a9afca; --ink-3:#8389a6;
   --hair:rgba(233,236,248,.11); --hair-2:rgba(233,236,248,.22);
   --s1:#d7dcfb; --s2:#5d76ff; --s3:#2cc6e4; --s4:#ff6748; --s5:#ffbd2e;
@@ -275,6 +275,24 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 .ill text{font-family:var(--body)}
 .gs{fill:none;stroke:var(--s5)} .bs{fill:none;stroke:var(--s2)} .t2{fill:var(--ink-2)}
 
+/* ── Photo prints (early-2000s digicam, date-stamped) ─────────── */
+.prints{display:flex;align-items:flex-start;gap:18px;margin:30px 0 36px;padding:4px 4px 12px;max-width:620px}
+.print{--rot:-1.4deg;flex:1 1 0;min-width:0;appearance:none;border:0;margin:0;cursor:zoom-in;background:var(--print);color:var(--print-ink);padding:9px 9px 11px;text-align:left;font:inherit;box-shadow:0 12px 26px -14px rgba(10,12,30,.55),0 1px 2px rgba(10,12,30,.18);transform:rotate(var(--rot));transition:transform .25s ease}
+.print:nth-child(2){--rot:1.8deg;margin-top:16px}
+.print:nth-child(3){--rot:-.6deg}
+.print:hover{transform:rotate(0deg) translateY(-3px)}
+.prints.one .print{--rot:-1deg;flex:0 1 560px}
+.ph{position:relative;display:block;background:#15182a;overflow:hidden}
+.ph img{display:block;width:100%;height:auto}
+.stamp{position:absolute;right:9px;bottom:7px;font:400 18px/1 var(--lcdf);letter-spacing:.08em;color:#ff9a2e;text-shadow:0 0 5px rgba(255,110,20,.9)}
+.pc{display:block;margin-top:9px;font:500 13px/1.4 var(--body)}
+.lbox{border:0;padding:0;background:transparent;color:#fff;max-width:min(94vw,1100px);max-height:94vh;overflow:visible}
+.lbox::backdrop{background:rgba(5,6,14,.88)}
+.lbox img{display:block;max-width:100%;max-height:80vh;width:auto;height:auto;margin:0 auto;border:8px solid #ffffff;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.lbox p{margin:12px 0 0;text-align:center;font:500 14px var(--body);color:#ffffff}
+.lbox .x{display:block;margin:0 0 10px auto;appearance:none;border:1px solid rgba(255,255,255,.55);background:rgba(0,0,0,.45);color:#ffffff;font:600 13px var(--body);border-radius:999px;padding:6px 14px;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.print{transition:none}}
+
 /* ── Phone width ─────────────────────────────────────────────── */
 @media (max-width:759px){
   body{font-size:17px}
@@ -298,6 +316,8 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
   .jewel{grid-template-columns:28px minmax(0,1fr)}
   .insert{padding:20px 18px 8px}
   .cgrid{grid-template-columns:minmax(0,1fr)}
+  .prints{overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding:6px 10px 14px 4px;margin:24px 0 28px}
+  .prints.two .print,.prints.three .print{flex:0 0 78%;scroll-snap-align:start}
   ol.take li{grid-template-columns:44px minmax(0,1fr)}
   ol.take li::before{font-size:24px}
 }
@@ -412,6 +432,7 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
       <p class="credit"><b>David Geffen Hall</b> · Lincoln Center · home of the New York Philharmonic</p>
       <p class="say" data-say>Start with the room. ElevenLabs could have rented a convention center or a hotel ballroom. Instead it held the summit at Lincoln Center, in David Geffen Hall, the home of the New York Philharmonic.</p>
       <p class="say" data-say>If your company is betting that the future of computing runs on voices so lifelike you forget they're synthetic, you put that bet in a building engineered for the best sound in the city. The venue was the first demo, and nobody had to say so.</p>
+      <figure class="prints two"><button class="print" type="button" aria-label="Enlarge photo: David Geffen Hall, home of the New York Philharmonic"><span class="ph"><img src="photos/geffen-exterior.jpg" width="993" height="1200" alt="David Geffen Hall at Lincoln Center on a clear morning: a travertine colonnade and tall glass facade, with attendees on the balconies" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">David Geffen Hall, home of the New York Philharmonic</span></button><button class="print" type="button" aria-label="Enlarge photo: The room before the keynote"><span class="ph"><img src="photos/hall-interior.jpg" width="1200" height="1024" alt="Inside the hall before the keynote: wood-paneled walls, rows of stage lights and screens reading Welcome to ElevenLabs Summit NYC" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">The room before the keynote</span></button></figure>
       <div class="stat say" data-say data-text="Two thousand attendees, in a concert hall with about twenty-two hundred seats."><span class="n">2,000<small>/2,200</small></span><span class="l">Attendees, in a concert hall with about 2,200 seats</span></div>
       <p class="say" data-say>Geffen Hall reopened in 2022 after a roughly $550 million rebuild meant to fix acoustic problems it had carried since 1962. Even its wood panels are shaped after sound waves. For a company that sells sound, that isn't a backdrop. It's an argument.</p>
       <p class="pull say" data-say>You don't tell people your voices sound real. You book the room where sound gets judged.</p>
@@ -440,6 +461,7 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
       <p class="credit"><b>Mati Staniszewski</b> · Co-founder &amp; CEO, ElevenLabs</p>
       <p class="say" data-say>Anyone who has run an AI demo knows the fear. You can build it carefully and rehearse it all week, and it can still go off the rails in front of the room. These systems are probabilistic. Audiences aren't.</p>
       <p class="say" data-say>Mati ran it live anyway, and it was flawless. There was no sizzle reel and no recording with a confident voiceover. It was the actual product, working in real time, in a hall built for orchestras. It had the energy of the great product keynotes, Steve Jobs doing a real demo, where the confidence comes from the fact that it's really happening.</p>
+      <figure class="prints one"><button class="print" type="button" aria-label="Enlarge photo: Mati opens the summit"><span class="ph"><img src="photos/mati-welcome.jpg" width="1200" height="960" alt="Mati Staniszewski on stage in front of a pink screen reading Welcome to ElevenLabs Summit NYC" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">Mati opens the summit</span></button></figure>
       <p class="pull say" data-say>Live is the only demo that proves reliability. A recording only proves editing.</p>
       <p class="say" data-say>Just as telling was the language. It wasn't overtly technical. The story came in outcomes a CFO or a head of customer experience could repeat on Monday, like this line:</p>
       <blockquote class="q say" data-say data-voice="airy"><p>If AI is going to work for us, and alongside us, it will need to interact naturally and intuitively with people in many different settings.</p><cite>Mati Staniszewski, at the summit</cite></blockquote>
@@ -463,12 +485,16 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
     <div class="txt" data-stop="m" data-lane-m="px:18">
       <p class="tk"><span class="no">03</span><span>Side A · The show</span><span>All day · Exhibit floor</span></p>
       <h2>Try it yourself</h2>
-      <p class="credit"><b>Partner booths</b> · including Bancolombia's customer FAQ agent</p>
+      <p class="credit"><b>Partner booths</b> · including Bancolombia's Customer Support FAQ agent</p>
       <p class="say" data-say>The exhibits outside the hall made the same argument in a different key: if you don't believe us, try it. Partners set up small booths with their own agents running live, and you could walk up and talk to them.</p>
-      <p class="say" data-say>Bancolombia was showing its customer FAQ agent, and it was impressive. It was also honest about where it is. The agent answers a defined set of questions, the bank is still working through the rollout, and the ambition to go agentic is clear but not there yet.</p>
+      <p class="say" data-say>Bancolombia was showing its customer support FAQ agent. You put on the headphones, held a button to talk, and asked it about the bank. It was impressive, and it was honest about where it is. The booth spelled out its scope: products and services, cards and loans, requirements and documentation, fees and benefits, and self-service help.</p>
+      <figure class="prints one"><button class="print" type="button" aria-label="Enlarge photo: Bancolombia's booth: hold to talk"><span class="ph"><img src="photos/bancolombia.jpg" width="1072" height="1200" alt="Bancolombia's Customer Support FAQ booth: a tablet running the Bancolombia Assistant with ElevenLabs, a hold-to-talk button and suggested questions, headphones hanging below" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">Bancolombia's booth: hold to talk</span></button></figure>
+      <p class="say" data-say>One of the suggested questions was "How can I send money?" Today the agent is built to tell you how, not to do it for you. The bank is still working through the rollout, and the ambition to go agentic is clear but not there yet. That booth previewed the theme of the day's best session, the gap between answering and acting, which I come back to on Side B.</p>
+      <p class="say" data-say>Even the demo screen carried a line noting that the bank is supervised by Colombia's Financial Superintendency. In regulated finance, the regulator is in the room even at a trade-show booth.</p>
       <p class="pull say" data-say>A keynote creates belief. A booth creates proof.</p>
       <p class="say" data-say>From a marketing seat, the booths were the smartest money spent. A partner's own agent is proof that isn't ElevenLabs talking about itself. It's a customer vouching for the product with its own brand on the line.</p>
-      <p class="say" data-say>That booth also previewed the theme of the day's best session: the gap between answering and acting. More on that on Side B.</p>
+      <p class="say" data-say>Not every exhibit was a product demo. One was a listening room lined with acoustic foam, where you put on headphones and heard New Yorkers' stories, captioned on a screen built like a giant speaker. It didn't pitch anything. It let the voices do the work, which is the company's whole argument in one room.</p>
+      <figure class="prints two"><button class="print" type="button" aria-label="Enlarge photo: The listening room"><span class="ph"><img src="photos/auntie-chan.jpg" width="900" height="1200" alt="A giant speaker-shaped screen in a foam-lined room, captioned: Auntie Chan, 67. Nine years old! So proud. So angry too!" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">The listening room</span></button><button class="print" type="button" aria-label="Enlarge photo: Five boroughs, one speaker"><span class="ph"><img src="photos/neighborhoods.jpg" width="900" height="1200" alt="The same screen scrolling New York neighborhood names: Times Square, Chelsea, Chinatown, Williamsburg, DUMBO" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">Five boroughs, one speaker</span></button></figure>
     </div>
     <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
       <svg class="ill" viewBox="0 0 300 330">
@@ -566,9 +592,10 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
     <div class="txt" data-stop="m" data-lane-m="px:18">
       <p class="tk"><span class="no">06</span><span>Side B · The day</span><span>10:45 AM · Panel</span></p>
       <h2>From answering to acting</h2>
-      <p class="credit"><b>Carlos Coto</b>, Customers Bank · <b>Daniela Mineiro</b>, Banco Inter · <b>Douglas Hamilton</b>, Nasdaq · with <b>Ethan Tandowsky</b>, CFO, ElevenLabs</p>
+      <p class="credit"><b>Carlos Coto</b>, Chief Strategy &amp; Innovation Officer, Customers Bank · <b>Daniela Mineiro</b>, Experience Leader, Inter · <b>Douglas Hamilton</b>, Head of AI Research &amp; Engineering, Nasdaq · with <b>Ethan Tandowsky</b>, CFO, ElevenLabs</p>
       <div class="stat say" data-say data-text="More than two million customer service interactions a month at Banco Inter, in Portuguese, English and Spanish."><span class="n">2M<small>+ / mo</small></span><span class="l">Customer service interactions at Banco Inter, in Portuguese, English and Spanish</span></div>
       <p class="say" data-say>This was the session I came for, and it named the gap I'd seen at the Bancolombia booth. The first wave of voice agents answered questions. The next wave does things: it checks the balance, and then it moves the money.</p>
+      <figure class="prints one"><button class="print" type="button" aria-label="Enlarge photo: From answering to acting, 10:45 AM"><span class="ph"><img src="photos/finance-panel.jpg" width="844" height="1200" alt="Douglas Hamilton, Daniela Mineiro and Carlos Coto on stage under the slide From answering to acting: agentic voice AI in regulated finance" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">From answering to acting, 10:45 AM</span></button></figure>
       <p class="say" data-say>That one verb changes the risk profile completely. An agent that answers is a content problem: is it accurate, is it compliant, does it sound like us? An agent that acts is a controls problem. Who authorized this? How do we know who's calling? What's the limit, and where's the evidence? Banks already answer those questions for people and for APIs. Voice agents need the same answers before the first transfer, not after it.</p>
       <blockquote class="q say" data-say data-voice="airy"><p>Full self-service for the ones that don't want to interact with humans, and human beings powered by agents for the people that value the interaction.</p><cite>Carlos Coto, Customers Bank, describing its ElevenLabs rollout</cite></blockquote>
       <p class="say" data-say>That's the framing I'd hand to any regulated team. The human handoff is part of the product. Design it first, measure it, and make it fast.</p>
@@ -598,9 +625,10 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
     <div class="txt" data-stop="m" data-lane-m="px:18">
       <p class="tk"><span class="no">07</span><span>Side B · The day</span><span>11:10 AM · Fireside</span></p>
       <h2>Zero click</h2>
-      <p class="credit"><b>Eric Glyman</b> · Co-founder &amp; CEO, Ramp · in conversation with <b>Mati Staniszewski</b></p>
+      <p class="credit">"A conversation on building an AI-first company" · <b>Eric Glyman</b>, Co-founder &amp; CEO, Ramp · with <b>Mati Staniszewski</b></p>
       <div class="stat say" data-say data-text="Zero clicks. Ramp's goal for routine finance work, with people stepping in only for the exceptions."><span class="n">0</span><span class="l">Clicks: Ramp's goal for routine finance work, with people stepping in only for exceptions</span></div>
       <p class="say" data-say>Ramp is the clearest example I know of AI making financial decisions at scale with the receipts attached, literally. When its agents approve an expense, each decision cites the policy rule it applied, so an auditor can follow the reasoning.</p>
+      <figure class="prints one"><button class="print" type="button" aria-label="Enlarge photo: Building an AI-first company, 11:10 AM"><span class="ph"><img src="photos/ramp-fireside.jpg" width="1125" height="1200" alt="Mati Staniszewski and Eric Glyman applauding on stage under the slide A conversation on building an AI-first company" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">Building an AI-first company, 11:10 AM</span></button></figure>
       <p class="say" data-say>That's the pattern I want from voice agents in a bank. Every action arrives with its reason, written down in a form the second line of defense can read without filing a ticket with engineering.</p>
       <p class="say" data-say>There's a nice symmetry in putting these two on one stage. One company built its business on taking clicks out of finance. The other is trying to take the keyboard out of everything else. ElevenLabs has run its own spend on Ramp for years, so each company is a working demo of the other's thesis.</p>
     </div>
@@ -628,6 +656,7 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
       <h2>The 360-degree cost</h2>
       <p class="credit"><b>Matt Yanchyshyn</b>, VP, AWS · <b>Yael Taqqu</b>, Senior Partner, McKinsey · with <b>Ashish Uchil</b>, Global BD &amp; Partnerships, ElevenLabs</p>
       <p class="say" data-say>The session I've thought about most since was "What it takes to scale AI across the enterprise," and in particular a point Matt Yanchyshyn from AWS made that almost nobody talks about: the hidden costs of AI. He called it the 360-degree cost.</p>
+      <figure class="prints one"><button class="print" type="button" aria-label="Enlarge photo: What it takes to scale AI, 11:55 AM"><span class="ph"><img src="photos/scale-panel.jpg" width="1200" height="737" alt="Matt Yanchyshyn, Yael Taqqu and Ashish Uchil on stage under the slide What it takes to scale AI across the enterprise" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">What it takes to scale AI, 11:55 AM</span></button></figure>
       <p class="say" data-say>AI can take the pressure off a support queue. But what happens when demand explodes? If you automate one step, who handles the next one your support team inherits? If demand generation is mostly automated and it works, do you have the people in place to handle everything it sends you?</p>
       <p class="pull say" data-say>Automation doesn't remove work. It moves it, and sometimes it multiplies it.</p>
       <p class="say" data-say>In a bank, this gets concrete fast. If a voice agent resolves most routine calls, the calls left for people are the hardest ones: disputes, fraud, complaints, the customer who's already upset. A rate change or a fraud event can spike volume overnight. The agent scales instantly. The back office, the reviewers and the complaint handlers don't. Budget for the whole system, not just the bot.</p>
@@ -664,6 +693,8 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
       <h2>Thumb through the releases</h2>
       <p class="say" data-say>ElevenLabs counted thirteen launches and upgrades. I've pressed them onto twelve covers. Swipe or use the arrow keys, and tap the cover in front to flip it for the liner notes.</p>
       <p class="say" data-say>Watch the sticker on each one. What's shipping today is mostly the models underneath. The ideas that would change how a bank operates, like memory, routines and custom models, are still preview or roadmap. That's not a knock. It's a timeline, and it tells you when to start the governance work: now.</p>
+      <p class="say" data-say>One partner made its point just by showing up. Jensen Huang had pulled out days earlier, but NVIDIA still put Kari Briski, its VP of generative AI software products, on stage with ElevenLabs field CTO Alex Holt to talk models, infrastructure and sovereignty at scale. For anyone in a regulated or government-adjacent business, that last word is the one to watch.</p>
+      <figure class="prints one"><button class="print" type="button" aria-label="Enlarge photo: NVIDIA on sovereignty at scale"><span class="ph"><img src="photos/nvidia.jpg" width="1200" height="928" alt="Kari Briski of NVIDIA and Alex Holt of ElevenLabs on stage under the slide A conversation with NVIDIA on models, infrastructure, and sovereignty at scale" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">NVIDIA on sovereignty at scale</span></button></figure>
     </div>
     <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
       <svg class="ill" viewBox="0 0 300 280">
@@ -838,7 +869,8 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
     <div class="txt" data-stop="m" data-lane-m="px:18">
       <p class="tk"><span class="no">∞</span><span>Side D · Hidden track</span><span>4:00 PM · Impact Program</span></p>
       <h2>Two voices, returned</h2>
-      <p class="say" data-say>The moment that stayed with me had nothing to do with banking. Greg Kellner and Abdi Omar, who both lost their voices to illness, performed on stage using voices they rebuilt with ElevenLabs.</p>
+      <p class="say" data-say>The moment that stayed with me had nothing to do with banking. In the Impact Program session, led by ElevenLabs' Gabi Leibowitz, Greg Kelner and Abdi Omar, who both lost their voices to illness, performed on stage using voices they rebuilt with ElevenLabs.</p>
+      <figure class="prints one"><button class="print" type="button" aria-label="Enlarge photo: The Impact Program session, 4:00 PM"><span class="ph"><img src="photos/impact.jpg" width="1200" height="1024" alt="Gabi Leibowitz, Greg Kelner and Abdi Omar on stage for the ElevenLabs Impact Program, with music stands and instruments set up behind them" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">The Impact Program session, 4:00 PM</span></button></figure>
       <p class="say" data-say>ElevenLabs used the moment to widen its Impact Program: free, lifetime voice restoration for people with permanent voice loss, free ElevenMusic for songwriters through Songwriters of North America, a partnership with the Wounded Warrior Project, and a path for patients at NYU Langone's Rusk Rehabilitation.</p>
       <p class="pull say" data-say>The same technology that makes a voice forgeable gave two people theirs back.</p>
       <p class="say" data-say>Both things are true. That's exactly why the industries I care about need to get the controls right, so that we get to keep the good part.</p>
@@ -866,8 +898,8 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
       <p class="kick">Liner notes</p>
       <h2>Recorded live at David Geffen Hall</h2>
       <p>Written by <b>Carson Boykin</b> after the ElevenLabs Summit at Lincoln Center on November 11, 2026.</p>
-      <p><b>From the room.</b> The venue, the live keynote demos, the partner booths (Bancolombia's included) and the scaling panel come from my own notes. ElevenLabs' public recaps don't describe them. Facts about the hall come from coverage of its 2022 reopening.</p>
-      <p><b>Billed, then absent.</b> NVIDIA's Jensen Huang withdrew from the program days before the summit. NVIDIA still announced an expanded partnership that day.</p>
+      <p><b>From the room.</b> The venue, the live keynote demos, the partner booths (Bancolombia's included) and the scaling panel come from my own notes, and every photo on this page is mine. ElevenLabs' public recaps don't describe those moments. Facts about the hall come from coverage of its 2022 reopening.</p>
+      <p><b>Billed, then absent.</b> NVIDIA's Jensen Huang withdrew from the program days before the summit. NVIDIA still announced an expanded partnership that day and sent Kari Briski to talk sovereignty at scale.</p>
       <p><b>On the numbers.</b> Figures are as ElevenLabs and the press reported them. KPN's verification gain appears as 50% → 90% in ElevenLabs' material and as 60% → 85% in one podcast summary. Scribe v3's error reduction is 27% in ElevenLabs' own evaluation and about 25% in The Decoder. Status stickers reflect what was public on November 16, 2026.</p>
       <p><b>On the quotes.</b> Quotes are from ElevenLabs' summit announcement and keynote coverage, and from Customers Bank's public statements about its rollout. Everything in the first person is my own read.</p>
     </div>
@@ -900,6 +932,8 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
     </div>
   </div>
 </footer>
+
+<dialog class="lbox" id="lbox" aria-label="Photo"><button class="x" id="lbox-x" type="button">Close</button><img id="lbox-img" alt=""><p id="lbox-cap"></p></dialog>
 
 <script>
 (function(){
@@ -1240,8 +1274,8 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
       read: "Third-party risk just gained a fourth party. Know who built the app your agent runs, and who supports it at 2 a.m." },
     { key: "nvidia", t: "NVIDIA Expansion", lines: ["NVIDIA", "Expansion"], fs: 28, status: "Live", bg: "#0d0f14", fg: "#e9ecf8", ac: "#2cc8e6", m: "chip",
       short: "A new model inside ElevenAgents and 15 MW of fresh compute.",
-      facts: "Nemotron 3.5 Super VL is live inside ElevenAgents. ElevenLabs is adding 15 MW of capacity on Blackwell Ultra and Vera Rubin, aimed at large deployments with strict security and data-residency needs, including an on-prem agent for Poland's national e-Health platform.",
-      read: "Capacity built for data residency tells you who they're selling to next: regulated, sovereign and on-prem buyers." },
+      facts: "Nemotron 3.5 Super VL is live inside ElevenAgents. ElevenLabs is adding 15 MW of capacity on Blackwell Ultra and Vera Rubin, aimed at large deployments with strict security and data-residency needs, including an on-prem agent for Poland's national e-Health platform. On stage, NVIDIA's Kari Briski and ElevenLabs' Alex Holt covered models, infrastructure and sovereignty at scale.",
+      read: "Capacity built for data residency tells you who they're selling to next: regulated, sovereign and on-prem buyers. The NVIDIA session title said it outright: sovereignty at scale." },
     { key: "mckinsey", t: "McKinsey Alliance", lines: ["McKinsey", "Alliance"], fs: 28, status: "Signed", bg: "#ff9f1c", fg: "#1b1206", ac: "#ffffff", m: "rings",
       short: "Agents plus a transformation practice, sold together.",
       facts: "An alliance pairing ElevenAgents with McKinsey's transformation practice and QuantumBlack, AI by McKinsey.",
@@ -1475,6 +1509,21 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
   $("#v-covers").addEventListener("click", function(){ setView("covers"); });
   $("#v-list").addEventListener("click", function(){ setView("list"); });
   try { if (localStorage.getItem("vito-view") === "list") setView("list"); } catch (e) {}
+
+  /* ───────────── Photo prints ───────────── */
+  var lbox = $("#lbox"), lboxImg = $("#lbox-img"), lboxCap = $("#lbox-cap");
+  $$(".print").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var img = btn.querySelector("img");
+      lboxImg.src = img.getAttribute("src"); lboxImg.alt = img.alt;
+      lboxCap.textContent = btn.querySelector(".pc").textContent;
+      if (lbox && typeof lbox.showModal === "function") lbox.showModal();
+    });
+  });
+  if (lbox){
+    $("#lbox-x").addEventListener("click", function(){ lbox.close(); });
+    lbox.addEventListener("click", function(e){ if (e.target === lbox) lbox.close(); });
+  }
 
   layoutCovers();
   buildRibbon();

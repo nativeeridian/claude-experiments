@@ -70,7 +70,7 @@ Compiled 2026-11-16.
 
 **ElevenLabs:** Mati Staniszewski (co-founder & CEO), Piotr Dabkowski (co-founder), Ethan Tandowsky (CFO), Ashley Kramer (CRO), Ashish Uchil, Alex George (localization), Aneri Amin, Jonathan Chang (startups), Gabi Leibowitz (Impact).
 
-**External:** Eric Glyman (Ramp), Carlos Coto (Customers Bank), Daniela Mineiro (Banco Inter), Douglas Hamilton (Nasdaq), Cameron Pringle (Clover Health), Yael Taqqu (McKinsey), Matt Yanchyshyn (AWS Marketplace), Dustin Myers (Fox Sports). Performers Greg Kellner and Abdi Omar sang with voices rebuilt through the Impact Program. Jensen Huang (NVIDIA) was billed but absent.
+**External:** Eric Glyman (Ramp), Carlos Coto (Customers Bank), Daniela Mineiro (Banco Inter), Douglas Hamilton (Nasdaq), Cameron Pringle (Clover Health), Yael Taqqu (McKinsey), Matt Yanchyshyn (AWS Marketplace), Dustin Myers (Fox Sports). Performers Greg Kelner and Abdi Omar sang with voices rebuilt through the Impact Program. Jensen Huang (NVIDIA) was billed but absent.
 
 ### On-the-record quotes
 - Mati: *"Within a few years, conversational agents will become critical infrastructure for every enterprise, as essential as cloud or payments."*
@@ -135,6 +135,21 @@ Speakers per the stage slide: Matt Yanchyshyn (VP, AWS), Yael Taqqu (Senior Part
 - **Matt, on engineers:** software engineers are now treated as product engineers, with a strategic lens and real product understanding. Generate product spec-driven, inside a harness, rather than generating "stuff."
 - **Yael:** a technology revolution that is also a talent revolution. Leaders need boldness and humility together, which is rare; most leaders have to learn the humility.
 - **Used in:** new track 08, *The 360-degree cost* (iceberg illustration). New sixth takeaway: "Budget for the 360." The banking tie-in: automation leaves people with the hardest calls, agents scale instantly but back offices don't, and a spec is something an auditor can read.
+
+### From your photos (Nov 16)
+- **Venue confirmed:** the exterior shot shows the "David Geffen Hall" sign. The interior shows the hall's wood-paneled walls.
+- **Finance panel titles (slide):** Douglas Hamilton, Head of AI Research & Engineering, Nasdaq · Daniela Mineiro, Experience Leader, Inter · Carlos Coto, Chief Strategy & Innovation Officer, Customers Bank.
+- **Ramp fireside title (slide):** "A conversation on building an AI-first company." Eric Glyman (CEO, Ramp) with Mati Staniszewski (CEO and co-founder).
+- **NVIDIA session (new):** "A conversation with NVIDIA on models, infrastructure, and sovereignty at scale." Kari Briski (VP Generative AI Software Products, NVIDIA) with Alex Holt (Field CTO, ElevenLabs). NVIDIA was on stage even though Jensen Huang withdrew.
+- **Impact Program (slide):** Greg **Kelner** (corrected spelling), Gabi Leibowitz (Impact, ElevenLabs), Abdi Omar. Music stands and instruments on stage for the performances.
+- **Bancolombia booth:**
+  - Labeled "Customer Support FAQ"; the screen reads "Bancolombia Assistant X Eleven Labs".
+  - Hold to talk, with headphones.
+  - Stated scope: products and services; credit cards and loans; requirements and documentation; fees, benefits and features; support and self-service processes.
+  - Suggested questions include "How can I send money?"
+  - The screen carries a line noting the bank is supervised by the Financial Superintendency of Colombia.
+- **Listening room:** an exhibit lined with acoustic foam, with headphones, and New Yorkers' stories captioned on a speaker-shaped round screen (e.g. "Auntie Chan, 67").
+- **Photos on the page:** 11 photos, cropped, resized to 1200px and stripped of all metadata, including location. The listening-room shot with identifiable attendees was left out.
 
 **New structure (double album):**
 - Side A, the show (case study): 01 The room is the product · 02 No safety net · 03 Try it yourself · 04 The playbook
