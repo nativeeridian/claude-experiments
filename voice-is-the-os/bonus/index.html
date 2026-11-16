@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<style>:root{color-scheme:dark;box-sizing:border-box}body{margin:0;padding:0}[hidden]{display:none!important}</style>
+<meta name="theme-color" content="#0a0c18">
+<script>try{if(localStorage.getItem("vito-theme")==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}</script>
+<meta name="description" content="A bonus track from the ElevenLabs Summit NYC recap: an hour in the merch line, three questions out loud, and what voice-agent friction teaches regulated industries.">
+<meta name="author" content="Carson Boykin">
+<link rel="canonical" href="https://nativeeridian.github.io/claude-experiments/voice-is-the-os/bonus/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23121530'/%3E%3Crect x='7' y='6' width='3' height='20' fill='%23d7dcfb'/%3E%3Crect x='11' y='6' width='3' height='20' fill='%233a55ff'/%3E%3Crect x='15' y='6' width='3' height='20' fill='%2314a8c8'/%3E%3Crect x='19' y='6' width='3' height='20' fill='%23ff4f2e'/%3E%3Crect x='23' y='6' width='3' height='20' fill='%23ffae00'/%3E%3C/svg%3E">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Voice Is the OS">
+<meta property="og:title" content="The merch line: a bonus track from Voice Is the OS">
+<meta property="og:description" content="An hour in line, three questions out loud, and what voice-agent friction teaches regulated industries.">
+<meta property="og:url" content="https://nativeeridian.github.io/claude-experiments/voice-is-the-os/bonus/">
+<meta property="og:image" content="https://nativeeridian.github.io/claude-experiments/voice-is-the-os/share-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<title>The Merch Line · Voice Is the OS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Unbounded:wght@400;500;700;800&family=VT323&display=swap">
+<style>
+/* Bonus track. Same tokens as the album, dark first. The page falls out of a wormhole,
+   makes you wait in a scroll-driven line, then puts you at the booth. */
+:root{
+  --paper:#0a0c18; --paper-2:#10132a; --card:#131731; --ink:#e9ecf8; --ink-2:#a9afca; --ink-3:#8389a6;
+  --hair:rgba(233,236,248,.11); --hair-2:rgba(233,236,248,.22);
+  --s1:#d7dcfb; --s2:#5d76ff; --s3:#2cc6e4; --s4:#ff6748; --s5:#ffbd2e;
+  --accent:#ff6a4a; --accent-ink:#ff8d72; --sel:#4a7fe8;
+  --sil:#323c80; --sil-2:#1b2048; --person:#7d84a3;
+  --ipod-1:#30333d; --ipod-2:#0e0f13; --ipod-ink:#e6e9f2;
+  --lcd-1:#0f2a36; --lcd-2:#0a1c25; --lcd-ink:#8be6ff;
+  --display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --lcdf:"VT323",ui-monospace,Menlo,monospace;
+  color-scheme:dark}
+:root[data-theme="light"]{
+  --paper:#eef0f4; --paper-2:#e2e6ed; --card:#f9fafc; --ink:#121530; --ink-2:#474e6b; --ink-3:#686f8c;
+  --hair:rgba(18,21,48,.12); --hair-2:rgba(18,21,48,.22);
+  --s1:#121530; --s2:#3a55ff; --s3:#14a8c8; --s4:#ff4f2e; --s5:#ffae00;
+  --accent:#e2401d; --accent-ink:#c0320f; --sel:#3a6fd8;
+  --sil:#151a3f; --sil-2:#d9dee8; --person:#5b6283;
+  --ipod-1:#fdfdfe; --ipod-2:#dfe2e8; --ipod-ink:#22263a;
+  --lcd-1:#e7eff1; --lcd-2:#c9d7dc; --lcd-ink:#15232b;
+  color-scheme:light}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
+a{color:var(--accent-ink);text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--sel);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1040px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.narrow{max-width:720px}
+.kick{font:600 12.5px/1.45 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);margin:0}
+h1{font:800 clamp(38px,6.4vw,76px)/1 var(--display);letter-spacing:-.04em;margin:18px 0 20px;text-wrap:balance}
+h1 span{color:var(--accent)}
+h2{font:700 clamp(28px,4vw,44px)/1.08 var(--display);letter-spacing:-.035em;margin:12px 0 16px;text-wrap:balance}
+p{margin:0 0 18px}
+.lede{font-size:clamp(18px,2vw,21px);line-height:1.55;color:var(--ink-2);max-width:54ch;margin:0 auto}
+.pull{font:700 clamp(24px,3vw,34px)/1.2 var(--display);letter-spacing:-.025em;color:var(--accent);margin:30px 0;max-width:24ch;text-wrap:balance}
+.chip{display:inline-flex;align-items:center;gap:6px;font:700 11px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;padding:6px 11px;border-radius:999px;border:1.5px dashed var(--ink-3);color:var(--ink-2)}
+.stripes{display:flex;height:6px}
+.stripes i{flex:1}
+.f1{background:var(--s1)} .f2{background:var(--s2)} .f3{background:var(--s3)} .f4{background:var(--s4)} .f5{background:var(--s5)}
+
+/* top bar */
+.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px max(14px,env(safe-area-inset-right,0px)) 8px max(14px,env(safe-area-inset-left,0px));background:linear-gradient(var(--ipod-1),var(--ipod-2));color:var(--ipod-ink);border-bottom:1px solid var(--hair-2);font:600 13.5px var(--body)}
+.topbar a{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:8px;padding:4px 8px;border-radius:8px}
+.topbar a:hover{background:rgba(127,127,127,.18)}
+.topbar .inf{font:400 22px/1 var(--lcdf)}
+.lcdtag{font:400 17px/1 var(--lcdf);letter-spacing:.08em;background:linear-gradient(var(--lcd-1),var(--lcd-2));color:var(--lcd-ink);padding:4px 9px;border-radius:5px;border:1px solid rgba(0,0,0,.4);white-space:nowrap}
+.themebtn{appearance:none;border:0;background:none;color:inherit;padding:6px;display:grid;place-items:center;cursor:pointer;border-radius:6px}
+.themebtn svg{width:16px;height:16px;fill:currentColor;display:block}
+@media (max-width:520px){.lcdtag{display:none}}
+
+/* ── Portal: the wormhole you fell through ── */
+.portal{position:relative;min-height:calc(100svh - 50px);display:grid;place-items:center;overflow:hidden;text-align:center;isolation:isolate}
+.tunnel{position:absolute;inset:0;width:100%;height:100%;z-index:-2}
+.rings{animation:spin 60s linear infinite}
+.ring{fill:none;stroke-width:5;transform-origin:0 0;animation:tun 8s linear infinite;animation-delay:calc(var(--i) * -.5s)}
+.ring:nth-child(5n+1){stroke:var(--s1)} .ring:nth-child(5n+2){stroke:var(--s2)} .ring:nth-child(5n+3){stroke:var(--s3)} .ring:nth-child(5n+4){stroke:var(--s4)} .ring:nth-child(5n){stroke:var(--s5)}
+@keyframes tun{0%{transform:scale(.04);opacity:0}12%{opacity:.95}55%{transform:scale(1)}82%{transform:scale(3.2);opacity:.8}100%{transform:scale(9);opacity:0}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.portal::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(closest-side,var(--paper) 0%,color-mix(in srgb,var(--paper) 86%,transparent) 55%,transparent 100%);transform:scale(1.05)}
+.portal-in{padding:56px 16px 72px;max-width:900px}
+.portal .kick{text-wrap:balance}
+.portal .chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:26px}
+.scrollcue{margin-top:34px;font:600 12.5px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);display:inline-flex;flex-direction:column;align-items:center;gap:8px}
+.scrollcue i{width:2px;height:34px;background:linear-gradient(var(--s3),transparent);animation:cue 1.8s ease-in-out infinite}
+@keyframes cue{0%{transform:scaleY(.2);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}100%{transform:scaleY(.2);transform-origin:bottom}}
+@media (prefers-reduced-motion:reduce){
+  .rings,.scrollcue i{animation:none}
+  .ring{animation:none;opacity:.6;transform:scale(calc(.12 + var(--i) * .22))}
+}
+
+/* ── The line: scroll to wait ── */
+.line-sec{position:relative;height:420vh}
+.stage{position:sticky;top:50px;height:calc(100svh - 50px);display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:10px;padding:18px 0 22px}
+.stage .wrap{width:100%}
+.stage-top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
+.lcd{background:linear-gradient(var(--lcd-1),var(--lcd-2));color:var(--lcd-ink);border:2px solid rgba(0,0,0,.5);border-radius:10px;box-shadow:inset 0 2px 6px rgba(0,0,0,.35);padding:6px 14px 8px;min-width:210px}
+.lcd small{display:block;font:700 10.5px var(--body);letter-spacing:.16em;text-transform:uppercase;opacity:.85}
+.lcd b{display:block;font:400 clamp(38px,5.4vw,56px)/1 var(--lcdf);font-weight:400;font-variant-numeric:tabular-nums;letter-spacing:.02em}
+.lcd.over b{animation:blink 1s steps(2,start) infinite}
+@keyframes blink{to{visibility:hidden}}
+.stage-h{font:700 clamp(20px,2.6vw,30px)/1.15 var(--display);letter-spacing:-.025em;margin:0;max-width:22ch}
+.scene{width:100%;height:100%;display:block}
+.band path{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.band{opacity:.5}
+.q1{stroke:var(--s1);stroke-width:34px}.q2{stroke:var(--s2);stroke-width:27px}.q3{stroke:var(--s3);stroke-width:20px}.q4{stroke:var(--s4);stroke-width:13px}.q5{stroke:var(--s5);stroke-width:6px}
+.o1{fill:var(--s2)}.o2{fill:var(--s3)}.o3{fill:var(--s4)}
+.person{fill:var(--person)}
+.person.you{fill:var(--accent)}
+.person.pal{fill:var(--s5)}
+.tag{font:400 22px var(--lcdf);fill:var(--ink)}
+.booth-b{fill:var(--card);stroke:var(--hair-2);stroke-width:2}
+.booth-s{fill:var(--lcd-1);stroke:rgba(0,0,0,.45);stroke-width:2}
+.booth-l{font:400 20px var(--lcdf);fill:var(--ink-3);letter-spacing:.06em}
+.booth-o{animation:talk 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+.booth-o.b2{animation-delay:-.8s}.booth-o.b3{animation-delay:-1.6s}
+@keyframes talk{0%,100%{transform:scale(.8)}50%{transform:scale(1.12)}}
+.bubble rect,.bubble path{fill:var(--s5)}
+.bubble text{font:400 24px var(--lcdf);fill:#121530}
+.capwrap{position:relative;min-height:6.2em}
+.cap{position:absolute;inset:auto 0 0 0;background:var(--card);border:1px solid var(--hair-2);border-radius:14px;padding:14px 18px;max-width:640px;font-size:clamp(16px,1.8vw,19px);line-height:1.5;opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s}
+.cap.on{opacity:1;transform:none}
+.cap .n{display:block;font:400 18px/1 var(--lcdf);color:var(--ink-3);margin-bottom:4px}
+@media (prefers-reduced-motion:reduce){.booth-o{animation:none}.cap{transition:none}}
+
+/* ── Prose sections ── */
+.sec{position:relative;padding-block:88px}
+.sec + .sec{border-top:1px solid var(--hair)}
+.sec p{max-width:62ch}
+.sec .muted{color:var(--ink-2)}
+dfn{font-style:normal;font-weight:700;color:var(--ink)}
+.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.steps li{background:var(--card);border:1px solid var(--hair-2);border-radius:12px;padding:14px 14px 16px;font-size:15.5px;line-height:1.45;color:var(--ink-2)}
+.steps b{display:block;font:400 22px/1 var(--lcdf);color:var(--accent-ink);margin-bottom:8px}
+.steps strong{display:block;color:var(--ink);font:700 15px/1.3 var(--display);letter-spacing:-.01em;margin-bottom:4px}
+@media (max-width:759px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* ── Kiosk ── */
+.booth-sec .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,400px);gap:48px;align-items:center}
+.kiosk{justify-self:center;width:min(100%,380px)}
+.k-shell{background:linear-gradient(160deg,var(--ipod-1),var(--ipod-2));color:var(--ipod-ink);border-radius:26px;padding:14px 14px 18px;box-shadow:0 26px 54px -20px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.14)}
+.k-top{display:flex;justify-content:space-between;align-items:center;gap:8px;font:700 11px var(--body);letter-spacing:.1em;text-transform:uppercase;padding:2px 6px 10px}
+.k-top b{font:400 19px/1 var(--lcdf);letter-spacing:.02em;font-variant-numeric:tabular-nums}
+.k-screen{position:relative;min-height:470px;border-radius:12px;background:linear-gradient(var(--lcd-1),var(--lcd-2));color:var(--lcd-ink);border:2px solid rgba(0,0,0,.55);box-shadow:inset 0 2px 6px rgba(0,0,0,.35);padding:18px 16px 16px;display:flex;flex-direction:column;gap:12px}
+.k-orbwrap{display:grid;place-items:center;height:96px;flex:none}
+.orb{position:relative;width:78px;height:78px;border-radius:50%;overflow:hidden;box-shadow:0 0 18px rgba(93,118,255,.5),inset 0 -6px 16px rgba(0,0,0,.28);transform:scale(.88)}
+.orb::before{content:"";position:absolute;inset:-35%;background:conic-gradient(from 0deg,var(--s2),var(--s3),var(--s5),var(--s4),var(--s2));animation:spin 9s linear infinite;filter:blur(7px)}
+.orb::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.7),rgba(255,255,255,0) 40%)}
+.orb.talk{animation:speak 1.3s ease-in-out}
+@keyframes speak{0%{transform:scale(.88)}15%{transform:scale(1.08)}30%{transform:scale(.95)}45%{transform:scale(1.12)}60%{transform:scale(.96)}78%{transform:scale(1.05)}100%{transform:scale(.88)}}
+.k-step{font:800 10.5px var(--body);letter-spacing:.16em;text-transform:uppercase;text-align:center;margin:0;opacity:.85}
+.k-say{font:700 clamp(19px,2.2vw,22px)/1.3 var(--display);letter-spacing:-.015em;text-align:center;margin:0;min-height:3.9em;display:grid;place-items:center}
+.redact{display:inline-flex;gap:6px;flex-wrap:wrap;justify-content:center}
+.redact i{display:inline-block;height:.8em;background:currentColor;border-radius:3px;opacity:.85}
+.k-note{font:500 13.5px/1.4 var(--body);text-align:center;margin:-4px 0 0;opacity:.85}
+.k-opts{display:grid;gap:8px;margin-top:auto}
+.k-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:auto}
+.k-opt{appearance:none;display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:1.5px solid currentColor;background:rgba(255,255,255,.08);color:inherit;font:600 15px/1.3 var(--body);padding:10px 12px;border-radius:10px;cursor:pointer}
+.k-opt:hover{background:rgba(255,255,255,.18)}
+.k-opt.mic::before{content:"";flex:none;width:9px;height:15px;border:2px solid currentColor;border-radius:6px;box-shadow:0 7px 0 -5px currentColor}
+.k-opt.right{border-color:var(--s5);box-shadow:0 0 0 3px color-mix(in srgb,var(--s5) 45%,transparent)}
+.k-tile{appearance:none;border:1.5px solid currentColor;border-radius:10px;background:rgba(255,255,255,.06);color:inherit;cursor:pointer;padding:0 0 8px;font:700 12.5px/1.25 var(--body);display:grid;gap:8px;overflow:hidden}
+.k-tile:hover{background:rgba(255,255,255,.16)}
+.k-tile .art{display:block;aspect-ratio:1;background:repeating-linear-gradient(135deg,var(--s1) 0 7px,var(--s2) 7px 14px,var(--s3) 14px 21px,var(--s4) 21px 28px,var(--s5) 28px 35px);position:relative}
+.k-tile .art::after{content:"?";position:absolute;inset:0;display:grid;place-items:center;font:800 30px var(--display);color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.45)}
+.k-human{display:flex;gap:10px;align-items:flex-start;background:var(--s5);color:#121530;border-radius:12px;padding:10px 12px;font:600 14px/1.4 var(--body)}
+.k-human svg{flex:none;width:30px;height:38px;fill:#121530}
+.k-done{display:grid;gap:8px;margin-top:auto}
+.k-done dl{margin:0;display:grid;gap:0}
+.k-done dl div{display:flex;justify-content:space-between;gap:10px;border-top:1px solid rgba(127,127,127,.4);padding:7px 0;font:600 14px/1.35 var(--body)}
+.k-done dt{opacity:.85}
+.k-done dd{margin:0;font:400 20px/1 var(--lcdf);text-align:right;white-space:nowrap}
+.k-base{width:46%;height:16px;margin:0 auto;background:linear-gradient(var(--ipod-2),var(--ipod-1));border-radius:0 0 12px 12px}
+.k-foot{width:70%;height:10px;margin:0 auto;border-radius:6px;background:var(--hair-2)}
+.k-cap{font-size:13.5px;line-height:1.45;color:var(--ink-3);text-align:center;margin:14px auto 0;max-width:34ch}
+@media (max-width:859px){.booth-sec .wrap{grid-template-columns:minmax(0,1fr);gap:28px}}
+@media (prefers-reduced-motion:reduce){.orb::before,.orb.talk{animation:none}}
+
+/* ── Booth vs bank ── */
+.map{display:grid;gap:12px;margin:30px 0 8px}
+.map-row{display:grid;grid-template-columns:minmax(0,1fr) 28px minmax(0,1fr);gap:0;align-items:stretch}
+.map-row > div{background:var(--card);border:1px solid var(--hair-2);border-radius:12px;padding:14px 16px;font-size:15.5px;line-height:1.5;color:var(--ink-2)}
+.map-row > div b{display:block;font:700 11px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px}
+.map-row > div.bank{border-color:color-mix(in srgb,var(--s3) 55%,transparent)}
+.map-row > div.bank b{color:var(--s3)}
+.map-row > i{align-self:center;justify-self:center;width:14px;height:14px;border-top:2.5px solid var(--ink-3);border-right:2.5px solid var(--ink-3);transform:rotate(45deg);margin-left:-6px}
+@media (max-width:640px){.map-row{grid-template-columns:minmax(0,1fr);gap:6px}.map-row > i{transform:rotate(135deg);margin:0 0 2px}}
+
+ol.take{list-style:none;counter-reset:t;margin:28px 0 0;padding:0;display:grid;max-width:760px}
+ol.take li{counter-increment:t;display:grid;grid-template-columns:62px minmax(0,1fr);gap:14px;padding:18px 0;border-top:1px solid var(--hair-2)}
+ol.take li::before{content:counter(t,decimal-leading-zero);font:800 32px/1.05 var(--display);color:var(--accent);letter-spacing:-.04em}
+ol.take b{display:block;font:700 19px/1.3 var(--display);letter-spacing:-.015em;margin-bottom:4px}
+ol.take span{color:var(--ink-2);font-size:16.5px}
+@media (max-width:759px){ol.take li{grid-template-columns:44px minmax(0,1fr)}ol.take li::before{font-size:24px}}
+
+/* ── Run the numbers ── */
+.calc{background:var(--card);border:1px solid var(--hair-2);border-radius:18px;padding:22px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:26px 36px;margin-top:28px}
+.ctl{display:grid;gap:16px;align-content:start}
+.ctl label{display:grid;gap:6px;font:600 14.5px var(--body)}
+.ctl .row{display:flex;justify-content:space-between;gap:8px}
+.ctl output{font:400 21px/1 var(--lcdf);color:var(--accent-ink)}
+.ctl input[type=range]{width:100%;accent-color:var(--accent)}
+.ctl .chk{display:flex;align-items:flex-start;gap:10px;font-weight:500;color:var(--ink-2)}
+.ctl .chk input{margin-top:5px;accent-color:var(--accent);width:17px;height:17px;flex:none}
+.res{display:grid;gap:14px;align-content:start}
+.res .big{font:800 clamp(44px,6vw,68px)/1 var(--display);letter-spacing:-.045em;color:var(--accent);font-variant-numeric:tabular-nums}
+.res .lbl{font:700 11.5px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.res .math{font:400 19px/1.3 var(--lcdf);color:var(--ink-2)}
+.bars{display:grid;gap:10px;margin-top:4px}
+.bars div{display:grid;gap:4px;font-size:14px;color:var(--ink-2)}
+.bars span{display:flex;justify-content:space-between;gap:8px}
+.bars b{font:400 19px/1 var(--lcdf);color:var(--ink)}
+.bars .track{display:block;height:12px;border-radius:6px;background:var(--hair);overflow:hidden}
+.bars .fill{display:block;width:0;height:100%;border-radius:6px;background:var(--accent);transition:width .3s}
+.bars .fill.alt{background:var(--s3)}
+.calc-note{grid-column:1/-1;font-size:13.5px;color:var(--ink-3);margin:0;border-top:1px solid var(--hair);padding-top:12px}
+@media (max-width:759px){.calc{grid-template-columns:minmax(0,1fr);padding:18px}}
+@media (prefers-reduced-motion:reduce){.bars .fill{transition:none}}
+
+/* ── Outro ── */
+.outro{text-align:center;padding-block:96px 80px}
+.door{display:inline-grid;place-items:center;width:132px;height:132px;border-radius:50%;text-decoration:none;color:var(--ink);font:400 76px/1 var(--lcdf);background:radial-gradient(circle,var(--paper) 52%,transparent 54%),conic-gradient(var(--s1),var(--s2),var(--s3),var(--s4),var(--s5),var(--s1));box-shadow:0 0 34px rgba(93,118,255,.35);transition:transform .3s}
+.door:hover{transform:rotate(-12deg) scale(1.05)}
+.outro .links{display:flex;gap:10px 22px;justify-content:center;flex-wrap:wrap;margin-top:22px;font:600 15px var(--body)}
+@media (prefers-reduced-motion:reduce){.door{transition:none}}
+footer{border-top:1px solid var(--hair-2);background:var(--paper-2)}
+footer .wrap{padding-block:40px 56px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:24px 48px}
+footer p{font-size:15px;color:var(--ink-2);margin:0 0 12px;max-width:62ch}
+footer p b{color:var(--ink)}
+footer h3{font:700 11.5px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 8px}
+footer ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14.5px}
+@media (max-width:759px){footer .wrap{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:759px){body{font-size:17px}.sec{padding-block:60px}}
+</style>
+</head>
+<body>
+
+<nav class="topbar" aria-label="Bonus track">
+  <a href="../#encore"><span class="inf" aria-hidden="true">∞</span><span>Back through the door</span></a>
+  <span class="lcdtag">B-SIDE · UNRELEASED</span>
+  <button class="themebtn" type="button"><svg viewBox="0 0 16 16"></svg></button>
+</nav>
+
+<main>
+<!-- The wormhole -->
+<header class="portal">
+  <svg class="tunnel" viewBox="-500 -500 1000 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g class="rings">
+      <circle class="ring" r="60" style="--i:0"/><circle class="ring" r="60" style="--i:1"/><circle class="ring" r="60" style="--i:2"/><circle class="ring" r="60" style="--i:3"/><circle class="ring" r="60" style="--i:4"/>
+      <circle class="ring" r="60" style="--i:5"/><circle class="ring" r="60" style="--i:6"/><circle class="ring" r="60" style="--i:7"/><circle class="ring" r="60" style="--i:8"/><circle class="ring" r="60" style="--i:9"/>
+      <circle class="ring" r="60" style="--i:10"/><circle class="ring" r="60" style="--i:11"/><circle class="ring" r="60" style="--i:12"/><circle class="ring" r="60" style="--i:13"/><circle class="ring" r="60" style="--i:14"/>
+      <circle class="ring" r="60" style="--i:15"/>
+    </g>
+  </svg>
+  <div class="portal-in">
+    <p class="kick">You found the door behind ∞ · Bonus track</p>
+    <h1>The longest hour at the <span>voice summit.</span></h1>
+    <p class="lede">A colleague and I waited well over an hour for free merch. The merch wasn't the hold-up. The voice agent was.</p>
+    <div class="chips"><span class="chip">Not narrated yet</span><span class="chip">ElevenLabs Summit NYC · 11.11.26</span></div>
+    <a class="scrollcue" href="#line">Get in line<i aria-hidden="true"></i></a>
+  </div>
+</header>
+
+<!-- The line: scroll to wait -->
+<section class="line-sec" id="line" aria-label="Waiting in the merch line">
+  <div class="stage">
+    <div class="wrap stage-top">
+      <p class="stage-h">Scroll to wait in line.</p>
+      <div class="lcd" id="lcd" role="img" aria-label="Time in line"><small>Time in line</small><b id="clock">0:00:00</b></div>
+    </div>
+    <div class="wrap" style="min-height:0">
+      <svg class="scene" id="scene" viewBox="0 0 1000 640" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <g class="booths">
+          <g transform="translate(300 28)"><rect class="booth-b" x="0" y="0" width="84" height="118" rx="10"/><rect class="booth-s" x="10" y="10" width="64" height="70" rx="5"/><circle class="booth-o o1" cx="42" cy="45" r="16"/><text class="booth-l" x="42" y="104" text-anchor="middle">BOOTH 1</text></g>
+          <g transform="translate(458 28)"><rect class="booth-b" x="0" y="0" width="84" height="118" rx="10"/><rect class="booth-s" x="10" y="10" width="64" height="70" rx="5"/><circle class="booth-o b2 o2" cx="42" cy="45" r="16"/><text class="booth-l" x="42" y="104" text-anchor="middle">BOOTH 2</text></g>
+          <g transform="translate(616 28)"><rect class="booth-b" x="0" y="0" width="84" height="118" rx="10"/><rect class="booth-s" x="10" y="10" width="64" height="70" rx="5"/><circle class="booth-o b3 o3" cx="42" cy="45" r="16"/><text class="booth-l" x="42" y="104" text-anchor="middle">BOOTH 3</text></g>
+          <g class="bubble" transform="translate(712 18)"><rect x="0" y="0" width="150" height="40" rx="10"/><path d="M8 30l-14 16 26-10z"/><text x="75" y="27" text-anchor="middle">What is ASR?</text></g>
+        </g>
+        <g class="band">
+          <path id="qpath" class="q1" d="M70 594H860A55 55 0 0 0 860 484H160A55 55 0 0 1 160 374H860A55 55 0 0 0 860 264H500V196"/>
+          <path class="q2" d="M70 594H860A55 55 0 0 0 860 484H160A55 55 0 0 1 160 374H860A55 55 0 0 0 860 264H500V196"/>
+          <path class="q3" d="M70 594H860A55 55 0 0 0 860 484H160A55 55 0 0 1 160 374H860A55 55 0 0 0 860 264H500V196"/>
+          <path class="q4" d="M70 594H860A55 55 0 0 0 860 484H160A55 55 0 0 1 160 374H860A55 55 0 0 0 860 264H500V196"/>
+          <path class="q5" d="M70 594H860A55 55 0 0 0 860 484H160A55 55 0 0 1 160 374H860A55 55 0 0 0 860 264H500V196"/>
+        </g>
+        <g id="crowd"></g>
+      </svg>
+    </div>
+    <div class="wrap capwrap" id="caps">
+      <p class="cap"><span class="n">0:00</span>The merch was free. A colleague and I got in line for it.</p>
+      <p class="cap"><span class="n">Up front</span>Three booths, each with a screen and an ElevenLabs voice agent. Nobody behind a table handing things out.</p>
+      <p class="cap"><span class="n">The catch</span>Everyone ahead of us had to tap the screen to pick something, then answer three questions out loud.</p>
+      <p class="cap"><span class="n">The hold-up</span>Question one stopped almost everyone. Every so often a staffer stepped in to help someone get past it.</p>
+      <p class="cap"><span class="n">1:00:00+</span>Well over an hour later, it was our turn.</p>
+    </div>
+  </div>
+</section>
+
+<!-- How the booth worked -->
+<section class="sec" id="how">
+  <div class="wrap">
+    <p class="kick">How the booth worked</p>
+    <h2>Free merch, one spoken quiz away</h2>
+    <p class="muted">There were no humans handing out merch at that point. Distribution ran entirely through three booths, each with a touchscreen and an ElevenLabs voice agent. The flow was simple on paper.</p>
+    <ol class="steps">
+      <li><b>01</b><strong>Tap</strong>Pick what you want on the screen.</li>
+      <li><b>02</b><strong>Question one</strong>Out loud. The hard one.</li>
+      <li><b>03</b><strong>Question two</strong>Out loud. Easier. I don't remember it.</li>
+      <li><b>04</b><strong>Question three</strong>Out loud. Then the merch is yours.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- Try the booth -->
+<section class="sec booth-sec" id="booth">
+  <div class="wrap">
+    <div>
+      <p class="kick">Your turn</p>
+      <h2>Step up to booth 2</h2>
+      <p class="muted">This is the booth as I remember it, minus the hour. Tap your way through. The answers you pick stand in for what you'd say out loud.</p>
+      <p class="muted">Pay attention to question one. That's where the line went to die.</p>
+    </div>
+    <div class="kiosk">
+      <div class="k-shell">
+        <div class="k-top"><span>Merch · Booth 2 of 3</span><span>At the booth <b id="k-time">0:00</b></span></div>
+        <div class="k-screen">
+          <div class="k-orbwrap"><div class="orb" id="k-orb" aria-hidden="true"></div></div>
+          <p class="k-step" id="k-step">Tap to choose</p>
+          <p class="k-say" id="k-say" aria-live="polite">Hi there! Tap what you'd like.</p>
+          <p class="k-note" id="k-note" hidden></p>
+          <div class="k-human" id="k-human" hidden role="status"><svg viewBox="0 0 30 38" aria-hidden="true"><circle cx="15" cy="8" r="7"/><rect x="4" y="17" width="22" height="21" rx="9"/></svg><span id="k-human-t"></span></div>
+          <div class="k-tiles" id="k-tiles"></div>
+          <div class="k-opts" id="k-opts"></div>
+          <div class="k-done" id="k-done" hidden>
+            <dl>
+              <div><dt>Time at the booth</dt><dd id="d-time">0:00</dd></div>
+              <div><dt>Tries on question one</dt><dd id="d-tries">0</dd></div>
+              <div><dt>Times a human stepped in</dt><dd id="d-help">0</dd></div>
+              <div><dt>Time in line before this</dt><dd>1:00:00+</dd></div>
+            </dl>
+            <button class="k-opt" type="button" id="k-again">Get back in line</button>
+          </div>
+        </div>
+      </div>
+      <div class="k-base" aria-hidden="true"></div><div class="k-foot" aria-hidden="true"></div>
+      <p class="k-cap">Recreated from memory. Booth time is simulated, and the agent's replies are paraphrased.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Question one -->
+<section class="sec" id="asr">
+  <div class="wrap narrow">
+    <p class="kick">Question one</p>
+    <h2>“What is ASR?”</h2>
+    <p><dfn>ASR</dfn> is automatic speech recognition: the part of a voice agent that turns what you say into text. It's the agent's ears. ElevenLabs sells its own, called Scribe, and launched Scribe v3 that same day.</p>
+    <p>So we'd heard plenty about Scribe. As far as I heard, nobody on stage said “ASR” all day. The first thing standing between a room of AI-curious people and a free piece of merch was a vocabulary test in industry jargon.</p>
+    <p>People froze, guessed, asked it to repeat itself, and tried again. Eventually the staff standing nearby started helping people through it. The humans were in the loop the whole time. They just weren't part of the design.</p>
+    <p class="pull">The agent needed ASR to hear you say “ASR.”</p>
+    <p>Question two was easier, so easy I can't remember it. Question three asked which company has the best voice models. And that was it. Three spoken questions, plus the retries, multiplied by every person in the line, added up to well over an hour.</p>
+  </div>
+</section>
+
+<!-- Booth vs bank -->
+<section class="sec" id="bank">
+  <div class="wrap">
+    <p class="kick">The other line of thought</p>
+    <h2>I've seen this booth before. It was a bank's phone line.</h2>
+    <p class="muted">Strip out the merch and the booth is a pattern I see in regulated industries all the time: a voice agent placed in front of something a customer wants, gated by questions that serve the business more than the customer.</p>
+    <div class="map" role="list">
+      <div class="map-row" role="listitem"><div><b>At the booth</b>Question one asked for jargon I hadn't heard on stage all day.</div><i aria-hidden="true"></i><div class="bank"><b>On a bank's phone line</b>Security questions customers can't answer, like the exact amount of a recent deposit. They fail, call back or give up.</div></div>
+      <div class="map-row" role="listitem"><div><b>At the booth</b>Staff stood nearby and helped people get past the question.</div><i aria-hidden="true"></i><div class="bank"><b>On a bank's phone line</b>Reps coaching callers through verification. If people routinely need help to pass a check, the check isn't working.</div></div>
+      <div class="map-row" role="listitem"><div><b>At the booth</b>Question three had one obvious answer: the host.</div><i aria-hidden="true"></i><div class="bank"><b>On a bank's phone line</b>Surveys built to flatter. You get a score, not a signal.</div></div>
+      <div class="map-row" role="listitem"><div><b>At the booth</b>Three self-serve booths and no one at a table.</div><i aria-hidden="true"></i><div class="bank"><b>On a bank's phone line</b>A contact center scored on containment. The dashboard says “automated.” The customer says “an hour.”</div></div>
+    </div>
+    <h2 style="margin-top:56px">What I'd tell anyone putting a voice agent at the front door</h2>
+    <ol class="take">
+      <li><div><b>Ask only what the moment needs.</b><span>The booth needed to know which item you wanted. Everything after that felt like a quiz.</span></div></li>
+      <li><div><b>Speak your customer's language, not your roadmap's.</b><span>“ASR” is how builders talk. Customers say “it didn't hear me.”</span></div></li>
+      <li><div><b>Design the human in.</b><span>The staff ended up in the loop anyway. Make the hand-off official, quick and logged, so it's a feature instead of a workaround.</span></div></li>
+      <li><div><b>Measure the line, not the bot.</b><span>Every second a voice flow adds gets multiplied by everyone waiting behind it. Containment rate won't show you that. Wait time will.</span></div></li>
+      <li><div><b>Friction should protect someone.</b><span>Banks add friction on purpose: fraud checks, step-up verification, cooling-off periods. Good friction protects a customer. This friction protected free merch.</span></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- Run the numbers -->
+<section class="sec" id="numbers">
+  <div class="wrap">
+    <p class="kick">Run the numbers</p>
+    <h2>Every question gets multiplied by the line</h2>
+    <p class="muted">A toy model of the merch line. Move the sliders and see how much of the wait came from the questions rather than the crowd.</p>
+    <div class="calc">
+      <div class="ctl">
+        <label for="c-people"><span class="row"><span>People ahead of you</span><output id="o-people" for="c-people">75</output></span><input type="range" id="c-people" min="10" max="150" step="5" value="75"></label>
+        <label for="c-booths"><span class="row"><span>Booths</span><output id="o-booths" for="c-booths">3</output></span><input type="range" id="c-booths" min="1" max="6" step="1" value="3"></label>
+        <label for="c-qs"><span class="row"><span>Spoken questions</span><output id="o-qs" for="c-qs">3</output></span><input type="range" id="c-qs" min="0" max="3" step="1" value="3"></label>
+        <label for="c-qsec"><span class="row"><span>Seconds per question</span><output id="o-qsec" for="c-qsec">25</output></span><input type="range" id="c-qsec" min="10" max="45" step="5" value="25"></label>
+        <label class="chk"><input type="checkbox" id="c-jargon" checked><span>Question one is jargon (two failed tries each)</span></label>
+      </div>
+      <div class="res" aria-live="polite">
+        <span class="lbl">Your estimated wait</span>
+        <span class="big" id="r-wait">60 min</span>
+        <span class="math" id="r-math"></span>
+        <div class="bars">
+          <div><span>With the quiz <b id="r-a">60 min</b></span><span class="track"><span class="fill" id="b-a"></span></span></div>
+          <div><span>Tap, grab, go <b id="r-b">8 min</b></span><span class="track"><span class="fill alt" id="b-b"></span></span></div>
+        </div>
+      </div>
+      <p class="calc-note">Assumes 20 seconds to tap a pick and grab it, plus the questions, with every booth busy the whole time. The defaults are my guesses, not a count of the actual line, picked to land near what we lived through.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Outro -->
+<section class="sec outro">
+  <div class="wrap narrow">
+    <p class="kick">The kicker</p>
+    <h2>The tech worked. The questions didn't.</h2>
+    <p class="muted" style="margin-inline:auto">The summit was incredibly well run, which is exactly why this line stuck with me. The voice agent did its job. Someone just decided to put a quiz between people and the thing they came for, and to ask the hardest question first.</p>
+    <p class="muted" style="margin-inline:auto">Question three asked which company has the best voice models. Maybe the one asking does. But the best model in the world can't rescue a question nobody should have been asked.</p>
+    <p style="margin-top:40px"><a class="door" href="../#encore" aria-label="Back through the door to the hidden track">∞</a></p>
+    <div class="links"><a href="../#encore">Back to the hidden track</a><a href="../">Start the album over</a></div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="stripes" aria-hidden="true"><i class="f1"></i><i class="f2"></i><i class="f3"></i><i class="f4"></i><i class="f5"></i></div>
+  <div class="wrap">
+    <div>
+      <p><b>About this bonus track.</b> Written by Carson Boykin after the ElevenLabs Summit NYC on November 11, 2026. It isn't narrated yet.</p>
+      <p><b>From memory.</b> I don't have photos from the merch booths, so the line, the booths and the booth screen are illustrations recreated from my memory. The booth's lines are paraphrased, and its replies to wrong answers, the booth timer and the toy model's inputs are illustrative.</p>
+    </div>
+    <div>
+      <h3>Background</h3>
+      <ul>
+        <li><a href="https://elevenlabs.io/blog/nyc-summit" target="_blank" rel="noopener">ElevenLabs: Summit NYC announcements, including Scribe v3</a></li>
+        <li><a href="https://the-decoder.com/elevenlabs-scribe-v3-live-uses-conversational-context-to-stop-voice-agents-from-cutting-off-callers-mid-sentence/" target="_blank" rel="noopener">The Decoder on Scribe v3 Live</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(s, r){ return (r || document).querySelector(s); };
+  var $$ = function(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var pad = function(n){ return (n < 10 ? "0" : "") + n; };
+  var NS = "http://www.w3.org/2000/svg";
+  function mmss(s){ s = Math.max(0, Math.round(s)); return Math.floor(s / 60) + ":" + pad(s % 60); }
+  function hms(s){ s = Math.max(0, Math.floor(s)); return Math.floor(s / 3600) + ":" + pad(Math.floor(s / 60) % 60) + ":" + pad(s % 60); }
+
+  /* ───────────── The line ───────────── */
+  var sec = $("#line"), path = $("#qpath"), crowd = $("#crowd"), clock = $("#clock"), lcd = $("#lcd"), caps = $$("#caps .cap");
+  var L = path.getTotalLength(), GAP = 48, START = 46, AHEAD = Math.floor((L - START) / GAP), BEHIND = 30;
+  function person(cls){
+    var g = document.createElementNS(NS, "g"); g.setAttribute("class", "person " + (cls || ""));
+    var h = document.createElementNS(NS, "circle"); h.setAttribute("cx", "0"); h.setAttribute("cy", "-33"); h.setAttribute("r", "8.5");
+    var b = document.createElementNS(NS, "rect"); b.setAttribute("x", "-10.5"); b.setAttribute("y", "-23"); b.setAttribute("width", "21"); b.setAttribute("height", "27"); b.setAttribute("rx", "9");
+    g.appendChild(h); g.appendChild(b); crowd.appendChild(g); return g;
+  }
+  var ahead = [], behind = [], i;
+  for (i = 0; i < BEHIND; i++) behind.push(person());
+  for (i = 0; i < AHEAD; i++) ahead.push(person());
+  var pal = person("pal"), you = person("you");
+  var youTag = document.createElementNS(NS, "text"); youTag.setAttribute("class", "tag"); youTag.setAttribute("text-anchor", "middle"); youTag.textContent = "US"; crowd.appendChild(youTag);
+
+  function place(g, s){
+    if (s < 0 || s > L + 12){ g.style.display = "none"; return; }
+    g.style.display = "";
+    var p = path.getPointAtLength(Math.min(L, s));
+    g.setAttribute("transform", "translate(" + p.x.toFixed(1) + " " + p.y.toFixed(1) + ")");
+    g.style.opacity = s > L - 6 ? Math.max(0, (L + 12 - s) / 18).toFixed(2) : "";
+  }
+  // a queue moves in shuffles: wait, step forward, wait
+  function stepped(p, n){
+    var t = p * n, k = Math.floor(t), f = t - k;
+    f = Math.min(1, Math.max(0, (f - .55) / .45)); f = f * f * (3 - 2 * f);
+    return Math.min(1, (k + f) / n);
+  }
+  var raf = 0;
+  function drawLine(){
+    raf = 0;
+    var r = sec.getBoundingClientRect(), span = Math.max(1, r.height - window.innerHeight);
+    var p = Math.min(1, Math.max(0, -r.top / span));
+    var q = stepped(p, 18), sYou = START + (L - START - 20) * q;
+    place(you, sYou); place(pal, sYou - GAP * .62);
+    var pt = path.getPointAtLength(Math.max(0, Math.min(L, sYou - GAP * .3)));
+    youTag.setAttribute("x", pt.x.toFixed(1)); youTag.setAttribute("y", (pt.y - 50).toFixed(1));
+    for (var k = 0; k < ahead.length; k++) place(ahead[k], sYou + (k + 1) * GAP);
+    var joined = Math.floor(p * BEHIND * 1.1);
+    for (k = 0; k < behind.length; k++) place(behind[k], k < joined ? sYou - GAP * .62 - (k + 1) * GAP : -1);
+    var over = p > .985;
+    clock.textContent = over ? "1:00:00+" : hms(p * 3600);
+    lcd.classList.toggle("over", over);
+    lcd.setAttribute("aria-label", "Time in line: " + (over ? "over an hour" : Math.floor(p * 60) + " minutes"));
+    var ci = Math.min(caps.length - 1, Math.floor(p * caps.length * 1.02));
+    caps.forEach(function(c, j){ c.classList.toggle("on", j === ci); });
+  }
+  function onScroll(){ if (!raf) raf = requestAnimationFrame(drawLine); }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+  drawLine();
+
+  /* ───────────── The booth ───────────── */
+  var K = {}, kTime = $("#k-time"), kSay = $("#k-say"), kStep = $("#k-step"), kNote = $("#k-note"), kOrb = $("#k-orb");
+  var kTiles = $("#k-tiles"), kOpts = $("#k-opts"), kHuman = $("#k-human"), kDone = $("#k-done");
+  function clear(el){ while (el.firstChild) el.removeChild(el.firstChild); }
+  function add(s){ K.t += s; kTime.textContent = mmss(K.t); }
+  function talk(){ kOrb.classList.remove("talk"); void kOrb.offsetWidth; kOrb.classList.add("talk"); }
+  function say(step, text, note){
+    kStep.textContent = step; clear(kSay);
+    if (typeof text === "string") kSay.textContent = text; else kSay.appendChild(text);
+    kNote.hidden = !note; kNote.textContent = note || "";
+    talk();
+  }
+  function options(list){
+    clear(kOpts); clear(kTiles);
+    list.forEach(function(o){
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "k-opt mic" + (o.cls ? " " + o.cls : "");
+      b.textContent = o.label; b.setAttribute("aria-label", "Say: " + o.plain);
+      b.addEventListener("click", o.go); kOpts.appendChild(b);
+    });
+  }
+  function focusFirst(){ var b = $("#k-opts button, #k-tiles button"); if (b && K.kbd) b.focus({ preventScroll: true }); }
+
+  function start(){
+    K = { t: 0, tries: 0, helped: 0, kbd: K.kbd };
+    kTime.textContent = "0:00"; kHuman.hidden = true; kDone.hidden = true;
+    say("Tap to choose", "Hi there! Tap what you'd like.");
+    clear(kOpts); clear(kTiles);
+    ["This one", "That one", "The other one"].forEach(function(name){
+      var b = document.createElement("button"), art = document.createElement("span"), t = document.createElement("span");
+      b.type = "button"; b.className = "k-tile"; art.className = "art"; art.setAttribute("aria-hidden", "true"); t.textContent = name;
+      b.appendChild(art); b.appendChild(t);
+      b.addEventListener("click", function(){ add(10); q1("Great pick. Answer three quick questions and it's yours. First: what is ASR?"); });
+      kTiles.appendChild(b);
+    });
+  }
+  function q1(line){
+    say("Question 1 of 3", line);
+    var list = [
+      { label: "“Uh… a sound thing?”", plain: "a sound thing?", go: function(){ miss("Not quite. Let's try again. What is ASR?"); } },
+      { label: "“Can you repeat that?”", plain: "can you repeat that?", go: function(){ miss("Sure! What is ASR?"); } },
+      { label: "“I honestly have no idea.”", plain: "I honestly have no idea.", go: function(){ miss("No problem, take your time. What is ASR?"); } }
+    ];
+    if (K.helped) list.push({ label: "“Automatic speech recognition.”", plain: "automatic speech recognition", cls: "right", go: function(){ add(20); q2(); } });
+    options(list); focusFirst();
+  }
+  function miss(reply){
+    add(25); K.tries++;
+    if (K.tries >= 2 && !K.helped){
+      K.helped = 1; add(10);
+      $("#k-human-t").textContent = "A staffer leans in: “It's automatic speech recognition.”";
+      kHuman.hidden = false;
+    }
+    q1(reply);
+  }
+  function q2(){
+    kHuman.hidden = true;
+    var red = document.createElement("span"), sr = document.createElement("span");
+    red.className = "redact"; red.setAttribute("aria-hidden", "true");
+    [3.2, 1.6, 2.4, 4.4, 2].forEach(function(w){ var i = document.createElement("i"); i.style.width = w + "ch"; red.appendChild(i); });
+    sr.textContent = "Question two, which I don't remember."; sr.style.cssText = "position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)";
+    var wrap = document.createElement("span"); wrap.appendChild(red); wrap.appendChild(sr);
+    say("Question 2 of 3", wrap, "I honestly don't remember question two. It was easier.");
+    options([{ label: "“[Answers it easily]”", plain: "the answer to question two", go: function(){ add(20); q3("Correct! Last one: which company has the best voice models?"); } }]);
+    focusFirst();
+  }
+  function q3(line){
+    say("Question 3 of 3", line);
+    options([
+      { label: "“ElevenLabs.”", plain: "ElevenLabs", go: function(){ add(15); done(); } },
+      { label: "“Honestly? It depends on the use case.”", plain: "it depends on the use case", go: function(){ add(25); q3("Let's try that one again. Which company has the best voice models?"); } }
+    ]);
+    focusFirst();
+  }
+  function done(){
+    say("Unlocked", "That's right! Your merch is ready.");
+    clear(kOpts);
+    $("#d-time").textContent = mmss(K.t); $("#d-tries").textContent = String(K.tries + 1); $("#d-help").textContent = String(K.helped);
+    kDone.hidden = false;
+    if (K.kbd) $("#k-again").focus({ preventScroll: true });
+  }
+  $("#k-again").addEventListener("click", start);
+  document.addEventListener("keydown", function(){ K.kbd = true; });
+  document.addEventListener("pointerdown", function(){ K.kbd = false; });
+  start();
+
+  /* ───────────── Run the numbers ───────────── */
+  var c = { people: $("#c-people"), booths: $("#c-booths"), qs: $("#c-qs"), qsec: $("#c-qsec"), jargon: $("#c-jargon") };
+  function mins(s){ return s < 90 ? Math.round(s) + " sec" : Math.round(s / 60) + " min"; }
+  function calc(){
+    var people = +c.people.value, booths = +c.booths.value, qs = +c.qs.value, qsec = +c.qsec.value;
+    var base = 20, per = base + qs * qsec + (c.jargon.checked && qs > 0 ? 2 * qsec : 0);
+    var rounds = Math.ceil(people / booths), wait = rounds * per, plain = rounds * base;
+    $("#o-people").textContent = people; $("#o-booths").textContent = booths; $("#o-qs").textContent = qs; $("#o-qsec").textContent = qsec;
+    $("#r-wait").textContent = mins(wait);
+    $("#r-math").textContent = people + " people ÷ " + booths + (booths === 1 ? " booth" : " booths") + " × " + mmss(per) + " each";
+    $("#r-a").textContent = mins(wait); $("#r-b").textContent = mins(plain);
+    $("#b-a").style.width = "100%"; $("#b-b").style.width = Math.max(2, plain / Math.max(wait, 1) * 100).toFixed(1) + "%";
+  }
+  Object.keys(c).forEach(function(k){ c[k].addEventListener("input", calc); c[k].addEventListener("change", calc); });
+  calc();
+
+  /* ───────────── Theme (dark by default) ───────────── */
+  var SUN = '<circle cx="8" cy="8" r="3.2"/><path d="M8 .9v2M8 13.1v2M.9 8h2M13.1 8h2M2.9 2.9l1.4 1.4M11.7 11.7l1.4 1.4M2.9 13.1l1.4-1.4M11.7 4.3l1.4-1.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>';
+  var MOON = '<path d="M13.6 10.3A6 6 0 0 1 5.7 2.4a6.1 6.1 0 1 0 7.9 7.9z"/>';
+  function paintTheme(){
+    var light = document.documentElement.getAttribute("data-theme") === "light";
+    $$(".themebtn").forEach(function(b){
+      b.querySelector("svg").innerHTML = light ? MOON : SUN;
+      b.setAttribute("aria-label", light ? "Switch to dark mode" : "Switch to light mode");
+    });
+  }
+  $$(".themebtn").forEach(function(b){ b.addEventListener("click", function(){
+    var toLight = document.documentElement.getAttribute("data-theme") !== "light";
+    if (toLight) document.documentElement.setAttribute("data-theme", "light"); else document.documentElement.removeAttribute("data-theme");
+    try { localStorage.setItem("vito-theme", toLight ? "light" : "dark"); } catch (e) {}
+    paintTheme();
+  }); });
+  paintTheme();
+})();
+</script>
+</body>
+</html>
