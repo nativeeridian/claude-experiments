@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <style>:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <meta name="theme-color" content="#0a0c18">
 <script>try{if(localStorage.getItem("vito-theme")==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}</script>
@@ -34,6 +36,7 @@
    "now playing"; the centrepiece is a sideways-device carousel of release covers. */
 :root{
   --gloss:rgba(255,255,255,.06); --print:#e9e7e0; --print-ink:#23283f;
+  --ipod-1:#30333d; --ipod-2:#0e0f13; --ipod-ink:#e6e9f2; --wheel:#1c1e25; --wheel-ink:#b9c0d0; --wheel-c:#2b2e37;
   --paper:#0a0c18; --paper-2:#10132a; --card:#131731; --ink:#e9ecf8; --ink-2:#a9afca; --ink-3:#8389a6;
   --hair:rgba(233,236,248,.11); --hair-2:rgba(233,236,248,.22);
   --s1:#d7dcfb; --s2:#5d76ff; --s3:#2cc6e4; --s4:#ff6748; --s5:#ffbd2e;
@@ -61,6 +64,7 @@
   --board:#2f46e8; --board-ink:#ffffff; --board-ink-2:rgba(255,255,255,.8);
   --bib:#ffffff; --bib-ink:#121530;
   --zebra:#eaf0fb; --sel:#3a6fd8; --gloss:rgba(255,255,255,.55); --print:#ffffff; --print-ink:#2a2f4d;
+  --ipod-1:#fdfdfe; --ipod-2:#dfe2e8; --ipod-ink:#22263a; --wheel:#eef0f4; --wheel-ink:#7f86a0; --wheel-c:#ffffff;
   --live-bg:#daf5e4; --live-fg:#0f6338; --ea-bg:#fff0c4; --ea-fg:#765000;
   --pre-bg:#d6f1f7; --pre-fg:#0a5b6e; --road-fg:#474e6b; --sign-bg:#ffe0ee; --sign-fg:#8a1b4d;
   color-scheme:light}
@@ -69,34 +73,85 @@
 html{scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--chrome-1)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--paper)}
 a{color:var(--accent-ink);text-underline-offset:3px}
 :focus-visible{outline:2px solid var(--sel);outline-offset:3px;border-radius:4px}
 .wrap{max-width:1140px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 
-/* ── Now Playing bar ─────────────────────────────────────────── */
-.np{position:sticky;top:env(safe-area-inset-top,0px);z-index:25;background:linear-gradient(var(--chrome-1),var(--chrome-2));border-bottom:1px solid var(--hair-2)}
-.np .wrap{display:flex;align-items:center;gap:12px;padding-block:8px}
-.tp{display:flex;gap:6px;align-items:center;flex:none}
-.tbtn{appearance:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--hair-2);background:linear-gradient(var(--btn-1),var(--btn-2));color:var(--ink);display:grid;place-items:center;cursor:pointer;padding:0;box-shadow:0 1px 2px rgba(0,0,0,.14)}
-.tbtn.big{width:42px;height:42px}
-.tbtn svg{width:14px;height:14px;fill:currentColor;display:block}
-.tbtn.big svg{width:16px;height:16px}
-.tbtn:active{background:linear-gradient(var(--btn-2),var(--btn-1))}
-.lcd{flex:1;min-width:0;border-radius:9px;background:linear-gradient(var(--lcd-1),var(--lcd-2));border:1px solid var(--lcd-edge);box-shadow:inset 0 1px 3px rgba(0,0,0,.22);padding:4px 14px 6px;color:var(--lcd-ink);text-align:center}
-.lcd .l1{font-weight:600;font-size:13.5px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lcd .l2{font-size:12px;line-height:1.3;opacity:.78;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lcd .pr{display:flex;align-items:center;gap:8px;font-family:var(--lcdf);font-size:16px;line-height:1;font-variant-numeric:tabular-nums;margin-top:3px}
-.lcd .bar{flex:1;height:8px;border:1px solid currentColor;border-radius:5px;position:relative;opacity:.85}
-.lcd .bar i{position:absolute;left:0;top:0;bottom:0;width:0;background:currentColor;border-radius:4px}
-.lcd .bar b{position:absolute;top:50%;left:0;width:9px;height:9px;background:var(--lcd-1);border:1.5px solid currentColor;transform:translate(-50%,-50%) rotate(45deg)}
-.eq{display:none;gap:2px;height:10px;align-items:flex-end;margin-right:7px;vertical-align:-1px}
-.reading .eq{display:inline-flex}
-.eq i{width:2px;height:40%;background:currentColor;animation:eq .8s ease-in-out infinite}
-.eq i:nth-child(2){animation-delay:-.3s}.eq i:nth-child(3){animation-delay:-.55s}
-@keyframes eq{0%,100%{height:30%}50%{height:100%}}
-.side{flex:none;font-family:var(--lcdf);font-size:20px;letter-spacing:.08em;color:var(--ink-2);min-width:88px;text-align:right}
-@media (max-width:640px){.side{display:none}.tbtn{width:30px;height:30px}.tbtn.big{width:36px;height:36px}.lcd{padding:3px 10px 5px}.lcd .l2{display:none}}
+/* ── Player: iPod side rail (wide screens) + mini player (phones) ── */
+.ipod{position:fixed;z-index:30;left:max(20px,env(safe-area-inset-left,0px));top:max(20px,calc(50% - 268px));width:252px;display:none}
+.ip-shell{background:linear-gradient(160deg,var(--ipod-1),var(--ipod-2));border-radius:30px;padding:16px 16px 22px;display:grid;gap:18px;box-shadow:0 24px 50px -18px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.14),inset 0 0 0 1px rgba(255,255,255,.05)}
+.ip-screen{height:272px;border-radius:10px;background:linear-gradient(var(--lcd-1),var(--lcd-2));color:var(--lcd-ink);border:2px solid rgba(0,0,0,.55);box-shadow:inset 0 2px 6px rgba(0,0,0,.35);overflow:hidden;display:flex;flex-direction:column}
+.ip-top{display:flex;justify-content:space-between;align-items:center;gap:6px;padding:4px 8px;font:700 11.5px/1.3 var(--body);border-bottom:1px solid rgba(127,127,127,.4);background:rgba(255,255,255,.06)}
+.ip-icons{display:flex;align-items:center;gap:6px}
+.ip-batt{width:18px;height:8px;border:1.5px solid currentColor;border-radius:2px;position:relative;opacity:.8}
+.ip-batt::before{content:"";position:absolute;inset:1px 4px 1px 1px;background:currentColor}
+.themebtn{appearance:none;border:0;background:none;color:inherit;padding:2px;display:grid;place-items:center;cursor:pointer;border-radius:4px}
+.themebtn svg{width:13px;height:13px;fill:currentColor;display:block}
+.ip-view{flex:1;min-height:0;display:flex;flex-direction:column}
+.ip-np{padding:4px 10px 8px;gap:6px}
+.orbwrap{height:96px;display:grid;place-items:center;flex:none}
+.orb{--lvl:0;position:relative;width:78px;height:78px;border-radius:50%;overflow:hidden;transform:scale(calc(.84 + var(--lvl) * .44));box-shadow:0 0 calc(4px + var(--lvl) * 30px) rgba(93,118,255,.6),inset 0 -6px 16px rgba(0,0,0,.28)}
+.orb::before{content:"";position:absolute;inset:-35%;background:conic-gradient(from 0deg,var(--s2),var(--s3),var(--s5),var(--s4),var(--s2));animation:orbspin 10s linear infinite;filter:blur(7px)}
+.orb::after{content:"";position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle at 34% 28%,rgba(255,255,255,.7),rgba(255,255,255,0) 40%)}
+.orb.idle{animation:breathe 4.5s ease-in-out infinite}
+.reading .orb::before{animation-duration:3s}
+@keyframes orbspin{to{transform:rotate(360deg)}}
+@keyframes breathe{0%,100%{transform:scale(.84)}50%{transform:scale(.9)}}
+.ip-meta{text-align:center;display:grid;gap:1px}
+.ip-meta b{font:700 13px/1.3 var(--body);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em}
+.ip-meta span{font-size:11px;line-height:1.35;opacity:.82;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ip-prog{display:flex;align-items:center;gap:6px;font:400 15px/1 var(--lcdf);font-variant-numeric:tabular-nums}
+.ip-prog .bar{flex:1;height:6px;border:1px solid currentColor;border-radius:4px;position:relative;overflow:hidden}
+.ip-prog .bar i,.mm-bar i{position:absolute;left:0;top:0;bottom:0;width:0;background:currentColor}
+.ip-voice{display:flex;align-items:center;gap:6px;font:700 10.5px var(--body);letter-spacing:.08em;text-transform:uppercase}
+.voicesel{min-width:0;flex:1;font:600 12px var(--body);color:inherit;background:rgba(255,255,255,.12);border:1px solid rgba(127,127,127,.55);border-radius:5px;padding:3px 4px;text-transform:none;letter-spacing:0}
+.voicesel option{color:#121530;background:#ffffff}
+.ratebtn{appearance:none;flex:none;border:1px solid currentColor;background:none;color:inherit;font:700 11.5px/1 var(--body);border-radius:999px;padding:4px 7px;cursor:pointer;font-variant-numeric:tabular-nums;min-width:40px}
+.mbtn.ratebtn{width:auto;min-width:44px;height:30px;border:1px solid currentColor;border-radius:999px;font:700 12px/1 var(--body);padding:0 8px}
+.followbtn{appearance:none;border:1px solid currentColor;background:none;color:inherit;font:600 11px var(--body);border-radius:999px;padding:3px 9px;cursor:pointer;align-self:center}
+.ip-list{overflow-y:auto}
+.tl{list-style:none;margin:0;padding:0}
+.ls-side{font:700 10px var(--body);letter-spacing:.14em;text-transform:uppercase;opacity:.7;padding:7px 10px 3px}
+.ls-item{appearance:none;width:100%;display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:6px;align-items:baseline;border:0;background:none;color:inherit;text-align:left;font:500 12.5px/1.3 var(--body);padding:5px 10px;cursor:pointer}
+.ls-no{font:400 14px/1 var(--lcdf)}
+.ls-t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ls-d{font:400 13px/1 var(--lcdf);opacity:.8;font-variant-numeric:tabular-nums}
+.ls-item[aria-current="true"]{background:var(--lcd-ink);color:var(--lcd-1)}
+.ls-item.playing .ls-t::before{content:"\25B6\00A0"}
+.wheel{position:relative;width:186px;height:186px;margin:0 auto;border-radius:50%;background:var(--wheel);box-shadow:inset 0 1px 2px rgba(255,255,255,.08),0 1px 0 rgba(255,255,255,.06),inset 0 -2px 6px rgba(0,0,0,.25)}
+.wb{position:absolute;appearance:none;border:0;background:none;color:var(--wheel-ink);cursor:pointer;display:grid;place-items:center;width:54px;height:44px;padding:0;font:800 11px var(--body);letter-spacing:.12em;border-radius:10px}
+.wb svg{width:16px;height:16px;fill:currentColor;display:block}
+.wb.menu{top:8px;left:66px}
+.wb.prev{left:6px;top:71px}
+.wb.next{right:6px;top:71px}
+.wb.play{bottom:8px;left:66px}
+.wb.play svg{width:22px}
+.wc{position:absolute;left:58px;top:58px;width:70px;height:70px;border-radius:50%;appearance:none;border:1px solid rgba(0,0,0,.25);background:linear-gradient(var(--wheel-c),var(--wheel));color:var(--wheel-ink);display:grid;place-items:center;align-content:center;gap:1px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.3);padding:0}
+.wc svg{width:18px;height:18px;display:block}
+.wc small{font:800 8.5px/1 var(--body);letter-spacing:.14em}
+.wb:hover,.wc:hover{color:var(--ipod-ink)}
+.wb:active,.wc:active{filter:brightness(1.25)}
+.mini{position:fixed;left:0;right:0;bottom:0;z-index:30;display:none;align-items:center;gap:6px;padding:9px max(12px,env(safe-area-inset-right,0px)) calc(9px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));background:linear-gradient(var(--ipod-1),var(--ipod-2));color:var(--ipod-ink);border-top:1px solid var(--hair-2);box-shadow:0 -10px 26px -10px rgba(0,0,0,.45)}
+.orb.sm{width:40px;height:40px;flex:none;margin-right:4px}
+.mm-meta{flex:1;min-width:0;display:grid;gap:7px}
+.mm-meta b{font:700 13px/1.25 var(--body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.mm-bar{position:relative;display:block;height:4px;border-radius:2px;overflow:hidden;background:rgba(127,127,127,.35)}
+.mbtn{appearance:none;flex:none;width:38px;height:38px;border-radius:50%;border:0;background:none;color:inherit;display:grid;place-items:center;cursor:pointer;padding:0}
+.mbtn svg{width:17px;height:17px;fill:currentColor;display:block}
+.mbtn.big{width:44px;height:44px;background:var(--ipod-ink);color:var(--ipod-2)}
+.sheet{position:fixed;left:0;right:0;bottom:calc(62px + env(safe-area-inset-bottom,0px));z-index:31;max-height:min(70vh,560px);display:flex;flex-direction:column;background:linear-gradient(var(--lcd-1),var(--lcd-2));color:var(--lcd-ink);border-radius:18px 18px 0 0;box-shadow:0 -14px 40px rgba(0,0,0,.45)}
+.sh-head{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid rgba(127,127,127,.35)}
+.sh-head b{font:800 15px var(--display)}
+.sh-head label{flex:1;display:flex;gap:6px;align-items:center;font:700 10.5px var(--body);text-transform:uppercase;letter-spacing:.08em;min-width:0}
+.sh-x{appearance:none;border:1px solid currentColor;background:none;color:inherit;border-radius:999px;font:600 12px var(--body);padding:4px 10px;cursor:pointer}
+.sheet .followbtn{margin:8px auto 0}
+.sheet .tl{overflow-y:auto;padding-bottom:8px}
+.sheet .ls-item{font-size:14.5px;padding:9px 14px}
+@media (min-width:1100px){body{padding-left:292px}.ipod{display:block}}
+@media (max-width:1099px){.mini{display:flex}body{padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))}}
+@media (max-width:420px){.mbtn.hide-s{display:none}}
+@media (prefers-reduced-motion:reduce){.orb::before,.orb.idle{animation:none}}
 
 /* ── Album body + ribbon ─────────────────────────────────────── */
 #album{position:relative;overflow-x:clip}
@@ -104,7 +159,7 @@ a{color:var(--accent-ink);text-underline-offset:3px}
 #ribbon path{fill:none;stroke-linecap:butt;stroke-linejoin:round}
 
 /* ── Hero ────────────────────────────────────────────────────── */
-.hero{position:relative;z-index:1;scroll-margin-top:72px}
+.hero{position:relative;z-index:1;scroll-margin-top:16px}
 .hero .wrap{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:40px;padding-block:64px 44px}
 .hero-txt{align-self:center;min-width:0}
 .kick{font:600 12.5px/1.45 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);margin:0}
@@ -154,7 +209,7 @@ h2.ctitle{font-size:clamp(26px,3.4vw,40px);margin:10px 0 18px;max-width:24ch}
 .cgrid dd b{color:var(--ink)}
 
 /* ── Tracks ──────────────────────────────────────────────────── */
-.track{position:relative;z-index:1;padding-block:88px;scroll-margin-top:64px}
+.track{position:relative;z-index:1;padding-block:88px;scroll-margin-top:16px}
 .track .wrap{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px 64px}
 .track.l .wrap{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}
 .track.l .art{order:-1}
@@ -267,7 +322,7 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 .listv button.rowgo:hover b{color:var(--accent-ink)}
 
 /* ── Liner notes ─────────────────────────────────────────────── */
-.liner{position:relative;z-index:1;border-top:1px solid var(--hair-2);background:var(--paper-2);scroll-margin-top:64px}
+.liner{position:relative;z-index:1;border-top:1px solid var(--hair-2);background:var(--paper-2);scroll-margin-top:16px}
 .liner .wrap{padding-block:56px 72px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:32px 56px}
 .liner h2{font-size:clamp(26px,3vw,34px);margin-top:10px}
 .liner p{font-size:15.5px;color:var(--ink-2);margin:0 0 14px;max-width:62ch}
@@ -339,23 +394,45 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 </head>
 <body>
 
-<!-- Now Playing -->
-<div class="np" role="region" aria-label="Now playing">
-  <div class="wrap">
-    <div class="tp">
-      <button class="tbtn" id="prev" type="button" aria-label="Previous track"><svg viewBox="0 0 16 16"><path d="M2 3h2v10H2zM15 3v10L8.5 8zM8.5 3v10L2 8z"/></svg></button>
-      <button class="tbtn big" id="play" type="button" aria-label="Read aloud from this track"><svg viewBox="0 0 16 16" id="playicon"><path d="M4 2.5v11l9.5-5.5z"/></svg></button>
-      <button class="tbtn" id="next" type="button" aria-label="Next track"><svg viewBox="0 0 16 16"><path d="M12 3h2v10h-2zM1 3v10l6.5-5zM7.5 3v10L14 8z"/></svg></button>
-      <button class="tbtn" id="stop" type="button" aria-label="Stop reading" hidden><svg viewBox="0 0 16 16"><path d="M3.5 3.5h9v9h-9z"/></svg></button>
+<!-- Player: iPod side rail (wide screens) -->
+<aside class="ipod" id="ipod" aria-label="Audio player">
+  <div class="ip-shell">
+    <div class="ip-screen">
+      <div class="ip-top"><span id="ip-mode">Voice Is the OS</span><span class="ip-icons"><button class="themebtn" type="button"><svg viewBox="0 0 16 16"></svg></button><span class="ip-batt" aria-hidden="true"></span></span></div>
+      <div class="ip-view ip-np" id="ip-np">
+        <div class="orbwrap"><div class="orb idle" aria-hidden="true"></div></div>
+        <div class="ip-meta"><b id="ip-t">00 · Voice Is the OS</b><span id="ip-a"></span></div>
+        <div class="ip-prog"><span id="ip-e">0:00</span><span class="bar" aria-hidden="true"><i id="ip-f"></i></span><span id="ip-r">-0:00</span></div>
+        <div class="ip-voice"><label for="voice-sel">Voice</label><select class="voicesel" id="voice-sel" disabled><option>Loading…</option></select><button class="ratebtn" type="button">1×</button></div>
+        <button class="followbtn" type="button" hidden>Jump to the line being read</button>
+      </div>
+      <div class="ip-view ip-list" id="ip-list" hidden><ol class="tl" id="ip-tracks"></ol></div>
     </div>
-    <div class="lcd" aria-live="off">
-      <div class="l1"><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span id="np-t">00 · Voice Is the OS</span></div>
-      <div class="l2" id="np-a">Field notes · ElevenLabs Summit New York</div>
-      <div class="pr"><span id="np-e">0:00</span><span class="bar" aria-hidden="true"><i id="np-f"></i><b id="np-h"></b></span><span id="np-r">-0:00</span></div>
+    <div class="wheel">
+      <button class="wb menu" id="w-menu" type="button" aria-label="Show the track list" aria-expanded="false">MENU</button>
+      <button class="wb prev" id="w-prev" type="button" aria-label="Previous track"><svg viewBox="0 0 16 16"><path d="M2 3h2v10H2zM15 3v10L8.5 8zM8.5 3v10L2 8z"/></svg></button>
+      <button class="wb next" id="w-next" type="button" aria-label="Next track"><svg viewBox="0 0 16 16"><path d="M12 3h2v10h-2zM1 3v10l6.5-5zM7.5 3v10L14 8z"/></svg></button>
+      <button class="wb play" id="w-play" type="button" aria-label="Play"><svg viewBox="0 0 22 16"><path d="M1 3v10l7-5zM11 3h3v10h-3zM16 3h3v10h-3z"/></svg></button>
+      <button class="wc" id="w-reset" type="button" aria-label="Reset: stop and go back to the start"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.3 6.3A5.1 5.1 0 1 1 3.1 9.6"/><path d="M2.7 2.8v3.7h3.7"/></svg><small>RESET</small></button>
     </div>
-    <div class="side" id="np-s">INTRO</div>
-    <button class="tbtn" id="theme" type="button" aria-label="Switch to light mode"><svg viewBox="0 0 16 16" id="themeicon"></svg></button>
   </div>
+</aside>
+
+<!-- Player: mini bar (phones and tablets) -->
+<div class="mini" id="mini" role="region" aria-label="Audio player">
+  <div class="orb sm idle" aria-hidden="true"></div>
+  <div class="mm-meta"><b id="mm-t">00 · Voice Is the OS</b><span class="mm-bar" aria-hidden="true"><i id="mm-f"></i></span></div>
+  <button class="mbtn hide-s" id="m-prev" type="button" aria-label="Previous track"><svg viewBox="0 0 16 16"><path d="M2 3h2v10H2zM15 3v10L8.5 8zM8.5 3v10L2 8z"/></svg></button>
+  <button class="mbtn big" id="m-play" type="button" aria-label="Play"><svg viewBox="0 0 16 16" class="ppicon"><path d="M4 2.5v11l9.5-5.5z"/></svg></button>
+  <button class="mbtn hide-s" id="m-next" type="button" aria-label="Next track"><svg viewBox="0 0 16 16"><path d="M12 3h2v10h-2zM1 3v10l6.5-5zM7.5 3v10L14 8z"/></svg></button>
+  <button class="mbtn ratebtn hide-s" type="button">1×</button>
+  <button class="mbtn" id="m-reset" type="button" aria-label="Reset: stop and go back to the start"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.3 6.3A5.1 5.1 0 1 1 3.1 9.6"/><path d="M2.7 2.8v3.7h3.7"/></svg></button>
+  <button class="mbtn" id="m-list" type="button" aria-label="Tracks and voice" aria-expanded="false"><svg viewBox="0 0 16 16"><path d="M2 3.4h12V5H2zM2 7.2h12v1.6H2zM2 11h12v1.6H2z"/></svg></button>
+</div>
+<div class="sheet" id="sheet" hidden role="dialog" aria-label="Tracks and voice">
+  <div class="sh-head"><b>Tracks</b><label for="voice-sel-m">Voice <select class="voicesel" id="voice-sel-m" disabled><option>Loading…</option></select></label><button class="ratebtn" type="button">1×</button><button class="themebtn" type="button"><svg viewBox="0 0 16 16"></svg></button><button class="sh-x" id="sh-x" type="button">Close</button></div>
+  <button class="followbtn" type="button" hidden>Jump to the line being read</button>
+  <ol class="tl" id="sh-tracks"></ol>
 </div>
 
 <main id="album">
@@ -370,7 +447,7 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
       <p class="stand say" data-say>I went to Lincoln Center for a voice company's product day and watched two things at once. One was a company pitching the operating layer for how we'll use software: you talk, it listens, and then it acts. The other was a masterclass in how to launch it. This is part recap, part case study, read with one question in mind: what does all of this mean if you work somewhere a regulator reads the transcripts?</p>
       <div class="byline">
         <button class="playbig" id="playbig" type="button"><span class="pi"><svg viewBox="0 0 16 16"><path d="M4 2.5v11l9.5-5.5z"/></svg></span><span id="playbig-l">Play the album</span></button>
-        <span><b>Carson Boykin</b></span><span class="dot"></span><span>Recap + case study</span><span class="dot"></span><span>4 sides · 14 tracks</span><span class="dot"></span><span id="runtime">Run time ≈ 14 min</span>
+        <span><b>Carson Boykin</b></span><span class="dot"></span><span>Recap + case study</span><span class="dot"></span><span>4 sides · 11 tracks</span><span class="dot"></span><span id="runtime">Run time ≈ 14 min</span>
       </div>
     </div>
     <div class="hero-art" data-stop="dm" data-lane=".5" data-lane-m=".5" data-from-top aria-hidden="true">
@@ -531,14 +608,24 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
   </div>
 </section>
 
-<!-- 04 Playbook -->
-<section class="track r" id="playbook" data-track="04" data-side="SIDE A" data-title="The playbook" data-artist="Six moves worth stealing" data-intro="Track four. The playbook.">
+<!-- 04 The playbook (keynote + takeaways) -->
+<section class="track r" id="playbook" data-track="04" data-side="SIDE A" data-title="The playbook" data-artist="What they sold, and how they sold it" data-intro="Track four. The playbook.">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
       <p class="tk"><span class="no">04</span><span>Side A · The show</span><span>Case study</span></p>
       <h2>The playbook</h2>
-      <p class="say" data-say>Put together, the day reads like a launch playbook. Here are the six moves I'd steal, and how I'd adapt each one for a bank, or for any business that answers to a regulator.</p>
-      <p class="say" data-say>The honest footnote is that the story ran ahead of the product. Much of what was announced is still preview or roadmap, and the agent I tried at the booth answers a set list. Great marketing buys attention. It doesn't ship the product. ElevenLabs earned the attention of the people who sign enterprise contracts, and now it has to ship into it.</p>
+      <p class="credit">What ElevenLabs sold, and how it sold it</p>
+      <p class="say" data-say>Underneath the showmanship was a real thesis. ElevenLabs wants to be the interaction layer: the software between people and every model they talk to. It listens, decides whose turn it is, picks which model should do the thinking, and answers in a voice you'd want to hear.</p>
+      <blockquote class="q say" data-say data-voice="airy"><p>Within a few years, conversational agents will become critical infrastructure for every enterprise, as essential as cloud or payments.</p><cite>Mati Staniszewski, opening keynote</cite></blockquote>
+      <p class="say" data-say>Coming from financial services, that last word stuck with me. Payments is the most supervised plumbing we run, and payments-grade infrastructure comes with payments-grade expectations.</p>
+      <p class="say" data-say>How they sold it is the part worth stealing. Four moves:</p>
+      <ol class="take">
+        <li class="say" data-say><div><b>Let the room make the argument.</b><span>A company selling lifelike voice launched in the home of the New York Philharmonic.</span></div></li>
+        <li class="say" data-say><div><b>Demo live.</b><span>Real product, real time, no recordings. It's the riskiest kind of demo and the only kind that proves reliability.</span></div></li>
+        <li class="say" data-say><div><b>Talk to the buyer, not the builder.</b><span>Plain language and outcomes, so the room could hold executives, not just engineers.</span></div></li>
+        <li class="say" data-say><div><b>Let people try it.</b><span>Partner booths with live agents, like Bancolombia's. Proof beats claims, as long as you're honest about the scope.</span></div></li>
+      </ol>
+      <p class="say" data-say>The story still runs ahead of the product. Much of what was announced is preview or roadmap. Great marketing buys attention, and now ElevenLabs has to ship into it.</p>
     </div>
     <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
       <svg class="ill" viewBox="0 0 300 330">
@@ -554,56 +641,14 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
         <path class="k" d="M96 160l6-10 6 10zM144 152l6-10 6 10zM194 168l6-10 6 10z"/>
       </svg>
     </div>
-    <div class="full tcard" data-stop="dm" data-lane="prev" data-lane-m="prev">
-      <div class="scroll">
-        <table class="pb">
-          <thead><tr><th>The move</th><th>What ElevenLabs did</th><th>Why it worked</th><th>How a bank could borrow it</th></tr></thead>
-          <tbody>
-            <tr><td>Let the room make the argument</td><td>Booked the home of the New York Philharmonic to launch a company that sells sound.</td><td>The venue proved the core claim before anyone said a word.</td><td>Stage the launch where your claim gets tested. Launching a fraud agent? Demo it to fraud investigators.</td></tr>
-            <tr><td>Demo live</td><td>Ran the product live on stage instead of playing recordings.</td><td>Live is the only demo that proves reliability.</td><td>Show the board and examiners the live system with guardrails on, not a deck about it.</td></tr>
-            <tr><td>Talk in outcomes</td><td>Kept the language plain and the jargon low.</td><td>It widened the room from builders to the executives who buy.</td><td>Explain AI to customers by what it does for them, and what it won't do.</td></tr>
-            <tr><td>Let people touch it</td><td>Partner booths where anyone could talk to a live agent, Bancolombia's among them.</td><td>Hands-on proof beats claims, and a partner's agent beats self-promotion.</td><td>Run pilots in the open: an opt-in beta, a branch kiosk, a demo line customers can call.</td></tr>
-            <tr><td>Put customers on stage</td><td>Banks, an insurer and fintechs on panels, and Ramp's CEO in a fireside.</td><td>Peer proof persuades regulated buyers better than any vendor slide.</td><td>Volunteer as the reference customer. The industry moves faster when banks share what worked.</td></tr>
-            <tr><td>Make room for a human moment</td><td>Performers who had lost their voices sang with rebuilt ones.</td><td>It's what people remember, and it ties the technology to why it matters.</td><td>Lead with the customer who got helped, not with the model.</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 05 Keynote -->
-<section class="track l" id="keynote" data-track="05" data-side="SIDE B" data-title="The interaction layer" data-artist="Mati Staniszewski · Keynote · 10:00 AM" data-intro="Side B, the day. Track five. The interaction layer.">
-  <div class="wrap">
-    <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">05</span><span>Side B · The day</span><span>10:00 AM · Keynote</span></p>
-      <h2>The interaction layer</h2>
-      <p class="credit"><b>Mati Staniszewski</b> · Co-founder &amp; CEO, ElevenLabs</p>
-      <p class="say" data-say>Underneath the showmanship was a real thesis. Mati opened the summit on November 11th, Polish Independence Day, and he didn't spend the keynote on voices. He spent it on a layer. ElevenLabs wants to sit between people and every model they talk to. It listens, decides whose turn it is, picks which model should do the thinking, and answers in a voice you'd actually want to hear.</p>
-      <blockquote class="q say" data-say data-voice="airy"><p>Within a few years, conversational agents will become critical infrastructure for every enterprise, as essential as cloud or payments.</p><cite>Mati Staniszewski, opening keynote</cite></blockquote>
-      <p class="say" data-say>That last word is the one I underlined. In financial services, payments is the most supervised plumbing we run. If voice agents become payments-grade infrastructure, they inherit payments-grade expectations: uptime, change control, audit trails, and a named owner when something breaks. I don't read that as a threat to the thesis. I read it as the job description.</p>
-      <p class="say" data-say>He also argued that businesses will build their own reinforcement learning stacks to put proprietary data to work. For a bank, proprietary data means customer conversations. Hold that thought for Side B.</p>
-    </div>
-    <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
-      <svg class="ill" viewBox="0 0 300 330">
-        <path class="rs" stroke-width="7" stroke-linecap="round" d="M70 72a112 112 0 0 0 0 128M44 52a142 142 0 0 0 0 168M230 72a112 112 0 0 1 0 128M256 52a142 142 0 0 1 0 168"/>
-        <path class="ks" stroke-width="11" d="M96 118v26a54 54 0 0 0 108 0v-26"/>
-        <circle class="k" cx="96" cy="118" r="9"/><circle class="k" cx="204" cy="118" r="9"/>
-        <rect class="k" x="108" y="30" width="84" height="152" rx="42"/>
-        <g class="c"><rect x="124" y="62" width="52" height="6" rx="3"/><rect x="124" y="80" width="52" height="6" rx="3"/><rect x="124" y="98" width="52" height="6" rx="3"/><rect x="124" y="116" width="52" height="6" rx="3"/><rect x="124" y="134" width="52" height="6" rx="3"/><rect x="124" y="152" width="52" height="6" rx="3"/></g>
-        <rect class="k" x="122" y="194" width="56" height="16" rx="4"/>
-        <rect class="k" x="142" y="208" width="16" height="96"/>
-        <ellipse class="k" cx="150" cy="310" rx="76" ry="15"/>
-      </svg>
-    </div>
   </div>
 </section>
 
 <!-- 02 Finance panel -->
-<section class="track r" id="finance" data-track="06" data-side="SIDE B" data-title="From answering to acting" data-artist="Customers Bank · Banco Inter · Nasdaq · 10:45 AM" data-intro="Track six. From answering to acting.">
+<section class="track l" id="finance" data-track="05" data-side="SIDE B" data-title="From answering to acting" data-artist="Customers Bank · Banco Inter · Nasdaq · 10:45 AM" data-intro="Side B, the day. Track five. From answering to acting.">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">06</span><span>Side B · The day</span><span>10:45 AM · Panel</span></p>
+      <p class="tk"><span class="no">05</span><span>Side B · The day</span><span>10:45 AM · Panel</span></p>
       <h2>From answering to acting</h2>
       <p class="credit"><b>Carlos Coto</b>, Chief Strategy &amp; Innovation Officer, Customers Bank · <b>Daniela Mineiro</b>, Experience Leader, Inter · <b>Douglas Hamilton</b>, Head of AI Research &amp; Engineering, Nasdaq · with <b>Ethan Tandowsky</b>, CFO, ElevenLabs</p>
       <div class="stat say" data-say data-text="More than two million customer service interactions a month at Banco Inter, in Portuguese, English and Spanish."><span class="n">2M<small>+ / mo</small></span><span class="l">Customer service interactions at Banco Inter, in Portuguese, English and Spanish</span></div>
@@ -633,10 +678,10 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 </section>
 
 <!-- 08 Scale -->
-<section class="track l" id="scale" data-track="07" data-side="SIDE B" data-title="The 360-degree cost" data-artist="AWS · McKinsey · ElevenLabs · 11:55 AM" data-intro="Track seven. The 360-degree cost.">
+<section class="track r" id="scale" data-track="06" data-side="SIDE B" data-title="The 360-degree cost" data-artist="AWS · McKinsey · ElevenLabs · 11:55 AM" data-intro="Track six. The 360-degree cost.">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">07</span><span>Side B · The day</span><span>11:55 AM · Panel</span></p>
+      <p class="tk"><span class="no">06</span><span>Side B · The day</span><span>11:55 AM · Panel</span></p>
       <h2>The 360-degree cost</h2>
       <p class="credit"><b>Matt Yanchyshyn</b>, VP, AWS · <b>Yael Taqqu</b>, Senior Partner, McKinsey · with <b>Ashish Uchil</b>, Global BD &amp; Partnerships, ElevenLabs</p>
       <p class="say" data-say>The session I've thought about most since was "What it takes to scale AI across the enterprise," and in particular a point Matt Yanchyshyn from AWS made that almost nobody talks about: the hidden costs of AI. He called it the 360-degree cost.</p>
@@ -670,10 +715,10 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 </section>
 
 <!-- 04 The Drop -->
-<section class="track r" id="drop" data-track="08" data-side="SIDE B" data-title="The drop" data-artist="Twelve covers from one keynote" data-intro="Track eight. The drop.">
+<section class="track l" id="drop" data-track="07" data-side="SIDE B" data-title="The drop" data-artist="Twelve covers from one keynote" data-intro="Track seven. The drop.">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">08</span><span>Side B · The day</span><span>All day · Releases</span></p>
+      <p class="tk"><span class="no">07</span><span>Side B · The day</span><span>All day · Releases</span></p>
       <h2>Thumb through the releases</h2>
       <p class="say" data-say>ElevenLabs counted thirteen launches and upgrades. I've pressed them onto twelve covers. Swipe or use the arrow keys, and tap the cover in front to flip it for the liner notes.</p>
       <p class="say" data-say>Watch the sticker on each one. What's shipping today is mostly the models underneath. The ideas that would change how a bank operates, like memory, routines and custom models, are still preview or roadmap. That's not a knock. It's a timeline, and it tells you when to start the governance work: now.</p>
@@ -728,10 +773,10 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 </section>
 
 <!-- 09 Closing: Ramp -->
-<section class="track l" id="ramp" data-track="09" data-side="SIDE B" data-title="Waste on the way to useful" data-artist="Eric Glyman with Mati Staniszewski · 4:30 PM" data-intro="Track nine, the closing session. Waste on the way to useful.">
+<section class="track r" id="ramp" data-track="08" data-side="SIDE B" data-title="Waste on the way to useful" data-artist="Eric Glyman with Mati Staniszewski · 4:30 PM" data-intro="Track eight, the closing session. Waste on the way to useful.">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">09</span><span>Side B · The day</span><span>4:30 PM · Closing session</span></p>
+      <p class="tk"><span class="no">08</span><span>Side B · The day</span><span>4:30 PM · Closing session</span></p>
       <h2>Waste on the way to useful</h2>
       <p class="credit">"A conversation on building an AI-first company" · <b>Eric Glyman</b>, Co-founder &amp; CEO, Ramp · with <b>Mati Staniszewski</b></p>
       <p class="say" data-say>The day closed with Ramp's Eric Glyman in conversation with Mati, and it wasn't a tour of Ramp's product. It was about something harder: how a company actually captures the potential of AI.</p>
@@ -759,70 +804,11 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
   </div>
 </section>
 
-<!-- 05 Records -->
-<section class="track r" id="records" data-track="10" data-side="SIDE C" data-title="Memory is a records problem" data-artist="The fine print" data-intro="Side C, the fine print. Track ten. Memory is a records problem.">
-  <div class="wrap">
-    <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">10</span><span>Side C</span><span>The fine print</span></p>
-      <h2>Memory is a records problem</h2>
-      <p class="say" data-say>Memory lets an agent recognize a returning customer and keep structured notes on every conversation. Routines let it carry out multi-step work before, during and after a call. Custom models let a company fine-tune on its own conversations. Each one is a great product idea, and each one already has a compliance owner who doesn't know it yet.</p>
-      <p class="say" data-say>Here's how I'd translate the launches for a regulated team, with the first question I'd put to the vendor. None of these are reasons to wait. They're the checklist that gets you to yes faster.</p>
-      <p class="say" data-say>Wall Street has already paid billions in fines over business conversations held on channels nobody was keeping. A meeting recorder is a new channel. So is an agent with a memory. Decide what you keep on day one.</p>
-    </div>
-    <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
-      <svg class="ill" viewBox="0 0 300 330">
-        <path class="a" d="M88 44V22h44l7 9v13z"/><path class="r" d="M148 44V16h46l7 9v19z"/>
-        <rect class="k" x="64" y="38" width="172" height="284" rx="6"/>
-        <rect class="c" x="78" y="54" width="144" height="78" rx="4"/><rect class="k" x="128" y="88" width="44" height="10" rx="5"/><rect class="g" x="132" y="64" width="36" height="14" rx="2"/>
-        <rect class="c" x="78" y="144" width="144" height="78" rx="4"/><rect class="k" x="128" y="178" width="44" height="10" rx="5"/><rect class="g" x="132" y="154" width="36" height="14" rx="2"/>
-        <rect class="c" x="78" y="234" width="144" height="78" rx="4"/><rect class="k" x="128" y="268" width="44" height="10" rx="5"/><rect class="g" x="132" y="244" width="36" height="14" rx="2"/>
-      </svg>
-    </div>
-    <div class="full tcard" data-stop="dm" data-lane="prev" data-lane-m="prev">
-      <div class="scroll">
-        <table class="xl">
-          <thead><tr><th>What they launched</th><th>What it is in a regulated shop</th><th>The first question I'd ask</th></tr></thead>
-          <tbody>
-            <tr><td>Memory</td><td>Recordkeeping and privacy</td><td>What's kept, for how long, and can we honor a deletion request? Keeping the CRM as the system of record is the right call.</td></tr>
-            <tr><td>Routines</td><td>Entitlements and change control</td><td>What can a routine touch, who approved it, and is every step logged?</td></tr>
-            <tr><td>Custom models</td><td>Model risk management and consent</td><td>Did customers agree to their calls training a model? How is the tuned model validated and monitored?</td></tr>
-            <tr><td>Interaction Engine</td><td>Model inventory</td><td>For any single turn, can we prove which model answered?</td></tr>
-            <tr><td>Eleven Realtime</td><td>Supervision and disclosure</td><td>Speech-to-speech skips the text step. What does compliance review, and when does the caller hear it's an AI?</td></tr>
-            <tr><td>ElevenAI</td><td>Communications recordkeeping</td><td>If it records a client meeting, is that a business record we have to retain and supervise?</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 06 Identity -->
-<section class="track l" id="identity" data-track="11" data-side="SIDE C" data-title="The identity paradox" data-artist="The fine print" data-intro="Track eleven. The identity paradox.">
-  <div class="wrap">
-    <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">11</span><span>Side C</span><span>The fine print</span></p>
-      <h2>The identity paradox</h2>
-      <div class="stat say" data-say data-text="Fifty to ninety percent. KPN's identity verification accuracy after tuning on Dutch-language data, as ElevenLabs reported it."><span class="n">50→90<small>%</small></span><span class="l">KPN's identity-verification accuracy after tuning on Dutch-language data, as ElevenLabs reported it</span></div>
-      <p class="say" data-say>Here's the tension I keep coming back to. The company that made voices easy to recreate is building the agents that now have to decide who's really on the line. Banks spent a decade enrolling customers in voice biometrics, and that control gets weaker every quarter.</p>
-      <p class="say" data-say>So the most important number of the day, for me, wasn't a model benchmark. It was KPN, the Dutch telecom, where tuning on its own Dutch-language data took identity verification from roughly half right to about ninety percent. Verification is the gate, and everything about acting sits behind it. If fine-tuning moves that number, custom models stop being a nice-to-have for a bank. They become the price of letting an agent near an account.</p>
-      <p class="pull say" data-say>The voice is the interface. It's never the credential.</p>
-      <p class="say" data-say>Verify with something the caller has, or something the bank can check. Then let the voice do what it's good at, which is making that step feel human.</p>
-    </div>
-    <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
-      <svg class="ill" viewBox="0 0 300 320">
-        <path class="ks" stroke-width="26" d="M96 150V104a54 54 0 0 1 108 0v46"/>
-        <rect class="k" x="56" y="136" width="188" height="172" rx="24"/>
-        <g class="g"><rect x="85" y="210" width="10" height="24" rx="5"/><rect x="105" y="198" width="10" height="48" rx="5"/><rect x="125" y="183" width="10" height="78" rx="5"/><rect x="145" y="168" width="10" height="108" rx="5"/><rect x="165" y="183" width="10" height="78" rx="5"/><rect x="185" y="198" width="10" height="48" rx="5"/><rect x="205" y="210" width="10" height="24" rx="5"/></g>
-      </svg>
-    </div>
-  </div>
-</section>
-
 <!-- 07 Lineage -->
-<section class="track r" id="lineage" data-track="12" data-side="SIDE C" data-title="Which model answered?" data-artist="The fine print" data-intro="Track twelve. Which model answered?">
+<section class="track l" id="lineage" data-track="09" data-side="SIDE C" data-title="Which model answered?" data-artist="So what" data-intro="Side C, so what. Track nine. Which model answered?">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">12</span><span>Side C</span><span>The fine print</span></p>
+      <p class="tk"><span class="no">09</span><span>Side C</span><span>So what</span></p>
       <h2>Which model answered?</h2>
       <p class="say" data-say>The Interaction Engine is the most important thing ElevenLabs previewed, and the least flashy. It manages turn-taking and interruptions, and it routes each moment of a conversation to a different model: something cheap to triage, something frontier-grade for the hard part.</p>
       <p class="say" data-say>That's great economics. It's also a new question for model risk. In a bank, "the AI said it" is not an answer. For every turn we'll need to know which model spoke, which version, what it was given, and why the router picked it.</p>
@@ -847,12 +833,12 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 </section>
 
 <!-- 08 Takeaways -->
-<section class="track l" id="takeaways" data-track="13" data-side="SIDE C" data-title="What I'm taking back to work" data-artist="For the risk committee" data-intro="Track thirteen. What I'm taking back to work.">
+<section class="track r" id="takeaways" data-track="10" data-side="SIDE C" data-title="What I'm taking away" data-artist="So what" data-intro="Track ten. What I'm taking away.">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">13</span><span>Side C</span><span>For the risk committee</span></p>
-      <h2>What I'm taking back to work</h2>
-      <p class="say" data-say>Six things I'd put in front of any risk committee looking at voice agents this year.</p>
+      <p class="tk"><span class="no">10</span><span>Side C</span><span>So what</span></p>
+      <h2>What I'm taking away</h2>
+      <p class="say" data-say>Six things I'm taking away, and would put in front of any risk committee looking at voice agents this year.</p>
       <ol class="take">
         <li class="say" data-say><div><b>Govern voice agents as a channel.</b><span>Hold them to the same bar as a branch or the app: disclosures, complaints handling, QA sampling and accessibility.</span></div></li>
         <li class="say" data-say><div><b>Retire voice as a credential.</b><span>Keep voice as the interface. Verify identity with factors a clone can't copy.</span></div></li>
@@ -880,7 +866,7 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 </section>
 
 <!-- Hidden track -->
-<section class="track r" id="encore" data-track="14" data-hidden data-side="SIDE D" data-title="Two voices, returned" data-artist="Impact Program · 4:00 PM" data-intro="Hidden track. Two voices, returned.">
+<section class="track l" id="encore" data-track="11" data-hidden data-side="SIDE D" data-title="Two voices, returned" data-artist="Impact Program · 4:00 PM" data-intro="Hidden track. Two voices, returned.">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
       <p class="tk"><span class="no">∞</span><span>Side D · Hidden track</span><span>4:00 PM · Impact Program</span></p>
@@ -917,9 +903,9 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
       <figure class="prints two"><button class="print" type="button" aria-label="Enlarge photo: At the summit"><span class="ph"><img src="photos/crew-backdrop.jpg" width="1200" height="973" alt="Carson Boykin and a colleague in front of the ElevenLabs Summit NYC backdrop" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">At the summit</span></button><button class="print" type="button" aria-label="Enlarge photo: Between sessions"><span class="ph"><img src="photos/crew-selfie.jpg" width="1184" height="960" alt="A group selfie of six attendees in the Geffen Hall lobby, with the ElevenLabs screen behind them" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">Between sessions</span></button></figure>
       <p><b>From the room.</b> The venue, the live keynote demos, the partner booths (Bancolombia's included) and the scaling panel come from my own notes, and the photos come from me and the people I was with. ElevenLabs' public recaps don't describe those moments. Facts about the hall come from coverage of its 2022 reopening.</p>
       <p><b>Billed, then absent.</b> NVIDIA's Jensen Huang withdrew from the program days before the summit. NVIDIA still announced an expanded partnership that day and sent Kari Briski to talk sovereignty at scale.</p>
-      <p><b>On the numbers.</b> Figures are as ElevenLabs and the press reported them. KPN's verification gain appears as 50% → 90% in ElevenLabs' material and as 60% → 85% in one podcast summary. Scribe v3's error reduction is 27% in ElevenLabs' own evaluation and about 25% in The Decoder. Status stickers reflect what was public on November 16, 2026.</p>
+      <p><b>On the numbers.</b> Figures are as ElevenLabs and the press reported them. Scribe v3's error reduction is 27% in ElevenLabs' own evaluation and about 25% in The Decoder. Status stickers reflect what was public on November 16, 2026.</p>
       <p><b>On the quotes.</b> Quotes are from ElevenLabs' summit announcement and keynote coverage, and from Customers Bank's public statements about its rollout. Everything in the first person is my own read.</p>
-      <p><b>On the narration.</b> Press play to hear the whole album read aloud, recorded with ElevenLabs' Eleven v4 model in the voice "Chris." Fitting, for a recap of a company betting that voice is the interface.</p>
+      <p><b>On the narration.</b> Press play to hear the whole album read aloud, recorded with ElevenLabs' Eleven v4 model. Pick your narrator in the player. Fitting, for a recap of a company betting that voice is the interface.</p>
     </div>
     <div class="srcs">
       <div><h3>ElevenLabs</h3><ul>
@@ -1082,42 +1068,311 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
   var rebuildTimer = 0;
   function scheduleBuild(){ clearTimeout(rebuildTimer); rebuildTimer = setTimeout(buildRibbon, 60); }
 
-  /* ───────────── Now Playing (scroll) ───────────── */
-  var tracks = $$("[data-track]");
+  /* ───────────── Tracks ───────────── */
+  var tracks = $$("[data-track]").filter(function(t){ return t.id !== "liner"; });
   tracks.forEach(function(t){ $$("[data-say]", t).forEach(function(el, j){ if (!el.id) el.id = t.id + "-" + (j + 1); }); });
-  var words = function(el){ return (el.textContent || "").trim().split(/\s+/).length; };
+  var fmt = function(s){ s = Math.max(0, Math.round(s)); return Math.floor(s / 60) + ":" + pad(s % 60); };
   tracks.forEach(function(t){
     var n = 0;
-    $$("[data-say]", t).forEach(function(s){ n += words(s); });
+    $$("[data-say]", t).forEach(function(el){ n += (el.textContent || "").trim().split(/\s+/).length; });
     t._dur = Math.max(20, Math.round(n / 165 * 60));
   });
-  var runtime = tracks.reduce(function(s, t){ return t.id === "liner" ? s : s + t._dur; }, 0);
-  $("#runtime").textContent = "Run time ≈ " + Math.round(runtime / 60) + " min";
-  var fmt = function(s){ s = Math.max(0, Math.round(s)); return Math.floor(s / 60) + ":" + pad(s % 60); };
-  var npT = $("#np-t"), npA = $("#np-a"), npE = $("#np-e"), npR = $("#np-r"), npF = $("#np-f"), npH = $("#np-h"), npS = $("#np-s");
-  var curTrack = 0, lockTrack = -1;
-
+  function label(t){ return t.hasAttribute("data-hidden") ? "∞" : t.getAttribute("data-track"); }
   function currentByScroll(){
     var line = window.innerHeight * 0.38, idx = 0;
     for (var i = 0; i < tracks.length; i++){ if (tracks[i].getBoundingClientRect().top <= line) idx = i; }
     return idx;
   }
-  function paintLCD(){
-    var idx = lockTrack >= 0 ? lockTrack : currentByScroll();
-    curTrack = idx;
-    var t = tracks[idx], r = t.getBoundingClientRect();
-    var p = Math.min(1, Math.max(0, (window.innerHeight * 0.38 - r.top) / Math.max(1, r.height)));
-    var label = t.hasAttribute("data-hidden") ? "∞" : t.getAttribute("data-track");
-    npT.textContent = label + " · " + t.getAttribute("data-title");
-    npA.textContent = t.getAttribute("data-artist");
-    npS.textContent = t.getAttribute("data-side");
-    npE.textContent = fmt(p * t._dur);
-    npR.textContent = "-" + fmt((1 - p) * t._dur);
-    npF.style.width = (p * 100).toFixed(1) + "%";
-    npH.style.left = (p * 100).toFixed(1) + "%";
+  function goTrack(i){
+    i = Math.max(0, Math.min(tracks.length - 1, i));
+    tracks[i].scrollIntoView({ behavior: reduce.matches ? "auto" : "smooth", block: "start" });
   }
+
+  /* ───────────── Player ───────────── */
+  var ss = ("speechSynthesis" in window) ? window.speechSynthesis : null;
+  var state = "idle", engine = null, playIdx = -1, cur = null, queue = [], follow = true, speakingEl = null;
+  var voices = [], voiceKey = null, manifests = {}, narr = null;
+  var A = [new Audio(), new Audio()], ai = 0;
+  var RATES = [0.75, 1, 1.25, 1.5, 1.75, 2], rate = 1;
+  try { var savedRate = parseFloat(localStorage.getItem("vito-rate")); if (RATES.indexOf(savedRate) >= 0) rate = savedRate; } catch (e) {}
+  var orbs = $$(".orb"), PLAY = '<path d="M4 2.5v11l9.5-5.5z"/>', PAUSE = '<path d="M3.5 2.5h3.2v11H3.5zM9.3 2.5h3.2v11H9.3z"/>';
+
+  A.forEach(function(a, k){
+    a.preload = "auto"; a.defaultPlaybackRate = rate; if ("preservesPitch" in a) a.preservesPitch = true;
+    a.addEventListener("ended", function(){ if (k === ai && engine === "audio" && state !== "idle"){ ai = 1 - ai; next(); } });
+    a.addEventListener("error", function(){ if (k === ai && engine === "audio" && state === "speaking"){ ai = 1 - ai; next(); } });
+    a.addEventListener("timeupdate", function(){ if (k === ai) paintProgress(); });
+  });
+
+  function linesFrom(idx){
+    var out = [];
+    for (var i = Math.max(0, idx); i < tracks.length; i++){
+      var t = tracks[i], says = $$("[data-say]", t), intro = t.getAttribute("data-intro");
+      if (intro) out.push({ id: t.id + "-0", ti: i, el: says[0] || null, text: intro });
+      says.forEach(function(el){ out.push({ id: el.id, ti: i, el: el, text: (el.getAttribute("data-text") || el.textContent).replace(/\s+/g, " ").trim() }); });
+    }
+    return out;
+  }
+  function src(l){ return "audio/" + voiceKey + "/" + narr.lines[l.id].file + (narr.v ? "?v=" + narr.v : ""); }
+
+  // audio-reactive orb (falls back to a gentle pulse if Web Audio isn't available)
+  var actx = null, analyser = null, buf = null, lvl = 0, loopOn = false;
+  function ensureAnalyser(){
+    if (actx){ if (actx.state === "suspended") actx.resume(); return; }
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC || location.protocol === "file:") return;
+    try {
+      actx = new AC(); analyser = actx.createAnalyser(); analyser.fftSize = 512; buf = new Uint8Array(analyser.fftSize);
+      A.forEach(function(a){ actx.createMediaElementSource(a).connect(analyser); });
+      analyser.connect(actx.destination);
+    } catch (e) { actx = null; analyser = null; }
+  }
+  function loop(){
+    var target = 0;
+    if (state === "speaking"){
+      if (analyser && engine === "audio"){
+        analyser.getByteTimeDomainData(buf);
+        var sum = 0; for (var i = 0; i < buf.length; i++){ var v = (buf[i] - 128) / 128; sum += v * v; }
+        target = Math.min(1, Math.sqrt(sum / buf.length) * 4.2);
+      } else {
+        var t = Date.now(); target = 0.35 + 0.25 * Math.sin(t / 140) * Math.sin(t / 370);
+      }
+    }
+    lvl += (target - lvl) * (target > lvl ? 0.45 : 0.12);
+    orbs.forEach(function(o){ o.style.setProperty("--lvl", lvl.toFixed(3)); });
+    if (state === "speaking" || lvl > 0.01) requestAnimationFrame(loop);
+    else { loopOn = false; orbs.forEach(function(o){ o.style.setProperty("--lvl", "0"); }); }
+  }
+  function kick(){ if (!loopOn){ loopOn = true; requestAnimationFrame(loop); } }
+
+  function setState(s){
+    state = s;
+    document.documentElement.classList.toggle("reading", s === "speaking");
+    orbs.forEach(function(o){ o.classList.toggle("idle", s !== "speaking"); });
+    if (s === "speaking") kick();
+    setFollowUI();
+    paint();
+  }
+  function highlight(el){
+    if (speakingEl) speakingEl.classList.remove("speaking");
+    speakingEl = el;
+    if (!el) return;
+    el.classList.add("speaking");
+    if (!follow) return;
+    var r = el.getBoundingClientRect(), bottomUI = window.innerWidth < 1100 ? 90 : 30;
+    if (r.top < 40 || r.bottom > window.innerHeight - bottomUI) el.scrollIntoView({ behavior: reduce.matches ? "auto" : "smooth", block: "center" });
+  }
+  function stopAudio(){ queue = []; A.forEach(function(a){ a.pause(); }); if (ss) ss.cancel(); }
+  function finish(){ stopAudio(); engine = null; cur = null; playIdx = -1; highlight(null); setState("idle"); }
+  function playFrom(idx, startId){
+    stopAudio();
+    var lines = linesFrom(idx);
+    if (startId){ var k = lines.map(function(l){ return l.id; }).indexOf(startId); if (k > 0) lines = lines.slice(k); }
+    if (!lines.length) return;
+    follow = true;
+    if (narr){ engine = "audio"; queue = lines.filter(function(l){ return narr.lines[l.id]; }); ensureAnalyser(); }
+    else if (ss){ engine = "ss"; queue = lines; }
+    else return;
+    next();
+  }
+  function next(){
+    if (!queue.length){ finish(); return; }
+    cur = queue.shift(); playIdx = cur.ti;
+    if (engine === "audio"){
+      var a = A[ai], want = src(cur);
+      if (a._for !== want){ a.src = want; a._for = want; }
+      try { a.currentTime = 0; } catch (e) {}
+      a.playbackRate = rate;
+      var pr = a.play();
+      if (pr && pr.catch) pr.catch(function(e){ if (e && e.name === "AbortError") return; finish(); });
+      var b = A[1 - ai];
+      if (queue.length){ var nw = src(queue[0]); if (b._for !== nw){ b.src = nw; b._for = nw; } }
+    } else {
+      var u = new SpeechSynthesisUtterance(cur.text); u.lang = "en-US"; u.rate = 1.02 * rate;
+      u.onend = function(){ if (engine === "ss" && state !== "idle") next(); };
+      u.onerror = function(){ finish(); };
+      ss.speak(u);
+    }
+    highlight(cur.el);
+    setState("speaking");
+  }
+  function togglePlay(fromStart){
+    if (state === "idle"){ playFrom(fromStart ? 0 : currentByScroll()); return; }
+    if (state === "speaking"){
+      if (engine === "audio") A[ai].pause(); else if (ss) ss.pause();
+      setState("paused");
+    } else {
+      if (engine === "audio"){ ensureAnalyser(); var pr = A[ai].play(); if (pr && pr.catch) pr.catch(function(){}); }
+      else if (ss) ss.resume();
+      setState("speaking");
+    }
+  }
+  function trackElapsed(){
+    if (!cur || !narr || playIdx < 0) return 0;
+    var t = tracks[playIdx], ids = [t.id + "-0"].concat($$("[data-say]", t).map(function(e){ return e.id; })), sec = 0;
+    for (var i = 0; i < ids.length && ids[i] !== cur.id; i++) sec += (narr.lines[ids[i]] || {}).sec || 0;
+    return sec + (engine === "audio" ? (A[ai].currentTime || 0) : 0);
+  }
+  function skip(d){
+    if (state === "idle"){ goTrack(currentByScroll() + d); return; }
+    if (d < 0 && trackElapsed() > 4) playFrom(playIdx);
+    else playFrom(Math.max(0, Math.min(tracks.length - 1, playIdx + d)));
+  }
+  function resetAll(){
+    finish(); follow = true; setFollowUI();
+    window.scrollTo({ top: 0, behavior: reduce.matches ? "auto" : "smooth" });
+  }
+
+  // manual scrolling during playback pauses auto-follow instead of fighting the reader
+  function userScrolled(e){
+    if (e && e.target && e.target.closest && e.target.closest(".ipod,.mini,.sheet,.flow,.prints")) return;
+    if (state === "speaking" && follow){ follow = false; setFollowUI(); }
+  }
+  window.addEventListener("wheel", userScrolled, { passive: true });
+  window.addEventListener("touchmove", userScrolled, { passive: true });
+  window.addEventListener("keydown", function(e){
+    if (/^(PageUp|PageDown|ArrowUp|ArrowDown|Home|End)$/.test(e.key)) userScrolled(e);
+    if (e.key === "Escape" && state === "speaking") togglePlay();
+  });
+  function setFollowUI(){ $$(".followbtn").forEach(function(b){ b.hidden = follow || state === "idle"; }); }
+  $$(".followbtn").forEach(function(b){ b.addEventListener("click", function(){
+    follow = true; setFollowUI();
+    if (speakingEl) speakingEl.scrollIntoView({ behavior: reduce.matches ? "auto" : "smooth", block: "center" });
+  }); });
+
+  /* display */
+  function paintProgress(){
+    var idx = state !== "idle" ? playIdx : currentByScroll(), t = tracks[idx], p;
+    if (state !== "idle" && narr) p = Math.min(1, trackElapsed() / Math.max(1, t._dur));
+    else { var r = t.getBoundingClientRect(); p = Math.min(1, Math.max(0, (window.innerHeight * 0.38 - r.top) / Math.max(1, r.height))); }
+    $("#ip-e").textContent = fmt(p * t._dur / rate);
+    $("#ip-r").textContent = "-" + fmt((1 - p) * t._dur / rate);
+    var w = (p * 100).toFixed(1) + "%"; $("#ip-f").style.width = w; $("#mm-f").style.width = w;
+  }
+  function paint(){
+    var idx = state !== "idle" ? playIdx : currentByScroll(), t = tracks[idx];
+    var title = label(t) + " · " + t.getAttribute("data-title");
+    $("#ip-t").textContent = title; $("#mm-t").textContent = title;
+    $("#ip-a").textContent = t.getAttribute("data-artist") + " · " + t.getAttribute("data-side").replace("SIDE", "Side");
+    $("#ip-mode").textContent = state === "idle" ? "Voice Is the OS" : (state === "paused" ? "Paused" : "Now Playing");
+    var playing = state === "speaking";
+    $("#m-play .ppicon").innerHTML = playing ? PAUSE : PLAY;
+    $("#m-play").setAttribute("aria-label", playing ? "Pause" : "Play");
+    $("#w-play").setAttribute("aria-label", playing ? "Pause" : "Play");
+    $("#playbig-l").textContent = state === "idle" ? "Play the album" : (state === "paused" ? "Resume" : "Pause");
+    $$(".ls-item").forEach(function(b){
+      var i = +b.dataset.i;
+      b.setAttribute("aria-current", i === idx ? "true" : "false");
+      b.classList.toggle("playing", state !== "idle" && i === playIdx);
+      b.querySelector(".ls-d").textContent = fmt(tracks[i]._dur / rate);
+    });
+    paintProgress();
+  }
+  function runtimeText(){
+    var tot = tracks.reduce(function(s, t){ return s + t._dur; }, 0);
+    $("#runtime").textContent = (narr ? "Run time " : "Run time ≈ ") + fmt(tot / rate) + (rate !== 1 ? " at " + rate + "×" : "");
+  }
+
+  /* track lists (iPod screen + phone sheet) */
+  function buildList(ol, closeAfter){
+    var lastSide = "";
+    tracks.forEach(function(t, i){
+      var side = t.getAttribute("data-side");
+      if (side !== lastSide){
+        var h = document.createElement("li"); h.className = "ls-side"; h.setAttribute("aria-hidden", "true");
+        h.textContent = side === "INTRO" ? "Intro" : side.replace("SIDE", "Side"); ol.appendChild(h); lastSide = side;
+      }
+      var li = document.createElement("li"), b = document.createElement("button");
+      b.type = "button"; b.className = "ls-item"; b.dataset.i = i;
+      b.innerHTML = '<span class="ls-no"></span><span class="ls-t"></span><span class="ls-d"></span>';
+      b.querySelector(".ls-no").textContent = label(t);
+      b.querySelector(".ls-t").textContent = t.getAttribute("data-title");
+      b.addEventListener("click", function(){
+        if (state !== "idle") playFrom(i); else goTrack(i);
+        if (closeAfter) closeSheet();
+      });
+      li.appendChild(b); ol.appendChild(li);
+    });
+  }
+  buildList($("#ip-tracks"), false);
+  buildList($("#sh-tracks"), true);
+
+  /* controls */
+  $("#w-play").addEventListener("click", function(){ togglePlay(false); });
+  $("#m-play").addEventListener("click", function(){ togglePlay(false); });
+  $("#playbig").addEventListener("click", function(){ togglePlay(true); });
+  $("#w-prev").addEventListener("click", function(){ skip(-1); });
+  $("#m-prev").addEventListener("click", function(){ skip(-1); });
+  $("#w-next").addEventListener("click", function(){ skip(1); });
+  $("#m-next").addEventListener("click", function(){ skip(1); });
+  $("#w-reset").addEventListener("click", resetAll);
+  $("#m-reset").addEventListener("click", resetAll);
+  $("#w-menu").addEventListener("click", function(){
+    var showList = $("#ip-list").hidden;
+    $("#ip-list").hidden = !showList; $("#ip-np").hidden = showList;
+    this.setAttribute("aria-expanded", String(showList));
+    this.setAttribute("aria-label", showList ? "Show Now Playing" : "Show the track list");
+    if (showList){ var c = $("#ip-tracks .ls-item[aria-current='true']"); if (c) c.scrollIntoView({ block: "nearest" }); }
+  });
+  function closeSheet(){ $("#sheet").hidden = true; $("#m-list").setAttribute("aria-expanded", "false"); }
+  $("#m-list").addEventListener("click", function(){
+    var open = $("#sheet").hidden; $("#sheet").hidden = !open; this.setAttribute("aria-expanded", String(open));
+  });
+  $("#sh-x").addEventListener("click", closeSheet);
+
+  /* playback speed */
+  function applyRate(){
+    A.forEach(function(a){ a.defaultPlaybackRate = rate; a.playbackRate = rate; });
+    $$(".ratebtn").forEach(function(b){ b.textContent = rate + "×"; b.setAttribute("aria-label", "Playback speed " + rate + " times. Change speed"); });
+    runtimeText(); paint();
+  }
+  $$(".ratebtn").forEach(function(b){ b.addEventListener("click", function(){
+    rate = RATES[(RATES.indexOf(rate) + 1) % RATES.length];
+    try { localStorage.setItem("vito-rate", String(rate)); } catch (e) {}
+    if (engine === "ss" && state !== "idle" && cur){ playFrom(playIdx, cur.id); }
+    applyRate();
+  }); });
+
+  /* voices: pre-recorded with ElevenLabs, one folder per voice */
+  function setVoice(key, resume){
+    function apply(m){
+      var wasActive = state !== "idle", wasPaused = state === "paused", at = cur && cur.id, idx = playIdx;
+      voiceKey = key; narr = m;
+      $$(".voicesel").forEach(function(sel){ sel.value = key; });
+      try { localStorage.setItem("vito-voice", key); } catch (e) {}
+      tracks.forEach(function(t){
+        var sec = 0;
+        Object.keys(m.lines).forEach(function(k){ if (k.lastIndexOf(t.id + "-", 0) === 0) sec += m.lines[k].sec || 0; });
+        if (sec) t._dur = Math.round(sec);
+      });
+      runtimeText(); paint();
+      if (resume && wasActive && at){ playFrom(idx, at); if (wasPaused) togglePlay(); }
+    }
+    if (manifests[key]) return apply(manifests[key]);
+    fetch("audio/" + key + "/manifest.json", { cache: "no-cache" })
+      .then(function(r){ return r.ok ? r.json() : null; })
+      .then(function(m){ if (m && m.lines){ manifests[key] = m; apply(m); } })
+      .catch(function(){});
+  }
+  $$(".voicesel").forEach(function(sel){ sel.addEventListener("change", function(){ setVoice(sel.value, true); }); });
+  if (window.fetch){
+    fetch("audio/voices.json", { cache: "no-cache" }).then(function(r){ return r.ok ? r.json() : null; }).then(function(v){
+      if (!v || !v.voices || !v.voices.length) return;
+      voices = v.voices;
+      var saved = null; try { saved = localStorage.getItem("vito-voice"); } catch (e) {}
+      var key = voices.some(function(x){ return x.key === saved; }) ? saved : (v.default || voices[0].key);
+      $$(".voicesel").forEach(function(sel){
+        sel.innerHTML = "";
+        voices.forEach(function(x){ var o = document.createElement("option"); o.value = x.key; o.textContent = x.name + (x.note ? " · " + x.note : ""); sel.appendChild(o); });
+        sel.disabled = false;
+      });
+      setVoice(key, false);
+    }).catch(function(){});
+  }
+  applyRate();
+
   function onScroll(){
-    if (!raf) raf = requestAnimationFrame(function(){ drawRibbon(); paintLCD(); });
+    if (!raf) raf = requestAnimationFrame(function(){ drawRibbon(); paint(); });
   }
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", function(){ scheduleBuild(); onScroll(); });
@@ -1125,167 +1380,6 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleBuild);
   if (mobileMQ.addEventListener) mobileMQ.addEventListener("change", scheduleBuild);
   window.addEventListener("load", scheduleBuild);
-
-  function goTrack(i){
-    i = Math.max(0, Math.min(tracks.length - 1, i));
-    tracks[i].scrollIntoView({ behavior: reduce.matches ? "auto" : "smooth", block: "start" });
-  }
-  $("#prev").addEventListener("click", function(){
-    var r = tracks[curTrack].getBoundingClientRect();
-    goTrack(r.top < -40 ? curTrack : curTrack - 1);
-  });
-  $("#next").addEventListener("click", function(){ goTrack(curTrack + 1); });
-
-  /* ───────────── Read aloud ───────────── */
-  var tts = null, ttsReady = false, ss = ("speechSynthesis" in window) ? window.speechSynthesis : null;
-  var state = "idle", ssQueue = null, speakingEl = null, engine = null;
-  var narr = null, au = new Audio(), auPre = new Audio(), auQueue = null;
-  au.preload = "auto"; auPre.preload = "auto";
-  var playBtn = $("#play"), stopBtn = $("#stop"), playIcon = $("#playicon"), bigLabel = $("#playbig-l"), np = $(".np");
-  var ICON_PLAY = '<path d="M4 2.5v11l9.5-5.5z"/>', ICON_PAUSE = '<path d="M3.5 2.5h3.2v11H3.5zM9.3 2.5h3.2v11H9.3z"/>';
-
-  function setState(s){
-    state = s;
-    var active = s !== "idle";
-    playIcon.innerHTML = s === "speaking" || s === "starting" ? ICON_PAUSE : ICON_PLAY;
-    playBtn.setAttribute("aria-label", s === "speaking" || s === "starting" ? "Pause reading" : (s === "paused" ? "Resume reading" : "Read aloud from this track"));
-    stopBtn.hidden = !active;
-    np.classList.toggle("reading", s === "speaking" || s === "starting");
-    bigLabel.textContent = s === "idle" ? "Play the album" : (s === "paused" ? "Resume" : "Pause");
-    if (!active){ engine = null; highlight(null); lockTrack = -1; paintLCD(); }
-  }
-  function highlight(el){
-    if (speakingEl) speakingEl.classList.remove("speaking");
-    speakingEl = el;
-    if (!el) return;
-    el.classList.add("speaking");
-    var host = el.closest("[data-track]");
-    if (host){ lockTrack = tracks.indexOf(host); }
-    var r = el.getBoundingClientRect();
-    if (r.top < 90 || r.bottom > window.innerHeight - 40) el.scrollIntoView({ behavior: reduce.matches ? "auto" : "smooth", block: "center" });
-    paintLCD();
-  }
-  function buildLines(from){
-    var lines = [], n = 0;
-    for (var i = from; i < tracks.length; i++){
-      var t = tracks[i];
-      if (t.id === "liner") break;
-      var intro = t.getAttribute("data-intro");
-      var says = $$("[data-say]", t);
-      if (intro){ lines.push({ text: intro, id: t.id + "-0", el: says[0] || null, voice: "buttery" }); }
-      says.forEach(function(el){
-        var text = (el.getAttribute("data-text") || el.textContent).replace(/\s+/g, " ").trim();
-        if (text) lines.push({ text: text.slice(0, 1900), id: el.id, el: el, voice: el.getAttribute("data-voice") || "buttery" });
-      });
-    }
-    return lines.slice(0, 100);
-  }
-  var lineMap = {};
-  function startReading(){
-    var from = curTrack;
-    var r = tracks[from].getBoundingClientRect();
-    if (r.bottom < window.innerHeight * 0.3 && from < tracks.length - 1) from++;
-    var lines = buildLines(from);
-    if (!lines.length) return;
-    lineMap = {}; lines.forEach(function(l){ lineMap[l.id] = l; });
-    if (narr){
-      auQueue = lines.filter(function(l){ return narr.lines[l.id]; });
-      engine = "audio";
-      auNext();
-      return;
-    }
-    if (tts){
-      setState("starting");
-      engine = "tts";
-      tts.speak(lines.map(function(l){ return { text: l.text, voice: l.voice, id: l.id, language: "en" }; }), { language: "en" }).catch(function(e){
-        if (e && (e.code === "not_granted" || e.code === "unavailable")){ playBtn.hidden = true; $("#playbig").hidden = true; }
-        setState("idle");
-      });
-    } else if (ss){
-      ss.cancel();
-      ssQueue = lines.slice();
-      setState("speaking");
-      engine = "ss";
-      ssNext();
-    }
-  }
-  function auSrc(l){ return "audio/" + narr.lines[l.id].file + (narr.v ? "?v=" + narr.v : ""); }
-  function auNext(){
-    if (!auQueue || !auQueue.length){ auQueue = null; setState("idle"); return; }
-    var l = auQueue.shift();
-    au.src = auSrc(l);
-    if (auQueue.length) auPre.src = auSrc(auQueue[0]);
-    var pr = au.play();
-    setState("speaking"); highlight(l.el);
-    if (pr && pr.catch) pr.catch(function(e){ if (e && e.name === "AbortError") return; auQueue = null; setState("idle"); });
-  }
-  au.addEventListener("ended", function(){ if (auQueue) auNext(); });
-  au.addEventListener("error", function(){ if (auQueue) auNext(); });
-  function ssNext(){
-    if (!ssQueue || !ssQueue.length){ ssQueue = null; setState("idle"); return; }
-    var l = ssQueue.shift();
-    var u = new SpeechSynthesisUtterance(l.text);
-    u.lang = "en-US"; u.rate = 1.02; u.pitch = l.voice === "airy" ? 1.15 : 1;
-    u.onstart = function(){ highlight(l.el); };
-    u.onend = function(){ if (ssQueue) ssNext(); };
-    u.onerror = function(){ ssQueue = null; setState("idle"); };
-    ss.speak(u);
-  }
-  function togglePlay(){
-    if (state === "idle"){ startReading(); return; }
-    if (engine === "audio"){
-      if (state === "paused"){ var pr = au.play(); if (pr && pr.catch) pr.catch(function(){}); setState("speaking"); }
-      else { au.pause(); setState("paused"); }
-      return;
-    }
-    if (engine === "tts"){
-      if (state === "paused") tts.resume().catch(function(){});
-      else tts.pause().catch(function(){});
-    } else if (engine === "ss"){
-      if (state === "paused"){ ss.resume(); setState("speaking"); }
-      else { ss.pause(); setState("paused"); }
-    }
-  }
-  function stopReading(){
-    if (engine === "audio"){ auQueue = null; au.pause(); setState("idle"); return; }
-    if (engine === "tts") tts.stop().catch(function(){});
-    else if (engine === "ss"){ ssQueue = null; ss.cancel(); setState("idle"); }
-  }
-  playBtn.addEventListener("click", togglePlay);
-  $("#playbig").addEventListener("click", togglePlay);
-  stopBtn.addEventListener("click", stopReading);
-  document.addEventListener("keydown", function(e){ if (e.key === "Escape" && (engine === "ss" || engine === "audio")) stopReading(); });
-  if (!ss){ playBtn.hidden = true; $("#playbig").hidden = true; }
-
-  if (window.fetch){
-    fetch("audio/manifest.json", { cache: "no-cache" }).then(function(r){ return r.ok ? r.json() : null; }).then(function(m){
-      if (!m || !m.lines || !Object.keys(m.lines).length) return;
-      narr = m; playBtn.hidden = false; $("#playbig").hidden = false;
-      var tot = 0;
-      tracks.forEach(function(t){
-        var sec = 0;
-        Object.keys(m.lines).forEach(function(k){ if (k.lastIndexOf(t.id + "-", 0) === 0) sec += m.lines[k].sec || 0; });
-        if (sec) t._dur = Math.round(sec);
-        if (t.id !== "liner") tot += t._dur;
-      });
-      $("#runtime").textContent = "Run time " + fmt(tot);
-      paintLCD();
-    }).catch(function(){});
-  }
-  if (window.claude && typeof window.claude.use === "function"){
-    window.claude.use("tts").then(function(t){
-      if (!t) return;
-      tts = t; ttsReady = true;
-      playBtn.hidden = false; $("#playbig").hidden = false;
-      t.onState(function(e){
-        if (engine === "ss" || engine === "audio") return;
-        if (e.state !== "idle") engine = "tts";
-        setState(e.state);
-        if (e.state === "idle" && (e.reason === "not_granted" || e.reason === "unavailable")){ playBtn.hidden = true; $("#playbig").hidden = true; }
-      });
-      t.onLine(function(e){ var l = e.id && lineMap[e.id]; if (l) highlight(l.el); });
-    }).catch(function(){});
-  }
 
   /* ───────────── The Drop: covers ───────────── */
   var STICK = {
@@ -1571,20 +1665,21 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
   try { if (localStorage.getItem("vito-view") === "list") setView("list"); } catch (e) {}
 
   /* ───────────── Theme (dark by default) ───────────── */
-  var themeBtn = $("#theme"), themeIcon = $("#themeicon");
   var SUN = '<circle cx="8" cy="8" r="3.2"/><path d="M8 .9v2M8 13.1v2M.9 8h2M13.1 8h2M2.9 2.9l1.4 1.4M11.7 11.7l1.4 1.4M2.9 13.1l1.4-1.4M11.7 4.3l1.4-1.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>';
   var MOON = '<path d="M13.6 10.3A6 6 0 0 1 5.7 2.4a6.1 6.1 0 1 0 7.9 7.9z"/>';
   function paintTheme(){
     var light = document.documentElement.getAttribute("data-theme") === "light";
-    themeIcon.innerHTML = light ? MOON : SUN;
-    themeBtn.setAttribute("aria-label", light ? "Switch to dark mode" : "Switch to light mode");
+    $$(".themebtn").forEach(function(b){
+      b.querySelector("svg").innerHTML = light ? MOON : SUN;
+      b.setAttribute("aria-label", light ? "Switch to dark mode" : "Switch to light mode");
+    });
   }
-  themeBtn.addEventListener("click", function(){
+  $$(".themebtn").forEach(function(b){ b.addEventListener("click", function(){
     var toLight = document.documentElement.getAttribute("data-theme") !== "light";
     if (toLight) document.documentElement.setAttribute("data-theme", "light"); else document.documentElement.removeAttribute("data-theme");
     try { localStorage.setItem("vito-theme", toLight ? "light" : "dark"); } catch (e) {}
     paintTheme();
-  });
+  }); });
   paintTheme();
 
   /* ───────────── Photo prints ───────────── */
@@ -1604,7 +1699,7 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 
   layoutCovers();
   buildRibbon();
-  paintLCD();
+  paint();
 })();
 </script>
 </body>
