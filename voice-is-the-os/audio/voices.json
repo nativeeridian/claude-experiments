@@ -10,6 +10,11 @@
    "key": "matilda",
    "name": "Matilda",
    "note": "Knowledgeable, upbeat"
+  },
+  {
+   "key": "wildlife",
+   "name": "Wildlife Narrator",
+   "note": "Original character voice"
   }
  ]
 }
