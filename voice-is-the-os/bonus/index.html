@@ -285,6 +285,42 @@ ol.take b{display:block;font:700 19px/1.3 var(--display);letter-spacing:-.015em;
 ol.take span{color:var(--ink-2);font-size:16.5px}
 @media (max-width:759px){ol.take li{grid-template-columns:44px minmax(0,1fr)}ol.take li::before{font-size:24px}}
 
+/* ── The relationship ── */
+.rel{background:var(--card);border:1px solid var(--hair-2);border-radius:18px;padding:18px 18px 14px;margin:30px 0 8px}
+.rel-top{display:flex;justify-content:space-between;align-items:center;gap:12px 20px;flex-wrap:wrap}
+.seg{display:inline-flex;border:1px solid var(--hair-2);border-radius:999px;overflow:hidden;background:var(--paper)}
+.seg button{appearance:none;border:0;background:transparent;color:var(--ink-2);font:600 14px var(--body);padding:8px 16px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.j-first{margin:0;font:600 14px var(--body);color:var(--ink-2)}
+.j-first b{display:block;font:400 22px/1.1 var(--lcdf);color:var(--ink);letter-spacing:.02em}
+.jscroll{overflow-x:auto;margin:8px -4px 0;padding:0 4px}
+.journey{display:block;width:100%;height:auto}
+.jl{font:400 17px var(--lcdf);fill:var(--ink-3);letter-spacing:.08em}
+.jt{font:500 14px var(--body);fill:var(--ink-2)}
+.jlane{stroke:var(--hair-2);stroke-width:2;stroke-dasharray:3 7}
+.jbase{stroke:var(--hair-2);stroke-width:1.5;stroke-dasharray:2 6}
+.jline{fill:none;stroke:var(--s3);stroke-width:4;stroke-linecap:round;transition:d .5s cubic-bezier(.3,.7,.2,1),stroke .3s}
+.rel.contain .jline{stroke:var(--s4)}
+.jm{transition:transform .5s cubic-bezier(.3,.7,.2,1)}
+.jm .b{fill:var(--s3);transition:fill .3s}
+.jm.person .b{fill:var(--accent)}
+.jm.bad .b{fill:var(--s4)}
+.jm.none .b{fill:var(--card);stroke:var(--ink-3);stroke-width:2;stroke-dasharray:4 4}
+.jm .ga,.jm .gp{fill:#0a0c18}
+.jm.person .ga,.jm.agent .gp,.jm.none .ga,.jm.none .gp{display:none}
+.jm .ring{fill:none;stroke-width:3;opacity:0}
+.jm.bad .ring{opacity:1;stroke:var(--s4);animation:ping 1.6s ease-out infinite;transform-box:fill-box;transform-origin:center}
+.jm.good .ring{opacity:1;stroke:var(--s5)}
+.jnote{font:400 17px var(--lcdf);fill:var(--ink);letter-spacing:.02em}
+.j-note{margin:10px 2px 4px;font-size:15.5px;line-height:1.5;color:var(--ink-2);max-width:none}
+.j-note b{color:var(--ink)}
+.j-fine{margin:0 2px;font-size:12.5px;color:var(--ink-3)}
+.journey.vert .jt{font-size:14.5px}.journey.vert .jnote{font-size:15px}
+@media (max-width:600px){.seg button{font-size:13px;padding:7px 11px}.rel{padding:14px 12px 12px}}
+.reg{border-left:3px solid var(--s3);padding:4px 0 4px 16px;margin:26px 0 0;color:var(--ink-2)}
+.reg b{color:var(--ink)}
+@media (prefers-reduced-motion:reduce){.jm,.jline{transition:none}.jm.bad .ring{animation:none}}
+
 /* ── Run the numbers ── */
 .calc{background:var(--card);border:1px solid var(--hair-2);border-radius:18px;padding:22px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:26px 36px;margin-top:28px}
 .ctl{display:grid;gap:16px;align-content:start}
@@ -725,8 +761,47 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14.5
       <li><div><b>Make the wait visible.</b><span>We couldn't see the booths, the time or the reason. Telling people what's ahead, and why, changes how a wait feels.</span></div></li>
       <li><div><b>Ask only what the moment needs.</b><span>The booth needed to know which item you wanted. Everything after that felt like a quiz.</span></div></li>
       <li><div><b>Speak your customer's language, not your roadmap's.</b><span>“ASR” is how builders talk. Customers say “it didn't hear me.”</span></div></li>
-      <li><div><b>Design the human in.</b><span>The staff ended up in the loop anyway. Make the hand-off official, quick and logged, so it's a feature instead of a workaround.</span></div></li>
       <li><div><b>Put friction only where it protects someone.</b><span>Banks add friction on purpose: fraud checks, step-up verification, cooling-off periods. Good friction protects a customer. Accidental friction just slows everyone down.</span></div></li>
+    </ol>
+  </div>
+</section>
+
+<!-- The relationship -->
+<section class="sec" id="relationship">
+  <div class="wrap">
+    <p class="kick">The part I keep thinking about</p>
+    <h2>Don't let the first human conversation be the worst one.</h2>
+    <div class="narrow" style="padding:0;margin:0">
+      <p class="muted">At the booth, the humans only showed up once someone was stuck. They stepped in at the most flustered moment, in front of a line, to help with a question nobody should have been asked.</p>
+      <p class="muted">That's a small version of something much bigger. Design a simple automation well enough and you can confidently take people out of the process. The agent handles the easy things. Then a complicated matter comes along that it can't handle, and it goes to somebody else.</p>
+      <p class="muted">Now the first time a client ever speaks to a person is during that complicated issue, and they're already upset. They've fought the bot, they're repeating themselves to a stranger, and the relationship starts in a crisis.</p>
+      <p class="muted">Responsible design has to be considerate of what you want the human experience to be, and of how relationships get built. In financial services, the relationship is the product. Trust gets built in small, easy moments. If automation takes every easy moment, people only meet you on the hardest day.</p>
+    </div>
+
+    <div class="rel contain" id="rel">
+      <div class="rel-top">
+        <div class="seg" role="group" aria-label="Choose a design">
+          <button type="button" data-mode="contain" aria-pressed="true">Automate people out</button>
+          <button type="button" data-mode="relate" aria-pressed="false">Automate for people</button>
+        </div>
+        <p class="j-first">First person they talk to<b id="j-first">Contact 7: fraud on the account</b></p>
+      </div>
+      <div class="jscroll">
+        <svg class="journey" id="journey" viewBox="0 0 900 300" role="img" aria-labelledby="j-cap"></svg>
+      </div>
+      <p class="j-note" id="j-cap" aria-live="polite"></p>
+      <p class="j-fine">One customer's year, simplified and illustrative.</p>
+    </div>
+
+    <p class="reg"><b>This isn't hypothetical in banking.</b> In 2023 the CFPB warned that chatbots can trap customers in “doom loops” with no path to a human, and that a chatbot has to meet the same consumer-protection obligations as the process it replaces. <a href="https://files.consumerfinance.gov/f/documents/cfpb_chatbot-issue-spotlight_2023-06.pdf" target="_blank" rel="noopener">Read the CFPB's issue spotlight</a></p>
+
+    <h3 class="sub">What responsible design looks like</h3>
+    <ol class="take">
+      <li><div><b>Design the hand-off as the main event.</b><span>Pass the whole conversation along so nobody has to repeat themselves, and have the person open by acknowledging what already happened. A warm hand-off is where trust is won or lost.</span></div></li>
+      <li><div><b>Escalate on signals, not on failure.</b><span>Frustration, repeated tries, money at risk or signs of vulnerability should bring in a person early. Nobody should have to fail three times to earn one.</span></div></li>
+      <li><div><b>Spend the time automation saves on relationships.</b><span>Use the hours the agent frees up for welcomes, check-ins and milestones, so the first human conversation isn't a complaint.</span></div></li>
+      <li><div><b>Always leave a visible door to a person.</b><span>Say up front what the agent can't do, and make “talk to someone” easy to find, not a reward for persistence.</span></div></li>
+      <li><div><b>Measure the relationship, not just the deflection.</b><span>Track how people feel after a hand-off, repeat contacts, and time to a human on hard issues. And watch the team that only takes escalations: a queue of nothing but upset people burns out good people.</span></div></li>
     </ol>
   </div>
 </section>
@@ -765,7 +840,7 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14.5
     <p class="kick">The kicker</p>
     <h2>Friction doesn't disappear. It moves.</h2>
     <p class="muted" style="margin-inline:auto">The summit was incredibly well run, and the technology worked. That's exactly why this hour stuck with me. Nothing failed. The friction came from choices made around the technology: what to ask, in what order, and what the people waiting could see.</p>
-    <p class="muted" style="margin-inline:auto">As voice becomes the interface for more of what we do, the work isn't only removing friction from one conversation. It's deciding where friction belongs across the whole experience, and putting it only where it protects someone.</p>
+    <p class="muted" style="margin-inline:auto">As voice becomes the interface for more of what we do, the work isn't only removing friction from one conversation. It's designing the whole experience, and the relationship, on purpose: friction only where it protects someone, and a person there before the hardest day, not just on it.</p>
     <p style="margin-top:40px"><a class="door" href="../#encore" aria-label="Back through the door to the hidden track">∞</a></p>
     <div class="links"><a href="../#encore">Back to the hidden track</a><a href="../">Start the album over</a></div>
   </div>
@@ -785,6 +860,7 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14.5
       <ul>
         <li><a href="https://elevenlabs.io/blog/nyc-summit" target="_blank" rel="noopener">ElevenLabs: Summit NYC announcements, including Scribe v3</a></li>
         <li><a href="https://the-decoder.com/elevenlabs-scribe-v3-live-uses-conversational-context-to-stop-voice-agents-from-cutting-off-callers-mid-sentence/" target="_blank" rel="noopener">The Decoder on Scribe v3 Live</a></li>
+        <li><a href="https://files.consumerfinance.gov/f/documents/cfpb_chatbot-issue-spotlight_2023-06.pdf" target="_blank" rel="noopener">CFPB: Chatbots in consumer finance (June 2023)</a></li>
       </ul>
     </div>
   </div>
@@ -1082,6 +1158,103 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14.5
   document.addEventListener("keydown", function(){ K.kbd = true; });
   document.addEventListener("pointerdown", function(){ K.kbd = false; });
   start();
+
+  /* ───────────── The relationship: one customer's year, two designs ───────────── */
+  var J = [
+    { t: ["Opens", "an account"], contain: "agent", relate: "person" },
+    { t: ["Checks", "a balance"], contain: "agent", relate: "agent" },
+    { t: ["Resets", "a password"], contain: "agent", relate: "agent" },
+    { t: ["Annual", "check-in"], contain: "none", relate: "person", note: { contain: "never happens" } },
+    { t: ["Replaces", "a card"], contain: "agent", relate: "agent" },
+    { t: ["Disputes", "a charge"], contain: "agent", relate: "person", note: { contain: "stuck, 3 tries", relate: "early hand-off" } },
+    { t: ["Fraud on", "the account"], contain: "person", relate: "person", crisis: true, note: { contain: "a stranger, upset", relate: "knows them" } }
+  ];
+  var WARM = { contain: [0, 0, 0, 0, 0, -.4, -1], relate: [.45, .45, .45, .85, .85, .75, .6] };
+  var CAP = {
+    contain: ["Automate people out.", " Five of six contacts go to the agent, and the check-in never happens. The only person this customer ever talks to meets them during fraud, after getting stuck on a dispute. They're upset, they're repeating everything, and they've never heard this voice before."],
+    relate: ["Automate for people.", " The agent still does the routine work. But a person welcomes them, checks in once a year, and takes the dispute as soon as it gets complicated. When fraud hits, they're calling someone who already knows them, with the agent's notes in hand."]
+  };
+  var FIRST = { contain: "Contact 7: fraud on the account", relate: "Contact 1: opening the account" };
+  var rel = $("#rel"), jsvg = $("#journey"), jcap = $("#j-cap"), jfirst = $("#j-first"), jmode = "contain", jvert = null, jm = [], jline = null;
+  function el(tag, attrs, parent){ var e = document.createElementNS(NS, tag); Object.keys(attrs).forEach(function(k){ e.setAttribute(k, attrs[k]); }); if (parent) parent.appendChild(e); return e; }
+  function txt(cls, x, y, str, anchor){ var t = el("text", { "class": cls, x: x, y: y, "text-anchor": anchor || "start" }, jsvg); t.textContent = str; return t; }
+  // Wide screens: time runs left to right. Phones: time runs down the screen.
+  var GEO = {
+    wide: { W: 900, H: 300, start: [140, 88],
+            pos: function(i, lane){ return [196 + i * 106, { agent: 158, person: 226, none: 192 }[lane]]; },
+            warm: function(i, v){ return [196 + i * 106, 88 - v * 50]; } },
+    tall: { W: 360, H: 548, start: [326, 52],
+            pos: function(i, lane){ return [{ agent: 196, person: 266, none: 231 }[lane], 92 + i * 66]; },
+            warm: function(i, v){ return [326 + v * 24, 92 + i * 66]; } }
+  };
+  function buildJourney(){
+    var vert = jsvg.parentNode.clientWidth < 600;
+    if (vert === jvert) return;
+    jvert = vert;
+    var G = vert ? GEO.tall : GEO.wide, last = J.length - 1;
+    while (jsvg.firstChild) jsvg.removeChild(jsvg.firstChild);
+    jsvg.setAttribute("viewBox", "0 0 " + G.W + " " + G.H);
+    jsvg.setAttribute("class", "journey" + (vert ? " vert" : ""));
+    if (vert){
+      txt("jl", 196, 24, "AGENT", "middle"); txt("jl", 266, 24, "PERSON", "middle"); txt("jl", 326, 24, "FEELS", "middle"); txt("jl", 302, 44, "−", "middle"); txt("jl", 350, 44, "+", "middle");
+      el("line", { "class": "jbase", x1: 326, y1: 52, x2: 326, y2: G.H - 20 }, jsvg);
+      el("line", { "class": "jlane", x1: 196, y1: 52, x2: 196, y2: G.H - 20 }, jsvg);
+      el("line", { "class": "jlane", x1: 266, y1: 52, x2: 266, y2: G.H - 20 }, jsvg);
+      J.forEach(function(d, i){ var y = G.pos(i, "agent")[1]; txt("jt", 8, y - 3, d.t[0]); txt("jt", 8, y + 15, d.t[1]); });
+    } else {
+      txt("jl", 12, 30, "HOW THE RELATIONSHIP FEELS");
+      el("line", { "class": "jbase", x1: 140, y1: 88, x2: 880, y2: 88 }, jsvg); txt("jl", 12, 93, "NEUTRAL");
+      el("line", { "class": "jlane", x1: 140, y1: 158, x2: 880, y2: 158 }, jsvg);
+      el("line", { "class": "jlane", x1: 140, y1: 226, x2: 880, y2: 226 }, jsvg);
+      txt("jl", 12, 163, "AI AGENT"); txt("jl", 12, 231, "A PERSON");
+      J.forEach(function(d, i){ var x = G.pos(i, "agent")[0]; txt("jt", x, 272, d.t[0], "middle"); txt("jt", x, 290, d.t[1], "middle"); });
+    }
+    jline = el("path", { "class": "jline" }, jsvg);
+    jm = J.map(function(d, i){
+      var g = el("g", { "class": "jm" }, jsvg);
+      el("circle", { "class": "ring", r: 22 }, g);
+      el("circle", { "class": "b", r: 17 }, g);
+      var ga = el("g", { "class": "ga" }, g);
+      [[-7, 8], [-2, 14], [3, 10], [8, 6]].forEach(function(bar){ el("rect", { x: bar[0] - 1.5, y: -bar[1] / 2, width: 3, height: bar[1], rx: 1.5 }, ga); });
+      var gp = el("g", { "class": "gp" }, g);
+      el("circle", { cx: 0, cy: -5, r: 5 }, gp); el("rect", { x: -7, y: 1, width: 14, height: 9, rx: 4.5 }, gp);
+      // notes sit above the marker on wide screens (the last one higher and right-aligned), below it on phones
+      var note = vert ? el("text", { "class": "jnote", x: 0, y: 34, "text-anchor": "middle" }, g)
+                      : el("text", { "class": "jnote", x: i === last ? 24 : 0, y: i === last ? -46 : -28, "text-anchor": i === last ? "end" : "middle" }, g);
+      return { g: g, note: note, d: d, i: i };
+    });
+    paintJourney();
+  }
+  function linePath(G){
+    var pts = [G.start].concat(J.map(function(d, i){ return G.warm(i, WARM[jmode][i]); }));
+    var out = "M" + pts[0][0] + " " + pts[0][1];
+    for (var i = 1; i < pts.length; i++){
+      var a = pts[i - 1], b = pts[i];
+      if (jvert){ var my = (a[1] + b[1]) / 2; out += " C" + a[0].toFixed(1) + " " + my + " " + b[0].toFixed(1) + " " + my + " " + b[0].toFixed(1) + " " + b[1]; }
+      else { var mx = (a[0] + b[0]) / 2; out += " C" + mx + " " + a[1].toFixed(1) + " " + mx + " " + b[1].toFixed(1) + " " + b[0] + " " + b[1].toFixed(1); }
+    }
+    return out;
+  }
+  function paintJourney(){
+    var G = jvert ? GEO.tall : GEO.wide;
+    rel.classList.toggle("contain", jmode === "contain");
+    $$("#rel .seg button").forEach(function(b){ b.setAttribute("aria-pressed", b.dataset.mode === jmode ? "true" : "false"); });
+    jm.forEach(function(m){
+      var lane = m.d[jmode], xy = G.pos(m.i, lane);
+      m.g.setAttribute("class", "jm " + lane + (m.d.crisis ? (jmode === "contain" ? " bad" : " good") : ""));
+      m.g.style.transform = "translate(" + xy[0] + "px," + xy[1] + "px)";
+      m.note.textContent = (m.d.note && m.d.note[jmode]) || "";
+    });
+    var dstr = linePath(G);
+    jline.setAttribute("d", dstr); jline.style.d = "path('" + dstr + "')";
+    while (jcap.firstChild) jcap.removeChild(jcap.firstChild);
+    var bold = document.createElement("b"); bold.textContent = CAP[jmode][0];
+    jcap.appendChild(bold); jcap.appendChild(document.createTextNode(CAP[jmode][1]));
+    jfirst.textContent = FIRST[jmode];
+  }
+  $$("#rel .seg button").forEach(function(b){ b.addEventListener("click", function(){ jmode = b.dataset.mode; paintJourney(); }); });
+  window.addEventListener("resize", buildJourney);
+  buildJourney();
 
   /* ───────────── Run the numbers ───────────── */
   var c = { people: $("#c-people"), booths: $("#c-booths"), qs: $("#c-qs"), qsec: $("#c-qsec"), jargon: $("#c-jargon") };
