@@ -114,7 +114,8 @@ def call(method, url, body=None, accept="application/json"):
         req = urllib.request.Request(url, data=data, method=method, headers={
             "xi-api-key": key(), "Content-Type": "application/json", "Accept": accept})
         try:
-            with urllib.request.urlopen(req, timeout=180) as r:  # nosec B310: URL pinned to https://api.elevenlabs.io above
+            # The URL is pinned to https://api.elevenlabs.io by the check at the top of call().
+            with urllib.request.urlopen(req, timeout=180) as r:  # nosec B310
                 return r.read()
         except urllib.error.HTTPError as e:
             msg = e.read().decode(errors="replace")[:400]
