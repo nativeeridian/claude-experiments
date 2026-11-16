@@ -273,7 +273,7 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 .f1{fill:var(--s1)} .f2{fill:var(--s2)} .f3{fill:var(--s3)} .f4{fill:var(--s4)} .f5{fill:var(--s5)}
 .ks{fill:none;stroke:var(--sil)} .cs{fill:none;stroke:var(--sil-cut)} .rs{fill:none;stroke:var(--s4)} .as{fill:none;stroke:var(--s3)} .gl{fill:var(--s5);opacity:.24}
 .ill text{font-family:var(--body)}
-.gs{fill:none;stroke:var(--s5)} .bs{fill:none;stroke:var(--s2)}
+.gs{fill:none;stroke:var(--s5)} .bs{fill:none;stroke:var(--s2)} .t2{fill:var(--ink-2)}
 
 /* ── Phone width ─────────────────────────────────────────────── */
 @media (max-width:759px){
@@ -337,7 +337,7 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
       <p class="stand say" data-say>I went to Lincoln Center for a voice company's product day and watched two things at once. One was a company pitching the operating layer for how we'll use software: you talk, it listens, and then it acts. The other was a masterclass in how to launch it. This is part recap, part case study, read with one question in mind: what does all of this mean if you work somewhere a regulator reads the transcripts?</p>
       <div class="byline">
         <button class="playbig" id="playbig" type="button"><span class="pi"><svg viewBox="0 0 16 16"><path d="M4 2.5v11l9.5-5.5z"/></svg></span><span id="playbig-l">Play the album</span></button>
-        <span><b>Carson Boykin</b></span><span class="dot"></span><span>Recap + case study</span><span class="dot"></span><span>4 sides · 13 tracks</span><span class="dot"></span><span id="runtime">Run time ≈ 14 min</span>
+        <span><b>Carson Boykin</b></span><span class="dot"></span><span>Recap + case study</span><span class="dot"></span><span>4 sides · 14 tracks</span><span class="dot"></span><span id="runtime">Run time ≈ 14 min</span>
       </div>
     </div>
     <div class="hero-art" data-stop="dm" data-lane=".5" data-lane-m=".5" data-from-top aria-hidden="true">
@@ -620,11 +620,47 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
   </div>
 </section>
 
-<!-- 04 The Drop -->
-<section class="track r" id="drop" data-track="08" data-side="SIDE B" data-title="The drop" data-artist="Twelve covers from one keynote" data-intro="Track eight. The drop.">
+<!-- 08 Scale -->
+<section class="track r" id="scale" data-track="08" data-side="SIDE B" data-title="The 360-degree cost" data-artist="AWS · McKinsey · ElevenLabs · 11:55 AM" data-intro="Track eight. The 360-degree cost.">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">08</span><span>Side B · The day</span><span>All day · Releases</span></p>
+      <p class="tk"><span class="no">08</span><span>Side B · The day</span><span>11:55 AM · Panel</span></p>
+      <h2>The 360-degree cost</h2>
+      <p class="credit"><b>Matt Yanchyshyn</b>, VP, AWS · <b>Yael Taqqu</b>, Senior Partner, McKinsey · with <b>Ashish Uchil</b>, Global BD &amp; Partnerships, ElevenLabs</p>
+      <p class="say" data-say>The session I've thought about most since was "What it takes to scale AI across the enterprise," and in particular a point Matt Yanchyshyn from AWS made that almost nobody talks about: the hidden costs of AI. He called it the 360-degree cost.</p>
+      <p class="say" data-say>AI can take the pressure off a support queue. But what happens when demand explodes? If you automate one step, who handles the next one your support team inherits? If demand generation is mostly automated and it works, do you have the people in place to handle everything it sends you?</p>
+      <p class="pull say" data-say>Automation doesn't remove work. It moves it, and sometimes it multiplies it.</p>
+      <p class="say" data-say>In a bank, this gets concrete fast. If a voice agent resolves most routine calls, the calls left for people are the hardest ones: disputes, fraud, complaints, the customer who's already upset. A rate change or a fraud event can spike volume overnight. The agent scales instantly. The back office, the reviewers and the complaint handlers don't. Budget for the whole system, not just the bot.</p>
+      <div class="stat say" data-say data-text="More than ninety percent AI utilization at AWS, sustained for years, as Matt Yanchyshyn described it."><span class="n">90%<small>+</small></span><span class="l">AI utilization at AWS, sustained for years, as Matt Yanchyshyn described it</span></div>
+      <blockquote class="q say" data-say data-voice="airy"><p>Choose the right tools, and obsess over the rest.</p><cite>The AWS philosophy, as Matt Yanchyshyn put it</cite></blockquote>
+      <p class="say" data-say>There's no shortage of shiny tools. Matt's point was that adoption comes from purpose, not from any particular tool, and AWS has learned that the specific tool matters less than you'd think. Some waste is part of getting there, because people have to play with the tools to understand them. The mistake is staying in that phase.</p>
+      <p class="say" data-say>The shift that stuck with me is how AWS now thinks about engineers: as product engineers. With AI taking on so much of the typing, engineers are expected to bring a strategic lens and really understand the product. The goal is to generate product in a spec-driven way, not to generate stuff. That takes real skill in building the harness, the specs, tests and guardrails around the AI, instead of shipping cheap code with nothing holding it together.</p>
+      <p class="say" data-say>For regulated teams, that's good news. A spec is something an auditor can read. Spec-driven work already looks like the way model risk, audit and change control think, which makes it the shortest path to AI that passes review.</p>
+      <p class="say" data-say>Yael Taqqu from McKinsey widened the frame. This is a technology revolution, she said, and it's also a talent revolution. People have to be open to building new skills, and leaders need boldness and humility working together. It's a rare combination. Most leaders arrive with the boldness. The humility has to be learned.</p>
+      <p class="pull say" data-say>Bold enough to ship. Humble enough to scope it.</p>
+      <p class="say" data-say>I'd seen that combination on the exhibit floor. Bancolombia was bold enough to put a live agent in front of strangers, and humble enough to keep it to the questions it can answer well. That's the posture regulated industries need right now.</p>
+    </div>
+    <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
+      <svg class="ill" viewBox="0 0 300 330">
+        <rect class="a" x="0" y="96" width="300" height="234" opacity=".16"/>
+        <path class="c2" d="M108 96H214L248 150L262 214L230 282L170 318L104 304L54 240L48 168Z"/>
+        <path class="ks" stroke-width="3" stroke-linejoin="round" d="M108 96H214L248 150L262 214L230 282L170 318L104 304L54 240L48 168Z"/>
+        <path class="k" d="M114 97L148 38L168 62L184 48L208 97Z"/>
+        <text x="161" y="89" text-anchor="middle" font-weight="700" font-size="10.5" letter-spacing="1.4" class="c">THE BOT</text>
+        <path class="as" stroke-width="5" stroke-linecap="round" d="M0 97c20-8 30 8 50 0s30 8 50 0 30 8 50 0 30 8 50 0 30 8 50 0 30 8 50 0"/>
+        <g font-weight="700" font-size="11" letter-spacing="1.6" text-anchor="middle" class="t2">
+          <text x="155" y="148">SUPPORT</text><text x="155" y="178">DEMAND SPIKES</text><text x="155" y="208">PEOPLE</text><text x="155" y="238">REVIEW &amp; QA</text><text x="155" y="268">COMPLAINTS</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- 04 The Drop -->
+<section class="track l" id="drop" data-track="09" data-side="SIDE B" data-title="The drop" data-artist="Twelve covers from one keynote" data-intro="Track nine. The drop.">
+  <div class="wrap">
+    <div class="txt" data-stop="m" data-lane-m="px:18">
+      <p class="tk"><span class="no">09</span><span>Side B · The day</span><span>All day · Releases</span></p>
       <h2>Thumb through the releases</h2>
       <p class="say" data-say>ElevenLabs counted thirteen launches and upgrades. I've pressed them onto twelve covers. Swipe or use the arrow keys, and tap the cover in front to flip it for the liner notes.</p>
       <p class="say" data-say>Watch the sticker on each one. What's shipping today is mostly the models underneath. The ideas that would change how a bank operates, like memory, routines and custom models, are still preview or roadmap. That's not a knock. It's a timeline, and it tells you when to start the governance work: now.</p>
@@ -677,10 +713,10 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 </section>
 
 <!-- 05 Records -->
-<section class="track l" id="records" data-track="09" data-side="SIDE C" data-title="Memory is a records problem" data-artist="The fine print" data-intro="Side C, the fine print. Track nine. Memory is a records problem.">
+<section class="track r" id="records" data-track="10" data-side="SIDE C" data-title="Memory is a records problem" data-artist="The fine print" data-intro="Side C, the fine print. Track ten. Memory is a records problem.">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">09</span><span>Side C</span><span>The fine print</span></p>
+      <p class="tk"><span class="no">10</span><span>Side C</span><span>The fine print</span></p>
       <h2>Memory is a records problem</h2>
       <p class="say" data-say>Memory lets an agent recognize a returning customer and keep structured notes on every conversation. Routines let it carry out multi-step work before, during and after a call. Custom models let a company fine-tune on its own conversations. Each one is a great product idea, and each one already has a compliance owner who doesn't know it yet.</p>
       <p class="say" data-say>Here's how I'd translate the launches for a regulated team, with the first question I'd put to the vendor. None of these are reasons to wait. They're the checklist that gets you to yes faster.</p>
@@ -714,10 +750,10 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 </section>
 
 <!-- 06 Identity -->
-<section class="track r" id="identity" data-track="10" data-side="SIDE C" data-title="The identity paradox" data-artist="The fine print" data-intro="Track ten. The identity paradox.">
+<section class="track l" id="identity" data-track="11" data-side="SIDE C" data-title="The identity paradox" data-artist="The fine print" data-intro="Track eleven. The identity paradox.">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">10</span><span>Side C</span><span>The fine print</span></p>
+      <p class="tk"><span class="no">11</span><span>Side C</span><span>The fine print</span></p>
       <h2>The identity paradox</h2>
       <div class="stat say" data-say data-text="Fifty to ninety percent. KPN's identity verification accuracy after tuning on Dutch-language data, as ElevenLabs reported it."><span class="n">50→90<small>%</small></span><span class="l">KPN's identity-verification accuracy after tuning on Dutch-language data, as ElevenLabs reported it</span></div>
       <p class="say" data-say>Here's the tension I keep coming back to. The company that made voices easy to recreate is building the agents that now have to decide who's really on the line. Banks spent a decade enrolling customers in voice biometrics, and that control gets weaker every quarter.</p>
@@ -736,10 +772,10 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 </section>
 
 <!-- 07 Lineage -->
-<section class="track l" id="lineage" data-track="11" data-side="SIDE C" data-title="Which model answered?" data-artist="The fine print" data-intro="Track eleven. Which model answered?">
+<section class="track r" id="lineage" data-track="12" data-side="SIDE C" data-title="Which model answered?" data-artist="The fine print" data-intro="Track twelve. Which model answered?">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">11</span><span>Side C</span><span>The fine print</span></p>
+      <p class="tk"><span class="no">12</span><span>Side C</span><span>The fine print</span></p>
       <h2>Which model answered?</h2>
       <p class="say" data-say>The Interaction Engine is the most important thing ElevenLabs previewed, and the least flashy. It manages turn-taking and interruptions, and it routes each moment of a conversation to a different model: something cheap to triage, something frontier-grade for the hard part.</p>
       <p class="say" data-say>That's great economics. It's also a new question for model risk. In a bank, "the AI said it" is not an answer. For every turn we'll need to know which model spoke, which version, what it was given, and why the router picked it.</p>
@@ -764,18 +800,19 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 </section>
 
 <!-- 08 Takeaways -->
-<section class="track r" id="takeaways" data-track="12" data-side="SIDE C" data-title="What I'm taking back to work" data-artist="For the risk committee" data-intro="Track twelve. What I'm taking back to work.">
+<section class="track l" id="takeaways" data-track="13" data-side="SIDE C" data-title="What I'm taking back to work" data-artist="For the risk committee" data-intro="Track thirteen. What I'm taking back to work.">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">12</span><span>Side C</span><span>For the risk committee</span></p>
+      <p class="tk"><span class="no">13</span><span>Side C</span><span>For the risk committee</span></p>
       <h2>What I'm taking back to work</h2>
-      <p class="say" data-say>Five things I'd put in front of any risk committee looking at voice agents this year.</p>
+      <p class="say" data-say>Six things I'd put in front of any risk committee looking at voice agents this year.</p>
       <ol class="take">
         <li class="say" data-say><div><b>Govern voice agents as a channel.</b><span>Hold them to the same bar as a branch or the app: disclosures, complaints handling, QA sampling and accessibility.</span></div></li>
         <li class="say" data-say><div><b>Retire voice as a credential.</b><span>Keep voice as the interface. Verify identity with factors a clone can't copy.</span></div></li>
         <li class="say" data-say><div><b>Start where acting has hard limits.</b><span>Pick high-volume flows with firm thresholds and a fast human handoff, then widen the scope on evidence.</span></div></li>
         <li class="say" data-say><div><b>Demand per-turn lineage.</b><span>Transcript, model, version, action and reason, exportable for every call.</span></div></li>
         <li class="say" data-say><div><b>Treat memory and training data as records.</b><span>Design retention, consent and deletion on day one, not after the first exam finding.</span></div></li>
+        <li class="say" data-say><div><b>Budget for the 360.</b><span>Plan for what automation pushes downstream: the hard calls, the demand spikes, and the people and reviewers behind the agent.</span></div></li>
       </ol>
     </div>
     <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
@@ -796,7 +833,7 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 </section>
 
 <!-- Hidden track -->
-<section class="track l" id="encore" data-track="13" data-hidden data-side="SIDE D" data-title="Two voices, returned" data-artist="Impact Program · 4:00 PM" data-intro="Hidden track. Two voices, returned.">
+<section class="track r" id="encore" data-track="14" data-hidden data-side="SIDE D" data-title="Two voices, returned" data-artist="Impact Program · 4:00 PM" data-intro="Hidden track. Two voices, returned.">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
       <p class="tk"><span class="no">∞</span><span>Side D · Hidden track</span><span>4:00 PM · Impact Program</span></p>
@@ -829,7 +866,7 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
       <p class="kick">Liner notes</p>
       <h2>Recorded live at David Geffen Hall</h2>
       <p>Written by <b>Carson Boykin</b> after the ElevenLabs Summit at Lincoln Center on November 11, 2026.</p>
-      <p><b>From the room.</b> The venue, the live keynote demos and the partner booths, Bancolombia's included, come from my own notes. ElevenLabs' public recaps don't describe them. Facts about the hall come from coverage of its 2022 reopening.</p>
+      <p><b>From the room.</b> The venue, the live keynote demos, the partner booths (Bancolombia's included) and the scaling panel come from my own notes. ElevenLabs' public recaps don't describe them. Facts about the hall come from coverage of its 2022 reopening.</p>
       <p><b>Billed, then absent.</b> NVIDIA's Jensen Huang withdrew from the program days before the summit. NVIDIA still announced an expanded partnership that day.</p>
       <p><b>On the numbers.</b> Figures are as ElevenLabs and the press reported them. KPN's verification gain appears as 50% → 90% in ElevenLabs' material and as 60% → 85% in one podcast summary. Scribe v3's error reduction is 27% in ElevenLabs' own evaluation and about 25% in The Decoder. Status stickers reflect what was public on November 16, 2026.</p>
       <p><b>On the quotes.</b> Quotes are from ElevenLabs' summit announcement and keynote coverage, and from Customers Bank's public statements about its rollout. Everything in the first person is my own read.</p>
