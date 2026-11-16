@@ -106,12 +106,15 @@ def key():
 
 
 def call(method, url, body=None, accept="application/json"):
+    # Only ever talk to the ElevenLabs API over HTTPS (blocks file:// or other schemes).
+    if not url.startswith(API + "/"):
+        raise SystemExit(f"refusing to open a non-ElevenLabs URL: {url}")
     data = json.dumps(body).encode() if body is not None else None
     for attempt in range(5):
         req = urllib.request.Request(url, data=data, method=method, headers={
             "xi-api-key": key(), "Content-Type": "application/json", "Accept": accept})
         try:
-            with urllib.request.urlopen(req, timeout=180) as r:
+            with urllib.request.urlopen(req, timeout=180) as r:  # nosec B310: URL pinned to https://api.elevenlabs.io above
                 return r.read()
         except urllib.error.HTTPError as e:
             msg = e.read().decode(errors="replace")[:400]
