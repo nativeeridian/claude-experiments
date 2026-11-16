@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
 <style>:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
 <meta name="theme-color" content="#0a0c18">
 <script>try{if(localStorage.getItem("vito-theme")==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}</script>
@@ -105,6 +107,8 @@ a{color:var(--accent-ink);text-underline-offset:3px}
 .ip-voice{display:flex;align-items:center;gap:6px;font:700 10.5px var(--body);letter-spacing:.08em;text-transform:uppercase}
 .voicesel{min-width:0;flex:1;font:600 12px var(--body);color:inherit;background:rgba(255,255,255,.12);border:1px solid rgba(127,127,127,.55);border-radius:5px;padding:3px 4px;text-transform:none;letter-spacing:0}
 .voicesel option{color:#121530;background:#ffffff}
+.ratebtn{appearance:none;flex:none;border:1px solid currentColor;background:none;color:inherit;font:700 11.5px/1 var(--body);border-radius:999px;padding:4px 7px;cursor:pointer;font-variant-numeric:tabular-nums;min-width:40px}
+.mbtn.ratebtn{width:auto;min-width:44px;height:30px;border:1px solid currentColor;border-radius:999px;font:700 12px/1 var(--body);padding:0 8px}
 .followbtn{appearance:none;border:1px solid currentColor;background:none;color:inherit;font:600 11px var(--body);border-radius:999px;padding:3px 9px;cursor:pointer;align-self:center}
 .ip-list{overflow-y:auto}
 .tl{list-style:none;margin:0;padding:0}
@@ -399,7 +403,7 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
         <div class="orbwrap"><div class="orb idle" aria-hidden="true"></div></div>
         <div class="ip-meta"><b id="ip-t">00 · Voice Is the OS</b><span id="ip-a"></span></div>
         <div class="ip-prog"><span id="ip-e">0:00</span><span class="bar" aria-hidden="true"><i id="ip-f"></i></span><span id="ip-r">-0:00</span></div>
-        <label class="ip-voice" for="voice-sel">Voice <select class="voicesel" id="voice-sel" disabled><option>Loading…</option></select></label>
+        <div class="ip-voice"><label for="voice-sel">Voice</label><select class="voicesel" id="voice-sel" disabled><option>Loading…</option></select><button class="ratebtn" type="button">1×</button></div>
         <button class="followbtn" type="button" hidden>Jump to the line being read</button>
       </div>
       <div class="ip-view ip-list" id="ip-list" hidden><ol class="tl" id="ip-tracks"></ol></div>
@@ -421,11 +425,12 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
   <button class="mbtn hide-s" id="m-prev" type="button" aria-label="Previous track"><svg viewBox="0 0 16 16"><path d="M2 3h2v10H2zM15 3v10L8.5 8zM8.5 3v10L2 8z"/></svg></button>
   <button class="mbtn big" id="m-play" type="button" aria-label="Play"><svg viewBox="0 0 16 16" class="ppicon"><path d="M4 2.5v11l9.5-5.5z"/></svg></button>
   <button class="mbtn hide-s" id="m-next" type="button" aria-label="Next track"><svg viewBox="0 0 16 16"><path d="M12 3h2v10h-2zM1 3v10l6.5-5zM7.5 3v10L14 8z"/></svg></button>
+  <button class="mbtn ratebtn hide-s" type="button">1×</button>
   <button class="mbtn" id="m-reset" type="button" aria-label="Reset: stop and go back to the start"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.3 6.3A5.1 5.1 0 1 1 3.1 9.6"/><path d="M2.7 2.8v3.7h3.7"/></svg></button>
   <button class="mbtn" id="m-list" type="button" aria-label="Tracks and voice" aria-expanded="false"><svg viewBox="0 0 16 16"><path d="M2 3.4h12V5H2zM2 7.2h12v1.6H2zM2 11h12v1.6H2z"/></svg></button>
 </div>
 <div class="sheet" id="sheet" hidden role="dialog" aria-label="Tracks and voice">
-  <div class="sh-head"><b>Tracks</b><label for="voice-sel-m">Voice <select class="voicesel" id="voice-sel-m" disabled><option>Loading…</option></select></label><button class="themebtn" type="button"><svg viewBox="0 0 16 16"></svg></button><button class="sh-x" id="sh-x" type="button">Close</button></div>
+  <div class="sh-head"><b>Tracks</b><label for="voice-sel-m">Voice <select class="voicesel" id="voice-sel-m" disabled><option>Loading…</option></select></label><button class="ratebtn" type="button">1×</button><button class="themebtn" type="button"><svg viewBox="0 0 16 16"></svg></button><button class="sh-x" id="sh-x" type="button">Close</button></div>
   <button class="followbtn" type="button" hidden>Jump to the line being read</button>
   <ol class="tl" id="sh-tracks"></ol>
 </div>
@@ -1088,10 +1093,12 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
   var state = "idle", engine = null, playIdx = -1, cur = null, queue = [], follow = true, speakingEl = null;
   var voices = [], voiceKey = null, manifests = {}, narr = null;
   var A = [new Audio(), new Audio()], ai = 0;
+  var RATES = [0.75, 1, 1.25, 1.5, 1.75, 2], rate = 1;
+  try { var savedRate = parseFloat(localStorage.getItem("vito-rate")); if (RATES.indexOf(savedRate) >= 0) rate = savedRate; } catch (e) {}
   var orbs = $$(".orb"), PLAY = '<path d="M4 2.5v11l9.5-5.5z"/>', PAUSE = '<path d="M3.5 2.5h3.2v11H3.5zM9.3 2.5h3.2v11H9.3z"/>';
 
   A.forEach(function(a, k){
-    a.preload = "auto";
+    a.preload = "auto"; a.defaultPlaybackRate = rate; if ("preservesPitch" in a) a.preservesPitch = true;
     a.addEventListener("ended", function(){ if (k === ai && engine === "audio" && state !== "idle"){ ai = 1 - ai; next(); } });
     a.addEventListener("error", function(){ if (k === ai && engine === "audio" && state === "speaking"){ ai = 1 - ai; next(); } });
     a.addEventListener("timeupdate", function(){ if (k === ai) paintProgress(); });
@@ -1175,12 +1182,13 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
       var a = A[ai], want = src(cur);
       if (a._for !== want){ a.src = want; a._for = want; }
       try { a.currentTime = 0; } catch (e) {}
+      a.playbackRate = rate;
       var pr = a.play();
       if (pr && pr.catch) pr.catch(function(e){ if (e && e.name === "AbortError") return; finish(); });
       var b = A[1 - ai];
       if (queue.length){ var nw = src(queue[0]); if (b._for !== nw){ b.src = nw; b._for = nw; } }
     } else {
-      var u = new SpeechSynthesisUtterance(cur.text); u.lang = "en-US"; u.rate = 1.02;
+      var u = new SpeechSynthesisUtterance(cur.text); u.lang = "en-US"; u.rate = 1.02 * rate;
       u.onend = function(){ if (engine === "ss" && state !== "idle") next(); };
       u.onerror = function(){ finish(); };
       ss.speak(u);
@@ -1237,8 +1245,8 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
     var idx = state !== "idle" ? playIdx : currentByScroll(), t = tracks[idx], p;
     if (state !== "idle" && narr) p = Math.min(1, trackElapsed() / Math.max(1, t._dur));
     else { var r = t.getBoundingClientRect(); p = Math.min(1, Math.max(0, (window.innerHeight * 0.38 - r.top) / Math.max(1, r.height))); }
-    $("#ip-e").textContent = fmt(p * t._dur);
-    $("#ip-r").textContent = "-" + fmt((1 - p) * t._dur);
+    $("#ip-e").textContent = fmt(p * t._dur / rate);
+    $("#ip-r").textContent = "-" + fmt((1 - p) * t._dur / rate);
     var w = (p * 100).toFixed(1) + "%"; $("#ip-f").style.width = w; $("#mm-f").style.width = w;
   }
   function paint(){
@@ -1256,13 +1264,13 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
       var i = +b.dataset.i;
       b.setAttribute("aria-current", i === idx ? "true" : "false");
       b.classList.toggle("playing", state !== "idle" && i === playIdx);
-      b.querySelector(".ls-d").textContent = fmt(tracks[i]._dur);
+      b.querySelector(".ls-d").textContent = fmt(tracks[i]._dur / rate);
     });
     paintProgress();
   }
   function runtimeText(){
     var tot = tracks.reduce(function(s, t){ return s + t._dur; }, 0);
-    $("#runtime").textContent = (narr ? "Run time " : "Run time ≈ ") + fmt(tot);
+    $("#runtime").textContent = (narr ? "Run time " : "Run time ≈ ") + fmt(tot / rate) + (rate !== 1 ? " at " + rate + "×" : "");
   }
 
   /* track lists (iPod screen + phone sheet) */
@@ -1312,6 +1320,19 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
   });
   $("#sh-x").addEventListener("click", closeSheet);
 
+  /* playback speed */
+  function applyRate(){
+    A.forEach(function(a){ a.defaultPlaybackRate = rate; a.playbackRate = rate; });
+    $$(".ratebtn").forEach(function(b){ b.textContent = rate + "×"; b.setAttribute("aria-label", "Playback speed " + rate + " times. Change speed"); });
+    runtimeText(); paint();
+  }
+  $$(".ratebtn").forEach(function(b){ b.addEventListener("click", function(){
+    rate = RATES[(RATES.indexOf(rate) + 1) % RATES.length];
+    try { localStorage.setItem("vito-rate", String(rate)); } catch (e) {}
+    if (engine === "ss" && state !== "idle" && cur){ playFrom(playIdx, cur.id); }
+    applyRate();
+  }); });
+
   /* voices: pre-recorded with ElevenLabs, one folder per voice */
   function setVoice(key, resume){
     function apply(m){
@@ -1348,7 +1369,7 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
       setVoice(key, false);
     }).catch(function(){});
   }
-  runtimeText();
+  applyRate();
 
   function onScroll(){
     if (!raf) raf = requestAnimationFrame(function(){ drawRibbon(); paint(); });
