@@ -1,0 +1,20 @@
+{
+ "default": "chris",
+ "voices": [
+  {
+   "key": "chris",
+   "name": "Chris",
+   "note": "Down-to-earth"
+  },
+  {
+   "key": "matilda",
+   "name": "Matilda",
+   "note": "Knowledgeable, upbeat"
+  },
+  {
+   "key": "wildlife",
+   "name": "Wildlife Narrator",
+   "note": "Original character voice"
+  }
+ ]
+}

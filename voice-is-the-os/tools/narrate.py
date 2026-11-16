@@ -6,7 +6,9 @@ same ids the page uses (track intro = "<track>-0", then each [data-say] element
 "<track>-1", "<track>-2", ...), and writes ../audio/<id>.mp3 plus
 ../audio/manifest.json. Lines whose text hasn't changed are skipped.
 
-  ELEVENLABS_API_KEY=...  python3 tools/narrate.py --narrator VOICE_ID --quote VOICE_ID
+  ELEVENLABS_API_KEY=...  python3 tools/narrate.py --key chris --name Chris --note "Down-to-earth" --narrator VOICE_ID
+  python3 tools/narrate.py --design OUT_DIR "voice description"   # Voice Design previews
+  python3 tools/narrate.py --save-designed GENERATED_ID "Name" "description"
   python3 tools/narrate.py --dry-run            # list lines and character count
   python3 tools/narrate.py --list-voices        # voices on your account
   python3 tools/narrate.py --list-models
@@ -104,12 +106,16 @@ def key():
 
 
 def call(method, url, body=None, accept="application/json"):
+    # Only ever talk to the ElevenLabs API over HTTPS (blocks file:// or other schemes).
+    if not url.startswith(API + "/"):
+        raise SystemExit(f"refusing to open a non-ElevenLabs URL: {url}")
     data = json.dumps(body).encode() if body is not None else None
     for attempt in range(5):
         req = urllib.request.Request(url, data=data, method=method, headers={
             "xi-api-key": key(), "Content-Type": "application/json", "Accept": accept})
         try:
-            with urllib.request.urlopen(req, timeout=180) as r:
+            # The URL is pinned to https://api.elevenlabs.io by the check at the top of call().
+            with urllib.request.urlopen(req, timeout=180) as r:  # nosec B310
                 return r.read()
         except urllib.error.HTTPError as e:
             msg = e.read().decode(errors="replace")[:400]
@@ -133,6 +139,11 @@ def h(parts, voices, model):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--narrator"); ap.add_argument("--quote")
+    ap.add_argument("--key", help="voice folder under audio/ (e.g. chris)")
+    ap.add_argument("--name"); ap.add_argument("--note", default="")
+    ap.add_argument("--default", action="store_true", help="make this the page's default voice")
+    ap.add_argument("--design", nargs=2, metavar=("OUT_DIR", "DESCRIPTION"))
+    ap.add_argument("--save-designed", nargs=3, metavar=("GENERATED_ID", "NAME", "DESCRIPTION"))
     ap.add_argument("--model", default="eleven_multilingual_v2")
     ap.add_argument("--dry-run", action="store_true"); ap.add_argument("--force", action="store_true")
     ap.add_argument("--no-context", action="store_true", help="don't send previous/next text")
@@ -148,6 +159,27 @@ def main():
     if a.list_models:
         for m in json.loads(call("GET", f"{API}/models")):
             print(m["model_id"], "|", m.get("name"), "| tts:", m.get("can_do_text_to_speech"))
+        return
+
+    if a.design:
+        import base64
+        out, desc = a.design
+        os.makedirs(out, exist_ok=True)
+        text = next(t for l in extract(os.path.join(ROOT, "index.html")) if l["id"] == "intro-1" for _, t in l["parts"])
+        try:
+            res = json.loads(call("POST", f"{API}/text-to-voice/design", {"voice_description": desc, "text": text}))
+        except SystemExit as e:
+            print("design endpoint failed, trying create-previews:", e)
+            res = json.loads(call("POST", f"{API}/text-to-voice/create-previews", {"voice_description": desc, "text": text}))
+        for k, pv in enumerate(res.get("previews", []), 1):
+            fn = os.path.join(out, f"preview-{k}-{pv['generated_voice_id']}.mp3")
+            open(fn, "wb").write(base64.b64decode(pv["audio_base_64"]))
+            print("wrote", fn)
+        return
+    if a.save_designed:
+        gid, name, desc = a.save_designed
+        v = json.loads(call("POST", f"{API}/text-to-voice", {"voice_name": name, "voice_description": desc, "generated_voice_id": gid}))
+        print("saved voice", v.get("voice_id"), name)
         return
 
     lines = extract(os.path.join(ROOT, "index.html"))
@@ -166,10 +198,10 @@ def main():
             print("wrote sample", vid)
         return
 
-    if not (a.narrator and a.quote):
-        sys.exit("--narrator and --quote voice ids are required")
-    voices = {"narrator": a.narrator, "quote": a.quote}
-    adir = os.path.join(ROOT, "audio"); os.makedirs(adir, exist_ok=True)
+    if not (a.narrator and a.key):
+        sys.exit("--key and --narrator are required")
+    voices = {"narrator": a.narrator, "quote": a.quote or a.narrator}
+    adir = os.path.join(ROOT, "audio", a.key); os.makedirs(adir, exist_ok=True)
     mpath = os.path.join(adir, "manifest.json")
     old = json.load(open(mpath)) if os.path.exists(mpath) else {"lines": {}}
     man = {"model": a.model, "voices": voices, "format": FMT, "lines": {}}
@@ -197,6 +229,13 @@ def main():
     json.dump(man, open(mpath, "w"), indent=1)
     for stale in set(os.listdir(adir)) - {x["file"] for x in man["lines"].values()} - {"manifest.json"}:
         os.remove(os.path.join(adir, stale))
+    vpath = os.path.join(ROOT, "audio", "voices.json")
+    reg = json.load(open(vpath)) if os.path.exists(vpath) else {"default": a.key, "voices": []}
+    entry = {"key": a.key, "name": a.name or a.key.title(), "note": a.note}
+    reg["voices"] = [entry if v["key"] == a.key else v for v in reg["voices"]]
+    if not any(v["key"] == a.key for v in reg["voices"]): reg["voices"].append(entry)
+    if a.default or not reg.get("default"): reg["default"] = a.key
+    json.dump(reg, open(vpath, "w"), indent=1)
     total = sum(x["sec"] for x in man["lines"].values())
     print(f"generated {done}, total {len(man['lines'])} lines, {total/60:.1f} min")
 

@@ -1,0 +1,426 @@
+{
+ "model": "eleven_v4",
+ "voices": {
+  "narrator": "roJPMmP5mjyGkZmeuQgA",
+  "quote": "roJPMmP5mjyGkZmeuQgA"
+ },
+ "format": "mp3_44100_64",
+ "lines": {
+  "intro-0": {
+   "file": "intro-0.mp3",
+   "h": "e617be22b4d7",
+   "sec": 6.14
+  },
+  "intro-1": {
+   "file": "intro-1.mp3",
+   "h": "4c421e5deb8a",
+   "sec": 27.98
+  },
+  "room-0": {
+   "file": "room-0.mp3",
+   "h": "d4929fbfe3a2",
+   "sec": 5.99
+  },
+  "room-1": {
+   "file": "room-1.mp3",
+   "h": "d1c73e5eb0fc",
+   "sec": 14.06
+  },
+  "room-2": {
+   "file": "room-2.mp3",
+   "h": "7e297d5fab95",
+   "sec": 15.6
+  },
+  "room-3": {
+   "file": "room-3.mp3",
+   "h": "14cf50bcc74a",
+   "sec": 5.91
+  },
+  "room-4": {
+   "file": "room-4.mp3",
+   "h": "515c46e5336c",
+   "sec": 19.75
+  },
+  "room-5": {
+   "file": "room-5.mp3",
+   "h": "9d0eb31ea8b5",
+   "sec": 6.38
+  },
+  "room-6": {
+   "file": "room-6.mp3",
+   "h": "542c415e5b1b",
+   "sec": 10.95
+  },
+  "live-0": {
+   "file": "live-0.mp3",
+   "h": "387ad5c93664",
+   "sec": 3.58
+  },
+  "live-1": {
+   "file": "live-1.mp3",
+   "h": "68bddea2ec28",
+   "sec": 13.9
+  },
+  "live-2": {
+   "file": "live-2.mp3",
+   "h": "2a33d8b6df46",
+   "sec": 23.28
+  },
+  "live-3": {
+   "file": "live-3.mp3",
+   "h": "36bd9b6c6104",
+   "sec": 6.38
+  },
+  "live-4": {
+   "file": "live-4.mp3",
+   "h": "2c76bce1f577",
+   "sec": 12.07
+  },
+  "live-5": {
+   "file": "live-5.mp3",
+   "h": "7456fc5aeaf8",
+   "sec": 12.08
+  },
+  "live-6": {
+   "file": "live-6.mp3",
+   "h": "ba3bd519d406",
+   "sec": 10.87
+  },
+  "booths-0": {
+   "file": "booths-0.mp3",
+   "h": "a7bea40ad0dc",
+   "sec": 3.35
+  },
+  "booths-1": {
+   "file": "booths-1.mp3",
+   "h": "ee30cea9992c",
+   "sec": 14.24
+  },
+  "booths-2": {
+   "file": "booths-2.mp3",
+   "h": "e2836be7b067",
+   "sec": 23.36
+  },
+  "booths-3": {
+   "file": "booths-3.mp3",
+   "h": "daf8885a64ab",
+   "sec": 23.83
+  },
+  "booths-4": {
+   "file": "booths-4.mp3",
+   "h": "c1dca2992920",
+   "sec": 13.04
+  },
+  "booths-5": {
+   "file": "booths-5.mp3",
+   "h": "8bcf1448661f",
+   "sec": 4.71
+  },
+  "booths-6": {
+   "file": "booths-6.mp3",
+   "h": "57c351b40994",
+   "sec": 14.14
+  },
+  "booths-7": {
+   "file": "booths-7.mp3",
+   "h": "bb8999e01936",
+   "sec": 20.07
+  },
+  "playbook-0": {
+   "file": "playbook-0.mp3",
+   "h": "47ab17f65665",
+   "sec": 3.04
+  },
+  "playbook-1": {
+   "file": "playbook-1.mp3",
+   "h": "eb93af3ffc09",
+   "sec": 18.32
+  },
+  "playbook-2": {
+   "file": "playbook-2.mp3",
+   "h": "4e6b904097cd",
+   "sec": 12.21
+  },
+  "playbook-3": {
+   "file": "playbook-3.mp3",
+   "h": "c9e92dbd1952",
+   "sec": 12.96
+  },
+  "playbook-4": {
+   "file": "playbook-4.mp3",
+   "h": "473df2f158e3",
+   "sec": 4.86
+  },
+  "playbook-5": {
+   "file": "playbook-5.mp3",
+   "h": "4b0bfb0d6bd3",
+   "sec": 8.31
+  },
+  "playbook-6": {
+   "file": "playbook-6.mp3",
+   "h": "3838a4f7c62e",
+   "sec": 10.22
+  },
+  "playbook-7": {
+   "file": "playbook-7.mp3",
+   "h": "f9eb842d8c19",
+   "sec": 8.78
+  },
+  "playbook-8": {
+   "file": "playbook-8.mp3",
+   "h": "5f0d547e9e0e",
+   "sec": 9.44
+  },
+  "playbook-9": {
+   "file": "playbook-9.mp3",
+   "h": "fc29421106b9",
+   "sec": 11.58
+  },
+  "finance-0": {
+   "file": "finance-0.mp3",
+   "h": "62d90a277f78",
+   "sec": 6.64
+  },
+  "finance-1": {
+   "file": "finance-1.mp3",
+   "h": "019f04332c97",
+   "sec": 7.84
+  },
+  "finance-2": {
+   "file": "finance-2.mp3",
+   "h": "5fae31e176c4",
+   "sec": 14.4
+  },
+  "finance-3": {
+   "file": "finance-3.mp3",
+   "h": "9a01311634b9",
+   "sec": 30.23
+  },
+  "finance-4": {
+   "file": "finance-4.mp3",
+   "h": "cec4500f8dbe",
+   "sec": 14.3
+  },
+  "finance-5": {
+   "file": "finance-5.mp3",
+   "h": "1d780260831e",
+   "sec": 10.4
+  },
+  "scale-0": {
+   "file": "scale-0.mp3",
+   "h": "e740e9e769d3",
+   "sec": 4.63
+  },
+  "scale-1": {
+   "file": "scale-1.mp3",
+   "h": "7e9e50385237",
+   "sec": 19.36
+  },
+  "scale-2": {
+   "file": "scale-2.mp3",
+   "h": "2d09642658f1",
+   "sec": 18.47
+  },
+  "scale-3": {
+   "file": "scale-3.mp3",
+   "h": "e013557c447e",
+   "sec": 6.3
+  },
+  "scale-4": {
+   "file": "scale-4.mp3",
+   "h": "24bb7012e7a7",
+   "sec": 27.51
+  },
+  "scale-5": {
+   "file": "scale-5.mp3",
+   "h": "23734e2ab8f7",
+   "sec": 7.42
+  },
+  "scale-6": {
+   "file": "scale-6.mp3",
+   "h": "37574d7f608d",
+   "sec": 7.59
+  },
+  "scale-7": {
+   "file": "scale-7.mp3",
+   "h": "9cb1b36a7781",
+   "sec": 12.96
+  },
+  "scale-8": {
+   "file": "scale-8.mp3",
+   "h": "ba78d04ba42a",
+   "sec": 31.51
+  },
+  "scale-9": {
+   "file": "scale-9.mp3",
+   "h": "c6d7b9c7ccb0",
+   "sec": 15.68
+  },
+  "scale-10": {
+   "file": "scale-10.mp3",
+   "h": "3aebd2bf0051",
+   "sec": 23.2
+  },
+  "scale-11": {
+   "file": "scale-11.mp3",
+   "h": "98897ab17726",
+   "sec": 4.08
+  },
+  "scale-12": {
+   "file": "scale-12.mp3",
+   "h": "c7449f1dfbbb",
+   "sec": 14.79
+  },
+  "drop-0": {
+   "file": "drop-0.mp3",
+   "h": "9d0daccdb555",
+   "sec": 2.96
+  },
+  "drop-1": {
+   "file": "drop-1.mp3",
+   "h": "ded1724e1a7b",
+   "sec": 11.92
+  },
+  "drop-2": {
+   "file": "drop-2.mp3",
+   "h": "1bca8359d6cc",
+   "sec": 20.15
+  },
+  "drop-3": {
+   "file": "drop-3.mp3",
+   "h": "f134a5f9b219",
+   "sec": 27.28
+  },
+  "ramp-0": {
+   "file": "ramp-0.mp3",
+   "h": "e7af8f5b9971",
+   "sec": 5.6
+  },
+  "ramp-1": {
+   "file": "ramp-1.mp3",
+   "h": "072bba4d3cea",
+   "sec": 12.78
+  },
+  "ramp-2": {
+   "file": "ramp-2.mp3",
+   "h": "29cb7fe57cd2",
+   "sec": 18.24
+  },
+  "ramp-3": {
+   "file": "ramp-3.mp3",
+   "h": "0bed68b4e082",
+   "sec": 3.9
+  },
+  "ramp-4": {
+   "file": "ramp-4.mp3",
+   "h": "5d559fffe4e5",
+   "sec": 14.71
+  },
+  "ramp-5": {
+   "file": "ramp-5.mp3",
+   "h": "89fedd96a08c",
+   "sec": 8.0
+  },
+  "ramp-6": {
+   "file": "ramp-6.mp3",
+   "h": "7f098c8673b7",
+   "sec": 30.78
+  },
+  "ramp-7": {
+   "file": "ramp-7.mp3",
+   "h": "0d6914979288",
+   "sec": 20.22
+  },
+  "lineage-0": {
+   "file": "lineage-0.mp3",
+   "h": "f1160fd7906f",
+   "sec": 6.72
+  },
+  "lineage-1": {
+   "file": "lineage-1.mp3",
+   "h": "2c665afd0c61",
+   "sec": 17.51
+  },
+  "lineage-2": {
+   "file": "lineage-2.mp3",
+   "h": "bfde566b0ee2",
+   "sec": 16.88
+  },
+  "lineage-3": {
+   "file": "lineage-3.mp3",
+   "h": "6a6a0162690a",
+   "sec": 6.64
+  },
+  "lineage-4": {
+   "file": "lineage-4.mp3",
+   "h": "320bf6102943",
+   "sec": 12.39
+  },
+  "takeaways-0": {
+   "file": "takeaways-0.mp3",
+   "h": "62f8f90efeda",
+   "sec": 3.11
+  },
+  "takeaways-1": {
+   "file": "takeaways-1.mp3",
+   "h": "1b4d071e1a51",
+   "sec": 6.8
+  },
+  "takeaways-2": {
+   "file": "takeaways-2.mp3",
+   "h": "5d1fd4965808",
+   "sec": 11.26
+  },
+  "takeaways-3": {
+   "file": "takeaways-3.mp3",
+   "h": "5f4a07159765",
+   "sec": 8.86
+  },
+  "takeaways-4": {
+   "file": "takeaways-4.mp3",
+   "h": "63f6cd90ba59",
+   "sec": 10.3
+  },
+  "takeaways-5": {
+   "file": "takeaways-5.mp3",
+   "h": "719cd46046ab",
+   "sec": 8.7
+  },
+  "takeaways-6": {
+   "file": "takeaways-6.mp3",
+   "h": "cee95cb28167",
+   "sec": 9.67
+  },
+  "takeaways-7": {
+   "file": "takeaways-7.mp3",
+   "h": "fc96df542c8c",
+   "sec": 10.87
+  },
+  "encore-0": {
+   "file": "encore-0.mp3",
+   "h": "81c8857dbd22",
+   "sec": 4.08
+  },
+  "encore-1": {
+   "file": "encore-1.mp3",
+   "h": "df8de950f3ff",
+   "sec": 17.82
+  },
+  "encore-2": {
+   "file": "encore-2.mp3",
+   "h": "3a82656df96b",
+   "sec": 20.96
+  },
+  "encore-3": {
+   "file": "encore-3.mp3",
+   "h": "8c1a17838153",
+   "sec": 5.18
+  },
+  "encore-4": {
+   "file": "encore-4.mp3",
+   "h": "0c95d7f4d4de",
+   "sec": 8.78
+  }
+ },
+ "v": "34efa64c"
+}
