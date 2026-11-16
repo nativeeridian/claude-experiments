@@ -1,0 +1,10 @@
+{
+ "default": "chris",
+ "voices": [
+  {
+   "key": "chris",
+   "name": "Chris",
+   "note": "Down-to-earth"
+  }
+ ]
+}
