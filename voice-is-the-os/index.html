@@ -17,7 +17,7 @@
   --lcd-1:#e7eff1; --lcd-2:#c9d7dc; --lcd-ink:#15232b; --lcd-edge:#9aacb4;
   --board:#2f46e8; --board-ink:#ffffff; --board-ink-2:rgba(255,255,255,.8);
   --bib:#ffffff; --bib-ink:#121530;
-  --zebra:#eaf0fb; --sel:#3a6fd8;
+  --zebra:#eaf0fb; --sel:#3a6fd8; --gloss:rgba(255,255,255,.55);
   --live-bg:#daf5e4; --live-fg:#0f6338; --ea-bg:#fff0c4; --ea-fg:#765000;
   --pre-bg:#d6f1f7; --pre-fg:#0a5b6e; --road-fg:#474e6b; --sign-bg:#ffe0ee; --sign-fg:#8a1b4d;
   --display:"Unbounded","Arial Black",system-ui,sans-serif;
@@ -25,6 +25,7 @@
   --lcdf:"VT323",ui-monospace,Menlo,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --gloss:rgba(255,255,255,.06);
   --paper:#0a0c18; --paper-2:#10132a; --card:#131731; --ink:#e9ecf8; --ink-2:#a9afca; --ink-3:#8389a6;
   --hair:rgba(233,236,248,.11); --hair-2:rgba(233,236,248,.22);
   --s1:#d7dcfb; --s2:#5d76ff; --s3:#2cc6e4; --s4:#ff6748; --s5:#ffbd2e;
@@ -39,6 +40,7 @@
   --pre-bg:#0d3442; --pre-fg:#82def2; --road-fg:#a9afca; --sign-bg:#3d1428; --sign-fg:#ff9fc9;
   color-scheme:dark}}
 :root[data-theme="dark"]{
+  --gloss:rgba(255,255,255,.06);
   --paper:#0a0c18; --paper-2:#10132a; --card:#131731; --ink:#e9ecf8; --ink-2:#a9afca; --ink-3:#8389a6;
   --hair:rgba(233,236,248,.11); --hair-2:rgba(233,236,248,.22);
   --s1:#d7dcfb; --s2:#5d76ff; --s3:#2cc6e4; --s4:#ff6748; --s5:#ffbd2e;
@@ -126,6 +128,21 @@ h1 span{color:var(--accent)}
 .st .n{font:800 clamp(34px,4.4vw,52px)/1.08 var(--display);letter-spacing:-.035em;font-variant-numeric:tabular-nums;margin:2px 0}
 .st .d{font-size:14.5px;color:var(--board-ink-2);line-height:1.4}
 
+/* ── Case file (jewel case) ──────────────────────────────────── */
+.case-sec{position:relative;z-index:1;padding-top:28px}
+.jewel{position:relative;display:grid;grid-template-columns:36px minmax(0,1fr);background:var(--card);border:1px solid var(--hair-2);border-radius:6px;overflow:hidden;box-shadow:0 18px 40px -24px rgba(18,21,48,.45)}
+.jewel::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(118deg,var(--gloss) 0%,transparent 22%)}
+.spine{background:var(--ink);color:var(--paper);writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;justify-content:center;font:700 10.5px var(--body);letter-spacing:.22em;text-transform:uppercase;padding:14px 0}
+.insert{padding:26px 30px 12px;min-width:0}
+.ihead{display:flex;justify-content:space-between;align-items:baseline;gap:8px 16px;flex-wrap:wrap}
+.cno{font:400 20px/1 var(--lcdf);color:var(--ink-3)}
+h2.ctitle{font-size:clamp(26px,3.4vw,40px);margin:10px 0 18px;max-width:24ch}
+.cgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 28px;margin:0}
+.cgrid div{border-top:1px solid var(--hair-2);padding:12px 0 16px;min-width:0}
+.cgrid dt{font:700 11px/1.4 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+.cgrid dd{margin:0;font-size:15.5px;line-height:1.5;color:var(--ink-2)}
+.cgrid dd b{color:var(--ink)}
+
 /* ── Tracks ──────────────────────────────────────────────────── */
 .track{position:relative;z-index:1;padding-block:88px;scroll-margin-top:64px}
 .track .wrap{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px 64px}
@@ -165,6 +182,10 @@ tbody tr:last-child td{border-bottom:0}
 td:first-child{font-weight:600;white-space:nowrap}
 .xl td:nth-child(2){color:var(--ink-2)}
 .xl{min-width:720px}
+.pb{min-width:920px}
+.pb td:first-child{white-space:normal;width:17%;font:700 14.5px/1.35 var(--display);letter-spacing:-.01em}
+.pb td:nth-child(2),.pb td:nth-child(3){color:var(--ink-2)}
+.pb td:last-child{color:var(--ink);font-weight:500}
 
 /* takeaways */
 ol.take{list-style:none;counter-reset:t;margin:28px 0 0;padding:0;display:grid}
@@ -252,6 +273,7 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 .f1{fill:var(--s1)} .f2{fill:var(--s2)} .f3{fill:var(--s3)} .f4{fill:var(--s4)} .f5{fill:var(--s5)}
 .ks{fill:none;stroke:var(--sil)} .cs{fill:none;stroke:var(--sil-cut)} .rs{fill:none;stroke:var(--s4)} .as{fill:none;stroke:var(--s3)} .gl{fill:var(--s5);opacity:.24}
 .ill text{font-family:var(--body)}
+.gs{fill:none;stroke:var(--s5)} .bs{fill:none;stroke:var(--s2)}
 
 /* ── Phone width ─────────────────────────────────────────────── */
 @media (max-width:759px){
@@ -273,6 +295,9 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
   .device{border-radius:22px;padding:8px}
   .notes{grid-template-columns:minmax(0,1fr);gap:14px;padding:18px 4px 4px}
   .liner .wrap{grid-template-columns:minmax(0,1fr)}
+  .jewel{grid-template-columns:28px minmax(0,1fr)}
+  .insert{padding:20px 18px 8px}
+  .cgrid{grid-template-columns:minmax(0,1fr)}
   ol.take li{grid-template-columns:44px minmax(0,1fr)}
   ol.take li::before{font-size:24px}
 }
@@ -304,15 +329,15 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 <svg id="ribbon" aria-hidden="true"></svg>
 
 <!-- 00 Intro -->
-<header class="hero" id="intro" data-track="00" data-side="INTRO" data-title="Voice Is the OS" data-artist="Field notes · ElevenLabs Summit New York" data-intro="Voice is the OS. Field notes from the ElevenLabs Summit in New York.">
+<header class="hero" id="intro" data-track="00" data-side="INTRO" data-title="Voice Is the OS" data-artist="Recap + case study · ElevenLabs Summit NYC" data-intro="Voice is the OS. A recap and case study of the ElevenLabs Summit in New York.">
   <div class="wrap">
     <div class="hero-txt">
-      <p class="kick">Field notes · ElevenLabs Summit · Lincoln Center, New York · 11.11.2026</p>
+      <p class="kick">Recap + case study · ElevenLabs Summit · David Geffen Hall, Lincoln Center · 11.11.2026</p>
       <h1>Voice is the&nbsp;<span>OS.</span></h1>
-      <p class="stand say" data-say>I went to Lincoln Center for a voice company's product day. I left convinced I'd watched a company pitch the operating layer for how we'll use software: you talk, it listens, and then it acts. These are my notes, read through one lens in particular: what all of this means if you work somewhere a regulator reads the transcripts.</p>
+      <p class="stand say" data-say>I went to Lincoln Center for a voice company's product day and watched two things at once. One was a company pitching the operating layer for how we'll use software: you talk, it listens, and then it acts. The other was a masterclass in how to launch it. This is part recap, part case study, read with one question in mind: what does all of this mean if you work somewhere a regulator reads the transcripts?</p>
       <div class="byline">
         <button class="playbig" id="playbig" type="button"><span class="pi"><svg viewBox="0 0 16 16"><path d="M4 2.5v11l9.5-5.5z"/></svg></span><span id="playbig-l">Play the album</span></button>
-        <span><b>Carson Boykin</b></span><span class="dot"></span><span>Side A: the day</span><span class="dot"></span><span>Side B: the fine print</span><span class="dot"></span><span id="runtime">Run time ≈ 10 min</span>
+        <span><b>Carson Boykin</b></span><span class="dot"></span><span>Recap + case study</span><span class="dot"></span><span>4 sides · 13 tracks</span><span class="dot"></span><span id="runtime">Run time ≈ 14 min</span>
       </div>
     </div>
     <div class="hero-art" data-stop="dm" data-lane=".5" data-lane-m=".5" data-from-top aria-hidden="true">
@@ -340,7 +365,7 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
       <div class="bib" aria-label="Attendee badge">
         <div class="rail">Attendee</div>
         <div class="main">
-          <div class="top"><span>Summit · New York</span><span>Lincoln Center</span></div>
+          <div class="top"><span>Summit · New York</span><span>Geffen Hall</span></div>
           <div class="num">11·11</div>
           <div class="stripes" aria-hidden="true"><i class="f1"></i><i class="f2"></i><i class="f3"></i><i class="f4"></i><i class="f5"></i></div>
           <div class="start"><span>Keynote</span><b>10:00 a.m.</b></div>
@@ -357,14 +382,165 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
   </div>
 </section>
 
-<!-- 01 Keynote -->
-<section class="track l" id="keynote" data-track="01" data-side="SIDE A" data-title="The interaction layer" data-artist="Mati Staniszewski · Keynote · 10:00 AM" data-intro="Side A, track one. The interaction layer.">
+<!-- The case -->
+<section class="case-sec" aria-label="Case study summary">
+  <div class="wrap">
+    <div class="jewel" data-stop="dm" data-lane="prev" data-lane-m="prev">
+      <div class="spine" aria-hidden="true">Case study · No. 11.11</div>
+      <div class="insert">
+        <div class="ihead"><p class="kick">The case</p><span class="cno">EL · 11.11 · NYC</span></div>
+        <h2 class="ctitle">How to launch a platform in a concert hall</h2>
+        <dl class="cgrid">
+          <div><dt>The company</dt><dd>ElevenLabs. Founded in 2022, valued at $11 billion, and best known to developers for lifelike AI voices.</dd></div>
+          <div><dt>The challenge</dt><dd>Graduate from developer favorite to enterprise infrastructure, and win over buyers who don't write code.</dd></div>
+          <div><dt>The stage</dt><dd>David Geffen Hall at Lincoln Center, home of the New York Philharmonic.</dd></div>
+          <div><dt>The audience</dt><dd>About 2,000 customers and partners, and for once, not just technologists.</dd></div>
+          <div><dt>The play</dt><dd>Live demos, plain language, customers on stage, booths to try partner agents, and a human moment.</dd></div>
+          <div><dt>My verdict</dt><dd><b>A marketing masterclass.</b> The story runs ahead of what ships, but the launch itself didn't miss.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 The room -->
+<section class="track l" id="room" data-track="01" data-side="SIDE A" data-title="The room is the product" data-artist="David Geffen Hall · Lincoln Center" data-intro="Side A, the show. Track one. The room is the product.">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">01</span><span>Side A</span><span>10:00 AM · Keynote</span></p>
+      <p class="tk"><span class="no">01</span><span>Side A · The show</span><span>Case study</span></p>
+      <h2>The room is the product</h2>
+      <p class="credit"><b>David Geffen Hall</b> · Lincoln Center · home of the New York Philharmonic</p>
+      <p class="say" data-say>Start with the room. ElevenLabs could have rented a convention center or a hotel ballroom. Instead it held the summit at Lincoln Center, in David Geffen Hall, the home of the New York Philharmonic.</p>
+      <p class="say" data-say>If your company is betting that the future of computing runs on voices so lifelike you forget they're synthetic, you put that bet in a building engineered for the best sound in the city. The venue was the first demo, and nobody had to say so.</p>
+      <div class="stat say" data-say data-text="Two thousand attendees, in a concert hall with about twenty-two hundred seats."><span class="n">2,000<small>/2,200</small></span><span class="l">Attendees, in a concert hall with about 2,200 seats</span></div>
+      <p class="say" data-say>Geffen Hall reopened in 2022 after a roughly $550 million rebuild meant to fix acoustic problems it had carried since 1962. Even its wood panels are shaped after sound waves. For a company that sells sound, that isn't a backdrop. It's an argument.</p>
+      <p class="pull say" data-say>You don't tell people your voices sound real. You book the room where sound gets judged.</p>
+      <p class="say" data-say>It also says something about ambition. Developer conferences happen in hotel ballrooms. Launches you want people to remember happen in concert halls.</p>
+    </div>
+    <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
+      <svg class="ill" viewBox="0 0 300 310">
+        <path class="k" d="M14 272V96Q150 6 286 96V272Z"/>
+        <path class="c2" d="M38 262V108Q150 34 262 108V262Z"/>
+        <g class="gs" stroke-width="8" stroke-linecap="round"><path d="M52 122c25-12 50 12 75 0s50 12 75 0 25 12 46 0"/><path d="M52 150c25-12 50 12 75 0s50 12 75 0 25 12 46 0" opacity=".85"/><path d="M52 178c25-12 50 12 75 0s50 12 75 0 25 12 46 0" opacity=".7"/><path d="M52 206c25-12 50 12 75 0s50 12 75 0 25 12 46 0" opacity=".55"/></g>
+        <path class="k" d="M58 236H242L266 268H34Z"/>
+        <ellipse class="g" cx="150" cy="252" rx="48" ry="7"/>
+        <rect class="k" x="147" y="200" width="6" height="40"/><rect class="k" x="140" y="188" width="20" height="16" rx="8"/>
+        <g class="k"><rect x="14" y="280" width="20" height="26" rx="8"/><rect x="39" y="280" width="20" height="26" rx="8"/><rect x="64" y="280" width="20" height="26" rx="8"/><rect x="89" y="280" width="20" height="26" rx="8"/><rect x="114" y="280" width="20" height="26" rx="8"/><rect x="139" y="280" width="20" height="26" rx="8"/><rect x="164" y="280" width="20" height="26" rx="8"/><rect x="189" y="280" width="20" height="26" rx="8"/><rect x="214" y="280" width="20" height="26" rx="8"/><rect x="239" y="280" width="20" height="26" rx="8"/><rect x="264" y="280" width="20" height="26" rx="8"/></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- 02 Live -->
+<section class="track r" id="live" data-track="02" data-side="SIDE A" data-title="No safety net" data-artist="Mati Staniszewski · Keynote · 10:00 AM" data-intro="Track two. No safety net.">
+  <div class="wrap">
+    <div class="txt" data-stop="m" data-lane-m="px:18">
+      <p class="tk"><span class="no">02</span><span>Side A · The show</span><span>10:00 AM · Keynote</span></p>
+      <h2>No safety net</h2>
+      <p class="credit"><b>Mati Staniszewski</b> · Co-founder &amp; CEO, ElevenLabs</p>
+      <p class="say" data-say>Anyone who has run an AI demo knows the fear. You can build it carefully and rehearse it all week, and it can still go off the rails in front of the room. These systems are probabilistic. Audiences aren't.</p>
+      <p class="say" data-say>Mati ran it live anyway, and it was flawless. There was no sizzle reel and no recording with a confident voiceover. It was the actual product, working in real time, in a hall built for orchestras. It had the energy of the great product keynotes, Steve Jobs doing a real demo, where the confidence comes from the fact that it's really happening.</p>
+      <p class="pull say" data-say>Live is the only demo that proves reliability. A recording only proves editing.</p>
+      <p class="say" data-say>Just as telling was the language. It wasn't overtly technical. The story came in outcomes a CFO or a head of customer experience could repeat on Monday, like this line:</p>
+      <blockquote class="q say" data-say data-voice="airy"><p>If AI is going to work for us, and alongside us, it will need to interact naturally and intuitively with people in many different settings.</p><cite>Mati Staniszewski, at the summit</cite></blockquote>
+      <p class="say" data-say>This felt like ElevenLabs arriving on a bigger stage. The company developers made famous was speaking past them, to the executives who sign enterprise contracts.</p>
+    </div>
+    <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
+      <svg class="ill" viewBox="0 0 300 230">
+        <path class="ks" stroke-width="5" d="M100 0V52M200 0V52"/>
+        <rect class="k" x="36" y="50" width="228" height="124" rx="22"/>
+        <rect class="r" x="54" y="68" width="192" height="88" rx="12"/>
+        <text x="150" y="129" text-anchor="middle" font-family="Unbounded, Arial Black, sans-serif" font-weight="800" font-size="48" letter-spacing="-1" fill="#ffffff">LIVE</text>
+        <path class="rs" stroke-width="6" stroke-linecap="round" d="M22 88l-16-8M22 136l-16 8M278 88l16-8M278 136l16 8M150 190v28M104 186l-10 24M196 186l10 24"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- 03 Booths -->
+<section class="track l" id="booths" data-track="03" data-side="SIDE A" data-title="Try it yourself" data-artist="The exhibit floor · Bancolombia and partners" data-intro="Track three. Try it yourself.">
+  <div class="wrap">
+    <div class="txt" data-stop="m" data-lane-m="px:18">
+      <p class="tk"><span class="no">03</span><span>Side A · The show</span><span>All day · Exhibit floor</span></p>
+      <h2>Try it yourself</h2>
+      <p class="credit"><b>Partner booths</b> · including Bancolombia's customer FAQ agent</p>
+      <p class="say" data-say>The exhibits outside the hall made the same argument in a different key: if you don't believe us, try it. Partners set up small booths with their own agents running live, and you could walk up and talk to them.</p>
+      <p class="say" data-say>Bancolombia was showing its customer FAQ agent, and it was impressive. It was also honest about where it is. The agent answers a defined set of questions, the bank is still working through the rollout, and the ambition to go agentic is clear but not there yet.</p>
+      <p class="pull say" data-say>A keynote creates belief. A booth creates proof.</p>
+      <p class="say" data-say>From a marketing seat, the booths were the smartest money spent. A partner's own agent is proof that isn't ElevenLabs talking about itself. It's a customer vouching for the product with its own brand on the line.</p>
+      <p class="say" data-say>That booth also previewed the theme of the day's best session: the gap between answering and acting. More on that on Side B.</p>
+    </div>
+    <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
+      <svg class="ill" viewBox="0 0 300 330">
+        <rect class="k" x="70" y="16" width="150" height="292" rx="12"/>
+        <rect class="a" x="86" y="34" width="118" height="132" rx="6"/>
+        <rect class="c" x="96" y="48" width="74" height="26" rx="13"/>
+        <rect class="k" x="120" y="84" width="74" height="26" rx="13"/>
+        <g class="a"><circle cx="138" cy="97" r="3"/><circle cx="150" cy="97" r="3"/><circle cx="162" cy="97" r="3"/><circle cx="174" cy="97" r="3"/></g>
+        <rect class="c" x="96" y="120" width="58" height="26" rx="13"/>
+        <rect class="r" x="86" y="182" width="118" height="28" rx="5"/>
+        <text x="145" y="201" text-anchor="middle" font-weight="700" font-size="12" letter-spacing="2" fill="#ffffff">TRY IT LIVE</text>
+        <g class="c"><rect x="96" y="228" width="98" height="6" rx="3"/><rect x="96" y="242" width="70" height="6" rx="3"/></g>
+        <rect class="g" x="220" y="96" width="12" height="70" rx="4"/>
+        <path class="ks" stroke-width="3" d="M226 166c10 5-10 10 0 15s-10 10 0 15-10 10 0 15-10 10 0 15c6 4 14 6 22 6"/>
+        <rect class="k" x="246" y="214" width="18" height="76" rx="9"/>
+        <rect class="k" x="238" y="208" width="34" height="20" rx="9"/>
+        <rect class="k" x="238" y="278" width="34" height="20" rx="9"/>
+        <rect class="k" x="56" y="300" width="178" height="14" rx="4"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- 04 Playbook -->
+<section class="track r" id="playbook" data-track="04" data-side="SIDE A" data-title="The playbook" data-artist="Six moves worth stealing" data-intro="Track four. The playbook.">
+  <div class="wrap">
+    <div class="txt" data-stop="m" data-lane-m="px:18">
+      <p class="tk"><span class="no">04</span><span>Side A · The show</span><span>Case study</span></p>
+      <h2>The playbook</h2>
+      <p class="say" data-say>Put together, the day reads like a launch playbook. Here are the six moves I'd steal, and how I'd adapt each one for a bank, or for any business that answers to a regulator.</p>
+      <p class="say" data-say>The honest footnote is that the story ran ahead of the product. Much of what was announced is still preview or roadmap, and the agent I tried at the booth answers a set list. Great marketing buys attention. It doesn't ship the product. ElevenLabs earned the attention of the people who sign enterprise contracts, and now it has to ship into it.</p>
+    </div>
+    <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
+      <svg class="ill" viewBox="0 0 300 330">
+        <rect class="k" x="48" y="28" width="204" height="294" rx="14"/>
+        <rect class="c" x="66" y="60" width="168" height="246" rx="4"/>
+        <rect class="g" x="110" y="14" width="80" height="36" rx="8"/>
+        <rect class="k" x="132" y="24" width="36" height="10" rx="5"/>
+        <rect class="k" x="82" y="76" width="86" height="7" rx="3.5"/>
+        <rect class="k" x="82" y="90" width="54" height="5" rx="2.5" opacity=".5"/>
+        <path class="rs" stroke-width="5" stroke-linecap="round" d="M92 124l16 16M108 124l-16 16M142 112l16 16M158 112l-16 16M192 128l16 16M208 128l-16 16"/>
+        <g class="bs" stroke-width="5"><circle cx="100" cy="250" r="10"/><circle cx="150" cy="268" r="10"/><circle cx="200" cy="246" r="10"/></g>
+        <path class="ks" stroke-width="3" stroke-dasharray="6 5" d="M100 238C88 200 120 180 102 158M150 256C150 220 160 190 150 150M200 234C214 200 190 184 200 166"/>
+        <path class="k" d="M96 160l6-10 6 10zM144 152l6-10 6 10zM194 168l6-10 6 10z"/>
+      </svg>
+    </div>
+    <div class="full tcard" data-stop="dm" data-lane="prev" data-lane-m="prev">
+      <div class="scroll">
+        <table class="pb">
+          <thead><tr><th>The move</th><th>What ElevenLabs did</th><th>Why it worked</th><th>How a bank could borrow it</th></tr></thead>
+          <tbody>
+            <tr><td>Let the room make the argument</td><td>Booked the home of the New York Philharmonic to launch a company that sells sound.</td><td>The venue proved the core claim before anyone said a word.</td><td>Stage the launch where your claim gets tested. Launching a fraud agent? Demo it to fraud investigators.</td></tr>
+            <tr><td>Demo live</td><td>Ran the product live on stage instead of playing recordings.</td><td>Live is the only demo that proves reliability.</td><td>Show the board and examiners the live system with guardrails on, not a deck about it.</td></tr>
+            <tr><td>Talk in outcomes</td><td>Kept the language plain and the jargon low.</td><td>It widened the room from builders to the executives who buy.</td><td>Explain AI to customers by what it does for them, and what it won't do.</td></tr>
+            <tr><td>Let people touch it</td><td>Partner booths where anyone could talk to a live agent, Bancolombia's among them.</td><td>Hands-on proof beats claims, and a partner's agent beats self-promotion.</td><td>Run pilots in the open: an opt-in beta, a branch kiosk, a demo line customers can call.</td></tr>
+            <tr><td>Put customers on stage</td><td>Banks, an insurer and fintechs on panels, and Ramp's CEO in a fireside.</td><td>Peer proof persuades regulated buyers better than any vendor slide.</td><td>Volunteer as the reference customer. The industry moves faster when banks share what worked.</td></tr>
+            <tr><td>Make room for a human moment</td><td>Performers who had lost their voices sang with rebuilt ones.</td><td>It's what people remember, and it ties the technology to why it matters.</td><td>Lead with the customer who got helped, not with the model.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 Keynote -->
+<section class="track l" id="keynote" data-track="05" data-side="SIDE B" data-title="The interaction layer" data-artist="Mati Staniszewski · Keynote · 10:00 AM" data-intro="Side B, the day. Track five. The interaction layer.">
+  <div class="wrap">
+    <div class="txt" data-stop="m" data-lane-m="px:18">
+      <p class="tk"><span class="no">05</span><span>Side B · The day</span><span>10:00 AM · Keynote</span></p>
       <h2>The interaction layer</h2>
       <p class="credit"><b>Mati Staniszewski</b> · Co-founder &amp; CEO, ElevenLabs</p>
-      <p class="say" data-say>Mati opened the summit on November 11th, Polish Independence Day, and he didn't spend the keynote on voices. He spent it on a layer. ElevenLabs wants to sit between people and every model they talk to. It listens, decides whose turn it is, picks which model should do the thinking, and answers in a voice you'd actually want to hear.</p>
+      <p class="say" data-say>Underneath the showmanship was a real thesis. Mati opened the summit on November 11th, Polish Independence Day, and he didn't spend the keynote on voices. He spent it on a layer. ElevenLabs wants to sit between people and every model they talk to. It listens, decides whose turn it is, picks which model should do the thinking, and answers in a voice you'd actually want to hear.</p>
       <blockquote class="q say" data-say data-voice="airy"><p>Within a few years, conversational agents will become critical infrastructure for every enterprise, as essential as cloud or payments.</p><cite>Mati Staniszewski, opening keynote</cite></blockquote>
       <p class="say" data-say>That last word is the one I underlined. In financial services, payments is the most supervised plumbing we run. If voice agents become payments-grade infrastructure, they inherit payments-grade expectations: uptime, change control, audit trails, and a named owner when something breaks. I don't read that as a threat to the thesis. I read it as the job description.</p>
       <p class="say" data-say>He also argued that businesses will build their own reinforcement learning stacks to put proprietary data to work. For a bank, proprietary data means customer conversations. Hold that thought for Side B.</p>
@@ -385,14 +561,14 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 </section>
 
 <!-- 02 Finance panel -->
-<section class="track r" id="finance" data-track="02" data-side="SIDE A" data-title="From answering to acting" data-artist="Customers Bank · Banco Inter · Nasdaq · 10:45 AM" data-intro="Track two. From answering to acting.">
+<section class="track r" id="finance" data-track="06" data-side="SIDE B" data-title="From answering to acting" data-artist="Customers Bank · Banco Inter · Nasdaq · 10:45 AM" data-intro="Track six. From answering to acting.">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">02</span><span>Side A</span><span>10:45 AM · Panel</span></p>
+      <p class="tk"><span class="no">06</span><span>Side B · The day</span><span>10:45 AM · Panel</span></p>
       <h2>From answering to acting</h2>
       <p class="credit"><b>Carlos Coto</b>, Customers Bank · <b>Daniela Mineiro</b>, Banco Inter · <b>Douglas Hamilton</b>, Nasdaq · with <b>Ethan Tandowsky</b>, CFO, ElevenLabs</p>
       <div class="stat say" data-say data-text="More than two million customer service interactions a month at Banco Inter, in Portuguese, English and Spanish."><span class="n">2M<small>+ / mo</small></span><span class="l">Customer service interactions at Banco Inter, in Portuguese, English and Spanish</span></div>
-      <p class="say" data-say>This was the session I came for. The first wave of voice agents answered questions. The next wave does things: it checks the balance, and then it moves the money.</p>
+      <p class="say" data-say>This was the session I came for, and it named the gap I'd seen at the Bancolombia booth. The first wave of voice agents answered questions. The next wave does things: it checks the balance, and then it moves the money.</p>
       <p class="say" data-say>That one verb changes the risk profile completely. An agent that answers is a content problem: is it accurate, is it compliant, does it sound like us? An agent that acts is a controls problem. Who authorized this? How do we know who's calling? What's the limit, and where's the evidence? Banks already answer those questions for people and for APIs. Voice agents need the same answers before the first transfer, not after it.</p>
       <blockquote class="q say" data-say data-voice="airy"><p>Full self-service for the ones that don't want to interact with humans, and human beings powered by agents for the people that value the interaction.</p><cite>Carlos Coto, Customers Bank, describing its ElevenLabs rollout</cite></blockquote>
       <p class="say" data-say>That's the framing I'd hand to any regulated team. The human handoff is part of the product. Design it first, measure it, and make it fast.</p>
@@ -417,10 +593,10 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 </section>
 
 <!-- 03 Ramp -->
-<section class="track l" id="ramp" data-track="03" data-side="SIDE A" data-title="Zero click" data-artist="Eric Glyman with Mati Staniszewski · 11:10 AM" data-intro="Track three. Zero click.">
+<section class="track l" id="ramp" data-track="07" data-side="SIDE B" data-title="Zero click" data-artist="Eric Glyman with Mati Staniszewski · 11:10 AM" data-intro="Track seven. Zero click.">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">03</span><span>Side A</span><span>11:10 AM · Fireside</span></p>
+      <p class="tk"><span class="no">07</span><span>Side B · The day</span><span>11:10 AM · Fireside</span></p>
       <h2>Zero click</h2>
       <p class="credit"><b>Eric Glyman</b> · Co-founder &amp; CEO, Ramp · in conversation with <b>Mati Staniszewski</b></p>
       <div class="stat say" data-say data-text="Zero clicks. Ramp's goal for routine finance work, with people stepping in only for the exceptions."><span class="n">0</span><span class="l">Clicks: Ramp's goal for routine finance work, with people stepping in only for exceptions</span></div>
@@ -445,10 +621,10 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 </section>
 
 <!-- 04 The Drop -->
-<section class="track r" id="drop" data-track="04" data-side="SIDE A" data-title="The drop" data-artist="Twelve covers from one keynote" data-intro="Track four. The drop.">
+<section class="track r" id="drop" data-track="08" data-side="SIDE B" data-title="The drop" data-artist="Twelve covers from one keynote" data-intro="Track eight. The drop.">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">04</span><span>Side A</span><span>All day · Releases</span></p>
+      <p class="tk"><span class="no">08</span><span>Side B · The day</span><span>All day · Releases</span></p>
       <h2>Thumb through the releases</h2>
       <p class="say" data-say>ElevenLabs counted thirteen launches and upgrades. I've pressed them onto twelve covers. Swipe or use the arrow keys, and tap the cover in front to flip it for the liner notes.</p>
       <p class="say" data-say>Watch the sticker on each one. What's shipping today is mostly the models underneath. The ideas that would change how a bank operates, like memory, routines and custom models, are still preview or roadmap. That's not a knock. It's a timeline, and it tells you when to start the governance work: now.</p>
@@ -501,10 +677,10 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 </section>
 
 <!-- 05 Records -->
-<section class="track l" id="records" data-track="05" data-side="SIDE B" data-title="Memory is a records problem" data-artist="The fine print" data-intro="Side B, track five. Memory is a records problem.">
+<section class="track l" id="records" data-track="09" data-side="SIDE C" data-title="Memory is a records problem" data-artist="The fine print" data-intro="Side C, the fine print. Track nine. Memory is a records problem.">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">05</span><span>Side B</span><span>The fine print</span></p>
+      <p class="tk"><span class="no">09</span><span>Side C</span><span>The fine print</span></p>
       <h2>Memory is a records problem</h2>
       <p class="say" data-say>Memory lets an agent recognize a returning customer and keep structured notes on every conversation. Routines let it carry out multi-step work before, during and after a call. Custom models let a company fine-tune on its own conversations. Each one is a great product idea, and each one already has a compliance owner who doesn't know it yet.</p>
       <p class="say" data-say>Here's how I'd translate the launches for a regulated team, with the first question I'd put to the vendor. None of these are reasons to wait. They're the checklist that gets you to yes faster.</p>
@@ -538,10 +714,10 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 </section>
 
 <!-- 06 Identity -->
-<section class="track r" id="identity" data-track="06" data-side="SIDE B" data-title="The identity paradox" data-artist="The fine print" data-intro="Track six. The identity paradox.">
+<section class="track r" id="identity" data-track="10" data-side="SIDE C" data-title="The identity paradox" data-artist="The fine print" data-intro="Track ten. The identity paradox.">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">06</span><span>Side B</span><span>The fine print</span></p>
+      <p class="tk"><span class="no">10</span><span>Side C</span><span>The fine print</span></p>
       <h2>The identity paradox</h2>
       <div class="stat say" data-say data-text="Fifty to ninety percent. KPN's identity verification accuracy after tuning on Dutch-language data, as ElevenLabs reported it."><span class="n">50→90<small>%</small></span><span class="l">KPN's identity-verification accuracy after tuning on Dutch-language data, as ElevenLabs reported it</span></div>
       <p class="say" data-say>Here's the tension I keep coming back to. The company that made voices easy to recreate is building the agents that now have to decide who's really on the line. Banks spent a decade enrolling customers in voice biometrics, and that control gets weaker every quarter.</p>
@@ -560,10 +736,10 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 </section>
 
 <!-- 07 Lineage -->
-<section class="track l" id="lineage" data-track="07" data-side="SIDE B" data-title="Which model answered?" data-artist="The fine print" data-intro="Track seven. Which model answered?">
+<section class="track l" id="lineage" data-track="11" data-side="SIDE C" data-title="Which model answered?" data-artist="The fine print" data-intro="Track eleven. Which model answered?">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">07</span><span>Side B</span><span>The fine print</span></p>
+      <p class="tk"><span class="no">11</span><span>Side C</span><span>The fine print</span></p>
       <h2>Which model answered?</h2>
       <p class="say" data-say>The Interaction Engine is the most important thing ElevenLabs previewed, and the least flashy. It manages turn-taking and interruptions, and it routes each moment of a conversation to a different model: something cheap to triage, something frontier-grade for the hard part.</p>
       <p class="say" data-say>That's great economics. It's also a new question for model risk. In a bank, "the AI said it" is not an answer. For every turn we'll need to know which model spoke, which version, what it was given, and why the router picked it.</p>
@@ -588,10 +764,10 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 </section>
 
 <!-- 08 Takeaways -->
-<section class="track r" id="takeaways" data-track="08" data-side="SIDE B" data-title="What I'm taking back to work" data-artist="For the risk committee" data-intro="Track eight. What I'm taking back to work.">
+<section class="track r" id="takeaways" data-track="12" data-side="SIDE C" data-title="What I'm taking back to work" data-artist="For the risk committee" data-intro="Track twelve. What I'm taking back to work.">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">08</span><span>Side B</span><span>For the risk committee</span></p>
+      <p class="tk"><span class="no">12</span><span>Side C</span><span>For the risk committee</span></p>
       <h2>What I'm taking back to work</h2>
       <p class="say" data-say>Five things I'd put in front of any risk committee looking at voice agents this year.</p>
       <ol class="take">
@@ -620,10 +796,10 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 </section>
 
 <!-- Hidden track -->
-<section class="track l" id="encore" data-track="09" data-side="HIDDEN" data-title="Two voices, returned" data-artist="Impact Program · 4:00 PM" data-intro="Hidden track. Two voices, returned.">
+<section class="track l" id="encore" data-track="13" data-hidden data-side="SIDE D" data-title="Two voices, returned" data-artist="Impact Program · 4:00 PM" data-intro="Hidden track. Two voices, returned.">
   <div class="wrap">
     <div class="txt" data-stop="m" data-lane-m="px:18">
-      <p class="tk"><span class="no">∞</span><span>Hidden track</span><span>4:00 PM · Impact Program</span></p>
+      <p class="tk"><span class="no">∞</span><span>Side D · Hidden track</span><span>4:00 PM · Impact Program</span></p>
       <h2>Two voices, returned</h2>
       <p class="say" data-say>The moment that stayed with me had nothing to do with banking. Greg Kellner and Abdi Omar, who both lost their voices to illness, performed on stage using voices they rebuilt with ElevenLabs.</p>
       <p class="say" data-say>ElevenLabs used the moment to widen its Impact Program: free, lifetime voice restoration for people with permanent voice loss, free ElevenMusic for songwriters through Songwriters of North America, a partnership with the Wounded Warrior Project, and a path for patients at NYU Langone's Rusk Rehabilitation.</p>
@@ -646,16 +822,17 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 </main>
 
 <!-- Liner notes -->
-<footer class="liner" id="liner" data-track="10" data-side="LINER" data-title="Liner notes" data-artist="Credits and sources">
+<footer class="liner" id="liner" data-track="—" data-side="LINER" data-title="Liner notes" data-artist="Credits and sources">
   <div class="endstripes" aria-hidden="true"><i class="f1"></i><i class="f2"></i><i class="f3"></i><i class="f4"></i><i class="f5"></i></div>
   <div class="wrap">
     <div>
       <p class="kick">Liner notes</p>
-      <h2>Recorded live at Lincoln Center</h2>
-      <p>Written by <b>Carson Boykin</b> after the ElevenLabs Summit in New York on November 11, 2026.</p>
+      <h2>Recorded live at David Geffen Hall</h2>
+      <p>Written by <b>Carson Boykin</b> after the ElevenLabs Summit at Lincoln Center on November 11, 2026.</p>
+      <p><b>From the room.</b> The venue, the live keynote demos and the partner booths, Bancolombia's included, come from my own notes. ElevenLabs' public recaps don't describe them. Facts about the hall come from coverage of its 2022 reopening.</p>
       <p><b>Billed, then absent.</b> NVIDIA's Jensen Huang withdrew from the program days before the summit. NVIDIA still announced an expanded partnership that day.</p>
       <p><b>On the numbers.</b> Figures are as ElevenLabs and the press reported them. KPN's verification gain appears as 50% → 90% in ElevenLabs' material and as 60% → 85% in one podcast summary. Scribe v3's error reduction is 27% in ElevenLabs' own evaluation and about 25% in The Decoder. Status stickers reflect what was public on November 16, 2026.</p>
-      <p><b>On the quotes.</b> Quotes are from the keynote coverage and from Customers Bank's public statements about its rollout. Everything in the first person is my own read.</p>
+      <p><b>On the quotes.</b> Quotes are from ElevenLabs' summit announcement and keynote coverage, and from Customers Bank's public statements about its rollout. Everything in the first person is my own read.</p>
     </div>
     <div class="srcs">
       <div><h3>ElevenLabs</h3><ul>
@@ -674,6 +851,10 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
         <li><a href="https://www.techzine.eu/blogs/applications/144778/elevenlabs-wants-to-claim-the-interaction-layer/" target="_blank" rel="noopener">Techzine: ElevenLabs wants to claim the interaction layer</a></li>
         <li><a href="https://sifted.eu/articles/jensen-huang-pulls-out-of-elevenlabs-summit-amid-controversy/" target="_blank" rel="noopener">Sifted on Jensen Huang's withdrawal</a></li>
         <li><a href="https://dev.to/paullovelace/elevenlabs-is-now-infrastructure-custom-models-elevenai-partners-3c04" target="_blank" rel="noopener">DEV Community: ElevenLabs is now infrastructure</a></li>
+      </ul></div>
+      <div><h3>The hall</h3><ul>
+        <li><a href="https://www.cbsnews.com/newyork/news/david-geffen-hall-lincoln-center-reopens-550-million-renovation-new-york-philharmonic/" target="_blank" rel="noopener">CBS News on the $550 million reopening</a></li>
+        <li><a href="https://www.dezeen.com/2022/11/01/new-york-philharmonics-david-geffen-hall-renovation/" target="_blank" rel="noopener">Dezeen on the renovation and its sound-wave panels</a></li>
       </ul></div>
       <div><h3>From the room</h3><ul>
         <li><a href="https://x.com/michuk/status/2120539838998814793" target="_blank" rel="noopener">Borys Musielak on the opening keynote</a></li>
@@ -835,7 +1016,7 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
     curTrack = idx;
     var t = tracks[idx], r = t.getBoundingClientRect();
     var p = Math.min(1, Math.max(0, (window.innerHeight * 0.38 - r.top) / Math.max(1, r.height)));
-    var label = t.getAttribute("data-track") === "09" ? "∞" : t.getAttribute("data-track");
+    var label = t.hasAttribute("data-hidden") ? "∞" : t.getAttribute("data-track");
     npT.textContent = label + " · " + t.getAttribute("data-title");
     npA.textContent = t.getAttribute("data-artist");
     npS.textContent = t.getAttribute("data-side");

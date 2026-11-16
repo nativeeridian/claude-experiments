@@ -117,6 +117,25 @@ Compiled 2026-11-16.
 
 ---
 
+## 5b. Case-study layer (added from your notes, Nov 16)
+
+**Your thesis:** the summit was a marketing masterclass as much as a product launch.
+
+| Your observation | What I could verify | How it's used |
+|---|---|---|
+| Held in David Geffen Hall, home of the NY Philharmonic. Genius for a company betting on high-fidelity voice | Hall reopened Oct 8, 2022 after a ~$550M rebuild aimed at acoustic problems dating to 1962. About 2,200 seats. Wood panels are shaped after sound waves (CBS News, Dezeen). The summit venue itself is only reported as "Lincoln Center"; Geffen Hall is from your account | Track 01, *The room is the product* (stat: 2,000 attendees in a ~2,200-seat hall) |
+| Mati's live demos were flawless; Jobs-style real demo, not recordings | No public write-up describes the demos. ElevenLabs confirms the keynote included a "sneak preview" of ElevenAI | Track 02, *No safety net*. Written from your account; no specific demo is named |
+| Language not overtly technical; felt like arriving on a bigger stage beyond technologists | Matches the plain-language keynote quotes in coverage | Track 02 |
+| Try-it-yourself booths; Bancolombia showed its customer FAQ agent; scoped to a set of questions; agentic ambition | Nothing public links Bancolombia and ElevenLabs | Track 03, *Try it yourself*; bridges to the answering-vs-acting panel |
+
+**New structure (double album):**
+- Side A, the show (case study): 01 The room is the product · 02 No safety net · 03 Try it yourself · 04 The playbook
+- Side B, the day: 05 The interaction layer · 06 From answering to acting · 07 Zero click · 08 The drop
+- Side C, the fine print: 09 Records · 10 Identity · 11 Which model answered? · 12 Taking back to work
+- Side D: hidden track, *Two voices, returned*
+
+Track 04 is a "six moves worth stealing" table (move / what they did / why it worked / how a bank could borrow it). A case-file card styled as a CD jewel case sits under the scoreboard.
+
 ## 6. Build plan (as built)
 
 | Element | 2000s / retro-futurist reference | Job on the page |
