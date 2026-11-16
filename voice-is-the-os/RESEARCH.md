@@ -149,7 +149,7 @@ Speakers per the stage slide: Matt Yanchyshyn (VP, AWS), Yael Taqqu (Senior Part
   - Suggested questions include "How can I send money?"
   - The screen carries a line noting the bank is supervised by the Financial Superintendency of Colombia.
 - **Listening room:** an exhibit lined with acoustic foam, with headphones, and New Yorkers' stories captioned on a speaker-shaped round screen (e.g. "Auntie Chan, 67").
-- **Photos on the page:** 11 photos, cropped, resized to 1200px and stripped of all metadata, including location. The listening-room shot with identifiable attendees was left out.
+- **Photos on the page:** 12 photos, cropped, resized to 1200px and stripped of all metadata, including location. The listening-room shot with attendees was cropped to the screen only, so no faces appear (12 photos in all).
 
 **New structure (double album):**
 - Side A, the show (case study): 01 The room is the product · 02 No safety net · 03 Try it yourself · 04 The playbook
