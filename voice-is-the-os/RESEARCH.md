@@ -177,7 +177,7 @@ Track 04 is a "six moves worth stealing" table (move / what they did / why it wo
 | **Now Playing LCD** | Sticky top bar styled like a 2000s music-player display | Shows track, artist and side, with elapsed and remaining read time and prev/play/next |
 | **Sideways-device carousel** | Thumbing album art on a device turned sideways | The 12 releases as album covers with "shrink-wrap" status stickers; tap the front cover to flip it for liner notes; scrubber, swipe and arrow keys |
 | **List view toggle** | The device's list view with zebra rows | Every release at once, with status and "my read" |
-| **Scoreboard + badge** | The marathon results block and race bib | 2,000 / 13 / 550+ / 15 MW, with a summit badge as the bib |
+| **Scoreboard + badge** | The marathon results block and race bib | 2,000 / 13 / 550+ / 5 of 12 still to ship (replaced the NVIDIA 15 MW stat, which mattered less to this audience), with a summit badge as the bib |
 | **Read aloud** | Voice is the OS: the page talks | Play reads the recap track by track in a Claude voice where available (browser voice otherwise); quotes are read in a second voice |
 | **Silhouettes** | Marathon borough illustrations | Lincoln Center's opera-house arches, microphone, bank colonnade, card and receipt, record sleeve, filing cabinet, padlock with waveform keyhole, jukebox, cassette, two mics under a spotlight |
 

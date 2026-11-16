@@ -3,7 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<style>:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<meta name="theme-color" content="#0a0c18">
+<script>try{if(localStorage.getItem("vito-theme")==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}</script>
 <meta name="description" content="A recap and marketing case study of the ElevenLabs Summit in New York (11.11.2026), read through a financial-services lens. Part album, part field notes.">
 <meta name="author" content="Carson Boykin">
 <link rel="canonical" href="https://nativeeridian.github.io/claude-experiments/voice-is-the-os/">
@@ -31,6 +33,24 @@
    around track sections whose art columns alternate sides; a sticky LCD bar shows what's
    "now playing"; the centrepiece is a sideways-device carousel of release covers. */
 :root{
+  --gloss:rgba(255,255,255,.06); --print:#e9e7e0; --print-ink:#23283f;
+  --paper:#0a0c18; --paper-2:#10132a; --card:#131731; --ink:#e9ecf8; --ink-2:#a9afca; --ink-3:#8389a6;
+  --hair:rgba(233,236,248,.11); --hair-2:rgba(233,236,248,.22);
+  --s1:#d7dcfb; --s2:#5d76ff; --s3:#2cc6e4; --s4:#ff6748; --s5:#ffbd2e;
+  --accent:#ff6a4a; --accent-ink:#ff8d72; --hl:rgba(93,118,255,.22);
+  --sil:#323c80; --sil-cut:#0a0c18; --sil-2:#1b2048;
+  --chrome-1:#242a3e; --chrome-2:#141726; --btn-1:#3a4059; --btn-2:#1c2032;
+  --lcd-1:#0f2a36; --lcd-2:#0a1c25; --lcd-ink:#8be6ff; --lcd-edge:#25495b;
+  --board:#2a3cc8; --board-ink:#ffffff; --board-ink-2:rgba(255,255,255,.78);
+  --bib:#eef0fb; --bib-ink:#121530;
+  --zebra:#171c3a; --sel:#4a7fe8;
+  --live-bg:#123a26; --live-fg:#86e3ab; --ea-bg:#3a2e0b; --ea-fg:#ffd56e;
+  --pre-bg:#0d3442; --pre-fg:#82def2; --road-fg:#a9afca; --sign-bg:#3d1428; --sign-fg:#ff9fc9;
+  --display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --lcdf:"VT323",ui-monospace,Menlo,monospace;
+  color-scheme:dark}
+:root[data-theme="light"]{
   --paper:#eef0f4; --paper-2:#e2e6ed; --card:#f9fafc; --ink:#121530; --ink-2:#474e6b; --ink-3:#686f8c;
   --hair:rgba(18,21,48,.12); --hair-2:rgba(18,21,48,.22);
   --s1:#121530; --s2:#3a55ff; --s3:#14a8c8; --s4:#ff4f2e; --s5:#ffae00;
@@ -43,40 +63,7 @@
   --zebra:#eaf0fb; --sel:#3a6fd8; --gloss:rgba(255,255,255,.55); --print:#ffffff; --print-ink:#2a2f4d;
   --live-bg:#daf5e4; --live-fg:#0f6338; --ea-bg:#fff0c4; --ea-fg:#765000;
   --pre-bg:#d6f1f7; --pre-fg:#0a5b6e; --road-fg:#474e6b; --sign-bg:#ffe0ee; --sign-fg:#8a1b4d;
-  --display:"Unbounded","Arial Black",system-ui,sans-serif;
-  --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --lcdf:"VT323",ui-monospace,Menlo,monospace;
-}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --gloss:rgba(255,255,255,.06); --print:#e9e7e0; --print-ink:#23283f;
-  --paper:#0a0c18; --paper-2:#10132a; --card:#131731; --ink:#e9ecf8; --ink-2:#a9afca; --ink-3:#8389a6;
-  --hair:rgba(233,236,248,.11); --hair-2:rgba(233,236,248,.22);
-  --s1:#d7dcfb; --s2:#5d76ff; --s3:#2cc6e4; --s4:#ff6748; --s5:#ffbd2e;
-  --accent:#ff6a4a; --accent-ink:#ff8d72; --hl:rgba(93,118,255,.22);
-  --sil:#323c80; --sil-cut:#0a0c18; --sil-2:#1b2048;
-  --chrome-1:#242a3e; --chrome-2:#141726; --btn-1:#3a4059; --btn-2:#1c2032;
-  --lcd-1:#0f2a36; --lcd-2:#0a1c25; --lcd-ink:#8be6ff; --lcd-edge:#25495b;
-  --board:#2a3cc8; --board-ink:#ffffff; --board-ink-2:rgba(255,255,255,.78);
-  --bib:#eef0fb; --bib-ink:#121530;
-  --zebra:#171c3a; --sel:#4a7fe8;
-  --live-bg:#123a26; --live-fg:#86e3ab; --ea-bg:#3a2e0b; --ea-fg:#ffd56e;
-  --pre-bg:#0d3442; --pre-fg:#82def2; --road-fg:#a9afca; --sign-bg:#3d1428; --sign-fg:#ff9fc9;
-  color-scheme:dark}}
-:root[data-theme="dark"]{
-  --gloss:rgba(255,255,255,.06); --print:#e9e7e0; --print-ink:#23283f;
-  --paper:#0a0c18; --paper-2:#10132a; --card:#131731; --ink:#e9ecf8; --ink-2:#a9afca; --ink-3:#8389a6;
-  --hair:rgba(233,236,248,.11); --hair-2:rgba(233,236,248,.22);
-  --s1:#d7dcfb; --s2:#5d76ff; --s3:#2cc6e4; --s4:#ff6748; --s5:#ffbd2e;
-  --accent:#ff6a4a; --accent-ink:#ff8d72; --hl:rgba(93,118,255,.22);
-  --sil:#323c80; --sil-cut:#0a0c18; --sil-2:#1b2048;
-  --chrome-1:#242a3e; --chrome-2:#141726; --btn-1:#3a4059; --btn-2:#1c2032;
-  --lcd-1:#0f2a36; --lcd-2:#0a1c25; --lcd-ink:#8be6ff; --lcd-edge:#25495b;
-  --board:#2a3cc8; --board-ink:#ffffff; --board-ink-2:rgba(255,255,255,.78);
-  --bib:#eef0fb; --bib-ink:#121530;
-  --zebra:#171c3a; --sel:#4a7fe8;
-  --live-bg:#123a26; --live-fg:#86e3ab; --ea-bg:#3a2e0b; --ea-fg:#ffd56e;
-  --pre-bg:#0d3442; --pre-fg:#82def2; --road-fg:#a9afca; --sign-bg:#3d1428; --sign-fg:#ff9fc9;
-  color-scheme:dark}
+  color-scheme:light}
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -367,6 +354,7 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
       <div class="pr"><span id="np-e">0:00</span><span class="bar" aria-hidden="true"><i id="np-f"></i><b id="np-h"></b></span><span id="np-r">-0:00</span></div>
     </div>
     <div class="side" id="np-s">INTRO</div>
+    <button class="tbtn" id="theme" type="button" aria-label="Switch to light mode"><svg viewBox="0 0 16 16" id="themeicon"></svg></button>
   </div>
 </div>
 
@@ -421,7 +409,7 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
         <div class="st"><div class="lbl">In the room</div><div class="n">2,000</div><div class="d">customers and partners at Lincoln Center</div></div>
         <div class="st"><div class="lbl">Releases</div><div class="n">13</div><div class="d">launches and upgrades in one day</div></div>
         <div class="st"><div class="lbl">Partner network</div><div class="n">550+</div><div class="d">organizations across 44 countries</div></div>
-        <div class="st"><div class="lbl">New compute</div><div class="n">15 MW</div><div class="d">of NVIDIA capacity, built for data residency</div></div>
+        <div class="st"><div class="lbl">Still to ship</div><div class="n">5/12</div><div class="d">headline releases in preview, early access or on the roadmap</div></div>
       </div>
     </div>
   </div>
@@ -1344,8 +1332,8 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
       facts: "A partner program with 550+ organizations in 44 countries, and a Marketplace of partner-built industry apps. Buying through the Marketplace is planned for next year.",
       read: "Third-party risk just gained a fourth party. Know who built the app your agent runs, and who supports it at 2 a.m." },
     { key: "nvidia", t: "NVIDIA Expansion", lines: ["NVIDIA", "Expansion"], fs: 28, status: "Live", bg: "#0d0f14", fg: "#e9ecf8", ac: "#2cc8e6", m: "chip",
-      short: "A new model inside ElevenAgents and 15 MW of fresh compute.",
-      facts: "Nemotron 3.5 Super VL is live inside ElevenAgents. ElevenLabs is adding 15 MW of capacity on Blackwell Ultra and Vera Rubin, aimed at large deployments with strict security and data-residency needs, including an on-prem agent for Poland's national e-Health platform. On stage, NVIDIA's Kari Briski and ElevenLabs' Alex Holt covered models, infrastructure and sovereignty at scale.",
+      short: "A new model inside ElevenAgents, and a push into sovereign, on-prem deployments.",
+      facts: "Nemotron 3.5 Super VL is live inside ElevenAgents. ElevenLabs is also adding NVIDIA capacity aimed at large deployments with strict security and data-residency needs, including an on-prem agent for Poland's national e-Health platform. On stage, NVIDIA's Kari Briski and ElevenLabs' Alex Holt covered models, infrastructure and sovereignty at scale.",
       read: "Capacity built for data residency tells you who they're selling to next: regulated, sovereign and on-prem buyers. The NVIDIA session title said it outright: sovereignty at scale." },
     { key: "mckinsey", t: "McKinsey Alliance", lines: ["McKinsey", "Alliance"], fs: 28, status: "Signed", bg: "#ff9f1c", fg: "#1b1206", ac: "#ffffff", m: "rings",
       short: "Agents plus a transformation practice, sold together.",
@@ -1448,7 +1436,7 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
         s += '<rect x="214" y="' + (80 + i * 19) + '" width="16" height="8" rx="2" fill="' + c.fg + '"/>';
         s += '<rect x="' + (96 + i * 19) + '" y="194" width="8" height="16" rx="2" fill="' + c.fg + '"/>';
       }
-      s += '<text x="150" y="140" text-anchor="middle" font-family="Unbounded, Arial Black, sans-serif" font-weight="800" font-size="27" letter-spacing="-1" fill="' + c.bg + '">15 MW</text>';
+      s += '<text x="150" y="140" text-anchor="middle" font-family="Unbounded, Arial Black, sans-serif" font-weight="800" font-size="19" letter-spacing="0" fill="' + c.bg + '">ON-PREM</text>';
       s += '<rect x="108" y="158" width="84" height="6" rx="3" fill="' + c.ac + '"/>';
       return s;
     },
@@ -1580,6 +1568,23 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
   $("#v-covers").addEventListener("click", function(){ setView("covers"); });
   $("#v-list").addEventListener("click", function(){ setView("list"); });
   try { if (localStorage.getItem("vito-view") === "list") setView("list"); } catch (e) {}
+
+  /* ───────────── Theme (dark by default) ───────────── */
+  var themeBtn = $("#theme"), themeIcon = $("#themeicon");
+  var SUN = '<circle cx="8" cy="8" r="3.2"/><path d="M8 .9v2M8 13.1v2M.9 8h2M13.1 8h2M2.9 2.9l1.4 1.4M11.7 11.7l1.4 1.4M2.9 13.1l1.4-1.4M11.7 4.3l1.4-1.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>';
+  var MOON = '<path d="M13.6 10.3A6 6 0 0 1 5.7 2.4a6.1 6.1 0 1 0 7.9 7.9z"/>';
+  function paintTheme(){
+    var light = document.documentElement.getAttribute("data-theme") === "light";
+    themeIcon.innerHTML = light ? MOON : SUN;
+    themeBtn.setAttribute("aria-label", light ? "Switch to dark mode" : "Switch to light mode");
+  }
+  themeBtn.addEventListener("click", function(){
+    var toLight = document.documentElement.getAttribute("data-theme") !== "light";
+    if (toLight) document.documentElement.setAttribute("data-theme", "light"); else document.documentElement.removeAttribute("data-theme");
+    try { localStorage.setItem("vito-theme", toLight ? "light" : "dark"); } catch (e) {}
+    paintTheme();
+  });
+  paintTheme();
 
   /* ───────────── Photo prints ───────────── */
   var lbox = $("#lbox"), lboxImg = $("#lbox-img"), lboxCap = $("#lbox-cap");
