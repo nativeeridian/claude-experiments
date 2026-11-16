@@ -1,3 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<meta name="description" content="A recap and marketing case study of the ElevenLabs Summit in New York (11.11.2026), read through a financial-services lens. Part album, part field notes.">
+<meta name="author" content="Carson Boykin">
+<link rel="canonical" href="https://nativeeridian.github.io/claude-experiments/voice-is-the-os/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23121530'/%3E%3Crect x='7' y='6' width='3' height='20' fill='%23d7dcfb'/%3E%3Crect x='11' y='6' width='3' height='20' fill='%233a55ff'/%3E%3Crect x='15' y='6' width='3' height='20' fill='%2314a8c8'/%3E%3Crect x='19' y='6' width='3' height='20' fill='%23ff4f2e'/%3E%3Crect x='23' y='6' width='3' height='20' fill='%23ffae00'/%3E%3C/svg%3E">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Voice Is the OS">
+<meta property="og:title" content="Voice Is the OS: ElevenLabs Summit NYC, recap + case study">
+<meta property="og:description" content="A recap and marketing case study of the ElevenLabs Summit in New York (11.11.2026), read through a financial-services lens. Part album, part field notes.">
+<meta property="og:url" content="https://nativeeridian.github.io/claude-experiments/voice-is-the-os/">
+<meta property="og:image" content="https://nativeeridian.github.io/claude-experiments/voice-is-the-os/share-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Voice is the OS. Recap and case study of the ElevenLabs Summit NYC, 11.11.2026, by Carson Boykin.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Voice Is the OS">
+<meta name="twitter:description" content="A recap and marketing case study of the ElevenLabs Summit in New York (11.11.2026), read through a financial-services lens. Part album, part field notes.">
+<meta name="twitter:image" content="https://nativeeridian.github.io/claude-experiments/voice-is-the-os/share-card.jpg">
 <title>Voice Is the OS</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -326,6 +349,8 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
   .eq i{animation:none}
 }
 </style>
+</head>
+<body>
 
 <!-- Now Playing -->
 <div class="np" role="region" aria-label="Now playing">
@@ -1070,6 +1095,7 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
 
   /* ───────────── Now Playing (scroll) ───────────── */
   var tracks = $$("[data-track]");
+  tracks.forEach(function(t){ $$("[data-say]", t).forEach(function(el, j){ if (!el.id) el.id = t.id + "-" + (j + 1); }); });
   var words = function(el){ return (el.textContent || "").trim().split(/\s+/).length; };
   tracks.forEach(function(t){
     var n = 0;
@@ -1124,6 +1150,8 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
   /* ───────────── Read aloud ───────────── */
   var tts = null, ttsReady = false, ss = ("speechSynthesis" in window) ? window.speechSynthesis : null;
   var state = "idle", ssQueue = null, speakingEl = null, engine = null;
+  var narr = null, au = new Audio(), auPre = new Audio(), auQueue = null;
+  au.preload = "auto"; auPre.preload = "auto";
   var playBtn = $("#play"), stopBtn = $("#stop"), playIcon = $("#playicon"), bigLabel = $("#playbig-l"), np = $(".np");
   var ICON_PLAY = '<path d="M4 2.5v11l9.5-5.5z"/>', ICON_PAUSE = '<path d="M3.5 2.5h3.2v11H3.5zM9.3 2.5h3.2v11H9.3z"/>';
 
@@ -1155,9 +1183,8 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
       if (t.id === "liner") break;
       var intro = t.getAttribute("data-intro");
       var says = $$("[data-say]", t);
-      if (intro){ lines.push({ text: intro, id: t.id + "~h", el: says[0] || null, voice: "buttery" }); }
+      if (intro){ lines.push({ text: intro, id: t.id + "-0", el: says[0] || null, voice: "buttery" }); }
       says.forEach(function(el){
-        if (!el.id) el.id = t.id + "-s" + (n++);
         var text = (el.getAttribute("data-text") || el.textContent).replace(/\s+/g, " ").trim();
         if (text) lines.push({ text: text.slice(0, 1900), id: el.id, el: el, voice: el.getAttribute("data-voice") || "buttery" });
       });
@@ -1172,6 +1199,12 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
     var lines = buildLines(from);
     if (!lines.length) return;
     lineMap = {}; lines.forEach(function(l){ lineMap[l.id] = l; });
+    if (narr){
+      auQueue = lines.filter(function(l){ return narr.lines[l.id]; });
+      engine = "audio";
+      auNext();
+      return;
+    }
     if (tts){
       setState("starting");
       engine = "tts";
@@ -1187,6 +1220,18 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
       ssNext();
     }
   }
+  function auSrc(l){ return "audio/" + narr.lines[l.id].file + (narr.v ? "?v=" + narr.v : ""); }
+  function auNext(){
+    if (!auQueue || !auQueue.length){ auQueue = null; setState("idle"); return; }
+    var l = auQueue.shift();
+    au.src = auSrc(l);
+    if (auQueue.length) auPre.src = auSrc(auQueue[0]);
+    var pr = au.play();
+    setState("speaking"); highlight(l.el);
+    if (pr && pr.catch) pr.catch(function(e){ if (e && e.name === "AbortError") return; auQueue = null; setState("idle"); });
+  }
+  au.addEventListener("ended", function(){ if (auQueue) auNext(); });
+  au.addEventListener("error", function(){ if (auQueue) auNext(); });
   function ssNext(){
     if (!ssQueue || !ssQueue.length){ ssQueue = null; setState("idle"); return; }
     var l = ssQueue.shift();
@@ -1199,6 +1244,11 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
   }
   function togglePlay(){
     if (state === "idle"){ startReading(); return; }
+    if (engine === "audio"){
+      if (state === "paused"){ var pr = au.play(); if (pr && pr.catch) pr.catch(function(){}); setState("speaking"); }
+      else { au.pause(); setState("paused"); }
+      return;
+    }
     if (engine === "tts"){
       if (state === "paused") tts.resume().catch(function(){});
       else tts.pause().catch(function(){});
@@ -1208,22 +1258,38 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
     }
   }
   function stopReading(){
+    if (engine === "audio"){ auQueue = null; au.pause(); setState("idle"); return; }
     if (engine === "tts") tts.stop().catch(function(){});
     else if (engine === "ss"){ ssQueue = null; ss.cancel(); setState("idle"); }
   }
   playBtn.addEventListener("click", togglePlay);
   $("#playbig").addEventListener("click", togglePlay);
   stopBtn.addEventListener("click", stopReading);
-  document.addEventListener("keydown", function(e){ if (e.key === "Escape" && engine === "ss") stopReading(); });
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape" && (engine === "ss" || engine === "audio")) stopReading(); });
   if (!ss){ playBtn.hidden = true; $("#playbig").hidden = true; }
 
+  if (window.fetch){
+    fetch("audio/manifest.json", { cache: "no-cache" }).then(function(r){ return r.ok ? r.json() : null; }).then(function(m){
+      if (!m || !m.lines || !Object.keys(m.lines).length) return;
+      narr = m; playBtn.hidden = false; $("#playbig").hidden = false;
+      var tot = 0;
+      tracks.forEach(function(t){
+        var sec = 0;
+        Object.keys(m.lines).forEach(function(k){ if (k.lastIndexOf(t.id + "-", 0) === 0) sec += m.lines[k].sec || 0; });
+        if (sec) t._dur = Math.round(sec);
+        if (t.id !== "liner") tot += t._dur;
+      });
+      $("#runtime").textContent = "Run time " + fmt(tot);
+      paintLCD();
+    }).catch(function(){});
+  }
   if (window.claude && typeof window.claude.use === "function"){
     window.claude.use("tts").then(function(t){
       if (!t) return;
       tts = t; ttsReady = true;
       playBtn.hidden = false; $("#playbig").hidden = false;
       t.onState(function(e){
-        if (engine === "ss") return;
+        if (engine === "ss" || engine === "audio") return;
         if (e.state !== "idle") engine = "tts";
         setState(e.state);
         if (e.state === "idle" && (e.reason === "not_granted" || e.reason === "unavailable")){ playBtn.hidden = true; $("#playbig").hidden = true; }
@@ -1535,3 +1601,5 @@ input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
   paintLCD();
 })();
 </script>
+</body>
+</html>
