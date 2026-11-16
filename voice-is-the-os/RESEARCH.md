@@ -151,9 +151,19 @@ Speakers per the stage slide: Matt Yanchyshyn (VP, AWS), Yael Taqqu (Senior Part
 - **Listening room:** an exhibit lined with acoustic foam, with headphones, and New Yorkers' stories captioned on a speaker-shaped round screen (e.g. "Auntie Chan, 67").
 - **Photos on the page:** 14 photos (two crew shots in the liner notes, badges blurred), cropped, resized to 1200px and stripped of all metadata, including location. The listening-room shot with attendees was cropped to the screen only, so no faces appear (12 photos in all).
 
+### Corrections from you (Nov 16)
+- **Ramp was the closing session (4:30 PM),** not 11:10. Eric Glyman with Mati, "A conversation on building an AI-first company."
+- **What it covered:** how to capture AI's potential. It was not about Ramp's product, receipts or "zero click"; that framing came from my pre-read and has been removed.
+- **"AI waste to get to AI usefulness" was Eric's line,** not Matt Yanchyshyn's. Removed from the AWS section and moved to the Ramp track.
+- **Eric's example:** in 2023, ChatGPT might say 2+2 = 11 or miscount the r's in "strawberry"; now OpenAI's most advanced models solve math problems no mathematician had solved.
+  - **Checked:** no OpenAI model called "Astra" exists (Project Astra is Google's). The verified example is an internal OpenAI model disproving the 80-year-old Erdős unit distance conjecture, checked by outside mathematicians and announced May 20, 2026 ([OpenAI](https://openai.com/index/model-disproves-discrete-geometry-conjecture/), [Scientific American](https://www.scientificamerican.com/article/ai-just-solved-an-80-year-old-erdos-problem-and-mathematicians-are-amazed/)).
+  - **Still unverified:** OpenAI's Navier–Stokes claim (Sept 2026) is still being checked ([NPR](https://www.npr.org/2026/09/22/nx-s1-5968588/openai-navier-stokes-problem-mathematicians-learn-little)).
+  - **On the page:** the example is attributed to Eric, without a model name or date.
+- **Side B order is now:** 05 keynote · 06 finance · 07 the 360-degree cost · 08 the drop · 09 *Waste on the way to useful* (closing session).
+
 **New structure (double album):**
 - Side A, the show (case study): 01 The room is the product · 02 No safety net · 03 Try it yourself · 04 The playbook
-- Side B, the day: 05 The interaction layer · 06 From answering to acting · 07 Zero click · 08 The 360-degree cost · 09 The drop
+- Side B, the day: 05 The interaction layer · 06 From answering to acting · 07 The 360-degree cost · 08 The drop · 09 Waste on the way to useful (closing)
 - Side C, the fine print: 10 Records · 11 Identity · 12 Which model answered? · 13 Taking back to work (now six takeaways)
 - Side D: hidden track, *Two voices, returned*
 
