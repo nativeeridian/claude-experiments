@@ -128,10 +128,18 @@ Compiled 2026-11-16.
 | Language not overtly technical; felt like arriving on a bigger stage beyond technologists | Matches the plain-language keynote quotes in coverage | Track 02 |
 | Try-it-yourself booths; Bancolombia showed its customer FAQ agent; scoped to a set of questions; agentic ambition | Nothing public links Bancolombia and ElevenLabs | Track 03, *Try it yourself*; bridges to the answering-vs-acting panel |
 
+### Scaling panel, 11:55: "What it takes to scale AI across the enterprise" (from your notes and photo)
+Speakers per the stage slide: Matt Yanchyshyn (VP, AWS), Yael Taqqu (Senior Partner, McKinsey), Ashish Uchil (Global BD & Partnerships, ElevenLabs).
+- **Matt, on the 360-degree cost:** the hidden costs of AI. Automating support queues or demand gen shifts load elsewhere. Plan for demand spikes and for the people who handle what automation sends downstream.
+- **Matt, on tools:** AWS's philosophy is "choose the right tools and obsess over the rest." AWS has run 90%+ AI utilization for years. The specific tool matters less than purpose. Some waste is necessary to learn, but you have to move past it.
+- **Matt, on engineers:** software engineers are now treated as product engineers, with a strategic lens and real product understanding. Generate product spec-driven, inside a harness, rather than generating "stuff."
+- **Yael:** a technology revolution that is also a talent revolution. Leaders need boldness and humility together, which is rare; most leaders have to learn the humility.
+- **Used in:** new track 08, *The 360-degree cost* (iceberg illustration). New sixth takeaway: "Budget for the 360." The banking tie-in: automation leaves people with the hardest calls, agents scale instantly but back offices don't, and a spec is something an auditor can read.
+
 **New structure (double album):**
 - Side A, the show (case study): 01 The room is the product · 02 No safety net · 03 Try it yourself · 04 The playbook
-- Side B, the day: 05 The interaction layer · 06 From answering to acting · 07 Zero click · 08 The drop
-- Side C, the fine print: 09 Records · 10 Identity · 11 Which model answered? · 12 Taking back to work
+- Side B, the day: 05 The interaction layer · 06 From answering to acting · 07 Zero click · 08 The 360-degree cost · 09 The drop
+- Side C, the fine print: 10 Records · 11 Identity · 12 Which model answered? · 13 Taking back to work (now six takeaways)
 - Side D: hidden track, *Two voices, returned*
 
 Track 04 is a "six moves worth stealing" table (move / what they did / why it worked / how a bank could borrow it). A case-file card styled as a CD jewel case sits under the scoreboard.
