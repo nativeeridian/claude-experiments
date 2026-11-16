@@ -1,0 +1,4 @@
+# Private working notes stay out of the public repo
+voice-is-the-os/RESEARCH.md
+__pycache__/
+*.pyc

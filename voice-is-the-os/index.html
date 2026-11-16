@@ -1,0 +1,1611 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<meta name="theme-color" content="#0a0c18">
+<script>try{if(localStorage.getItem("vito-theme")==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}</script>
+<meta name="description" content="A recap and marketing case study of the ElevenLabs Summit in New York (11.11.2026), read through a financial-services lens. Part album, part field notes.">
+<meta name="author" content="Carson Boykin">
+<link rel="canonical" href="https://nativeeridian.github.io/claude-experiments/voice-is-the-os/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23121530'/%3E%3Crect x='7' y='6' width='3' height='20' fill='%23d7dcfb'/%3E%3Crect x='11' y='6' width='3' height='20' fill='%233a55ff'/%3E%3Crect x='15' y='6' width='3' height='20' fill='%2314a8c8'/%3E%3Crect x='19' y='6' width='3' height='20' fill='%23ff4f2e'/%3E%3Crect x='23' y='6' width='3' height='20' fill='%23ffae00'/%3E%3C/svg%3E">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Voice Is the OS">
+<meta property="og:title" content="Voice Is the OS: ElevenLabs Summit NYC, recap + case study">
+<meta property="og:description" content="A recap and marketing case study of the ElevenLabs Summit in New York (11.11.2026), read through a financial-services lens. Part album, part field notes.">
+<meta property="og:url" content="https://nativeeridian.github.io/claude-experiments/voice-is-the-os/">
+<meta property="og:image" content="https://nativeeridian.github.io/claude-experiments/voice-is-the-os/share-card.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Voice is the OS. Recap and case study of the ElevenLabs Summit NYC, 11.11.2026, by Carson Boykin.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Voice Is the OS">
+<meta name="twitter:description" content="A recap and marketing case study of the ElevenLabs Summit in New York (11.11.2026), read through a financial-services lens. Part album, part field notes.">
+<meta name="twitter:image" content="https://nativeeridian.github.io/claude-experiments/voice-is-the-os/share-card.jpg">
+<title>Voice Is the OS</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Unbounded:wght@400;500;700;800&family=VT323&display=swap">
+<style>
+/* Layout: one long "album". A five-stripe signal ribbon draws itself down the page, bending
+   around track sections whose art columns alternate sides; a sticky LCD bar shows what's
+   "now playing"; the centrepiece is a sideways-device carousel of release covers. */
+:root{
+  --gloss:rgba(255,255,255,.06); --print:#e9e7e0; --print-ink:#23283f;
+  --paper:#0a0c18; --paper-2:#10132a; --card:#131731; --ink:#e9ecf8; --ink-2:#a9afca; --ink-3:#8389a6;
+  --hair:rgba(233,236,248,.11); --hair-2:rgba(233,236,248,.22);
+  --s1:#d7dcfb; --s2:#5d76ff; --s3:#2cc6e4; --s4:#ff6748; --s5:#ffbd2e;
+  --accent:#ff6a4a; --accent-ink:#ff8d72; --hl:rgba(93,118,255,.22);
+  --sil:#323c80; --sil-cut:#0a0c18; --sil-2:#1b2048;
+  --chrome-1:#242a3e; --chrome-2:#141726; --btn-1:#3a4059; --btn-2:#1c2032;
+  --lcd-1:#0f2a36; --lcd-2:#0a1c25; --lcd-ink:#8be6ff; --lcd-edge:#25495b;
+  --board:#2a3cc8; --board-ink:#ffffff; --board-ink-2:rgba(255,255,255,.78);
+  --bib:#eef0fb; --bib-ink:#121530;
+  --zebra:#171c3a; --sel:#4a7fe8;
+  --live-bg:#123a26; --live-fg:#86e3ab; --ea-bg:#3a2e0b; --ea-fg:#ffd56e;
+  --pre-bg:#0d3442; --pre-fg:#82def2; --road-fg:#a9afca; --sign-bg:#3d1428; --sign-fg:#ff9fc9;
+  --display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --body:"Instrument Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --lcdf:"VT323",ui-monospace,Menlo,monospace;
+  color-scheme:dark}
+:root[data-theme="light"]{
+  --paper:#eef0f4; --paper-2:#e2e6ed; --card:#f9fafc; --ink:#121530; --ink-2:#474e6b; --ink-3:#686f8c;
+  --hair:rgba(18,21,48,.12); --hair-2:rgba(18,21,48,.22);
+  --s1:#121530; --s2:#3a55ff; --s3:#14a8c8; --s4:#ff4f2e; --s5:#ffae00;
+  --accent:#e2401d; --accent-ink:#c0320f; --hl:rgba(58,85,255,.12);
+  --sil:#151a3f; --sil-cut:#eef0f4; --sil-2:#d9dee8;
+  --chrome-1:#fdfdfe; --chrome-2:#dde2e9; --btn-1:#ffffff; --btn-2:#d3d9e2;
+  --lcd-1:#e7eff1; --lcd-2:#c9d7dc; --lcd-ink:#15232b; --lcd-edge:#9aacb4;
+  --board:#2f46e8; --board-ink:#ffffff; --board-ink-2:rgba(255,255,255,.8);
+  --bib:#ffffff; --bib-ink:#121530;
+  --zebra:#eaf0fb; --sel:#3a6fd8; --gloss:rgba(255,255,255,.55); --print:#ffffff; --print-ink:#2a2f4d;
+  --live-bg:#daf5e4; --live-fg:#0f6338; --ea-bg:#fff0c4; --ea-fg:#765000;
+  --pre-bg:#d6f1f7; --pre-fg:#0a5b6e; --road-fg:#474e6b; --sign-bg:#ffe0ee; --sign-fg:#8a1b4d;
+  color-scheme:light}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:18px;line-height:1.62;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:var(--chrome-1)}
+a{color:var(--accent-ink);text-underline-offset:3px}
+:focus-visible{outline:2px solid var(--sel);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1140px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* ── Now Playing bar ─────────────────────────────────────────── */
+.np{position:sticky;top:env(safe-area-inset-top,0px);z-index:25;background:linear-gradient(var(--chrome-1),var(--chrome-2));border-bottom:1px solid var(--hair-2)}
+.np .wrap{display:flex;align-items:center;gap:12px;padding-block:8px}
+.tp{display:flex;gap:6px;align-items:center;flex:none}
+.tbtn{appearance:none;width:34px;height:34px;border-radius:50%;border:1px solid var(--hair-2);background:linear-gradient(var(--btn-1),var(--btn-2));color:var(--ink);display:grid;place-items:center;cursor:pointer;padding:0;box-shadow:0 1px 2px rgba(0,0,0,.14)}
+.tbtn.big{width:42px;height:42px}
+.tbtn svg{width:14px;height:14px;fill:currentColor;display:block}
+.tbtn.big svg{width:16px;height:16px}
+.tbtn:active{background:linear-gradient(var(--btn-2),var(--btn-1))}
+.lcd{flex:1;min-width:0;border-radius:9px;background:linear-gradient(var(--lcd-1),var(--lcd-2));border:1px solid var(--lcd-edge);box-shadow:inset 0 1px 3px rgba(0,0,0,.22);padding:4px 14px 6px;color:var(--lcd-ink);text-align:center}
+.lcd .l1{font-weight:600;font-size:13.5px;line-height:1.35;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lcd .l2{font-size:12px;line-height:1.3;opacity:.78;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lcd .pr{display:flex;align-items:center;gap:8px;font-family:var(--lcdf);font-size:16px;line-height:1;font-variant-numeric:tabular-nums;margin-top:3px}
+.lcd .bar{flex:1;height:8px;border:1px solid currentColor;border-radius:5px;position:relative;opacity:.85}
+.lcd .bar i{position:absolute;left:0;top:0;bottom:0;width:0;background:currentColor;border-radius:4px}
+.lcd .bar b{position:absolute;top:50%;left:0;width:9px;height:9px;background:var(--lcd-1);border:1.5px solid currentColor;transform:translate(-50%,-50%) rotate(45deg)}
+.eq{display:none;gap:2px;height:10px;align-items:flex-end;margin-right:7px;vertical-align:-1px}
+.reading .eq{display:inline-flex}
+.eq i{width:2px;height:40%;background:currentColor;animation:eq .8s ease-in-out infinite}
+.eq i:nth-child(2){animation-delay:-.3s}.eq i:nth-child(3){animation-delay:-.55s}
+@keyframes eq{0%,100%{height:30%}50%{height:100%}}
+.side{flex:none;font-family:var(--lcdf);font-size:20px;letter-spacing:.08em;color:var(--ink-2);min-width:88px;text-align:right}
+@media (max-width:640px){.side{display:none}.tbtn{width:30px;height:30px}.tbtn.big{width:36px;height:36px}.lcd{padding:3px 10px 5px}.lcd .l2{display:none}}
+
+/* ── Album body + ribbon ─────────────────────────────────────── */
+#album{position:relative;overflow-x:clip}
+#ribbon{position:absolute;left:0;top:0;width:100%;height:100%;z-index:0;pointer-events:none;overflow:visible}
+#ribbon path{fill:none;stroke-linecap:butt;stroke-linejoin:round}
+
+/* ── Hero ────────────────────────────────────────────────────── */
+.hero{position:relative;z-index:1;scroll-margin-top:72px}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:40px;padding-block:64px 44px}
+.hero-txt{align-self:center;min-width:0}
+.kick{font:600 12.5px/1.45 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);margin:0}
+h1{font:800 clamp(46px,7vw,86px)/.98 var(--display);letter-spacing:-.04em;margin:20px 0 24px;text-wrap:balance}
+h1 span{color:var(--accent)}
+.stand{font-size:clamp(18px,2vw,21px);line-height:1.55;color:var(--ink-2);max-width:56ch;margin:0}
+.byline{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;margin-top:30px;font-size:14.5px;color:var(--ink-2)}
+.byline b{color:var(--ink);font-weight:600}
+.byline .dot{width:4px;height:4px;border-radius:50%;background:var(--ink-3)}
+.playbig{appearance:none;border:1px solid #0f5ea8;border-radius:999px;padding:10px 20px 10px 12px;display:inline-flex;gap:10px;align-items:center;font:600 15px var(--body);color:#fff;background:linear-gradient(#86dbff 0%,#2c9de9 49%,#1676cf 51%,#3fa9ef 100%);box-shadow:0 2px 8px rgba(22,119,207,.35),inset 0 1px 0 rgba(255,255,255,.65);text-shadow:0 -1px 0 rgba(0,0,0,.25);cursor:pointer}
+.playbig .pi{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.25);display:grid;place-items:center}
+.playbig svg{width:10px;height:10px;fill:#fff}
+.hero-art{position:relative;min-height:440px;display:flex;align-items:center;justify-content:center}
+.hero-art .ill{width:min(100%,430px);height:auto}
+
+/* ── Scoreboard ──────────────────────────────────────────────── */
+.board-sec{position:relative;z-index:1}
+.board{background:var(--board);color:var(--board-ink);border-radius:6px;padding:28px;display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.6fr);gap:28px 40px}
+.bib{background:var(--bib);color:var(--bib-ink);border-radius:10px;overflow:hidden;display:grid;grid-template-columns:32px minmax(0,1fr);box-shadow:0 8px 22px rgba(0,0,0,.22);align-self:start}
+.bib .rail{background:var(--bib-ink);color:var(--bib);writing-mode:vertical-rl;transform:rotate(180deg);font:700 10.5px var(--body);letter-spacing:.22em;text-transform:uppercase;display:flex;align-items:center;justify-content:center;padding:8px 0}
+.bib .main{display:grid;gap:10px;padding:16px 18px 14px}
+.bib .top,.bib .bot{display:flex;justify-content:space-between;gap:8px;font:700 10.5px/1.3 var(--body);letter-spacing:.14em;text-transform:uppercase}
+.bib .num{font:800 clamp(54px,6.6vw,80px)/1 var(--display);letter-spacing:-.05em;font-variant-numeric:tabular-nums}
+.bib .stripes{display:flex;height:6px;margin:0 -18px}
+.bib .stripes i{flex:1}
+.bib .start{display:flex;justify-content:space-between;align-items:baseline;border-top:2px solid var(--bib-ink);padding-top:8px;font:700 10.5px var(--body);letter-spacing:.14em;text-transform:uppercase}
+.bib .start b{font:800 20px var(--display);letter-spacing:-.02em;text-transform:none}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 28px;align-content:start}
+.st{border-top:3px solid var(--board-ink);padding:10px 0 16px}
+.st .lbl{font:700 11.5px var(--body);letter-spacing:.14em;text-transform:uppercase}
+.st .n{font:800 clamp(34px,4.4vw,52px)/1.08 var(--display);letter-spacing:-.035em;font-variant-numeric:tabular-nums;margin:2px 0}
+.st .d{font-size:14.5px;color:var(--board-ink-2);line-height:1.4}
+
+/* ── Case file (jewel case) ──────────────────────────────────── */
+.case-sec{position:relative;z-index:1;padding-top:28px}
+.jewel{position:relative;display:grid;grid-template-columns:36px minmax(0,1fr);background:var(--card);border:1px solid var(--hair-2);border-radius:6px;overflow:hidden;box-shadow:0 18px 40px -24px rgba(18,21,48,.45)}
+.jewel::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(118deg,var(--gloss) 0%,transparent 22%)}
+.spine{background:var(--ink);color:var(--paper);writing-mode:vertical-rl;transform:rotate(180deg);display:flex;align-items:center;justify-content:center;font:700 10.5px var(--body);letter-spacing:.22em;text-transform:uppercase;padding:14px 0}
+.insert{padding:26px 30px 12px;min-width:0}
+.ihead{display:flex;justify-content:space-between;align-items:baseline;gap:8px 16px;flex-wrap:wrap}
+.cno{font:400 20px/1 var(--lcdf);color:var(--ink-3)}
+h2.ctitle{font-size:clamp(26px,3.4vw,40px);margin:10px 0 18px;max-width:24ch}
+.cgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 28px;margin:0}
+.cgrid div{border-top:1px solid var(--hair-2);padding:12px 0 16px;min-width:0}
+.cgrid dt{font:700 11px/1.4 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:4px}
+.cgrid dd{margin:0;font-size:15.5px;line-height:1.5;color:var(--ink-2)}
+.cgrid dd b{color:var(--ink)}
+
+/* ── Tracks ──────────────────────────────────────────────────── */
+.track{position:relative;z-index:1;padding-block:88px;scroll-margin-top:64px}
+.track .wrap{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,5fr);gap:64px 64px}
+.track.l .wrap{grid-template-columns:minmax(0,5fr) minmax(0,7fr)}
+.track.l .art{order:-1}
+.txt{min-width:0}
+.art{position:relative;min-width:0}
+.art .ill{position:sticky;top:112px;display:block;width:min(100%,300px);height:auto;margin:0 auto}
+.art.end{display:flex;align-items:flex-end;justify-content:center}
+.art.end .ill{position:static}
+.full{grid-column:1/-1;min-width:0}
+.tk{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;font:600 12.5px/1.4 var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);margin:0}
+.tk .no{font:400 24px/1 var(--lcdf);letter-spacing:.02em;color:var(--ink)}
+h2{font:700 clamp(30px,4.2vw,48px)/1.06 var(--display);letter-spacing:-.035em;margin:14px 0 12px;text-wrap:balance}
+.credit{font-size:15px;line-height:1.5;color:var(--ink-3);margin:0 0 28px}
+.credit b{color:var(--ink-2);font-weight:600}
+.txt p{margin:0 0 18px;max-width:62ch}
+.stat{display:grid;gap:4px;margin:4px 0 28px;padding:14px 0 16px;border-top:3px solid var(--ink);border-bottom:1px solid var(--hair-2);max-width:540px}
+.stat .n{font:800 clamp(48px,7vw,84px)/1 var(--display);color:var(--accent);letter-spacing:-.045em;font-variant-numeric:tabular-nums}
+.stat .n small{font-size:.42em;letter-spacing:-.01em;margin-left:4px}
+.stat .l{font:600 13px/1.45 var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+blockquote.q{margin:32px 0;padding:0 0 0 34px;position:relative;max-width:60ch}
+blockquote.q::before{content:"";position:absolute;left:0;top:6px;bottom:6px;width:20px;background:linear-gradient(90deg,var(--s1) 0 16%,transparent 16% 21%,var(--s2) 21% 37%,transparent 37% 42%,var(--s3) 42% 58%,transparent 58% 63%,var(--s4) 63% 79%,transparent 79% 84%,var(--s5) 84%)}
+blockquote.q p{font:500 clamp(20px,2.3vw,25px)/1.4 var(--display);letter-spacing:-.015em;margin:0 0 12px;color:var(--ink)}
+blockquote.q cite{display:block;font-style:normal;font-size:14px;line-height:1.45;color:var(--ink-3)}
+.pull{font:700 clamp(24px,3vw,34px)/1.2 var(--display);letter-spacing:-.025em;color:var(--accent);margin:30px 0;max-width:24ch;text-wrap:balance}
+.say.speaking{background:var(--hl);border-radius:6px;box-shadow:0 0 0 8px var(--hl)}
+
+/* tables */
+.tcard{position:relative;background:var(--card);border:1px solid var(--hair-2);border-radius:14px;overflow:hidden}
+.scroll{overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.5}
+th{font:700 11px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-2);text-align:left;padding:10px 16px;background:linear-gradient(var(--chrome-1),var(--chrome-2));border-bottom:1px solid var(--hair-2);white-space:nowrap}
+td{padding:13px 16px;vertical-align:top;border-bottom:1px solid var(--hair)}
+tbody tr:nth-child(even) td{background:var(--zebra)}
+tbody tr:last-child td{border-bottom:0}
+td:first-child{font-weight:600;white-space:nowrap}
+.xl td:nth-child(2){color:var(--ink-2)}
+.xl{min-width:720px}
+.pb{min-width:920px}
+.pb td:first-child{white-space:normal;width:17%;font:700 14.5px/1.35 var(--display);letter-spacing:-.01em}
+.pb td:nth-child(2),.pb td:nth-child(3){color:var(--ink-2)}
+.pb td:last-child{color:var(--ink);font-weight:500}
+
+/* takeaways */
+ol.take{list-style:none;counter-reset:t;margin:28px 0 0;padding:0;display:grid}
+ol.take li{counter-increment:t;display:grid;grid-template-columns:62px minmax(0,1fr);gap:14px;padding:18px 0;border-top:1px solid var(--hair-2)}
+ol.take li::before{content:counter(t,decimal-leading-zero);font:800 32px/1.05 var(--display);color:var(--accent);letter-spacing:-.04em}
+ol.take b{display:block;font:700 19px/1.3 var(--display);letter-spacing:-.015em;margin-bottom:4px}
+ol.take span{color:var(--ink-2);font-size:16.5px}
+
+/* ── The Drop: console + device ──────────────────────────────── */
+.console{--cs:236px;position:relative;background:var(--card);border:1px solid var(--hair-2);border-radius:22px;padding:16px;box-shadow:0 22px 44px -26px rgba(18,21,48,.45)}
+.ctop{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;padding:2px 4px 14px}
+.ctop .hint{font-size:13.5px;color:var(--ink-3)}
+.seg{display:inline-flex;border:1px solid var(--hair-2);border-radius:8px;overflow:hidden;background:linear-gradient(var(--btn-1),var(--btn-2))}
+.seg button{appearance:none;border:0;background:transparent;font:600 13px var(--body);color:var(--ink-2);padding:7px 16px;cursor:pointer}
+.seg button+button{border-left:1px solid var(--hair-2)}
+.seg button[aria-pressed="true"]{background:linear-gradient(#3566cf,#5b8ff0);color:#fff;box-shadow:inset 0 1px 2px rgba(0,0,0,.3)}
+.device{background:linear-gradient(160deg,#272a34,#08090c 42%);border-radius:28px;padding:12px;border:1px solid #30333d;box-shadow:inset 0 1px 0 rgba(255,255,255,.09),0 10px 26px rgba(0,0,0,.3)}
+.screen{position:relative;border-radius:16px;overflow:hidden;background:radial-gradient(120% 60% at 50% 100%,#1f2535 0%,#05060a 62%);color:#fff;height:calc(var(--cs) * 1.6 + 96px)}
+.sbar{position:relative;z-index:2;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 14px;font:600 12px var(--body);color:rgba(255,255,255,.82);background:linear-gradient(rgba(255,255,255,.14),rgba(255,255,255,.03));border-bottom:1px solid rgba(255,255,255,.08)}
+.sbar .clk{font-variant-numeric:tabular-nums}
+.batt{display:inline-block;width:22px;height:10px;border:1.5px solid rgba(255,255,255,.8);border-radius:2px;position:relative;vertical-align:-1px}
+.batt::before{content:"";position:absolute;inset:1.5px;right:5px;background:#8fe39b;border-radius:1px}
+.batt::after{content:"";position:absolute;right:-4px;top:2px;width:2px;height:4px;background:rgba(255,255,255,.8);border-radius:0 1px 1px 0}
+.flow{position:absolute;left:0;right:0;top:46px;height:calc(var(--cs) * 1.5);perspective:1100px;outline:none;touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.flow:focus-visible{box-shadow:inset 0 0 0 2px #5ab3ff}
+.cover{--x:0px;--ry:0deg;--tz:0px;position:absolute;left:50%;top:8px;width:var(--cs);height:var(--cs);margin-left:calc(var(--cs) / -2);transform:translateX(var(--x)) translateZ(var(--tz)) rotateY(var(--ry));transform-style:preserve-3d;transition:transform .5s cubic-bezier(.2,.7,.2,1),opacity .35s;appearance:none;border:0;padding:0;background:none;cursor:pointer;color:inherit;font:inherit}
+.card{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,.7,.2,1)}
+.cover.flipped .card{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;box-shadow:0 0 0 1px rgba(255,255,255,.08)}
+.face svg{display:block;width:100%;height:100%}
+.back{transform:rotateY(180deg);background:#f6f4ee;color:#121530;padding:calc(var(--cs) * .075);display:flex;flex-direction:column;gap:calc(var(--cs) * .04);text-align:left}
+.bk-cat{font:700 calc(var(--cs) * .042)/1.3 var(--body);letter-spacing:.12em;text-transform:uppercase;color:#5b6180}
+.bk-t{font:700 calc(var(--cs) * .085)/1.12 var(--display);letter-spacing:-.03em}
+.bk-s{font:500 calc(var(--cs) * .062)/1.42 var(--body);color:#2a2f4d}
+.bk-f{margin-top:auto;display:flex;height:calc(var(--cs) * .024)}
+.bk-f i{flex:1}
+.reflect{position:absolute;left:0;right:0;top:100%;height:100%;transform:scaleY(-1);-webkit-mask-image:linear-gradient(to top,rgba(0,0,0,.36),transparent 46%);mask-image:linear-gradient(to top,rgba(0,0,0,.36),transparent 46%);pointer-events:none;transition:opacity .3s}
+.reflect svg{display:block;width:100%;height:100%}
+.cover.flipped .reflect{opacity:0}
+.cap{position:absolute;left:0;right:0;bottom:46px;text-align:center;padding:0 16px;pointer-events:none}
+.cap b{display:block;font:700 15px/1.3 var(--display);letter-spacing:-.01em}
+.cap span{font-size:12.5px;color:rgba(255,255,255,.66)}
+.scrubrow{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;padding:0 16px}
+input.scrub{-webkit-appearance:none;appearance:none;width:min(62%,420px);height:12px;border-radius:7px;background:linear-gradient(#3a3d47,#1d1f26);border:1px solid #474b57;margin:0;cursor:pointer}
+input.scrub::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:44px;height:12px;border-radius:7px;background:linear-gradient(#f4f6f9,#a7adb8);border:1px solid #2a2c33;box-shadow:0 1px 2px rgba(0,0,0,.5)}
+input.scrub::-moz-range-thumb{width:44px;height:12px;border-radius:7px;background:linear-gradient(#f4f6f9,#a7adb8);border:1px solid #2a2c33}
+input.scrub:focus-visible{outline:2px solid #5ab3ff;outline-offset:3px}
+.notes{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 32px;padding:22px 8px 6px}
+.nhead{grid-column:1/-1;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.nidx{font:400 20px/1 var(--lcdf);color:var(--ink-3)}
+.notes h3{grid-column:1/-1;font:700 clamp(22px,2.6vw,28px)/1.15 var(--display);letter-spacing:-.025em;margin:2px 0 6px}
+.nlbl{display:block;font:700 11px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px}
+.notes p{margin:0;font-size:16px;line-height:1.55}
+.myread p{color:var(--ink);font-weight:500}
+.myread{border-left:3px solid var(--accent);padding-left:16px}
+.chip{display:inline-flex;align-items:center;font:700 11px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:999px;white-space:nowrap}
+.chip.live{background:var(--live-bg);color:var(--live-fg)}
+.chip.ea{background:var(--ea-bg);color:var(--ea-fg)}
+.chip.pre{background:var(--pre-bg);color:var(--pre-fg)}
+.chip.road{color:var(--road-fg);border:1.5px dashed var(--road-fg);padding:4px 9px}
+.chip.sign{background:var(--sign-bg);color:var(--sign-fg)}
+.listv .scroll{border:1px solid var(--hair-2);border-radius:12px;background:var(--card)}
+.listv table{min-width:760px}
+.listv td:first-child{font:400 20px/1.2 var(--lcdf);color:var(--ink-3)}
+.listv td:nth-child(2){min-width:190px}
+.listv td:nth-child(2) b{display:block;font:700 15px/1.3 var(--display);letter-spacing:-.01em;margin-bottom:2px}
+.listv td:nth-child(2) span{font-size:13.5px;color:var(--ink-2)}
+.listv button.rowgo{appearance:none;border:0;background:none;padding:0;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.listv button.rowgo:hover b{color:var(--accent-ink)}
+
+/* ── Liner notes ─────────────────────────────────────────────── */
+.liner{position:relative;z-index:1;border-top:1px solid var(--hair-2);background:var(--paper-2);scroll-margin-top:64px}
+.liner .wrap{padding-block:56px 72px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:32px 56px}
+.liner h2{font-size:clamp(26px,3vw,34px);margin-top:10px}
+.liner p{font-size:15.5px;color:var(--ink-2);margin:0 0 14px;max-width:62ch}
+.liner p b{color:var(--ink)}
+.srcs{display:grid;gap:18px;font-size:14.5px}
+.srcs h3{font:700 11.5px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 6px}
+.srcs ul{list-style:none;margin:0;padding:0;display:grid;gap:5px}
+.endstripes{display:flex;height:8px}
+.endstripes i{flex:1}
+
+/* silhouettes */
+.k{fill:var(--sil)} .c{fill:var(--sil-cut)} .c2{fill:var(--sil-2)} .g{fill:var(--s5)} .a{fill:var(--s3)} .r{fill:var(--s4)} .b{fill:var(--s2)}
+.f1{fill:var(--s1)} .f2{fill:var(--s2)} .f3{fill:var(--s3)} .f4{fill:var(--s4)} .f5{fill:var(--s5)}
+.ks{fill:none;stroke:var(--sil)} .cs{fill:none;stroke:var(--sil-cut)} .rs{fill:none;stroke:var(--s4)} .as{fill:none;stroke:var(--s3)} .gl{fill:var(--s5);opacity:.24}
+.ill text{font-family:var(--body)}
+.gs{fill:none;stroke:var(--s5)} .bs{fill:none;stroke:var(--s2)} .t2{fill:var(--ink-2)}
+
+/* ── Photo prints (early-2000s digicam, date-stamped) ─────────── */
+.prints{display:flex;align-items:flex-start;gap:18px;margin:30px 0 36px;padding:4px 4px 12px;max-width:620px}
+.print{--rot:-1.4deg;flex:1 1 0;min-width:0;appearance:none;border:0;margin:0;cursor:zoom-in;background:var(--print);color:var(--print-ink);padding:9px 9px 11px;text-align:left;font:inherit;box-shadow:0 12px 26px -14px rgba(10,12,30,.55),0 1px 2px rgba(10,12,30,.18);transform:rotate(var(--rot));transition:transform .25s ease}
+.print:nth-child(2){--rot:1.8deg;margin-top:16px}
+.print:nth-child(3){--rot:-.6deg}
+.print:hover{transform:rotate(0deg) translateY(-3px)}
+.prints.one .print{--rot:-1deg;flex:0 1 560px}
+.ph{position:relative;display:block;background:#15182a;overflow:hidden}
+.ph img{display:block;width:100%;height:auto}
+.stamp{position:absolute;right:9px;bottom:7px;font:400 18px/1 var(--lcdf);letter-spacing:.08em;color:#ff9a2e;text-shadow:0 0 5px rgba(255,110,20,.9)}
+.pc{display:block;margin-top:9px;font:500 13px/1.4 var(--body)}
+.lbox{border:0;padding:0;background:transparent;color:#fff;max-width:min(94vw,1100px);max-height:94vh;overflow:visible}
+.lbox::backdrop{background:rgba(5,6,14,.88)}
+.lbox img{display:block;max-width:100%;max-height:80vh;width:auto;height:auto;margin:0 auto;border:8px solid #ffffff;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.lbox p{margin:12px 0 0;text-align:center;font:500 14px var(--body);color:#ffffff}
+.lbox .x{display:block;margin:0 0 10px auto;appearance:none;border:1px solid rgba(255,255,255,.55);background:rgba(0,0,0,.45);color:#ffffff;font:600 13px var(--body);border-radius:999px;padding:6px 14px;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.print{transition:none}}
+
+/* ── Phone width ─────────────────────────────────────────────── */
+@media (max-width:759px){
+  body{font-size:17px}
+  .hero .wrap{grid-template-columns:minmax(0,1fr);padding-block:36px 20px;gap:8px}
+  .hero-art{min-height:0;height:250px}
+  .hero-art .ill{width:auto;height:100%;max-width:100%}
+  .board{grid-template-columns:minmax(0,1fr);padding:20px;gap:22px}
+  .stats{gap:0 18px}
+  .st .d{font-size:13px}
+  .track{padding-block:32px 44px}
+  .track .wrap,.track.l .wrap{grid-template-columns:minmax(0,1fr);gap:26px}
+  .track .art,.track.l .art{order:-1;height:170px}
+  .art .ill{position:absolute;left:72%;top:50%;transform:translate(-50%,-50%);width:auto;height:100%;max-width:46%;margin:0}
+  .art.end{display:block}
+  .art.end .ill{position:absolute}
+  .txt{padding-left:46px;padding-top:24px}
+  .console{--cs:164px;padding:10px;border-radius:18px}
+  .device{border-radius:22px;padding:8px}
+  .notes{grid-template-columns:minmax(0,1fr);gap:14px;padding:18px 4px 4px}
+  .liner .wrap{grid-template-columns:minmax(0,1fr)}
+  .jewel{grid-template-columns:28px minmax(0,1fr)}
+  .insert{padding:20px 18px 8px}
+  .cgrid{grid-template-columns:minmax(0,1fr)}
+  .prints{overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;padding:6px 10px 14px 4px;margin:24px 0 28px}
+  .prints.two .print,.prints.three .print{flex:0 0 78%;scroll-snap-align:start}
+  ol.take li{grid-template-columns:44px minmax(0,1fr)}
+  ol.take li::before{font-size:24px}
+}
+@media (prefers-reduced-motion:reduce){
+  .cover,.card,.reflect{transition:none}
+  .eq i{animation:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Now Playing -->
+<div class="np" role="region" aria-label="Now playing">
+  <div class="wrap">
+    <div class="tp">
+      <button class="tbtn" id="prev" type="button" aria-label="Previous track"><svg viewBox="0 0 16 16"><path d="M2 3h2v10H2zM15 3v10L8.5 8zM8.5 3v10L2 8z"/></svg></button>
+      <button class="tbtn big" id="play" type="button" aria-label="Read aloud from this track"><svg viewBox="0 0 16 16" id="playicon"><path d="M4 2.5v11l9.5-5.5z"/></svg></button>
+      <button class="tbtn" id="next" type="button" aria-label="Next track"><svg viewBox="0 0 16 16"><path d="M12 3h2v10h-2zM1 3v10l6.5-5zM7.5 3v10L14 8z"/></svg></button>
+      <button class="tbtn" id="stop" type="button" aria-label="Stop reading" hidden><svg viewBox="0 0 16 16"><path d="M3.5 3.5h9v9h-9z"/></svg></button>
+    </div>
+    <div class="lcd" aria-live="off">
+      <div class="l1"><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span id="np-t">00 · Voice Is the OS</span></div>
+      <div class="l2" id="np-a">Field notes · ElevenLabs Summit New York</div>
+      <div class="pr"><span id="np-e">0:00</span><span class="bar" aria-hidden="true"><i id="np-f"></i><b id="np-h"></b></span><span id="np-r">-0:00</span></div>
+    </div>
+    <div class="side" id="np-s">INTRO</div>
+    <button class="tbtn" id="theme" type="button" aria-label="Switch to light mode"><svg viewBox="0 0 16 16" id="themeicon"></svg></button>
+  </div>
+</div>
+
+<main id="album">
+<svg id="ribbon" aria-hidden="true"></svg>
+
+<!-- 00 Intro -->
+<header class="hero" id="intro" data-track="00" data-side="INTRO" data-title="Voice Is the OS" data-artist="Recap + case study · ElevenLabs Summit NYC" data-intro="Voice is the OS. A recap and case study of the ElevenLabs Summit in New York.">
+  <div class="wrap">
+    <div class="hero-txt">
+      <p class="kick">Recap + case study · ElevenLabs Summit · David Geffen Hall, Lincoln Center · 11.11.2026</p>
+      <h1>Voice is the&nbsp;<span>OS.</span></h1>
+      <p class="stand say" data-say>I went to Lincoln Center for a voice company's product day and watched two things at once. One was a company pitching the operating layer for how we'll use software: you talk, it listens, and then it acts. The other was a masterclass in how to launch it. This is part recap, part case study, read with one question in mind: what does all of this mean if you work somewhere a regulator reads the transcripts?</p>
+      <div class="byline">
+        <button class="playbig" id="playbig" type="button"><span class="pi"><svg viewBox="0 0 16 16"><path d="M4 2.5v11l9.5-5.5z"/></svg></span><span id="playbig-l">Play the album</span></button>
+        <span><b>Carson Boykin</b></span><span class="dot"></span><span>Recap + case study</span><span class="dot"></span><span>4 sides · 14 tracks</span><span class="dot"></span><span id="runtime">Run time ≈ 14 min</span>
+      </div>
+    </div>
+    <div class="hero-art" data-stop="dm" data-lane=".5" data-lane-m=".5" data-from-top aria-hidden="true">
+      <svg class="ill" viewBox="0 0 400 350">
+        <rect class="k" x="24" y="22" width="352" height="16" rx="2"/>
+        <rect class="k" x="40" y="38" width="320" height="238"/>
+        <g class="g">
+          <path d="M51 264V114a25 25 0 0 1 50 0V264Z"/><path d="M113 264V114a25 25 0 0 1 50 0V264Z"/><path d="M175 264V114a25 25 0 0 1 50 0V264Z"/><path d="M237 264V114a25 25 0 0 1 50 0V264Z"/><path d="M299 264V114a25 25 0 0 1 50 0V264Z"/>
+        </g>
+        <path class="ks" stroke-width="3" d="M76 92V264M138 92V264M200 92V264M262 92V264M324 92V264M51 152H101M113 152H163M175 152H225M237 152H287M299 152H349M51 192H101M113 192H163M175 192H225M237 192H287M299 192H349M51 230H101M113 230H163M175 230H225M237 230H287M299 230H349"/>
+        <g class="c"><circle cx="76" cy="130" r="7"/><circle cx="138" cy="130" r="7"/><circle cx="200" cy="130" r="7"/><circle cx="262" cy="130" r="7"/><circle cx="324" cy="130" r="7"/><circle cx="76" cy="172" r="4"/><circle cx="138" cy="172" r="4"/><circle cx="200" cy="172" r="4"/><circle cx="262" cy="172" r="4"/><circle cx="324" cy="172" r="4"/></g>
+        <rect class="k" x="0" y="276" width="400" height="9"/>
+        <ellipse class="k" cx="200" cy="322" rx="152" ry="22"/>
+        <ellipse class="a" cx="200" cy="316" rx="130" ry="12"/>
+        <path class="as" stroke-width="5" stroke-linecap="round" d="M150 310V276M175 310V258M200 310V244M225 310V258M250 310V276"/>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- Scoreboard -->
+<section class="board-sec" aria-label="Summit by the numbers">
+  <div class="wrap">
+    <div class="board" data-stop="dm" data-lane="prev" data-lane-m="prev">
+      <div class="bib" aria-label="Attendee badge">
+        <div class="rail">Attendee</div>
+        <div class="main">
+          <div class="top"><span>Summit · New York</span><span>Geffen Hall</span></div>
+          <div class="num">11·11</div>
+          <div class="stripes" aria-hidden="true"><i class="f1"></i><i class="f2"></i><i class="f3"></i><i class="f4"></i><i class="f5"></i></div>
+          <div class="start"><span>Keynote</span><b>10:00 a.m.</b></div>
+          <div class="bot"><span>Voice &amp; agents</span><span>2026</span></div>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="st"><div class="lbl">In the room</div><div class="n">2,000</div><div class="d">customers and partners at Lincoln Center</div></div>
+        <div class="st"><div class="lbl">Releases</div><div class="n">13</div><div class="d">launches and upgrades in one day</div></div>
+        <div class="st"><div class="lbl">Partner network</div><div class="n">550+</div><div class="d">organizations across 44 countries</div></div>
+        <div class="st"><div class="lbl">Still to ship</div><div class="n">5/12</div><div class="d">headline releases in preview, early access or on the roadmap</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- The case -->
+<section class="case-sec" aria-label="Case study summary">
+  <div class="wrap">
+    <div class="jewel" data-stop="dm" data-lane="prev" data-lane-m="prev">
+      <div class="spine" aria-hidden="true">Case study · No. 11.11</div>
+      <div class="insert">
+        <div class="ihead"><p class="kick">The case</p><span class="cno">EL · 11.11 · NYC</span></div>
+        <h2 class="ctitle">How to launch a platform in a concert hall</h2>
+        <dl class="cgrid">
+          <div><dt>The company</dt><dd>ElevenLabs. Founded in 2022, valued at $11 billion, and best known to developers for lifelike AI voices.</dd></div>
+          <div><dt>The challenge</dt><dd>Graduate from developer favorite to enterprise infrastructure, and win over buyers who don't write code.</dd></div>
+          <div><dt>The stage</dt><dd>David Geffen Hall at Lincoln Center, home of the New York Philharmonic.</dd></div>
+          <div><dt>The audience</dt><dd>About 2,000 customers and partners, and for once, not just technologists.</dd></div>
+          <div><dt>The play</dt><dd>Live demos, plain language, customers on stage, booths to try partner agents, and a human moment.</dd></div>
+          <div><dt>My verdict</dt><dd><b>A marketing masterclass.</b> The story runs ahead of what ships, but the launch itself didn't miss.</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 The room -->
+<section class="track l" id="room" data-track="01" data-side="SIDE A" data-title="The room is the product" data-artist="David Geffen Hall · Lincoln Center" data-intro="Side A, the show. Track one. The room is the product.">
+  <div class="wrap">
+    <div class="txt" data-stop="m" data-lane-m="px:18">
+      <p class="tk"><span class="no">01</span><span>Side A · The show</span><span>Case study</span></p>
+      <h2>The room is the product</h2>
+      <p class="credit"><b>David Geffen Hall</b> · Lincoln Center · home of the New York Philharmonic</p>
+      <p class="say" data-say>Start with the room. ElevenLabs could have rented a convention center or a hotel ballroom. Instead it held the summit at Lincoln Center, in David Geffen Hall, the home of the New York Philharmonic.</p>
+      <p class="say" data-say>If your company is betting that the future of computing runs on voices so lifelike you forget they're synthetic, you put that bet in a building engineered for the best sound in the city. The venue was the first demo, and nobody had to say so.</p>
+      <figure class="prints two"><button class="print" type="button" aria-label="Enlarge photo: David Geffen Hall, home of the New York Philharmonic"><span class="ph"><img src="photos/geffen-exterior.jpg" width="993" height="1200" alt="David Geffen Hall at Lincoln Center on a clear morning: a travertine colonnade and tall glass facade, with attendees on the balconies" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">David Geffen Hall, home of the New York Philharmonic</span></button><button class="print" type="button" aria-label="Enlarge photo: The room before the keynote"><span class="ph"><img src="photos/hall-interior.jpg" width="1200" height="1024" alt="Inside the hall before the keynote: wood-paneled walls, rows of stage lights and screens reading Welcome to ElevenLabs Summit NYC" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">The room before the keynote</span></button></figure>
+      <div class="stat say" data-say data-text="Two thousand attendees, in a concert hall with about twenty-two hundred seats."><span class="n">2,000<small>/2,200</small></span><span class="l">Attendees, in a concert hall with about 2,200 seats</span></div>
+      <p class="say" data-say>Geffen Hall reopened in 2022 after a roughly $550 million rebuild meant to fix acoustic problems it had carried since 1962. Even its wood panels are shaped after sound waves. For a company that sells sound, that isn't a backdrop. It's an argument.</p>
+      <p class="pull say" data-say>You don't tell people your voices sound real. You book the room where sound gets judged.</p>
+      <p class="say" data-say>It also says something about ambition. Developer conferences happen in hotel ballrooms. Launches you want people to remember happen in concert halls.</p>
+    </div>
+    <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
+      <svg class="ill" viewBox="0 0 300 310">
+        <path class="k" d="M14 272V96Q150 6 286 96V272Z"/>
+        <path class="c2" d="M38 262V108Q150 34 262 108V262Z"/>
+        <g class="gs" stroke-width="8" stroke-linecap="round"><path d="M52 122c25-12 50 12 75 0s50 12 75 0 25 12 46 0"/><path d="M52 150c25-12 50 12 75 0s50 12 75 0 25 12 46 0" opacity=".85"/><path d="M52 178c25-12 50 12 75 0s50 12 75 0 25 12 46 0" opacity=".7"/><path d="M52 206c25-12 50 12 75 0s50 12 75 0 25 12 46 0" opacity=".55"/></g>
+        <path class="k" d="M58 236H242L266 268H34Z"/>
+        <ellipse class="g" cx="150" cy="252" rx="48" ry="7"/>
+        <rect class="k" x="147" y="200" width="6" height="40"/><rect class="k" x="140" y="188" width="20" height="16" rx="8"/>
+        <g class="k"><rect x="14" y="280" width="20" height="26" rx="8"/><rect x="39" y="280" width="20" height="26" rx="8"/><rect x="64" y="280" width="20" height="26" rx="8"/><rect x="89" y="280" width="20" height="26" rx="8"/><rect x="114" y="280" width="20" height="26" rx="8"/><rect x="139" y="280" width="20" height="26" rx="8"/><rect x="164" y="280" width="20" height="26" rx="8"/><rect x="189" y="280" width="20" height="26" rx="8"/><rect x="214" y="280" width="20" height="26" rx="8"/><rect x="239" y="280" width="20" height="26" rx="8"/><rect x="264" y="280" width="20" height="26" rx="8"/></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- 02 Live -->
+<section class="track r" id="live" data-track="02" data-side="SIDE A" data-title="No safety net" data-artist="Mati Staniszewski · Keynote · 10:00 AM" data-intro="Track two. No safety net.">
+  <div class="wrap">
+    <div class="txt" data-stop="m" data-lane-m="px:18">
+      <p class="tk"><span class="no">02</span><span>Side A · The show</span><span>10:00 AM · Keynote</span></p>
+      <h2>No safety net</h2>
+      <p class="credit"><b>Mati Staniszewski</b> · Co-founder &amp; CEO, ElevenLabs</p>
+      <p class="say" data-say>Anyone who has run an AI demo knows the fear. You can build it carefully and rehearse it all week, and it can still go off the rails in front of the room. These systems are probabilistic. Audiences aren't.</p>
+      <p class="say" data-say>Mati ran it live anyway, and it was flawless. There was no sizzle reel and no recording with a confident voiceover. It was the actual product, working in real time, in a hall built for orchestras. It had the energy of the great product keynotes, Steve Jobs doing a real demo, where the confidence comes from the fact that it's really happening.</p>
+      <figure class="prints one"><button class="print" type="button" aria-label="Enlarge photo: Mati opens the summit"><span class="ph"><img src="photos/mati-welcome.jpg" width="1200" height="960" alt="Mati Staniszewski on stage in front of a pink screen reading Welcome to ElevenLabs Summit NYC" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">Mati opens the summit</span></button></figure>
+      <p class="pull say" data-say>Live is the only demo that proves reliability. A recording only proves editing.</p>
+      <p class="say" data-say>Just as telling was the language. It wasn't overtly technical. The story came in outcomes a CFO or a head of customer experience could repeat on Monday, like this line:</p>
+      <blockquote class="q say" data-say data-voice="airy"><p>If AI is going to work for us, and alongside us, it will need to interact naturally and intuitively with people in many different settings.</p><cite>Mati Staniszewski, at the summit</cite></blockquote>
+      <p class="say" data-say>This felt like ElevenLabs arriving on a bigger stage. The company developers made famous was speaking past them, to the executives who sign enterprise contracts.</p>
+    </div>
+    <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
+      <svg class="ill" viewBox="0 0 300 230">
+        <path class="ks" stroke-width="5" d="M100 0V52M200 0V52"/>
+        <rect class="k" x="36" y="50" width="228" height="124" rx="22"/>
+        <rect class="r" x="54" y="68" width="192" height="88" rx="12"/>
+        <text x="150" y="129" text-anchor="middle" font-family="Unbounded, Arial Black, sans-serif" font-weight="800" font-size="48" letter-spacing="-1" fill="#ffffff">LIVE</text>
+        <path class="rs" stroke-width="6" stroke-linecap="round" d="M22 88l-16-8M22 136l-16 8M278 88l16-8M278 136l16 8M150 190v28M104 186l-10 24M196 186l10 24"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- 03 Booths -->
+<section class="track l" id="booths" data-track="03" data-side="SIDE A" data-title="Try it yourself" data-artist="The exhibit floor · Bancolombia and partners" data-intro="Track three. Try it yourself.">
+  <div class="wrap">
+    <div class="txt" data-stop="m" data-lane-m="px:18">
+      <p class="tk"><span class="no">03</span><span>Side A · The show</span><span>All day · Exhibit floor</span></p>
+      <h2>Try it yourself</h2>
+      <p class="credit"><b>Partner booths</b> · including Bancolombia's Customer Support FAQ agent</p>
+      <p class="say" data-say>The exhibits outside the hall made the same argument in a different key: if you don't believe us, try it. Partners set up small booths with their own agents running live, and you could walk up and talk to them.</p>
+      <p class="say" data-say>Bancolombia was showing its customer support FAQ agent. You put on the headphones, held a button to talk, and asked it about the bank. It was impressive, and it was honest about where it is. The booth spelled out its scope: products and services, cards and loans, requirements and documentation, fees and benefits, and self-service help.</p>
+      <figure class="prints one"><button class="print" type="button" aria-label="Enlarge photo: Bancolombia's booth: hold to talk"><span class="ph"><img src="photos/bancolombia.jpg" width="1072" height="1200" alt="Bancolombia's Customer Support FAQ booth: a tablet running the Bancolombia Assistant with ElevenLabs, a hold-to-talk button and suggested questions, headphones hanging below" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">Bancolombia's booth: hold to talk</span></button></figure>
+      <p class="say" data-say>One of the suggested questions was "How can I send money?" Today the agent is built to tell you how, not to do it for you. The bank is still working through the rollout, and the ambition to go agentic is clear but not there yet. That booth previewed the theme of the day's best session, the gap between answering and acting, which I come back to on Side B.</p>
+      <p class="say" data-say>Even the demo screen carried a line noting that the bank is supervised by Colombia's Financial Superintendency. In regulated finance, the regulator is in the room even at a trade-show booth.</p>
+      <p class="pull say" data-say>A keynote creates belief. A booth creates proof.</p>
+      <p class="say" data-say>From a marketing seat, the booths were the smartest money spent. A partner's own agent is proof that isn't ElevenLabs talking about itself. It's a customer vouching for the product with its own brand on the line.</p>
+      <p class="say" data-say>Not every exhibit was a product demo. One was a listening room lined with acoustic foam, where you put on headphones and heard New Yorkers' stories, captioned on a screen built like a giant speaker. It didn't pitch anything. It let the voices do the work, which is the company's whole argument in one room.</p>
+      <figure class="prints three"><button class="print" type="button" aria-label="Enlarge photo: The listening room"><span class="ph"><img src="photos/auntie-chan.jpg" width="900" height="1200" alt="A giant speaker-shaped screen in a foam-lined room, captioned: Auntie Chan, 67. Nine years old! So proud. So angry too!" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">The listening room</span></button><button class="print" type="button" aria-label="Enlarge photo: Stories from New Yorkers"><span class="ph"><img src="photos/irene.jpg" width="813" height="1200" alt="The speaker-shaped screen captioned: Irene, 24. And I swear, he still takes her shortcuts." loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">Stories from New Yorkers</span></button><button class="print" type="button" aria-label="Enlarge photo: Five boroughs, one speaker"><span class="ph"><img src="photos/neighborhoods.jpg" width="900" height="1200" alt="The same screen scrolling New York neighborhood names: Times Square, Chelsea, Chinatown, Williamsburg, DUMBO" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">Five boroughs, one speaker</span></button></figure>
+    </div>
+    <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
+      <svg class="ill" viewBox="0 0 300 330">
+        <rect class="k" x="70" y="16" width="150" height="292" rx="12"/>
+        <rect class="a" x="86" y="34" width="118" height="132" rx="6"/>
+        <rect class="c" x="96" y="48" width="74" height="26" rx="13"/>
+        <rect class="k" x="120" y="84" width="74" height="26" rx="13"/>
+        <g class="a"><circle cx="138" cy="97" r="3"/><circle cx="150" cy="97" r="3"/><circle cx="162" cy="97" r="3"/><circle cx="174" cy="97" r="3"/></g>
+        <rect class="c" x="96" y="120" width="58" height="26" rx="13"/>
+        <rect class="r" x="86" y="182" width="118" height="28" rx="5"/>
+        <text x="145" y="201" text-anchor="middle" font-weight="700" font-size="12" letter-spacing="2" fill="#ffffff">TRY IT LIVE</text>
+        <g class="c"><rect x="96" y="228" width="98" height="6" rx="3"/><rect x="96" y="242" width="70" height="6" rx="3"/></g>
+        <rect class="g" x="220" y="96" width="12" height="70" rx="4"/>
+        <path class="ks" stroke-width="3" d="M226 166c10 5-10 10 0 15s-10 10 0 15-10 10 0 15-10 10 0 15c6 4 14 6 22 6"/>
+        <rect class="k" x="246" y="214" width="18" height="76" rx="9"/>
+        <rect class="k" x="238" y="208" width="34" height="20" rx="9"/>
+        <rect class="k" x="238" y="278" width="34" height="20" rx="9"/>
+        <rect class="k" x="56" y="300" width="178" height="14" rx="4"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- 04 Playbook -->
+<section class="track r" id="playbook" data-track="04" data-side="SIDE A" data-title="The playbook" data-artist="Six moves worth stealing" data-intro="Track four. The playbook.">
+  <div class="wrap">
+    <div class="txt" data-stop="m" data-lane-m="px:18">
+      <p class="tk"><span class="no">04</span><span>Side A · The show</span><span>Case study</span></p>
+      <h2>The playbook</h2>
+      <p class="say" data-say>Put together, the day reads like a launch playbook. Here are the six moves I'd steal, and how I'd adapt each one for a bank, or for any business that answers to a regulator.</p>
+      <p class="say" data-say>The honest footnote is that the story ran ahead of the product. Much of what was announced is still preview or roadmap, and the agent I tried at the booth answers a set list. Great marketing buys attention. It doesn't ship the product. ElevenLabs earned the attention of the people who sign enterprise contracts, and now it has to ship into it.</p>
+    </div>
+    <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
+      <svg class="ill" viewBox="0 0 300 330">
+        <rect class="k" x="48" y="28" width="204" height="294" rx="14"/>
+        <rect class="c" x="66" y="60" width="168" height="246" rx="4"/>
+        <rect class="g" x="110" y="14" width="80" height="36" rx="8"/>
+        <rect class="k" x="132" y="24" width="36" height="10" rx="5"/>
+        <rect class="k" x="82" y="76" width="86" height="7" rx="3.5"/>
+        <rect class="k" x="82" y="90" width="54" height="5" rx="2.5" opacity=".5"/>
+        <path class="rs" stroke-width="5" stroke-linecap="round" d="M92 124l16 16M108 124l-16 16M142 112l16 16M158 112l-16 16M192 128l16 16M208 128l-16 16"/>
+        <g class="bs" stroke-width="5"><circle cx="100" cy="250" r="10"/><circle cx="150" cy="268" r="10"/><circle cx="200" cy="246" r="10"/></g>
+        <path class="ks" stroke-width="3" stroke-dasharray="6 5" d="M100 238C88 200 120 180 102 158M150 256C150 220 160 190 150 150M200 234C214 200 190 184 200 166"/>
+        <path class="k" d="M96 160l6-10 6 10zM144 152l6-10 6 10zM194 168l6-10 6 10z"/>
+      </svg>
+    </div>
+    <div class="full tcard" data-stop="dm" data-lane="prev" data-lane-m="prev">
+      <div class="scroll">
+        <table class="pb">
+          <thead><tr><th>The move</th><th>What ElevenLabs did</th><th>Why it worked</th><th>How a bank could borrow it</th></tr></thead>
+          <tbody>
+            <tr><td>Let the room make the argument</td><td>Booked the home of the New York Philharmonic to launch a company that sells sound.</td><td>The venue proved the core claim before anyone said a word.</td><td>Stage the launch where your claim gets tested. Launching a fraud agent? Demo it to fraud investigators.</td></tr>
+            <tr><td>Demo live</td><td>Ran the product live on stage instead of playing recordings.</td><td>Live is the only demo that proves reliability.</td><td>Show the board and examiners the live system with guardrails on, not a deck about it.</td></tr>
+            <tr><td>Talk in outcomes</td><td>Kept the language plain and the jargon low.</td><td>It widened the room from builders to the executives who buy.</td><td>Explain AI to customers by what it does for them, and what it won't do.</td></tr>
+            <tr><td>Let people touch it</td><td>Partner booths where anyone could talk to a live agent, Bancolombia's among them.</td><td>Hands-on proof beats claims, and a partner's agent beats self-promotion.</td><td>Run pilots in the open: an opt-in beta, a branch kiosk, a demo line customers can call.</td></tr>
+            <tr><td>Put customers on stage</td><td>Banks, an insurer and fintechs on panels, and Ramp's CEO in a fireside.</td><td>Peer proof persuades regulated buyers better than any vendor slide.</td><td>Volunteer as the reference customer. The industry moves faster when banks share what worked.</td></tr>
+            <tr><td>Make room for a human moment</td><td>Performers who had lost their voices sang with rebuilt ones.</td><td>It's what people remember, and it ties the technology to why it matters.</td><td>Lead with the customer who got helped, not with the model.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 Keynote -->
+<section class="track l" id="keynote" data-track="05" data-side="SIDE B" data-title="The interaction layer" data-artist="Mati Staniszewski · Keynote · 10:00 AM" data-intro="Side B, the day. Track five. The interaction layer.">
+  <div class="wrap">
+    <div class="txt" data-stop="m" data-lane-m="px:18">
+      <p class="tk"><span class="no">05</span><span>Side B · The day</span><span>10:00 AM · Keynote</span></p>
+      <h2>The interaction layer</h2>
+      <p class="credit"><b>Mati Staniszewski</b> · Co-founder &amp; CEO, ElevenLabs</p>
+      <p class="say" data-say>Underneath the showmanship was a real thesis. Mati opened the summit on November 11th, Polish Independence Day, and he didn't spend the keynote on voices. He spent it on a layer. ElevenLabs wants to sit between people and every model they talk to. It listens, decides whose turn it is, picks which model should do the thinking, and answers in a voice you'd actually want to hear.</p>
+      <blockquote class="q say" data-say data-voice="airy"><p>Within a few years, conversational agents will become critical infrastructure for every enterprise, as essential as cloud or payments.</p><cite>Mati Staniszewski, opening keynote</cite></blockquote>
+      <p class="say" data-say>That last word is the one I underlined. In financial services, payments is the most supervised plumbing we run. If voice agents become payments-grade infrastructure, they inherit payments-grade expectations: uptime, change control, audit trails, and a named owner when something breaks. I don't read that as a threat to the thesis. I read it as the job description.</p>
+      <p class="say" data-say>He also argued that businesses will build their own reinforcement learning stacks to put proprietary data to work. For a bank, proprietary data means customer conversations. Hold that thought for Side B.</p>
+    </div>
+    <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
+      <svg class="ill" viewBox="0 0 300 330">
+        <path class="rs" stroke-width="7" stroke-linecap="round" d="M70 72a112 112 0 0 0 0 128M44 52a142 142 0 0 0 0 168M230 72a112 112 0 0 1 0 128M256 52a142 142 0 0 1 0 168"/>
+        <path class="ks" stroke-width="11" d="M96 118v26a54 54 0 0 0 108 0v-26"/>
+        <circle class="k" cx="96" cy="118" r="9"/><circle class="k" cx="204" cy="118" r="9"/>
+        <rect class="k" x="108" y="30" width="84" height="152" rx="42"/>
+        <g class="c"><rect x="124" y="62" width="52" height="6" rx="3"/><rect x="124" y="80" width="52" height="6" rx="3"/><rect x="124" y="98" width="52" height="6" rx="3"/><rect x="124" y="116" width="52" height="6" rx="3"/><rect x="124" y="134" width="52" height="6" rx="3"/><rect x="124" y="152" width="52" height="6" rx="3"/></g>
+        <rect class="k" x="122" y="194" width="56" height="16" rx="4"/>
+        <rect class="k" x="142" y="208" width="16" height="96"/>
+        <ellipse class="k" cx="150" cy="310" rx="76" ry="15"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- 02 Finance panel -->
+<section class="track r" id="finance" data-track="06" data-side="SIDE B" data-title="From answering to acting" data-artist="Customers Bank · Banco Inter · Nasdaq · 10:45 AM" data-intro="Track six. From answering to acting.">
+  <div class="wrap">
+    <div class="txt" data-stop="m" data-lane-m="px:18">
+      <p class="tk"><span class="no">06</span><span>Side B · The day</span><span>10:45 AM · Panel</span></p>
+      <h2>From answering to acting</h2>
+      <p class="credit"><b>Carlos Coto</b>, Chief Strategy &amp; Innovation Officer, Customers Bank · <b>Daniela Mineiro</b>, Experience Leader, Inter · <b>Douglas Hamilton</b>, Head of AI Research &amp; Engineering, Nasdaq · with <b>Ethan Tandowsky</b>, CFO, ElevenLabs</p>
+      <div class="stat say" data-say data-text="More than two million customer service interactions a month at Banco Inter, in Portuguese, English and Spanish."><span class="n">2M<small>+ / mo</small></span><span class="l">Customer service interactions at Banco Inter, in Portuguese, English and Spanish</span></div>
+      <p class="say" data-say>This was the session I came for, and it named the gap I'd seen at the Bancolombia booth. The first wave of voice agents answered questions. The next wave does things: it checks the balance, and then it moves the money.</p>
+      <figure class="prints one"><button class="print" type="button" aria-label="Enlarge photo: From answering to acting, 10:45 AM"><span class="ph"><img src="photos/finance-panel.jpg" width="844" height="1200" alt="Douglas Hamilton, Daniela Mineiro and Carlos Coto on stage under the slide From answering to acting: agentic voice AI in regulated finance" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">From answering to acting, 10:45 AM</span></button></figure>
+      <p class="say" data-say>That one verb changes the risk profile completely. An agent that answers is a content problem: is it accurate, is it compliant, does it sound like us? An agent that acts is a controls problem. Who authorized this? How do we know who's calling? What's the limit, and where's the evidence? Banks already answer those questions for people and for APIs. Voice agents need the same answers before the first transfer, not after it.</p>
+      <blockquote class="q say" data-say data-voice="airy"><p>Full self-service for the ones that don't want to interact with humans, and human beings powered by agents for the people that value the interaction.</p><cite>Carlos Coto, Customers Bank, describing its ElevenLabs rollout</cite></blockquote>
+      <p class="say" data-say>That's the framing I'd hand to any regulated team. The human handoff is part of the product. Design it first, measure it, and make it fast.</p>
+    </div>
+    <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
+      <svg class="ill" viewBox="0 0 300 300">
+        <path class="k" d="M24 92L150 30L276 92Z"/>
+        <circle class="c" cx="150" cy="70" r="15"/>
+        <g class="g"><rect x="140" y="64" width="4" height="12" rx="2"/><rect x="148" y="59" width="4" height="22" rx="2"/><rect x="156" y="65" width="4" height="10" rx="2"/></g>
+        <rect class="k" x="30" y="96" width="240" height="16"/>
+        <g class="k">
+          <rect x="42" y="116" width="26" height="8"/><rect x="46" y="124" width="18" height="114"/><rect x="42" y="238" width="26" height="8"/>
+          <rect x="90" y="116" width="26" height="8"/><rect x="94" y="124" width="18" height="114"/><rect x="90" y="238" width="26" height="8"/>
+          <rect x="137" y="116" width="26" height="8"/><rect x="141" y="124" width="18" height="114"/><rect x="137" y="238" width="26" height="8"/>
+          <rect x="184" y="116" width="26" height="8"/><rect x="188" y="124" width="18" height="114"/><rect x="184" y="238" width="26" height="8"/>
+          <rect x="232" y="116" width="26" height="8"/><rect x="236" y="124" width="18" height="114"/><rect x="232" y="238" width="26" height="8"/>
+          <rect x="26" y="248" width="248" height="12"/><rect x="14" y="262" width="272" height="12"/><rect x="2" y="276" width="296" height="12"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- 08 Scale -->
+<section class="track l" id="scale" data-track="07" data-side="SIDE B" data-title="The 360-degree cost" data-artist="AWS · McKinsey · ElevenLabs · 11:55 AM" data-intro="Track seven. The 360-degree cost.">
+  <div class="wrap">
+    <div class="txt" data-stop="m" data-lane-m="px:18">
+      <p class="tk"><span class="no">07</span><span>Side B · The day</span><span>11:55 AM · Panel</span></p>
+      <h2>The 360-degree cost</h2>
+      <p class="credit"><b>Matt Yanchyshyn</b>, VP, AWS · <b>Yael Taqqu</b>, Senior Partner, McKinsey · with <b>Ashish Uchil</b>, Global BD &amp; Partnerships, ElevenLabs</p>
+      <p class="say" data-say>The session I've thought about most since was "What it takes to scale AI across the enterprise," and in particular a point Matt Yanchyshyn from AWS made that almost nobody talks about: the hidden costs of AI. He called it the 360-degree cost.</p>
+      <figure class="prints one"><button class="print" type="button" aria-label="Enlarge photo: What it takes to scale AI, 11:55 AM"><span class="ph"><img src="photos/scale-panel.jpg" width="1200" height="737" alt="Matt Yanchyshyn, Yael Taqqu and Ashish Uchil on stage under the slide What it takes to scale AI across the enterprise" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">What it takes to scale AI, 11:55 AM</span></button></figure>
+      <p class="say" data-say>AI can take the pressure off a support queue. But what happens when demand explodes? If you automate one step, who handles the next one your support team inherits? If demand generation is mostly automated and it works, do you have the people in place to handle everything it sends you?</p>
+      <p class="pull say" data-say>Automation doesn't remove work. It moves it, and sometimes it multiplies it.</p>
+      <p class="say" data-say>In a bank, this gets concrete fast. If a voice agent resolves most routine calls, the calls left for people are the hardest ones: disputes, fraud, complaints, the customer who's already upset. A rate change or a fraud event can spike volume overnight. The agent scales instantly. The back office, the reviewers and the complaint handlers don't. Budget for the whole system, not just the bot.</p>
+      <div class="stat say" data-say data-text="More than ninety percent AI utilization at AWS, sustained for years, as Matt Yanchyshyn described it."><span class="n">90%<small>+</small></span><span class="l">AI utilization at AWS, sustained for years, as Matt Yanchyshyn described it</span></div>
+      <blockquote class="q say" data-say data-voice="airy"><p>Choose the right tools, and obsess over the rest.</p><cite>The AWS philosophy, as Matt Yanchyshyn put it</cite></blockquote>
+      <p class="say" data-say>There's no shortage of shiny tools. Matt's point was that adoption comes from purpose, not from any particular tool, and AWS has learned that the specific tool matters less than you'd think.</p>
+      <p class="say" data-say>The shift that stuck with me is how AWS now thinks about engineers: as product engineers. With AI taking on so much of the typing, engineers are expected to bring a strategic lens and really understand the product. The goal is to generate product in a spec-driven way, not to generate stuff. That takes real skill in building the harness, the specs, tests and guardrails around the AI, instead of shipping cheap code with nothing holding it together.</p>
+      <p class="say" data-say>For regulated teams, that's good news. A spec is something an auditor can read. Spec-driven work already looks like the way model risk, audit and change control think, which makes it the shortest path to AI that passes review.</p>
+      <p class="say" data-say>Yael Taqqu from McKinsey widened the frame. This is a technology revolution, she said, and it's also a talent revolution. People have to be open to building new skills, and leaders need boldness and humility working together. It's a rare combination. Most leaders arrive with the boldness. The humility has to be learned.</p>
+      <p class="pull say" data-say>Bold enough to ship. Humble enough to scope it.</p>
+      <p class="say" data-say>I'd seen that combination on the exhibit floor. Bancolombia was bold enough to put a live agent in front of strangers, and humble enough to keep it to the questions it can answer well. That's the posture regulated industries need right now.</p>
+    </div>
+    <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
+      <svg class="ill" viewBox="0 0 300 330">
+        <rect class="a" x="0" y="96" width="300" height="234" opacity=".16"/>
+        <path class="c2" d="M108 96H214L248 150L262 214L230 282L170 318L104 304L54 240L48 168Z"/>
+        <path class="ks" stroke-width="3" stroke-linejoin="round" d="M108 96H214L248 150L262 214L230 282L170 318L104 304L54 240L48 168Z"/>
+        <path class="k" d="M114 97L148 38L168 62L184 48L208 97Z"/>
+        <text x="161" y="89" text-anchor="middle" font-weight="700" font-size="10.5" letter-spacing="1.4" class="c">THE BOT</text>
+        <path class="as" stroke-width="5" stroke-linecap="round" d="M0 97c20-8 30 8 50 0s30 8 50 0 30 8 50 0 30 8 50 0 30 8 50 0 30 8 50 0"/>
+        <g font-weight="700" font-size="11" letter-spacing="1.6" text-anchor="middle" class="t2">
+          <text x="155" y="148">SUPPORT</text><text x="155" y="178">DEMAND SPIKES</text><text x="155" y="208">PEOPLE</text><text x="155" y="238">REVIEW &amp; QA</text><text x="155" y="268">COMPLAINTS</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- 04 The Drop -->
+<section class="track r" id="drop" data-track="08" data-side="SIDE B" data-title="The drop" data-artist="Twelve covers from one keynote" data-intro="Track eight. The drop.">
+  <div class="wrap">
+    <div class="txt" data-stop="m" data-lane-m="px:18">
+      <p class="tk"><span class="no">08</span><span>Side B · The day</span><span>All day · Releases</span></p>
+      <h2>Thumb through the releases</h2>
+      <p class="say" data-say>ElevenLabs counted thirteen launches and upgrades. I've pressed them onto twelve covers. Swipe or use the arrow keys, and tap the cover in front to flip it for the liner notes.</p>
+      <p class="say" data-say>Watch the sticker on each one. What's shipping today is mostly the models underneath. The ideas that would change how a bank operates, like memory, routines and custom models, are still preview or roadmap. That's not a knock. It's a timeline, and it tells you when to start the governance work: now.</p>
+      <p class="say" data-say>One partner made its point just by showing up. Jensen Huang had pulled out days earlier, but NVIDIA still put Kari Briski, its VP of generative AI software products, on stage with ElevenLabs field CTO Alex Holt to talk models, infrastructure and sovereignty at scale. For anyone in a regulated or government-adjacent business, that last word is the one to watch.</p>
+      <figure class="prints one"><button class="print" type="button" aria-label="Enlarge photo: NVIDIA on sovereignty at scale"><span class="ph"><img src="photos/nvidia.jpg" width="1200" height="928" alt="Kari Briski of NVIDIA and Alex Holt of ElevenLabs on stage under the slide A conversation with NVIDIA on models, infrastructure, and sovereignty at scale" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">NVIDIA on sovereignty at scale</span></button></figure>
+    </div>
+    <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
+      <svg class="ill" viewBox="0 0 300 280">
+        <circle class="k" cx="190" cy="140" r="98"/>
+        <g class="cs" stroke-width="2" opacity=".45"><circle cx="190" cy="140" r="84"/><circle cx="190" cy="140" r="70"/><circle cx="190" cy="140" r="56"/><circle cx="190" cy="140" r="42"/></g>
+        <circle class="r" cx="190" cy="140" r="26"/><circle class="c" cx="190" cy="140" r="4"/>
+        <rect class="c2" x="16" y="36" width="210" height="210"/>
+        <path class="ks" stroke-width="4" d="M16 36h210v210H16z"/>
+        <text x="36" y="96" font-family="Unbounded, Arial Black, sans-serif" font-weight="800" font-size="40" letter-spacing="-2" class="k">11·11</text>
+        <text x="38" y="122" font-weight="700" font-size="10.5" letter-spacing="1.2" class="k">LIVE AT LINCOLN CENTER</text>
+        <rect class="f1" x="16" y="168" width="210" height="9"/><rect class="f2" x="16" y="180" width="210" height="9"/><rect class="f3" x="16" y="192" width="210" height="9"/><rect class="f4" x="16" y="204" width="210" height="9"/><rect class="f5" x="16" y="216" width="210" height="9"/>
+      </svg>
+    </div>
+    <div class="full console" id="console" data-stop="dm" data-lane=".5" data-lane-m="prev">
+      <div class="ctop">
+        <div class="seg" role="group" aria-label="View">
+          <button type="button" id="v-covers" aria-pressed="true">Covers</button><button type="button" id="v-list" aria-pressed="false">List</button>
+        </div>
+        <span class="hint" id="hint">Swipe, scrub or use ← → · tap the front cover to flip it</span>
+      </div>
+      <div id="coverview">
+        <div class="device">
+          <div class="screen">
+            <div class="sbar"><span>The Drop</span><span class="clk">11:11</span><span class="batt" aria-hidden="true"></span></div>
+            <div class="flow" id="flow" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Summit releases. Use left and right arrow keys to browse, Enter to flip."></div>
+            <div class="cap" aria-hidden="true"><b id="cap-t">Interaction Engine</b><span id="cap-s">Preview</span></div>
+            <div class="scrubrow"><input class="scrub" id="scrub" type="range" min="0" max="11" step="1" value="3" aria-label="Scrub through releases"></div>
+          </div>
+        </div>
+        <div class="notes" aria-live="polite">
+          <div class="nhead"><span class="nidx" id="n-idx">04 / 12</span><span class="chip pre" id="n-chip">Preview</span></div>
+          <h3 id="n-t">Interaction Engine</h3>
+          <div><span class="nlbl">What they announced</span><p id="n-f"></p></div>
+          <div class="myread"><span class="nlbl">My read for regulated teams</span><p id="n-r"></p></div>
+        </div>
+      </div>
+      <div class="listv" id="listview" hidden>
+        <div class="scroll">
+          <table>
+            <thead><tr><th>#</th><th>Release</th><th>Status</th><th>My read for regulated teams</th></tr></thead>
+            <tbody id="listbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 Closing: Ramp -->
+<section class="track l" id="ramp" data-track="09" data-side="SIDE B" data-title="Waste on the way to useful" data-artist="Eric Glyman with Mati Staniszewski · 4:30 PM" data-intro="Track nine, the closing session. Waste on the way to useful.">
+  <div class="wrap">
+    <div class="txt" data-stop="m" data-lane-m="px:18">
+      <p class="tk"><span class="no">09</span><span>Side B · The day</span><span>4:30 PM · Closing session</span></p>
+      <h2>Waste on the way to useful</h2>
+      <p class="credit">"A conversation on building an AI-first company" · <b>Eric Glyman</b>, Co-founder &amp; CEO, Ramp · with <b>Mati Staniszewski</b></p>
+      <p class="say" data-say>The day closed with Ramp's Eric Glyman in conversation with Mati, and it wasn't a tour of Ramp's product. It was about something harder: how a company actually captures the potential of AI.</p>
+      <figure class="prints one"><button class="print" type="button" aria-label="Enlarge photo: Building an AI-first company, 4:30 PM"><span class="ph"><img src="photos/ramp-fireside.jpg" width="1125" height="1200" alt="Mati Staniszewski and Eric Glyman applauding on stage under the slide A conversation on building an AI-first company" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">Building an AI-first company, 4:30 PM</span></button></figure>
+      <p class="say" data-say>The idea I've repeated most since came from him: some AI waste is the price of AI usefulness. People need room to try the tools, burn some cycles and learn what works. The mistake is getting stuck in that phase instead of moving past it to purpose.</p>
+      <p class="pull say" data-say>You have to waste some AI to get to useful AI.</p>
+      <p class="say" data-say>In a bank, "waste" is a hard word to say out loud. But a sanctioned sandbox where people can experiment safely is how you get to useful, and it's far cheaper than the shadow AI that fills the gap when there isn't one.</p>
+      <div class="stat say" data-say data-text="Two plus two equals eleven. What a chatbot might have told you in 2023, in Eric Glyman's example."><span class="n">2+2=11</span><span class="l">What a chatbot might have told you in 2023, in Eric Glyman's example</span></div>
+      <p class="say" data-say>He also gave the best illustration of the day of how fast this is moving. In 2023, he said, ChatGPT might tell you 2 + 2 was 11, or miscount the r's in "strawberry." Today, OpenAI's most advanced models are solving math problems no mathematician had ever solved. That isn't hype: this year an internal OpenAI model disproved an 80-year-old Erdős conjecture, and outside mathematicians checked the proof.</p>
+      <p class="say" data-say>That's the case for governance that can keep up. The model a bank approves this quarter won't be the model it runs next year, and controls that assume the technology stands still will be out of date before they're signed. It was the right note to end the day on: an exciting time to be building, and no time to stand still.</p>
+    </div>
+    <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
+      <svg class="ill" viewBox="0 0 300 345">
+        <path class="c" d="M104 18h92v214l-11.5 10-11.5-10-11.5 10-11.5-10-11.5 10-11.5-10-11.5 10-11.5-10z"/>
+        <path class="ks" stroke-width="4" stroke-linejoin="round" d="M104 18h92v214l-11.5 10-11.5-10-11.5 10-11.5-10-11.5 10-11.5-10-11.5 10-11.5-10z"/>
+        <g class="k"><rect x="120" y="38" width="60" height="8" rx="2"/><rect x="120" y="62" width="34" height="5" rx="2"/><rect x="162" y="62" width="18" height="5" rx="2"/><rect x="120" y="78" width="40" height="5" rx="2"/><rect x="166" y="78" width="14" height="5" rx="2"/><rect x="120" y="94" width="28" height="5" rx="2"/><rect x="160" y="94" width="20" height="5" rx="2"/><rect x="120" y="110" width="44" height="5" rx="2"/><rect x="168" y="110" width="12" height="5" rx="2"/><rect x="120" y="134" width="60" height="3"/><rect x="120" y="146" width="30" height="8" rx="2"/><rect x="158" y="146" width="22" height="8" rx="2"/></g>
+        <g transform="rotate(-10 150 262)">
+          <rect class="k" x="44" y="196" width="212" height="134" rx="14"/>
+          <rect class="g" x="70" y="230" width="38" height="28" rx="5"/>
+          <path class="cs" stroke-width="4" stroke-linecap="round" d="M220 230a14 14 0 0 1 0 20M230 224a24 24 0 0 1 0 32"/>
+          <g class="c"><rect x="70" y="284" width="34" height="7" rx="3"/><rect x="112" y="284" width="34" height="7" rx="3"/><rect x="154" y="284" width="34" height="7" rx="3"/><rect x="196" y="284" width="34" height="7" rx="3"/></g>
+        </g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- 05 Records -->
+<section class="track r" id="records" data-track="10" data-side="SIDE C" data-title="Memory is a records problem" data-artist="The fine print" data-intro="Side C, the fine print. Track ten. Memory is a records problem.">
+  <div class="wrap">
+    <div class="txt" data-stop="m" data-lane-m="px:18">
+      <p class="tk"><span class="no">10</span><span>Side C</span><span>The fine print</span></p>
+      <h2>Memory is a records problem</h2>
+      <p class="say" data-say>Memory lets an agent recognize a returning customer and keep structured notes on every conversation. Routines let it carry out multi-step work before, during and after a call. Custom models let a company fine-tune on its own conversations. Each one is a great product idea, and each one already has a compliance owner who doesn't know it yet.</p>
+      <p class="say" data-say>Here's how I'd translate the launches for a regulated team, with the first question I'd put to the vendor. None of these are reasons to wait. They're the checklist that gets you to yes faster.</p>
+      <p class="say" data-say>Wall Street has already paid billions in fines over business conversations held on channels nobody was keeping. A meeting recorder is a new channel. So is an agent with a memory. Decide what you keep on day one.</p>
+    </div>
+    <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
+      <svg class="ill" viewBox="0 0 300 330">
+        <path class="a" d="M88 44V22h44l7 9v13z"/><path class="r" d="M148 44V16h46l7 9v19z"/>
+        <rect class="k" x="64" y="38" width="172" height="284" rx="6"/>
+        <rect class="c" x="78" y="54" width="144" height="78" rx="4"/><rect class="k" x="128" y="88" width="44" height="10" rx="5"/><rect class="g" x="132" y="64" width="36" height="14" rx="2"/>
+        <rect class="c" x="78" y="144" width="144" height="78" rx="4"/><rect class="k" x="128" y="178" width="44" height="10" rx="5"/><rect class="g" x="132" y="154" width="36" height="14" rx="2"/>
+        <rect class="c" x="78" y="234" width="144" height="78" rx="4"/><rect class="k" x="128" y="268" width="44" height="10" rx="5"/><rect class="g" x="132" y="244" width="36" height="14" rx="2"/>
+      </svg>
+    </div>
+    <div class="full tcard" data-stop="dm" data-lane="prev" data-lane-m="prev">
+      <div class="scroll">
+        <table class="xl">
+          <thead><tr><th>What they launched</th><th>What it is in a regulated shop</th><th>The first question I'd ask</th></tr></thead>
+          <tbody>
+            <tr><td>Memory</td><td>Recordkeeping and privacy</td><td>What's kept, for how long, and can we honor a deletion request? Keeping the CRM as the system of record is the right call.</td></tr>
+            <tr><td>Routines</td><td>Entitlements and change control</td><td>What can a routine touch, who approved it, and is every step logged?</td></tr>
+            <tr><td>Custom models</td><td>Model risk management and consent</td><td>Did customers agree to their calls training a model? How is the tuned model validated and monitored?</td></tr>
+            <tr><td>Interaction Engine</td><td>Model inventory</td><td>For any single turn, can we prove which model answered?</td></tr>
+            <tr><td>Eleven Realtime</td><td>Supervision and disclosure</td><td>Speech-to-speech skips the text step. What does compliance review, and when does the caller hear it's an AI?</td></tr>
+            <tr><td>ElevenAI</td><td>Communications recordkeeping</td><td>If it records a client meeting, is that a business record we have to retain and supervise?</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 06 Identity -->
+<section class="track l" id="identity" data-track="11" data-side="SIDE C" data-title="The identity paradox" data-artist="The fine print" data-intro="Track eleven. The identity paradox.">
+  <div class="wrap">
+    <div class="txt" data-stop="m" data-lane-m="px:18">
+      <p class="tk"><span class="no">11</span><span>Side C</span><span>The fine print</span></p>
+      <h2>The identity paradox</h2>
+      <div class="stat say" data-say data-text="Fifty to ninety percent. KPN's identity verification accuracy after tuning on Dutch-language data, as ElevenLabs reported it."><span class="n">50→90<small>%</small></span><span class="l">KPN's identity-verification accuracy after tuning on Dutch-language data, as ElevenLabs reported it</span></div>
+      <p class="say" data-say>Here's the tension I keep coming back to. The company that made voices easy to recreate is building the agents that now have to decide who's really on the line. Banks spent a decade enrolling customers in voice biometrics, and that control gets weaker every quarter.</p>
+      <p class="say" data-say>So the most important number of the day, for me, wasn't a model benchmark. It was KPN, the Dutch telecom, where tuning on its own Dutch-language data took identity verification from roughly half right to about ninety percent. Verification is the gate, and everything about acting sits behind it. If fine-tuning moves that number, custom models stop being a nice-to-have for a bank. They become the price of letting an agent near an account.</p>
+      <p class="pull say" data-say>The voice is the interface. It's never the credential.</p>
+      <p class="say" data-say>Verify with something the caller has, or something the bank can check. Then let the voice do what it's good at, which is making that step feel human.</p>
+    </div>
+    <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
+      <svg class="ill" viewBox="0 0 300 320">
+        <path class="ks" stroke-width="26" d="M96 150V104a54 54 0 0 1 108 0v46"/>
+        <rect class="k" x="56" y="136" width="188" height="172" rx="24"/>
+        <g class="g"><rect x="85" y="210" width="10" height="24" rx="5"/><rect x="105" y="198" width="10" height="48" rx="5"/><rect x="125" y="183" width="10" height="78" rx="5"/><rect x="145" y="168" width="10" height="108" rx="5"/><rect x="165" y="183" width="10" height="78" rx="5"/><rect x="185" y="198" width="10" height="48" rx="5"/><rect x="205" y="210" width="10" height="24" rx="5"/></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- 07 Lineage -->
+<section class="track r" id="lineage" data-track="12" data-side="SIDE C" data-title="Which model answered?" data-artist="The fine print" data-intro="Track twelve. Which model answered?">
+  <div class="wrap">
+    <div class="txt" data-stop="m" data-lane-m="px:18">
+      <p class="tk"><span class="no">12</span><span>Side C</span><span>The fine print</span></p>
+      <h2>Which model answered?</h2>
+      <p class="say" data-say>The Interaction Engine is the most important thing ElevenLabs previewed, and the least flashy. It manages turn-taking and interruptions, and it routes each moment of a conversation to a different model: something cheap to triage, something frontier-grade for the hard part.</p>
+      <p class="say" data-say>That's great economics. It's also a new question for model risk. In a bank, "the AI said it" is not an answer. For every turn we'll need to know which model spoke, which version, what it was given, and why the router picked it.</p>
+      <p class="pull say" data-say>One customer call can now be answered by several models. Each of them belongs in the model inventory.</p>
+      <p class="say" data-say>The vendor that makes that lineage a standard export, per call and per turn, becomes the easiest one in the room to approve. If I were ElevenLabs, I'd ship that before Memory.</p>
+    </div>
+    <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
+      <svg class="ill" viewBox="0 0 300 340">
+        <path class="k" d="M44 334V138a106 106 0 0 1 212 0V334Z"/>
+        <path class="a" d="M76 214V144a74 74 0 0 1 148 0V214Z"/>
+        <circle class="k" cx="150" cy="170" r="40"/>
+        <g class="as" stroke-width="2" opacity=".5"><circle cx="150" cy="170" r="31"/><circle cx="150" cy="170" r="23"/></g>
+        <circle class="r" cx="150" cy="170" r="12"/><circle class="a" cx="150" cy="170" r="3"/>
+        <path class="ks" stroke-width="5" stroke-linecap="round" d="M208 118l-30 36"/>
+        <g><rect class="g" x="78" y="232" width="22" height="12" rx="3"/><rect class="c" x="106" y="232" width="22" height="12" rx="3"/><rect class="r" x="134" y="232" width="22" height="12" rx="3"/><rect class="c" x="162" y="232" width="22" height="12" rx="3"/><rect class="g" x="190" y="232" width="22" height="12" rx="3"/>
+        <rect class="c" x="78" y="252" width="22" height="12" rx="3"/><rect class="r" x="106" y="252" width="22" height="12" rx="3"/><rect class="c" x="134" y="252" width="22" height="12" rx="3"/><rect class="g" x="162" y="252" width="22" height="12" rx="3"/><rect class="c" x="190" y="252" width="22" height="12" rx="3"/></g>
+        <path class="cs" stroke-width="3" d="M78 290h144M78 302h144M78 314h144"/>
+        <rect class="g" x="54" y="150" width="8" height="170" rx="4"/><rect class="g" x="238" y="150" width="8" height="170" rx="4"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- 08 Takeaways -->
+<section class="track l" id="takeaways" data-track="13" data-side="SIDE C" data-title="What I'm taking back to work" data-artist="For the risk committee" data-intro="Track thirteen. What I'm taking back to work.">
+  <div class="wrap">
+    <div class="txt" data-stop="m" data-lane-m="px:18">
+      <p class="tk"><span class="no">13</span><span>Side C</span><span>For the risk committee</span></p>
+      <h2>What I'm taking back to work</h2>
+      <p class="say" data-say>Six things I'd put in front of any risk committee looking at voice agents this year.</p>
+      <ol class="take">
+        <li class="say" data-say><div><b>Govern voice agents as a channel.</b><span>Hold them to the same bar as a branch or the app: disclosures, complaints handling, QA sampling and accessibility.</span></div></li>
+        <li class="say" data-say><div><b>Retire voice as a credential.</b><span>Keep voice as the interface. Verify identity with factors a clone can't copy.</span></div></li>
+        <li class="say" data-say><div><b>Start where acting has hard limits.</b><span>Pick high-volume flows with firm thresholds and a fast human handoff, then widen the scope on evidence.</span></div></li>
+        <li class="say" data-say><div><b>Demand per-turn lineage.</b><span>Transcript, model, version, action and reason, exportable for every call.</span></div></li>
+        <li class="say" data-say><div><b>Treat memory and training data as records.</b><span>Design retention, consent and deletion on day one, not after the first exam finding.</span></div></li>
+        <li class="say" data-say><div><b>Budget for the 360.</b><span>Plan for what automation pushes downstream: the hard calls, the demand spikes, and the people and reviewers behind the agent.</span></div></li>
+      </ol>
+    </div>
+    <div class="art" data-stop="dm" data-lane=".5" data-lane-m=".72" aria-hidden="true">
+      <svg class="ill" viewBox="0 0 300 210">
+        <rect class="k" x="14" y="14" width="272" height="182" rx="14"/>
+        <rect class="c" x="34" y="30" width="232" height="72" rx="4"/>
+        <text x="48" y="56" font-weight="700" font-size="10.5" letter-spacing=".8" class="k">MIX FOR THE RISK COMMITTEE</text>
+        <text x="48" y="74" font-weight="600" font-size="11" letter-spacing="1.5" class="k" opacity=".7">SIDE B · 11.11.26</text>
+        <rect class="f1" x="34" y="82" width="232" height="4"/><rect class="f2" x="34" y="86" width="232" height="4"/><rect class="f3" x="34" y="90" width="232" height="4"/><rect class="f4" x="34" y="94" width="232" height="4"/><rect class="f5" x="34" y="98" width="232" height="4"/>
+        <rect class="c" x="84" y="114" width="132" height="46" rx="23"/>
+        <circle class="k" cx="112" cy="137" r="17"/><circle class="k" cx="188" cy="137" r="17"/>
+        <circle class="c" cx="112" cy="137" r="6"/><circle class="c" cx="188" cy="137" r="6"/>
+        <path class="c2" d="M68 196l14-24h136l14 24z"/>
+        <g class="c"><circle cx="30" cy="30" r="4"/><circle cx="270" cy="30" r="4"/><circle cx="30" cy="180" r="4"/><circle cx="270" cy="180" r="4"/></g>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- Hidden track -->
+<section class="track r" id="encore" data-track="14" data-hidden data-side="SIDE D" data-title="Two voices, returned" data-artist="Impact Program · 4:00 PM" data-intro="Hidden track. Two voices, returned.">
+  <div class="wrap">
+    <div class="txt" data-stop="m" data-lane-m="px:18">
+      <p class="tk"><span class="no">∞</span><span>Side D · Hidden track</span><span>4:00 PM · Impact Program</span></p>
+      <h2>Two voices, returned</h2>
+      <p class="say" data-say>The moment that stayed with me had nothing to do with banking. In the Impact Program session, led by ElevenLabs' Gabi Leibowitz, Greg Kelner and Abdi Omar, who both lost their voices to illness, performed on stage using voices they rebuilt with ElevenLabs.</p>
+      <figure class="prints one"><button class="print" type="button" aria-label="Enlarge photo: The Impact Program session, 4:00 PM"><span class="ph"><img src="photos/impact.jpg" width="1200" height="1024" alt="Gabi Leibowitz, Greg Kelner and Abdi Omar on stage for the ElevenLabs Impact Program, with music stands and instruments set up behind them" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">The Impact Program session, 4:00 PM</span></button></figure>
+      <p class="say" data-say>ElevenLabs used the moment to widen its Impact Program: free, lifetime voice restoration for people with permanent voice loss, free ElevenMusic for songwriters through Songwriters of North America, a partnership with the Wounded Warrior Project, and a path for patients at NYU Langone's Rusk Rehabilitation.</p>
+      <p class="pull say" data-say>The same technology that makes a voice forgeable gave two people theirs back.</p>
+      <p class="say" data-say>Both things are true. That's exactly why the industries I care about need to get the controls right, so that we get to keep the good part.</p>
+    </div>
+    <div class="art end" data-stop="dm" data-lane=".5" data-lane-m=".72" data-end="-16" aria-hidden="true">
+      <svg class="ill" viewBox="0 0 300 330">
+        <path class="gl" d="M150 0L46 304H254Z"/>
+        <path class="rs" stroke-width="5" stroke-linecap="round" d="M80 92a26 26 0 0 1 18-16M72 78a42 42 0 0 1 28-26M220 92a26 26 0 0 0-18-16M228 78a42 42 0 0 0-28-26"/>
+        <rect class="k" x="96" y="94" width="26" height="50" rx="13" transform="rotate(-14 109 119)"/>
+        <rect class="k" x="178" y="94" width="26" height="50" rx="13" transform="rotate(14 191 119)"/>
+        <rect class="k" x="108" y="140" width="8" height="160"/><rect class="k" x="184" y="140" width="8" height="160"/>
+        <path class="ks" stroke-width="6" stroke-linecap="round" d="M112 298l-24 18M112 298l24 18M188 298l-24 18M188 298l24 18"/>
+        <ellipse class="k" cx="150" cy="314" rx="132" ry="16"/>
+      </svg>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- Liner notes -->
+<footer class="liner" id="liner" data-track="—" data-side="LINER" data-title="Liner notes" data-artist="Credits and sources">
+  <div class="endstripes" aria-hidden="true"><i class="f1"></i><i class="f2"></i><i class="f3"></i><i class="f4"></i><i class="f5"></i></div>
+  <div class="wrap">
+    <div>
+      <p class="kick">Liner notes</p>
+      <h2>Recorded live at David Geffen Hall</h2>
+      <p>Written by <b>Carson Boykin</b> after the ElevenLabs Summit at Lincoln Center on November 11, 2026.</p>
+      <figure class="prints two"><button class="print" type="button" aria-label="Enlarge photo: At the summit"><span class="ph"><img src="photos/crew-backdrop.jpg" width="1200" height="973" alt="Carson Boykin and a colleague in front of the ElevenLabs Summit NYC backdrop" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">At the summit</span></button><button class="print" type="button" aria-label="Enlarge photo: Between sessions"><span class="ph"><img src="photos/crew-selfie.jpg" width="1184" height="960" alt="A group selfie of six attendees in the Geffen Hall lobby, with the ElevenLabs screen behind them" loading="lazy" decoding="async"><span class="stamp" aria-hidden="true">11 11 '26</span></span><span class="pc">Between sessions</span></button></figure>
+      <p><b>From the room.</b> The venue, the live keynote demos, the partner booths (Bancolombia's included) and the scaling panel come from my own notes, and the photos come from me and the people I was with. ElevenLabs' public recaps don't describe those moments. Facts about the hall come from coverage of its 2022 reopening.</p>
+      <p><b>Billed, then absent.</b> NVIDIA's Jensen Huang withdrew from the program days before the summit. NVIDIA still announced an expanded partnership that day and sent Kari Briski to talk sovereignty at scale.</p>
+      <p><b>On the numbers.</b> Figures are as ElevenLabs and the press reported them. KPN's verification gain appears as 50% → 90% in ElevenLabs' material and as 60% → 85% in one podcast summary. Scribe v3's error reduction is 27% in ElevenLabs' own evaluation and about 25% in The Decoder. Status stickers reflect what was public on November 16, 2026.</p>
+      <p><b>On the quotes.</b> Quotes are from ElevenLabs' summit announcement and keynote coverage, and from Customers Bank's public statements about its rollout. Everything in the first person is my own read.</p>
+      <p><b>On the narration.</b> Press play to hear the whole album read aloud, recorded with ElevenLabs' Eleven v4 model in the voice "Chris." Fitting, for a recap of a company betting that voice is the interface.</p>
+    </div>
+    <div class="srcs">
+      <div><h3>ElevenLabs</h3><ul>
+        <li><a href="https://elevenlabs.io/blog/nyc-summit" target="_blank" rel="noopener">Summit NYC: The Interaction Layer for AI</a></li>
+        <li><a href="https://elevenlabs.io/blog/enterprise-nyc-summit" target="_blank" rel="noopener">How Yahoo, Westgate and KPN use ElevenLabs voice agents</a></li>
+        <li><a href="https://elevenlabs.io/blog/impact-nyc-summit" target="_blank" rel="noopener">Free voice restoration for veterans and artists</a></li>
+        <li><a href="https://elevenlabs.io/blog/nvidia" target="_blank" rel="noopener">ElevenLabs and NVIDIA expand voice agents for enterprise</a></li>
+        <li><a href="https://elevenlabs.io/blog/customers-bank-partnership" target="_blank" rel="noopener">AI agents for banking: Customers Bank</a></li>
+        <li><a href="https://elevenlabs.io/summit/new-york" target="_blank" rel="noopener">Summit agenda</a></li>
+      </ul></div>
+      <div><h3>Press</h3><ul>
+        <li><a href="https://techcrunch.com/2026/11/13/elevenlabs-new-app-combines-meeting-note-taking-and-dictation-for-teams/" target="_blank" rel="noopener">TechCrunch on ElevenAI</a> · <a href="https://www.digitaltrends.com/computing/elevenlabs-is-coming-for-your-meeting-notes-dictation-app-and-maybe-your-productivity-routine/" target="_blank" rel="noopener">Digital Trends</a></li>
+        <li><a href="https://thenextweb.com/news/elevenlabs-summit-nyc-elevenai-custom-models-partner-program" target="_blank" rel="noopener">The Next Web</a> · <a href="https://www.unite.ai/elevenlabs-unveils-model-customization-elevenai-and-partner-program/" target="_blank" rel="noopener">Unite.AI</a> · <a href="https://mumbrella.com.au/elevenlabs-launches-13-new-products-and-upgrades-944467" target="_blank" rel="noopener">Mumbrella</a></li>
+        <li><a href="https://www.cxodigitalpulse.com/elevenlabs-builds-out-the-interaction-layer-for-ai-with-major-new-model-and-agent-upgrades/" target="_blank" rel="noopener">CXO Digitalpulse (keynote quotes)</a></li>
+        <li><a href="https://the-decoder.com/elevenlabs-scribe-v3-live-uses-conversational-context-to-stop-voice-agents-from-cutting-off-callers-mid-sentence/" target="_blank" rel="noopener">The Decoder on Scribe v3 Live</a></li>
+        <li><a href="https://www.techzine.eu/blogs/applications/144778/elevenlabs-wants-to-claim-the-interaction-layer/" target="_blank" rel="noopener">Techzine: ElevenLabs wants to claim the interaction layer</a></li>
+        <li><a href="https://sifted.eu/articles/jensen-huang-pulls-out-of-elevenlabs-summit-amid-controversy/" target="_blank" rel="noopener">Sifted on Jensen Huang's withdrawal</a></li>
+        <li><a href="https://openai.com/index/model-disproves-discrete-geometry-conjecture/" target="_blank" rel="noopener">OpenAI on disproving the unit distance conjecture</a> · <a href="https://www.scientificamerican.com/article/ai-just-solved-an-80-year-old-erdos-problem-and-mathematicians-are-amazed/" target="_blank" rel="noopener">Scientific American</a></li>
+        <li><a href="https://dev.to/paullovelace/elevenlabs-is-now-infrastructure-custom-models-elevenai-partners-3c04" target="_blank" rel="noopener">DEV Community: ElevenLabs is now infrastructure</a></li>
+      </ul></div>
+      <div><h3>The hall</h3><ul>
+        <li><a href="https://www.cbsnews.com/newyork/news/david-geffen-hall-lincoln-center-reopens-550-million-renovation-new-york-philharmonic/" target="_blank" rel="noopener">CBS News on the $550 million reopening</a></li>
+        <li><a href="https://www.dezeen.com/2022/11/01/new-york-philharmonics-david-geffen-hall-renovation/" target="_blank" rel="noopener">Dezeen on the renovation and its sound-wave panels</a></li>
+      </ul></div>
+      <div><h3>From the room</h3><ul>
+        <li><a href="https://x.com/michuk/status/2120539838998814793" target="_blank" rel="noopener">Borys Musielak on the opening keynote</a></li>
+        <li><a href="https://x.com/ElevenLabs/status/2113616436170240103" target="_blank" rel="noopener">ElevenLabs on the finance panel lineup</a></li>
+      </ul></div>
+    </div>
+  </div>
+</footer>
+
+<dialog class="lbox" id="lbox" aria-label="Photo"><button class="x" id="lbox-x" type="button">Close</button><img id="lbox-img" alt=""><p id="lbox-cap"></p></dialog>
+
+<script>
+(function(){
+  "use strict";
+  var $ = function(s, r){ return (r || document).querySelector(s); };
+  var $$ = function(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var mobileMQ = window.matchMedia("(max-width: 759px)");
+  var pad = function(n){ return (n < 10 ? "0" : "") + n; };
+
+  /* ───────────── Signal ribbon ───────────── */
+  var album = $("#album"), svg = $("#ribbon");
+  var NS = "http://www.w3.org/2000/svg";
+  var paths = [], route = [], cum = [], total = 0, raf = 0;
+
+  function readStops(){
+    var mobile = mobileMQ.matches, base = album.getBoundingClientRect(), out = [];
+    $$("[data-stop]").forEach(function(el){
+      var mode = el.getAttribute("data-stop");
+      if (mobile ? mode.indexOf("m") < 0 : mode.indexOf("d") < 0) return;
+      var r = el.getBoundingClientRect();
+      if (r.height < 2 || r.width < 2) return;
+      var lane = (mobile ? el.getAttribute("data-lane-m") : null) || el.getAttribute("data-lane") || ".5";
+      var end = mobile ? 0 : parseFloat(el.getAttribute("data-end") || "0");
+      out.push({ el: el, lane: lane, left: r.left - base.left, width: r.width, top: r.top - base.top, bottom: r.bottom - base.top + end });
+    });
+    out.sort(function(a, b){ return a.top - b.top; });
+    var prevX = null;
+    out.forEach(function(s){
+      if (s.lane === "prev" && prevX !== null) s.x = prevX;
+      else if (s.lane.indexOf("px:") === 0) s.x = s.left + parseFloat(s.lane.slice(3));
+      else s.x = s.left + s.width * (parseFloat(s.lane) || .5);
+      prevX = s.x;
+    });
+    return out;
+  }
+
+  function offsetPath(pts, d, rc){
+    var n = pts.length, U = [], N = [], i;
+    for (i = 0; i < n - 1; i++){
+      var dx = pts[i+1][0] - pts[i][0], dy = pts[i+1][1] - pts[i][1], L = Math.hypot(dx, dy) || 1;
+      var u = [dx / L, dy / L]; U.push(u); N.push([-u[1], u[0]]);
+    }
+    var f = function(v){ return v.toFixed(1); };
+    var s = "M" + f(pts[0][0] + d * N[0][0]) + " " + f(pts[0][1] + d * N[0][1]);
+    for (i = 1; i < n - 1; i++){
+      var ua = U[i-1], ub = U[i], na = N[i-1], nb = N[i];
+      var cx = pts[i][0] + d * (na[0] + nb[0]), cy = pts[i][1] + d * (na[1] + nb[1]);
+      var r = Math.max(0.5, rc[i] - d * (na[0] * ub[0] + na[1] * ub[1]));
+      var cross = ua[0] * ub[1] - ua[1] * ub[0];
+      s += " L" + f(cx - ua[0] * r) + " " + f(cy - ua[1] * r) + " A" + f(r) + " " + f(r) + " 0 0 " + (cross > 0 ? 1 : 0) + " " + f(cx + ub[0] * r) + " " + f(cy + ub[1] * r);
+    }
+    var e = pts[n-1], ne = N[n-2];
+    s += " L" + f(e[0] + d * ne[0]) + " " + f(e[1] + d * ne[1]);
+    return s;
+  }
+
+  function buildRibbon(){
+    var mobile = mobileMQ.matches;
+    var S = readStops();
+    while (svg.firstChild) svg.removeChild(svg.firstChild);
+    paths = []; route = []; cum = []; total = 0;
+    if (S.length < 2) return;
+    var R = mobile ? 34 : 64, pitch = mobile ? 7 : 12, w = mobile ? 5 : 9;
+    var pts = [[S[0].x, (!mobile && S[0].el.hasAttribute("data-from-top")) ? 0 : S[0].top]];
+    for (var i = 0; i < S.length - 1; i++){
+      var a = S[i], b = S[i+1];
+      if (Math.abs(a.x - b.x) < 2){ b.x = a.x; continue; }
+      var ym = (a.bottom + b.top) / 2;
+      pts.push([a.x, ym]); pts.push([b.x, ym]);
+    }
+    var last = S[S.length - 1];
+    pts.push([last.x, last.bottom]);
+    // drop zero-length segments
+    var clean = [pts[0]];
+    for (i = 1; i < pts.length; i++){
+      var p = clean[clean.length - 1];
+      if (Math.hypot(pts[i][0] - p[0], pts[i][1] - p[1]) > 0.5) clean.push(pts[i]);
+    }
+    pts = clean;
+    if (pts.length < 2) return;
+    var segL = [];
+    for (i = 0; i < pts.length - 1; i++) segL.push(Math.hypot(pts[i+1][0] - pts[i][0], pts[i+1][1] - pts[i][1]));
+    var rc = [0];
+    for (i = 1; i < pts.length - 1; i++){
+      var before = segL[i-1] * (i - 1 === 0 ? 1 : .5), after = segL[i] * (i === pts.length - 2 ? 1 : .5);
+      rc.push(Math.min(R, before, after));
+    }
+    route = pts; cum = [0];
+    for (i = 0; i < segL.length; i++) cum.push(cum[i] + segL[i]);
+    total = cum[cum.length - 1];
+    for (var k = 0; k < 5; k++){
+      var el = document.createElementNS(NS, "path");
+      el.setAttribute("d", offsetPath(pts, (k - 2) * pitch, rc));
+      el.setAttribute("stroke", "var(--s" + (k + 1) + ")");
+      el.style.stroke = "var(--s" + (k + 1) + ")";
+      el.setAttribute("stroke-width", w);
+      el.setAttribute("pathLength", "1000");
+      el.setAttribute("stroke-dasharray", "1000 1000");
+      svg.appendChild(el); paths.push(el);
+    }
+    drawRibbon();
+  }
+
+  function lengthAtY(y){
+    if (!route.length) return 0;
+    for (var i = 0; i < route.length - 1; i++){
+      var a = route[i], b = route[i+1];
+      if (a[1] === b[1]){ if (y < a[1]) return cum[i]; continue; }
+      var lo = Math.min(a[1], b[1]), hi = Math.max(a[1], b[1]);
+      if (y <= hi) return cum[i] + Math.max(0, y - lo);
+    }
+    return total;
+  }
+
+  function drawRibbon(){
+    raf = 0;
+    if (!total) return;
+    var f = 1;
+    if (!reduce.matches){
+      var top = album.getBoundingClientRect().top;
+      f = Math.min(1, lengthAtY(window.innerHeight * 0.8 - top) / total);
+    }
+    var off = (1000 * (1 - f)).toFixed(1);
+    for (var i = 0; i < paths.length; i++) paths[i].setAttribute("stroke-dashoffset", off);
+  }
+  var rebuildTimer = 0;
+  function scheduleBuild(){ clearTimeout(rebuildTimer); rebuildTimer = setTimeout(buildRibbon, 60); }
+
+  /* ───────────── Now Playing (scroll) ───────────── */
+  var tracks = $$("[data-track]");
+  tracks.forEach(function(t){ $$("[data-say]", t).forEach(function(el, j){ if (!el.id) el.id = t.id + "-" + (j + 1); }); });
+  var words = function(el){ return (el.textContent || "").trim().split(/\s+/).length; };
+  tracks.forEach(function(t){
+    var n = 0;
+    $$("[data-say]", t).forEach(function(s){ n += words(s); });
+    t._dur = Math.max(20, Math.round(n / 165 * 60));
+  });
+  var runtime = tracks.reduce(function(s, t){ return t.id === "liner" ? s : s + t._dur; }, 0);
+  $("#runtime").textContent = "Run time ≈ " + Math.round(runtime / 60) + " min";
+  var fmt = function(s){ s = Math.max(0, Math.round(s)); return Math.floor(s / 60) + ":" + pad(s % 60); };
+  var npT = $("#np-t"), npA = $("#np-a"), npE = $("#np-e"), npR = $("#np-r"), npF = $("#np-f"), npH = $("#np-h"), npS = $("#np-s");
+  var curTrack = 0, lockTrack = -1;
+
+  function currentByScroll(){
+    var line = window.innerHeight * 0.38, idx = 0;
+    for (var i = 0; i < tracks.length; i++){ if (tracks[i].getBoundingClientRect().top <= line) idx = i; }
+    return idx;
+  }
+  function paintLCD(){
+    var idx = lockTrack >= 0 ? lockTrack : currentByScroll();
+    curTrack = idx;
+    var t = tracks[idx], r = t.getBoundingClientRect();
+    var p = Math.min(1, Math.max(0, (window.innerHeight * 0.38 - r.top) / Math.max(1, r.height)));
+    var label = t.hasAttribute("data-hidden") ? "∞" : t.getAttribute("data-track");
+    npT.textContent = label + " · " + t.getAttribute("data-title");
+    npA.textContent = t.getAttribute("data-artist");
+    npS.textContent = t.getAttribute("data-side");
+    npE.textContent = fmt(p * t._dur);
+    npR.textContent = "-" + fmt((1 - p) * t._dur);
+    npF.style.width = (p * 100).toFixed(1) + "%";
+    npH.style.left = (p * 100).toFixed(1) + "%";
+  }
+  function onScroll(){
+    if (!raf) raf = requestAnimationFrame(function(){ drawRibbon(); paintLCD(); });
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", function(){ scheduleBuild(); onScroll(); });
+  if (window.ResizeObserver) new ResizeObserver(scheduleBuild).observe(album);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(scheduleBuild);
+  if (mobileMQ.addEventListener) mobileMQ.addEventListener("change", scheduleBuild);
+  window.addEventListener("load", scheduleBuild);
+
+  function goTrack(i){
+    i = Math.max(0, Math.min(tracks.length - 1, i));
+    tracks[i].scrollIntoView({ behavior: reduce.matches ? "auto" : "smooth", block: "start" });
+  }
+  $("#prev").addEventListener("click", function(){
+    var r = tracks[curTrack].getBoundingClientRect();
+    goTrack(r.top < -40 ? curTrack : curTrack - 1);
+  });
+  $("#next").addEventListener("click", function(){ goTrack(curTrack + 1); });
+
+  /* ───────────── Read aloud ───────────── */
+  var tts = null, ttsReady = false, ss = ("speechSynthesis" in window) ? window.speechSynthesis : null;
+  var state = "idle", ssQueue = null, speakingEl = null, engine = null;
+  var narr = null, au = new Audio(), auPre = new Audio(), auQueue = null;
+  au.preload = "auto"; auPre.preload = "auto";
+  var playBtn = $("#play"), stopBtn = $("#stop"), playIcon = $("#playicon"), bigLabel = $("#playbig-l"), np = $(".np");
+  var ICON_PLAY = '<path d="M4 2.5v11l9.5-5.5z"/>', ICON_PAUSE = '<path d="M3.5 2.5h3.2v11H3.5zM9.3 2.5h3.2v11H9.3z"/>';
+
+  function setState(s){
+    state = s;
+    var active = s !== "idle";
+    playIcon.innerHTML = s === "speaking" || s === "starting" ? ICON_PAUSE : ICON_PLAY;
+    playBtn.setAttribute("aria-label", s === "speaking" || s === "starting" ? "Pause reading" : (s === "paused" ? "Resume reading" : "Read aloud from this track"));
+    stopBtn.hidden = !active;
+    np.classList.toggle("reading", s === "speaking" || s === "starting");
+    bigLabel.textContent = s === "idle" ? "Play the album" : (s === "paused" ? "Resume" : "Pause");
+    if (!active){ engine = null; highlight(null); lockTrack = -1; paintLCD(); }
+  }
+  function highlight(el){
+    if (speakingEl) speakingEl.classList.remove("speaking");
+    speakingEl = el;
+    if (!el) return;
+    el.classList.add("speaking");
+    var host = el.closest("[data-track]");
+    if (host){ lockTrack = tracks.indexOf(host); }
+    var r = el.getBoundingClientRect();
+    if (r.top < 90 || r.bottom > window.innerHeight - 40) el.scrollIntoView({ behavior: reduce.matches ? "auto" : "smooth", block: "center" });
+    paintLCD();
+  }
+  function buildLines(from){
+    var lines = [], n = 0;
+    for (var i = from; i < tracks.length; i++){
+      var t = tracks[i];
+      if (t.id === "liner") break;
+      var intro = t.getAttribute("data-intro");
+      var says = $$("[data-say]", t);
+      if (intro){ lines.push({ text: intro, id: t.id + "-0", el: says[0] || null, voice: "buttery" }); }
+      says.forEach(function(el){
+        var text = (el.getAttribute("data-text") || el.textContent).replace(/\s+/g, " ").trim();
+        if (text) lines.push({ text: text.slice(0, 1900), id: el.id, el: el, voice: el.getAttribute("data-voice") || "buttery" });
+      });
+    }
+    return lines.slice(0, 100);
+  }
+  var lineMap = {};
+  function startReading(){
+    var from = curTrack;
+    var r = tracks[from].getBoundingClientRect();
+    if (r.bottom < window.innerHeight * 0.3 && from < tracks.length - 1) from++;
+    var lines = buildLines(from);
+    if (!lines.length) return;
+    lineMap = {}; lines.forEach(function(l){ lineMap[l.id] = l; });
+    if (narr){
+      auQueue = lines.filter(function(l){ return narr.lines[l.id]; });
+      engine = "audio";
+      auNext();
+      return;
+    }
+    if (tts){
+      setState("starting");
+      engine = "tts";
+      tts.speak(lines.map(function(l){ return { text: l.text, voice: l.voice, id: l.id, language: "en" }; }), { language: "en" }).catch(function(e){
+        if (e && (e.code === "not_granted" || e.code === "unavailable")){ playBtn.hidden = true; $("#playbig").hidden = true; }
+        setState("idle");
+      });
+    } else if (ss){
+      ss.cancel();
+      ssQueue = lines.slice();
+      setState("speaking");
+      engine = "ss";
+      ssNext();
+    }
+  }
+  function auSrc(l){ return "audio/" + narr.lines[l.id].file + (narr.v ? "?v=" + narr.v : ""); }
+  function auNext(){
+    if (!auQueue || !auQueue.length){ auQueue = null; setState("idle"); return; }
+    var l = auQueue.shift();
+    au.src = auSrc(l);
+    if (auQueue.length) auPre.src = auSrc(auQueue[0]);
+    var pr = au.play();
+    setState("speaking"); highlight(l.el);
+    if (pr && pr.catch) pr.catch(function(e){ if (e && e.name === "AbortError") return; auQueue = null; setState("idle"); });
+  }
+  au.addEventListener("ended", function(){ if (auQueue) auNext(); });
+  au.addEventListener("error", function(){ if (auQueue) auNext(); });
+  function ssNext(){
+    if (!ssQueue || !ssQueue.length){ ssQueue = null; setState("idle"); return; }
+    var l = ssQueue.shift();
+    var u = new SpeechSynthesisUtterance(l.text);
+    u.lang = "en-US"; u.rate = 1.02; u.pitch = l.voice === "airy" ? 1.15 : 1;
+    u.onstart = function(){ highlight(l.el); };
+    u.onend = function(){ if (ssQueue) ssNext(); };
+    u.onerror = function(){ ssQueue = null; setState("idle"); };
+    ss.speak(u);
+  }
+  function togglePlay(){
+    if (state === "idle"){ startReading(); return; }
+    if (engine === "audio"){
+      if (state === "paused"){ var pr = au.play(); if (pr && pr.catch) pr.catch(function(){}); setState("speaking"); }
+      else { au.pause(); setState("paused"); }
+      return;
+    }
+    if (engine === "tts"){
+      if (state === "paused") tts.resume().catch(function(){});
+      else tts.pause().catch(function(){});
+    } else if (engine === "ss"){
+      if (state === "paused"){ ss.resume(); setState("speaking"); }
+      else { ss.pause(); setState("paused"); }
+    }
+  }
+  function stopReading(){
+    if (engine === "audio"){ auQueue = null; au.pause(); setState("idle"); return; }
+    if (engine === "tts") tts.stop().catch(function(){});
+    else if (engine === "ss"){ ssQueue = null; ss.cancel(); setState("idle"); }
+  }
+  playBtn.addEventListener("click", togglePlay);
+  $("#playbig").addEventListener("click", togglePlay);
+  stopBtn.addEventListener("click", stopReading);
+  document.addEventListener("keydown", function(e){ if (e.key === "Escape" && (engine === "ss" || engine === "audio")) stopReading(); });
+  if (!ss){ playBtn.hidden = true; $("#playbig").hidden = true; }
+
+  if (window.fetch){
+    fetch("audio/manifest.json", { cache: "no-cache" }).then(function(r){ return r.ok ? r.json() : null; }).then(function(m){
+      if (!m || !m.lines || !Object.keys(m.lines).length) return;
+      narr = m; playBtn.hidden = false; $("#playbig").hidden = false;
+      var tot = 0;
+      tracks.forEach(function(t){
+        var sec = 0;
+        Object.keys(m.lines).forEach(function(k){ if (k.lastIndexOf(t.id + "-", 0) === 0) sec += m.lines[k].sec || 0; });
+        if (sec) t._dur = Math.round(sec);
+        if (t.id !== "liner") tot += t._dur;
+      });
+      $("#runtime").textContent = "Run time " + fmt(tot);
+      paintLCD();
+    }).catch(function(){});
+  }
+  if (window.claude && typeof window.claude.use === "function"){
+    window.claude.use("tts").then(function(t){
+      if (!t) return;
+      tts = t; ttsReady = true;
+      playBtn.hidden = false; $("#playbig").hidden = false;
+      t.onState(function(e){
+        if (engine === "ss" || engine === "audio") return;
+        if (e.state !== "idle") engine = "tts";
+        setState(e.state);
+        if (e.state === "idle" && (e.reason === "not_granted" || e.reason === "unavailable")){ playBtn.hidden = true; $("#playbig").hidden = true; }
+      });
+      t.onLine(function(e){ var l = e.id && lineMap[e.id]; if (l) highlight(l.el); });
+    }).catch(function(){});
+  }
+
+  /* ───────────── The Drop: covers ───────────── */
+  var STICK = {
+    "Live": { bg: "#2fd36b", fg: "#06240f", l: ["LIVE", "NOW"], cls: "live" },
+    "Early access": { bg: "#ffd23f", fg: "#2a1f00", l: ["EARLY", "ACCESS"], cls: "ea" },
+    "Preview": { bg: "#2cc8e6", fg: "#052129", l: ["PRE-", "VIEW"], cls: "pre" },
+    "Roadmap": { bg: "#ffffff", fg: "#121530", l: ["ROAD", "MAP"], cls: "road", dash: true },
+    "Signed": { bg: "#ff6fae", fg: "#2a0c1a", l: ["SIGNED"], cls: "sign" }
+  };
+  var COVERS = [
+    { key: "realtime", t: "Eleven Realtime", lines: ["Eleven", "Realtime"], status: "Live", bg: "#ff5a3c", fg: "#160f2a", ac: "#ffffff", m: "s2s",
+      short: "Speech in, speech out. A new model family built for fast voice agents.",
+      facts: "A new family of speech-to-speech models for voice agents, built for speed: about 570 ms to first audio, per its launch listing.",
+      read: "Speech-to-speech skips the text step compliance teams review. Make sure a full transcript still exists for every call." },
+    { key: "scribe", t: "Scribe v3", lines: ["Scribe v3"], status: "Live", bg: "#ffd23f", fg: "#121530", ac: "#3a55ff", m: "scribe",
+      short: "Speech-to-text with fewer errors, live speaker labels and a medical edition.",
+      facts: "About 27% fewer word errors than v2 across 102 languages, per ElevenLabs. Scribe v3 Live labels speakers in real time and predicts turns, so agents stop cutting people off. A Medical edition handles clinical vocabulary.",
+      read: "Transcription accuracy is a compliance control. A misheard account number is a complaint waiting to happen." },
+    { key: "v4", t: "Eleven v4", lines: ["Eleven v4"], status: "Live", bg: "#6a3cff", fg: "#ffffff", ac: "#ffd23f", m: "waves",
+      short: "The most emotive text-to-speech model ElevenLabs has shipped.",
+      facts: "ElevenLabs' most emotive text-to-speech model, released in late September and on show throughout the summit.",
+      read: "More human voices are great for the experience. They also make clear, early disclosure that the caller is talking to an AI non-negotiable." },
+    { key: "engine", t: "Interaction Engine", lines: ["Interaction", "Engine"], fs: 27, status: "Preview", bg: "#121530", fg: "#ffffff", ac: "#2cc8e6", m: "router",
+      short: "The conductor: turn-taking, interruptions, and which model speaks when.",
+      facts: "Runs the conversation under the hood: turn-taking, interruptions, and choosing which model handles each step. Simple tasks go to cheaper models, hard ones to frontier models.",
+      read: "The one I'd watch most closely. Great economics, and it means one call can be answered by several models. Ask for per-turn model lineage before you ask for a demo." },
+    { key: "elevenai", t: "ElevenAI", lines: ["ElevenAI"], status: "Early access", bg: "#f4efe6", fg: "#121530", ac: "#ff5a3c", m: "checklist",
+      short: "Meeting notes, dictation and follow-ups in one work app.",
+      facts: "A work app that records meetings, in person too, tells attendees they're being recorded, and writes notes and action items. Dictation in 90+ languages into any app. Agents can take the follow-ups, like drafting the email. Built on Scribe v3.",
+      read: "In a broker-dealer, a meeting recorder is a recordkeeping system. Decide what counts as a business record before someone installs it." },
+    { key: "memory", t: "Memory", lines: ["Memory"], status: "Roadmap", bg: "#19b3c9", fg: "#0b1d26", ac: "#ffffff", m: "cards",
+      short: "Agents that recognize returning customers and keep structured notes.",
+      facts: "ElevenAgents will recognize returning customers and turn each conversation into structured notes. The CRM stays the system of record. No launch date yet.",
+      read: "Records management with a friendlier name. Retention schedules, deletion requests and consent have to be designed in, and keeping the CRM as the source of truth makes that easier." },
+    { key: "routines", t: "Routines", lines: ["Routines"], status: "Roadmap", bg: "#b8e04a", fg: "#13210a", ac: "#ffffff", m: "loop",
+      short: "Multi-step work before, during and after a call.",
+      facts: "Multi-step automations before, during and after a call, connected to business systems. No launch date yet.",
+      read: "This is where answering becomes acting. Every routine needs an owner, a scoped entitlement and a log a second-line reviewer can read." },
+    { key: "custom", t: "Custom Models", lines: ["Custom", "Models"], status: "Roadmap", bg: "#ff6fae", fg: "#1a0e1f", ac: "#ffffff", m: "dial",
+      short: "Fine-tune voices and open models on your own conversations.",
+      facts: "Fine-tune selected open-source LLMs and ElevenLabs voice models on your own deployment data, working directly with ElevenLabs researchers. Selected enterprises first, in the coming months.",
+      read: "The biggest unlock for banks and the heaviest lift for model risk. Settle consent for training on customer calls before anything else." },
+    { key: "partners", t: "Partners + Marketplace", lines: ["Partners +", "Marketplace"], fs: 26, status: "Live", bg: "#2f46e8", fg: "#ffffff", ac: "#ffd23f", m: "grid",
+      short: "550+ partners in 44 countries, plus a marketplace of industry apps.",
+      facts: "A partner program with 550+ organizations in 44 countries, and a Marketplace of partner-built industry apps. Buying through the Marketplace is planned for next year.",
+      read: "Third-party risk just gained a fourth party. Know who built the app your agent runs, and who supports it at 2 a.m." },
+    { key: "nvidia", t: "NVIDIA Expansion", lines: ["NVIDIA", "Expansion"], fs: 28, status: "Live", bg: "#0d0f14", fg: "#e9ecf8", ac: "#2cc8e6", m: "chip",
+      short: "A new model inside ElevenAgents, and a push into sovereign, on-prem deployments.",
+      facts: "Nemotron 3.5 Super VL is live inside ElevenAgents. ElevenLabs is also adding NVIDIA capacity aimed at large deployments with strict security and data-residency needs, including an on-prem agent for Poland's national e-Health platform. On stage, NVIDIA's Kari Briski and ElevenLabs' Alex Holt covered models, infrastructure and sovereignty at scale.",
+      read: "Capacity built for data residency tells you who they're selling to next: regulated, sovereign and on-prem buyers. The NVIDIA session title said it outright: sovereignty at scale." },
+    { key: "mckinsey", t: "McKinsey Alliance", lines: ["McKinsey", "Alliance"], fs: 28, status: "Signed", bg: "#ff9f1c", fg: "#1b1206", ac: "#ffffff", m: "rings",
+      short: "Agents plus a transformation practice, sold together.",
+      facts: "An alliance pairing ElevenAgents with McKinsey's transformation practice and QuantumBlack, AI by McKinsey.",
+      read: "A sign the buyer is moving from the innovation lab to the operating committee. That's when governance stops being optional." },
+    { key: "impact", t: "Impact Program", lines: ["Impact", "Program"], status: "Live", bg: "#c81d3a", fg: "#ffffff", ac: "#ffd23f", m: "mic",
+      short: "Free voice restoration, now with veterans, songwriters and NYU Langone.",
+      facts: "Free, lifetime voice restoration for people with permanent voice loss. New at the summit: the Wounded Warrior Project, free ElevenMusic for songwriters through SONA, and NYU Langone's Rusk Rehabilitation.",
+      read: "The best argument for this technology, and the best argument for strong consent and verification around it." }
+  ];
+
+  function sinePath(amp, phase, cyc){
+    var d = "", x;
+    for (x = 20; x <= 280; x += 5){
+      var y = 136 + amp * Math.sin(((x - 20) / 260) * Math.PI * 2 * cyc + phase);
+      d += (x === 20 ? "M" : "L") + x + " " + y.toFixed(1);
+    }
+    return d;
+  }
+  var MOTIF = {
+    s2s: function(c){
+      var bars = "", h = [10, 22, 34, 18, 28];
+      for (var i = 0; i < 5; i++) bars += '<rect x="' + (52 + i * 16) + '" y="' + (104 - h[i] / 2) + '" width="7" height="' + h[i] + '" rx="3.5" fill="' + c.bg + '"/>';
+      return '<rect x="24" y="72" width="140" height="64" rx="32" fill="' + c.fg + '"/><path d="M56 132l-14 28 36-24z" fill="' + c.fg + '"/>' + bars +
+        '<rect x="136" y="126" width="140" height="64" rx="32" fill="' + c.ac + '"/><path d="M244 186l14 24-34-18z" fill="' + c.ac + '"/>' +
+        '<path d="M156 84l-26 50h22l-14 42 42-58h-22l16-34z" fill="' + c.ac + '" stroke="' + c.fg + '" stroke-width="4" stroke-linejoin="round"/>';
+    },
+    scribe: function(c){
+      var s = "", h = [18, 40, 66, 92, 70, 46, 82, 30, 54, 22];
+      for (var i = 0; i < 10; i++) s += '<rect x="' + (26 + i * 12) + '" y="' + (132 - h[i] / 2) + '" width="7" height="' + h[i] + '" rx="3.5" fill="' + c.fg + '"/>';
+      s += '<rect x="152" y="84" width="5" height="96" fill="' + c.ac + '"/>';
+      var w = [104, 84, 98, 60];
+      for (i = 0; i < 4; i++) s += '<rect x="168" y="' + (94 + i * 22) + '" width="' + w[i] + '" height="10" rx="5" fill="' + c.fg + '"/>';
+      return s;
+    },
+    waves: function(c){
+      return '<path d="' + sinePath(48, 0, 1.5) + '" stroke="' + c.ac + '" stroke-width="9" fill="none" stroke-linecap="round"/>' +
+        '<path d="' + sinePath(30, 1.3, 2) + '" stroke="' + c.fg + '" stroke-width="6" fill="none" stroke-linecap="round"/>' +
+        '<path d="' + sinePath(14, 2.6, 3) + '" stroke="' + c.fg + '" stroke-width="4" fill="none" stroke-linecap="round" opacity=".6"/>';
+    },
+    router: function(c){
+      return '<path d="M24 140H104" stroke="' + c.fg + '" stroke-width="12" stroke-linecap="round"/>' +
+        '<path d="M126 140C176 140 184 96 262 96" stroke="' + c.fg + '" stroke-width="4" fill="none"/>' +
+        '<path d="M126 140H262" stroke="' + c.fg + '" stroke-width="7" fill="none"/>' +
+        '<path d="M126 140C176 140 184 186 262 186" stroke="' + c.ac + '" stroke-width="12" fill="none"/>' +
+        '<circle cx="114" cy="140" r="18" fill="' + c.ac + '"/><circle cx="114" cy="140" r="7" fill="' + c.bg + '"/>' +
+        '<circle cx="266" cy="96" r="7" fill="' + c.fg + '"/><circle cx="266" cy="140" r="8" fill="' + c.fg + '"/><circle cx="266" cy="186" r="10" fill="' + c.ac + '"/>';
+    },
+    checklist: function(c){
+      var s = "", i;
+      for (i = 0; i < 5; i++) s += '<circle cx="' + (40 + i * 28) + '" cy="82" r="12" fill="' + (i % 2 ? c.ac : c.fg) + '"/>';
+      var w = [170, 132, 152];
+      for (i = 0; i < 3; i++){
+        var y = 118 + i * 30, done = i < 2;
+        s += '<rect x="26" y="' + y + '" width="20" height="20" rx="4" fill="' + (done ? c.fg : "none") + '" stroke="' + c.fg + '" stroke-width="3"/>';
+        if (done) s += '<path d="M30 ' + (y + 10) + 'l5 5 8-10" stroke="' + c.bg + '" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/>';
+        s += '<rect x="58" y="' + (y + 6) + '" width="' + w[i] + '" height="8" rx="4" fill="' + (i === 2 ? c.ac : c.fg) + '"/>';
+      }
+      return s;
+    },
+    cards: function(c){
+      var s = "";
+      for (var i = 0; i < 4; i++){
+        var x = 30 + i * 16, y = 66 + i * 14;
+        s += '<rect x="' + x + '" y="' + y + '" width="150" height="96" rx="10" fill="' + (i % 2 ? c.ac : c.fg) + '" stroke="' + c.bg + '" stroke-width="3"/>';
+      }
+      s += '<rect x="94" y="122" width="96" height="7" rx="3.5" fill="' + c.bg + '"/><rect x="94" y="138" width="70" height="7" rx="3.5" fill="' + c.bg + '"/><rect x="94" y="154" width="84" height="7" rx="3.5" fill="' + c.bg + '"/>';
+      return s;
+    },
+    loop: function(c){
+      return '<rect x="34" y="82" width="208" height="112" rx="56" fill="none" stroke="' + c.fg + '" stroke-width="10"/>' +
+        '<path d="M150 182l-18 12 18 12z" fill="' + c.fg + '"/>' +
+        '<circle cx="34" cy="138" r="14" fill="' + c.ac + '" stroke="' + c.fg + '" stroke-width="5"/>' +
+        '<circle cx="138" cy="82" r="14" fill="' + c.ac + '" stroke="' + c.fg + '" stroke-width="5"/>' +
+        '<circle cx="242" cy="138" r="14" fill="' + c.ac + '" stroke="' + c.fg + '" stroke-width="5"/>';
+    },
+    dial: function(c){
+      var s = "", i, cx = 120, cy = 132;
+      for (i = 0; i <= 20; i++){
+        var a = (135 + i * 13.5) * Math.PI / 180, r1 = 74, r2 = i % 5 === 0 ? 92 : 86;
+        s += '<line x1="' + (cx + r1 * Math.cos(a)).toFixed(1) + '" y1="' + (cy + r1 * Math.sin(a)).toFixed(1) + '" x2="' + (cx + r2 * Math.cos(a)).toFixed(1) + '" y2="' + (cy + r2 * Math.sin(a)).toFixed(1) + '" stroke="' + (i < 15 ? c.fg : c.ac) + '" stroke-width="3.5" stroke-linecap="round"/>';
+      }
+      var ia = (135 + 14 * 13.5) * Math.PI / 180;
+      s += '<circle cx="' + cx + '" cy="' + cy + '" r="60" fill="' + c.fg + '"/>';
+      s += '<line x1="' + cx + '" y1="' + cy + '" x2="' + (cx + 46 * Math.cos(ia)).toFixed(1) + '" y2="' + (cy + 46 * Math.sin(ia)).toFixed(1) + '" stroke="' + c.ac + '" stroke-width="9" stroke-linecap="round"/>';
+      return s;
+    },
+    grid: function(c){
+      var s = "";
+      for (var row = 0; row < 4; row++) for (var col = 0; col < 11; col++){
+        var on = (col * 7 + row * 3) % 5 < 3;
+        s += '<circle cx="' + (30 + col * 22) + '" cy="' + (92 + row * 26) + '" r="7" fill="' + (on ? (col === 5 && row === 1 ? c.ac : c.fg) : "none") + '" stroke="' + c.fg + '" stroke-width="2"/>';
+      }
+      return s;
+    },
+    chip: function(c){
+      var s = '<rect x="86" y="70" width="128" height="124" rx="12" fill="' + c.fg + '"/>';
+      for (var i = 0; i < 6; i++){
+        s += '<rect x="70" y="' + (80 + i * 19) + '" width="16" height="8" rx="2" fill="' + c.fg + '"/>';
+        s += '<rect x="214" y="' + (80 + i * 19) + '" width="16" height="8" rx="2" fill="' + c.fg + '"/>';
+        s += '<rect x="' + (96 + i * 19) + '" y="194" width="8" height="16" rx="2" fill="' + c.fg + '"/>';
+      }
+      s += '<text x="150" y="140" text-anchor="middle" font-family="Unbounded, Arial Black, sans-serif" font-weight="800" font-size="19" letter-spacing="0" fill="' + c.bg + '">ON-PREM</text>';
+      s += '<rect x="108" y="158" width="84" height="6" rx="3" fill="' + c.ac + '"/>';
+      return s;
+    },
+    rings: function(c){
+      return '<circle cx="112" cy="136" r="54" fill="none" stroke="' + c.fg + '" stroke-width="15"/>' +
+        '<circle cx="182" cy="136" r="54" fill="none" stroke="' + c.ac + '" stroke-width="15"/>' +
+        '<path d="M150 98a54 54 0 0 1 0 76" fill="none" stroke="' + c.fg + '" stroke-width="15"/>';
+    },
+    mic: function(c){
+      var s = '<path d="M98 88a62 62 0 0 0 0 86M78 70a88 88 0 0 0 0 122M202 88a62 62 0 0 1 0 86M222 70a88 88 0 0 1 0 122" stroke="' + c.ac + '" stroke-width="6" fill="none" stroke-linecap="round"/>';
+      s += '<path d="M112 118v14a38 38 0 0 0 76 0v-14" stroke="' + c.fg + '" stroke-width="7" fill="none"/>';
+      s += '<rect x="126" y="62" width="48" height="96" rx="24" fill="' + c.fg + '"/>';
+      for (var i = 0; i < 5; i++) s += '<rect x="136" y="' + (78 + i * 14) + '" width="28" height="4" rx="2" fill="' + c.bg + '"/>';
+      s += '<rect x="146" y="168" width="8" height="26" fill="' + c.fg + '"/><rect x="120" y="192" width="60" height="8" rx="4" fill="' + c.fg + '"/>';
+      return s;
+    }
+  };
+
+  function coverArt(c, i){
+    var fs = c.fs || 30, n = c.lines.length;
+    var y0 = 276 - (n - 1) * fs * 1.04;
+    var title = '<text font-family="Unbounded, Arial Black, sans-serif" font-weight="700" font-size="' + fs + '" letter-spacing="-1.2" fill="' + c.fg + '">';
+    c.lines.forEach(function(ln, k){ title += '<tspan x="22" y="' + (y0 + k * fs * 1.04).toFixed(1) + '">' + ln + '</tspan>'; });
+    title += '</text>';
+    var st = STICK[c.status], sl = st.l.length;
+    var sticker = '<g transform="translate(250 50) rotate(12)"><circle r="34" fill="' + st.bg + '"' + (st.dash ? ' stroke="' + st.fg + '" stroke-width="2" stroke-dasharray="4 3"' : '') + '/>' +
+      '<text text-anchor="middle" font-family="Instrument Sans, Arial, sans-serif" font-weight="700" font-size="11" letter-spacing="1" fill="' + st.fg + '">';
+    st.l.forEach(function(w, k){ sticker += '<tspan x="0" y="' + ((k - (sl - 1) / 2) * 12 + 4).toFixed(1) + '">' + w + '</tspan>'; });
+    sticker += '</text></g>';
+    return '<svg viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">' +
+      '<rect width="300" height="300" fill="' + c.bg + '"/>' + MOTIF[c.m](c) +
+      '<text x="22" y="34" font-family="Instrument Sans, Arial, sans-serif" font-weight="700" font-size="11" letter-spacing="2" fill="' + c.fg + '" opacity=".8">EL · 11.11 · ' + pad(i + 1) + '</text>' +
+      title + sticker + '</svg>';
+  }
+  function backFace(c, i){
+    return '<span class="bk-cat">EL · 11.11 · ' + pad(i + 1) + ' · ' + c.status + '</span>' +
+      '<span class="bk-t">' + c.t + '</span><span class="bk-s">' + c.short + '</span>' +
+      '<span class="bk-f"><i style="background:#121530"></i><i style="background:#3a55ff"></i><i style="background:#14a8c8"></i><i style="background:#ff4f2e"></i><i style="background:#ffae00"></i></span>';
+  }
+
+  var flow = $("#flow"), scrub = $("#scrub"), cur = 3, flipped = -1, coverEls = [], dragMoved = false;
+  COVERS.forEach(function(c, i){
+    var b = document.createElement("button");
+    b.type = "button"; b.className = "cover"; b.tabIndex = -1;
+    b.setAttribute("aria-label", c.t + ", " + c.status);
+    b.innerHTML = '<span class="card"><span class="face front">' + coverArt(c, i) + '</span><span class="face back" aria-hidden="true">' + backFace(c, i) + '</span></span><span class="reflect" aria-hidden="true">' + coverArt(c, i) + '</span>';
+    b.addEventListener("click", function(){
+      if (dragMoved) return;
+      if (i === cur){ flipped = flipped === i ? -1 : i; layoutCovers(); }
+      else go(i);
+    });
+    flow.appendChild(b); coverEls.push(b);
+  });
+
+  function layoutCovers(){
+    var cs = parseFloat(getComputedStyle(flow).getPropertyValue("--cs")) || 236;
+    coverEls.forEach(function(el, i){
+      var o = i - cur, a = Math.abs(o), s = o < 0 ? -1 : 1, x = 0, ry = 0, tz = 0;
+      if (o !== 0){ x = s * (cs * 0.6 + (a - 1) * cs * 0.24); ry = -s * 64; tz = -cs * 0.45; }
+      el.style.setProperty("--x", x.toFixed(1) + "px");
+      el.style.setProperty("--ry", ry + "deg");
+      el.style.setProperty("--tz", tz.toFixed(1) + "px");
+      el.style.zIndex = String(100 - a);
+      el.style.opacity = a > 5 ? "0" : "1";
+      el.classList.toggle("flipped", i === cur && flipped === i);
+      el.setAttribute("aria-current", i === cur ? "true" : "false");
+    });
+    var c = COVERS[cur], st = STICK[c.status];
+    scrub.value = String(cur);
+    $("#cap-t").textContent = c.t;
+    $("#cap-s").textContent = c.status + (flipped === cur ? " · tap to flip back" : " · tap to flip");
+    $("#n-idx").textContent = pad(cur + 1) + " / " + pad(COVERS.length);
+    var chip = $("#n-chip"); chip.className = "chip " + st.cls; chip.textContent = c.status;
+    $("#n-t").textContent = c.t;
+    $("#n-f").textContent = c.facts;
+    $("#n-r").textContent = c.read;
+  }
+  function go(i){
+    i = Math.max(0, Math.min(COVERS.length - 1, i));
+    if (i === cur) return;
+    cur = i; flipped = -1; layoutCovers();
+  }
+  scrub.addEventListener("input", function(){ go(parseInt(scrub.value, 10) || 0); });
+  flow.addEventListener("keydown", function(e){
+    if (e.key === "ArrowRight"){ go(cur + 1); e.preventDefault(); }
+    else if (e.key === "ArrowLeft"){ go(cur - 1); e.preventDefault(); }
+    else if (e.key === "Home"){ go(0); e.preventDefault(); }
+    else if (e.key === "End"){ go(COVERS.length - 1); e.preventDefault(); }
+    else if (e.key === "Enter" || e.key === " "){ flipped = flipped === cur ? -1 : cur; layoutCovers(); e.preventDefault(); }
+  });
+  var sx = null;
+  flow.addEventListener("pointerdown", function(e){ sx = e.clientX; dragMoved = false; });
+  flow.addEventListener("pointermove", function(e){
+    if (sx === null) return;
+    var cs = parseFloat(getComputedStyle(flow).getPropertyValue("--cs")) || 236, dx = e.clientX - sx;
+    if (Math.abs(dx) > cs * 0.32){ go(cur + (dx < 0 ? 1 : -1)); sx = e.clientX; dragMoved = true; }
+  });
+  window.addEventListener("pointerup", function(){ sx = null; setTimeout(function(){ dragMoved = false; }, 0); });
+  window.addEventListener("pointercancel", function(){ sx = null; dragMoved = false; });
+  var wheelLock = 0;
+  flow.addEventListener("wheel", function(e){
+    if (Math.abs(e.deltaX) <= Math.abs(e.deltaY) || Math.abs(e.deltaX) < 8) return;
+    e.preventDefault();
+    var now = Date.now(); if (now - wheelLock < 220) return; wheelLock = now;
+    go(cur + (e.deltaX > 0 ? 1 : -1));
+  }, { passive: false });
+
+  // list view
+  var lb = $("#listbody");
+  COVERS.forEach(function(c, i){
+    var st = STICK[c.status], tr = document.createElement("tr");
+    tr.innerHTML = '<td>' + pad(i + 1) + '</td><td><button type="button" class="rowgo"><b></b><span></span></button></td><td><span class="chip ' + st.cls + '"></span></td><td></td>';
+    tr.querySelector("b").textContent = c.t;
+    tr.querySelector("span").textContent = c.short;
+    tr.querySelector(".chip").textContent = c.status;
+    tr.lastChild.textContent = c.read;
+    tr.querySelector(".rowgo").addEventListener("click", function(){ setView("covers"); go(i); flow.focus({ preventScroll: true }); });
+    lb.appendChild(tr);
+  });
+  function setView(v){
+    var list = v === "list";
+    $("#coverview").hidden = list; $("#listview").hidden = !list;
+    $("#v-covers").setAttribute("aria-pressed", String(!list));
+    $("#v-list").setAttribute("aria-pressed", String(list));
+    $("#hint").textContent = list ? "Every release at once · pick a title to see its cover" : "Swipe, scrub or use ← → · tap the front cover to flip it";
+    try { localStorage.setItem("vito-view", v); } catch (e) {}
+    scheduleBuild();
+  }
+  $("#v-covers").addEventListener("click", function(){ setView("covers"); });
+  $("#v-list").addEventListener("click", function(){ setView("list"); });
+  try { if (localStorage.getItem("vito-view") === "list") setView("list"); } catch (e) {}
+
+  /* ───────────── Theme (dark by default) ───────────── */
+  var themeBtn = $("#theme"), themeIcon = $("#themeicon");
+  var SUN = '<circle cx="8" cy="8" r="3.2"/><path d="M8 .9v2M8 13.1v2M.9 8h2M13.1 8h2M2.9 2.9l1.4 1.4M11.7 11.7l1.4 1.4M2.9 13.1l1.4-1.4M11.7 4.3l1.4-1.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" fill="none"/>';
+  var MOON = '<path d="M13.6 10.3A6 6 0 0 1 5.7 2.4a6.1 6.1 0 1 0 7.9 7.9z"/>';
+  function paintTheme(){
+    var light = document.documentElement.getAttribute("data-theme") === "light";
+    themeIcon.innerHTML = light ? MOON : SUN;
+    themeBtn.setAttribute("aria-label", light ? "Switch to dark mode" : "Switch to light mode");
+  }
+  themeBtn.addEventListener("click", function(){
+    var toLight = document.documentElement.getAttribute("data-theme") !== "light";
+    if (toLight) document.documentElement.setAttribute("data-theme", "light"); else document.documentElement.removeAttribute("data-theme");
+    try { localStorage.setItem("vito-theme", toLight ? "light" : "dark"); } catch (e) {}
+    paintTheme();
+  });
+  paintTheme();
+
+  /* ───────────── Photo prints ───────────── */
+  var lbox = $("#lbox"), lboxImg = $("#lbox-img"), lboxCap = $("#lbox-cap");
+  $$(".print").forEach(function(btn){
+    btn.addEventListener("click", function(){
+      var img = btn.querySelector("img");
+      lboxImg.src = img.getAttribute("src"); lboxImg.alt = img.alt;
+      lboxCap.textContent = btn.querySelector(".pc").textContent;
+      if (lbox && typeof lbox.showModal === "function") lbox.showModal();
+    });
+  });
+  if (lbox){
+    $("#lbox-x").addEventListener("click", function(){ lbox.close(); });
+    lbox.addEventListener("click", function(e){ if (e.target === lbox) lbox.close(); });
+  }
+
+  layoutCovers();
+  buildRibbon();
+  paintLCD();
+})();
+</script>
+</body>
+</html>
