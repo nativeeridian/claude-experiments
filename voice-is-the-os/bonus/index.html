@@ -3,37 +3,37 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'none'; connect-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'none'; object-src 'none'; frame-src 'none'; worker-src 'none'; base-uri 'none'; form-action 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <style>:root{color-scheme:dark;box-sizing:border-box}body{margin:0;padding:0}[hidden]{display:none!important}</style>
 <meta name="theme-color" content="#0a0c18">
 <script>try{if(localStorage.getItem("vito-theme")==="light")document.documentElement.setAttribute("data-theme","light")}catch(e){}</script>
-<meta name="description" content="A bonus track from the ElevenLabs Summit NYC recap: an hour in the merch line, three questions out loud, and what voice-agent friction teaches regulated industries.">
+<meta name="description" content="A bonus track from the ElevenLabs Summit NYC recap: an hour in a merch line run by voice agents, a fall through a century of talking machines, and why AI can add friction even when it's built to remove it.">
 <meta name="author" content="Carson Boykin">
 <link rel="canonical" href="https://nativeeridian.github.io/claude-experiments/voice-is-the-os/bonus/">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23121530'/%3E%3Crect x='7' y='6' width='3' height='20' fill='%23d7dcfb'/%3E%3Crect x='11' y='6' width='3' height='20' fill='%233a55ff'/%3E%3Crect x='15' y='6' width='3' height='20' fill='%2314a8c8'/%3E%3Crect x='19' y='6' width='3' height='20' fill='%23ff4f2e'/%3E%3Crect x='23' y='6' width='3' height='20' fill='%23ffae00'/%3E%3C/svg%3E">
 <meta property="og:type" content="article">
 <meta property="og:site_name" content="Voice Is the OS">
-<meta property="og:title" content="The merch line: a bonus track from Voice Is the OS">
-<meta property="og:description" content="An hour in line, three questions out loud, and what voice-agent friction teaches regulated industries.">
+<meta property="og:title" content="The friction in frictionless: a bonus track from Voice Is the OS">
+<meta property="og:description" content="An hour in a merch line run by voice agents, and why AI can add friction even when it's built to remove it.">
 <meta property="og:url" content="https://nativeeridian.github.io/claude-experiments/voice-is-the-os/bonus/">
 <meta property="og:image" content="https://nativeeridian.github.io/claude-experiments/voice-is-the-os/share-card.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<title>The Merch Line · Voice Is the OS</title>
+<title>The Friction in Frictionless · Voice Is the OS</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Unbounded:wght@400;500;700;800&family=VT323&display=swap">
 <style>
-/* Bonus track. Same tokens as the album, dark first. The page falls out of a wormhole,
-   makes you wait in a scroll-driven line, then puts you at the booth. */
+/* Bonus track. Same tokens as the album, dark first. You fall through a tunnel of talking
+   machines, wait in a scroll-driven line, step up to the booth, then get the argument. */
 :root{
   --paper:#0a0c18; --paper-2:#10132a; --card:#131731; --ink:#e9ecf8; --ink-2:#a9afca; --ink-3:#8389a6;
   --hair:rgba(233,236,248,.11); --hair-2:rgba(233,236,248,.22);
   --s1:#d7dcfb; --s2:#5d76ff; --s3:#2cc6e4; --s4:#ff6748; --s5:#ffbd2e;
   --accent:#ff6a4a; --accent-ink:#ff8d72; --sel:#4a7fe8;
-  --sil:#323c80; --sil-2:#1b2048; --person:#7d84a3;
+  --sil:#323c80; --sil-2:#1b2048; --person:#7d84a3; --wall:#6b7193;
   --ipod-1:#30333d; --ipod-2:#0e0f13; --ipod-ink:#e6e9f2;
   --lcd-1:#0f2a36; --lcd-2:#0a1c25; --lcd-ink:#8be6ff;
   --display:"Unbounded","Arial Black",system-ui,sans-serif;
@@ -45,7 +45,7 @@
   --hair:rgba(18,21,48,.12); --hair-2:rgba(18,21,48,.22);
   --s1:#121530; --s2:#3a55ff; --s3:#14a8c8; --s4:#ff4f2e; --s5:#ffae00;
   --accent:#e2401d; --accent-ink:#c0320f; --sel:#3a6fd8;
-  --sil:#151a3f; --sil-2:#d9dee8; --person:#5b6283;
+  --sil:#151a3f; --sil-2:#d9dee8; --person:#5b6283; --wall:#4b5170;
   --ipod-1:#fdfdfe; --ipod-2:#dfe2e8; --ipod-ink:#22263a;
   --lcd-1:#e7eff1; --lcd-2:#c9d7dc; --lcd-ink:#15232b;
   color-scheme:light}
@@ -63,12 +63,13 @@ h1{font:800 clamp(38px,6.4vw,76px)/1 var(--display);letter-spacing:-.04em;margin
 h1 span{color:var(--accent)}
 h2{font:700 clamp(28px,4vw,44px)/1.08 var(--display);letter-spacing:-.035em;margin:12px 0 16px;text-wrap:balance}
 p{margin:0 0 18px}
-.lede{font-size:clamp(18px,2vw,21px);line-height:1.55;color:var(--ink-2);max-width:54ch;margin:0 auto}
+.lede{font-size:clamp(18px,2vw,21px);line-height:1.55;color:var(--ink-2);max-width:56ch;margin:0 auto}
 .pull{font:700 clamp(24px,3vw,34px)/1.2 var(--display);letter-spacing:-.025em;color:var(--accent);margin:30px 0;max-width:24ch;text-wrap:balance}
 .chip{display:inline-flex;align-items:center;gap:6px;font:700 11px/1 var(--body);letter-spacing:.12em;text-transform:uppercase;padding:6px 11px;border-radius:999px;border:1.5px dashed var(--ink-3);color:var(--ink-2)}
 .stripes{display:flex;height:6px}
 .stripes i{flex:1}
 .f1{background:var(--s1)} .f2{background:var(--s2)} .f3{background:var(--s3)} .f4{background:var(--s4)} .f5{background:var(--s5)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* top bar */
 .topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px max(14px,env(safe-area-inset-right,0px)) 8px max(14px,env(safe-area-inset-left,0px));background:linear-gradient(var(--ipod-1),var(--ipod-2));color:var(--ipod-ink);border-bottom:1px solid var(--hair-2);font:600 13.5px var(--body)}
@@ -76,63 +77,136 @@ p{margin:0 0 18px}
 .topbar a:hover{background:rgba(127,127,127,.18)}
 .topbar .inf{font:400 22px/1 var(--lcdf)}
 .lcdtag{font:400 17px/1 var(--lcdf);letter-spacing:.08em;background:linear-gradient(var(--lcd-1),var(--lcd-2));color:var(--lcd-ink);padding:4px 9px;border-radius:5px;border:1px solid rgba(0,0,0,.4);white-space:nowrap}
-.themebtn{appearance:none;border:0;background:none;color:inherit;padding:6px;display:grid;place-items:center;cursor:pointer;border-radius:6px}
-.themebtn svg{width:16px;height:16px;fill:currentColor;display:block}
-@media (max-width:520px){.lcdtag{display:none}}
+.tb-r{display:flex;align-items:center;gap:4px}
+.themebtn,.soundbtn{appearance:none;border:0;background:none;color:inherit;padding:6px;display:inline-flex;align-items:center;gap:6px;cursor:pointer;border-radius:6px;font:600 12.5px var(--body)}
+.themebtn svg,.soundbtn svg{width:16px;height:16px;fill:currentColor;display:block}
+.soundbtn:hover,.themebtn:hover{background:rgba(127,127,127,.18)}
+.soundbtn[aria-pressed="true"]{color:var(--s3)}
+@media (max-width:560px){.lcdtag{display:none}.soundbtn .sl{display:none}}
 
-/* ── Portal: the wormhole you fell through ── */
-.portal{position:relative;min-height:calc(100svh - 50px);display:grid;place-items:center;overflow:hidden;text-align:center;isolation:isolate}
-.tunnel{position:absolute;inset:0;width:100%;height:100%;z-index:-2}
+/* ── Tunnel rings (shared by the portal and the fall) ── */
+.tunnel{position:absolute;inset:0;width:100%;height:100%}
 .rings{animation:spin 60s linear infinite}
 .ring{fill:none;stroke-width:5;transform-origin:0 0;animation:tun 8s linear infinite;animation-delay:calc(var(--i) * -.5s)}
 .ring:nth-child(5n+1){stroke:var(--s1)} .ring:nth-child(5n+2){stroke:var(--s2)} .ring:nth-child(5n+3){stroke:var(--s3)} .ring:nth-child(5n+4){stroke:var(--s4)} .ring:nth-child(5n){stroke:var(--s5)}
 @keyframes tun{0%{transform:scale(.04);opacity:0}12%{opacity:.95}55%{transform:scale(1)}82%{transform:scale(3.2);opacity:.8}100%{transform:scale(9);opacity:0}}
 @keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.rings{animation:none}.ring{animation:none;opacity:.6;transform:scale(calc(.12 + var(--i) * .22))}}
+
+/* ── Portal ── */
+.portal{position:relative;min-height:calc(100svh - 50px);display:grid;place-items:center;overflow:hidden;text-align:center;isolation:isolate}
+.portal .tunnel{z-index:-2}
 .portal::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(closest-side,var(--paper) 0%,color-mix(in srgb,var(--paper) 86%,transparent) 55%,transparent 100%);transform:scale(1.05)}
-.portal-in{padding:56px 16px 72px;max-width:900px}
+.portal-in{padding:56px 16px 72px;max-width:920px}
 .portal .kick{text-wrap:balance}
-.portal .chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:26px}
-.scrollcue{margin-top:34px;font:600 12.5px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);display:inline-flex;flex-direction:column;align-items:center;gap:8px}
-.scrollcue i{width:2px;height:34px;background:linear-gradient(var(--s3),transparent);animation:cue 1.8s ease-in-out infinite}
-@keyframes cue{0%{transform:scaleY(.2);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}100%{transform:scaleY(.2);transform-origin:bottom}}
-@media (prefers-reduced-motion:reduce){
-  .rings,.scrollcue i{animation:none}
-  .ring{animation:none;opacity:.6;transform:scale(calc(.12 + var(--i) * .22))}
+.portal .chips{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:22px}
+.ctas{display:flex;gap:12px 22px;justify-content:center;align-items:center;flex-wrap:wrap;margin-top:30px}
+.fallbtn{appearance:none;border:1px solid #0f5ea8;border-radius:999px;padding:11px 22px 11px 12px;display:inline-flex;gap:10px;align-items:center;font:600 16px var(--body);color:#fff;background:linear-gradient(#86dbff 0%,#2c9de9 49%,#1676cf 51%,#3fa9ef 100%);box-shadow:0 2px 10px rgba(22,119,207,.4),inset 0 1px 0 rgba(255,255,255,.65);text-shadow:0 -1px 0 rgba(0,0,0,.25);cursor:pointer}
+.fallbtn .pi{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.25);display:grid;place-items:center}
+.fallbtn svg{width:14px;height:14px;fill:#fff}
+.quiet{font:600 14px var(--body);color:var(--ink-2)}
+
+/* ── The fall: a century of talking machines ── */
+.fall{position:relative;height:calc(var(--n,11) * 82vh + 100vh)}
+.fall-stage{position:sticky;top:50px;height:calc(100svh - 50px);overflow:hidden;isolation:isolate;--past:1}
+.fall-stage .tunnel{z-index:-3;opacity:.55}
+.fall-stage::before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(closest-side,transparent 0%,color-mix(in srgb,var(--paper) 70%,transparent) 70%,var(--paper) 100%)}
+.grain{position:absolute;inset:0;z-index:-1;pointer-events:none;opacity:calc(var(--past) * .5);background:repeating-linear-gradient(0deg,rgba(255,236,200,.05) 0 1px,transparent 1px 3px),radial-gradient(circle at 50% 50%,rgba(255,200,120,.10),transparent 70%);mix-blend-mode:screen}
+.fall-h{position:absolute;left:0;right:0;top:16px;text-align:center;margin:0;font:600 12.5px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.devs{position:absolute;inset:0}
+.stop{position:absolute;inset:0;pointer-events:none}
+.art{position:absolute;left:50%;top:46%;width:min(32vmin,250px);aspect-ratio:1;margin:calc(min(32vmin,250px) / -2) 0 0 calc(min(32vmin,250px) / -2);will-change:transform,opacity;opacity:0;--lvl:0;filter:sepia(calc(var(--age,0) * .75)) saturate(calc(1 - var(--age,0) * .35))}
+.art svg{position:relative;display:block;width:100%;height:100%;overflow:visible}
+.art::before{content:"";position:absolute;inset:-18%;border-radius:50%;background:radial-gradient(circle,color-mix(in srgb,var(--s3) 55%,transparent) 0%,transparent 62%);opacity:calc(.25 + var(--lvl) * .9);transform:scale(calc(.85 + var(--lvl) * .5))}
+.stop.speaking .art::after{content:"";position:absolute;inset:-6%;border-radius:50%;border:2px solid var(--s3);animation:ping 1.4s ease-out infinite}
+@keyframes ping{0%{transform:scale(.9);opacity:.8}100%{transform:scale(1.5);opacity:0}}
+.card{position:absolute;top:50%;width:min(420px,38vw);transform:translateY(-46%);opacity:0;visibility:hidden;transition:opacity .35s,transform .35s,visibility 0s .35s;background:color-mix(in srgb,var(--card) 92%,transparent);border:1px solid var(--hair-2);border-radius:16px;padding:18px 20px 16px;box-shadow:0 20px 46px -24px rgba(0,0,0,.7);backdrop-filter:blur(4px);pointer-events:auto}
+.card.on{opacity:1;visibility:visible;transform:translateY(-50%);transition:opacity .35s,transform .35s}
+.card.right{left:56%} .card.left{right:56%} .card.mid{left:50%;top:auto;bottom:86px;transform:translate(-50%,6px);width:min(560px,86vw)}
+.card.mid.on{transform:translate(-50%,0)}
+.c-era{font:400 20px/1 var(--lcdf);letter-spacing:.04em;color:var(--s3);margin:0 0 6px}
+.c-emo{font:800 clamp(26px,3.2vw,38px)/1.02 var(--display);letter-spacing:-.04em;margin:0 0 10px;color:var(--ink)}
+.c-q{margin:0 0 10px;font:500 16.5px/1.45 var(--body);color:var(--ink);font-style:italic}
+.c-real{margin:0 0 12px;font-size:14.5px;line-height:1.45;color:var(--ink-2)}
+.c-real b{color:var(--accent-ink);font-weight:700}
+.hear{appearance:none;display:inline-flex;align-items:center;gap:8px;border:1.5px solid currentColor;border-radius:999px;background:none;color:var(--s3);font:700 13px var(--body);padding:5px 12px 5px 8px;cursor:pointer}
+.hear svg{width:16px;height:16px;fill:currentColor}
+.hear[aria-pressed="true"]{background:var(--s3);color:#05060a;border-color:var(--s3)}
+.dial{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);width:min(860px,calc(100% - 32px));height:50px;border-radius:10px;background:linear-gradient(var(--lcd-1),var(--lcd-2));border:2px solid rgba(0,0,0,.5);box-shadow:inset 0 2px 6px rgba(0,0,0,.35);color:var(--lcd-ink);overflow:hidden}
+.dial-in{position:absolute;left:22px;right:22px;top:0;bottom:0}
+.dial i{position:absolute;bottom:0;width:1px;height:9px;background:currentColor;opacity:.6}
+.dial span{position:absolute;top:7px;transform:translateX(-50%);font:400 17px/1 var(--lcdf);white-space:nowrap;opacity:.7}
+.dial span.on{opacity:1;text-shadow:0 0 8px currentColor}
+.needle{position:absolute;top:3px;bottom:3px;width:3px;margin-left:-1.5px;border-radius:2px;background:var(--s4);box-shadow:0 0 8px var(--s4)}
+@media (max-width:759px){
+  .card,.card.left,.card.right{left:16px;right:16px;width:auto;top:auto;bottom:80px;transform:translateY(6px);padding:14px 16px 12px}
+  .card.on,.card.left.on,.card.right.on{transform:none}
+  .card.mid{left:16px;right:16px;width:auto;transform:translateY(6px)}
+  .card.mid.on{transform:none}
+  .c-q{font-size:15px}.c-real{font-size:13.5px;margin-bottom:8px}
+  .art{top:30%;width:min(40vw,190px);margin:calc(min(40vw,190px) / -2) 0 0 calc(min(40vw,190px) / -2)}
+  .dial span{font-size:14px}
+  .fall-h{font-size:10.5px;letter-spacing:.1em;padding:0 12px}
+  .dial span:not(.on){display:none}
 }
+/* without JS or with reduced motion: a plain list */
+.fall.static{height:auto;padding:24px 0 40px}
+.fall.static .fall-stage{position:static;height:auto;overflow:visible;--past:0}
+.fall.static .tunnel,.fall.static .grain,.fall.static .dial,.fall.static .fall-stage::before{display:none}
+.fall.static .fall-h{position:static;margin-bottom:12px}
+.fall.static .devs{position:static;filter:none;display:grid;gap:18px;max-width:900px;margin:0 auto;padding:0 16px}
+.fall.static .stop{position:relative;inset:auto;display:grid;grid-template-columns:140px minmax(0,1fr);gap:20px;align-items:center;pointer-events:auto}
+.fall.static .art{position:relative;left:auto;top:auto;width:140px;margin:0;opacity:1;transform:none}
+.fall.static .card,.fall.static .card.mid{position:relative;left:auto;right:auto;top:auto;bottom:auto;width:auto;opacity:1;visibility:visible;transform:none;transition:none}
+@media (max-width:640px){.fall.static .stop{grid-template-columns:84px minmax(0,1fr);gap:12px}.fall.static .art{width:84px}}
+@media (prefers-reduced-motion:reduce){.stop.speaking .art::after{animation:none}.card{transition:none}}
+
+/* machine drawings */
+.dk{fill:var(--ink)} .dc{fill:var(--paper)} .dg{fill:var(--ink-3)} .dl{fill:none;stroke:var(--ink);stroke-linecap:round;stroke-linejoin:round}
+.d1{fill:var(--s1)} .d2{fill:var(--s2)} .d3{fill:var(--s3)} .d4{fill:var(--s4)} .d5{fill:var(--s5)} .da{fill:var(--accent)}
+.blink{animation:blinkf 1.2s steps(2,start) infinite}
+@keyframes blinkf{to{opacity:.15}}
+@media (prefers-reduced-motion:reduce){.blink{animation:none}}
 
 /* ── The line: scroll to wait ── */
-.line-sec{position:relative;height:420vh}
+.line-sec{position:relative;height:460vh}
 .stage{position:sticky;top:50px;height:calc(100svh - 50px);display:grid;grid-template-rows:auto minmax(0,1fr) auto;gap:10px;padding:18px 0 22px}
 .stage .wrap{width:100%}
 .stage-top{display:flex;justify-content:space-between;align-items:flex-end;gap:16px;flex-wrap:wrap}
-.lcd{background:linear-gradient(var(--lcd-1),var(--lcd-2));color:var(--lcd-ink);border:2px solid rgba(0,0,0,.5);border-radius:10px;box-shadow:inset 0 2px 6px rgba(0,0,0,.35);padding:6px 14px 8px;min-width:210px}
+.lcd{background:linear-gradient(var(--lcd-1),var(--lcd-2));color:var(--lcd-ink);border:2px solid rgba(0,0,0,.5);border-radius:10px;box-shadow:inset 0 2px 6px rgba(0,0,0,.35);padding:6px 14px 8px;min-width:230px}
 .lcd small{display:block;font:700 10.5px var(--body);letter-spacing:.16em;text-transform:uppercase;opacity:.85}
 .lcd b{display:block;font:400 clamp(38px,5.4vw,56px)/1 var(--lcdf);font-weight:400;font-variant-numeric:tabular-nums;letter-spacing:.02em}
-.lcd.over b{animation:blink 1s steps(2,start) infinite}
+.lcd.over b,.lcd.lost b{animation:blink 1s steps(2,start) infinite}
 @keyframes blink{to{visibility:hidden}}
 .stage-h{font:700 clamp(20px,2.6vw,30px)/1.15 var(--display);letter-spacing:-.025em;margin:0;max-width:22ch}
 .scene{width:100%;height:100%;display:block}
+.floor{fill:var(--paper-2);stroke:var(--hair-2);stroke-width:2}
+.wall{fill:var(--wall)}
+.wall-t{font:400 17px var(--lcdf);fill:var(--paper);letter-spacing:.1em}
+.lbl{font:400 19px var(--lcdf);fill:var(--ink-3);letter-spacing:.08em}
 .band path{fill:none;stroke-linecap:round;stroke-linejoin:round}
 .band{opacity:.5}
-.q1{stroke:var(--s1);stroke-width:34px}.q2{stroke:var(--s2);stroke-width:27px}.q3{stroke:var(--s3);stroke-width:20px}.q4{stroke:var(--s4);stroke-width:13px}.q5{stroke:var(--s5);stroke-width:6px}
-.o1{fill:var(--s2)}.o2{fill:var(--s3)}.o3{fill:var(--s4)}
+.q1{stroke:var(--s1);stroke-width:30px}.q2{stroke:var(--s2);stroke-width:24px}.q3{stroke:var(--s3);stroke-width:18px}.q4{stroke:var(--s4);stroke-width:12px}.q5{stroke:var(--s5);stroke-width:6px}
 .person{fill:var(--person)}
 .person.you{fill:var(--accent)}
 .person.pal{fill:var(--s5)}
+.hp{fill:none;stroke:var(--s3);stroke-width:3.5;stroke-linecap:round}
 .tag{font:400 22px var(--lcdf);fill:var(--ink)}
 .booth-b{fill:var(--card);stroke:var(--hair-2);stroke-width:2}
 .booth-s{fill:var(--lcd-1);stroke:rgba(0,0,0,.45);stroke-width:2}
-.booth-l{font:400 20px var(--lcdf);fill:var(--ink-3);letter-spacing:.06em}
 .booth-o{animation:talk 2.4s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
 .booth-o.b2{animation-delay:-.8s}.booth-o.b3{animation-delay:-1.6s}
+.o1{fill:var(--s2)}.o2{fill:var(--s3)}.o3{fill:var(--s4)}
 @keyframes talk{0%,100%{transform:scale(.8)}50%{transform:scale(1.12)}}
 .bubble rect,.bubble path{fill:var(--s5)}
-.bubble text{font:400 24px var(--lcdf);fill:#121530}
-.capwrap{position:relative;min-height:6.2em}
-.cap{position:absolute;inset:auto 0 0 0;background:var(--card);border:1px solid var(--hair-2);border-radius:14px;padding:14px 18px;max-width:640px;font-size:clamp(16px,1.8vw,19px);line-height:1.5;opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s}
+.bubble text{font:400 22px var(--lcdf);fill:#121530}
+.fog rect.fill{fill:var(--paper-2)}
+.fog text{font:400 34px var(--lcdf);fill:var(--ink-3);letter-spacing:.06em}
+.capwrap{position:relative;min-height:6.4em}
+.cap{position:absolute;inset:auto 0 0 0;background:var(--card);border:1px solid var(--hair-2);border-radius:14px;padding:14px 18px;max-width:660px;font-size:clamp(16px,1.8vw,19px);line-height:1.5;opacity:0;transform:translateY(8px);transition:opacity .35s,transform .35s}
 .cap.on{opacity:1;transform:none}
 .cap .n{display:block;font:400 18px/1 var(--lcdf);color:var(--ink-3);margin-bottom:4px}
-@media (prefers-reduced-motion:reduce){.booth-o{animation:none}.cap{transition:none}}
+@media (prefers-reduced-motion:reduce){.booth-o{animation:none}.cap{transition:none}.lcd.over b,.lcd.lost b{animation:none}}
 
 /* ── Prose sections ── */
 .sec{position:relative;padding-block:88px}
@@ -140,11 +214,11 @@ p{margin:0 0 18px}
 .sec p{max-width:62ch}
 .sec .muted{color:var(--ink-2)}
 dfn{font-style:normal;font-weight:700;color:var(--ink)}
-.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.steps li{background:var(--card);border:1px solid var(--hair-2);border-radius:12px;padding:14px 14px 16px;font-size:15.5px;line-height:1.45;color:var(--ink-2)}
+.steps{list-style:none;margin:28px 0 0;padding:0;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.steps li{background:var(--card);border:1px solid var(--hair-2);border-radius:12px;padding:14px 14px 16px;font-size:15px;line-height:1.45;color:var(--ink-2)}
 .steps b{display:block;font:400 22px/1 var(--lcdf);color:var(--accent-ink);margin-bottom:8px}
 .steps strong{display:block;color:var(--ink);font:700 15px/1.3 var(--display);letter-spacing:-.01em;margin-bottom:4px}
-@media (max-width:759px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:859px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
 
 /* ── Kiosk ── */
 .booth-sec .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,400px);gap:48px;align-items:center}
@@ -166,14 +240,16 @@ dfn{font-style:normal;font-weight:700;color:var(--ink)}
 .k-note{font:500 13.5px/1.4 var(--body);text-align:center;margin:-4px 0 0;opacity:.85}
 .k-opts{display:grid;gap:8px;margin-top:auto}
 .k-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:auto}
+.k-tiles:empty{display:none}
 .k-opt{appearance:none;display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:1.5px solid currentColor;background:rgba(255,255,255,.08);color:inherit;font:600 15px/1.3 var(--body);padding:10px 12px;border-radius:10px;cursor:pointer}
 .k-opt:hover{background:rgba(255,255,255,.18)}
 .k-opt.mic::before{content:"";flex:none;width:9px;height:15px;border:2px solid currentColor;border-radius:6px;box-shadow:0 7px 0 -5px currentColor}
+.k-opt.phones::before{content:"";flex:none;width:16px;height:12px;border:2.5px solid currentColor;border-bottom:0;border-radius:10px 10px 0 0;box-shadow:-3px 5px 0 -1px currentColor,3px 5px 0 -1px currentColor}
 .k-opt.right{border-color:var(--s5);box-shadow:0 0 0 3px color-mix(in srgb,var(--s5) 45%,transparent)}
 .k-tile{appearance:none;border:1.5px solid currentColor;border-radius:10px;background:rgba(255,255,255,.06);color:inherit;cursor:pointer;padding:0 0 8px;font:700 12.5px/1.25 var(--body);display:grid;gap:8px;overflow:hidden}
 .k-tile:hover{background:rgba(255,255,255,.16)}
-.k-tile .art{display:block;aspect-ratio:1;background:repeating-linear-gradient(135deg,var(--s1) 0 7px,var(--s2) 7px 14px,var(--s3) 14px 21px,var(--s4) 21px 28px,var(--s5) 28px 35px);position:relative}
-.k-tile .art::after{content:"?";position:absolute;inset:0;display:grid;place-items:center;font:800 30px var(--display);color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.45)}
+.k-tile .art2{display:block;aspect-ratio:1;background:repeating-linear-gradient(135deg,var(--s1) 0 7px,var(--s2) 7px 14px,var(--s3) 14px 21px,var(--s4) 21px 28px,var(--s5) 28px 35px);position:relative}
+.k-tile .art2::after{content:"?";position:absolute;inset:0;display:grid;place-items:center;font:800 30px var(--display);color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.45)}
 .k-human{display:flex;gap:10px;align-items:flex-start;background:var(--s5);color:#121530;border-radius:12px;padding:10px 12px;font:600 14px/1.4 var(--body)}
 .k-human svg{flex:none;width:30px;height:38px;fill:#121530}
 .k-done{display:grid;gap:8px;margin-top:auto}
@@ -187,8 +263,13 @@ dfn{font-style:normal;font-weight:700;color:var(--ink)}
 @media (max-width:859px){.booth-sec .wrap{grid-template-columns:minmax(0,1fr);gap:28px}}
 @media (prefers-reduced-motion:reduce){.orb::before,.orb.talk{animation:none}}
 
-/* ── Booth vs bank ── */
-.map{display:grid;gap:12px;margin:30px 0 8px}
+/* ── The argument ── */
+.moved{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:30px 0 10px}
+.moved div{background:var(--card);border:1px solid var(--hair-2);border-radius:14px;padding:16px 18px;font-size:15.5px;line-height:1.5;color:var(--ink-2)}
+.moved b{display:block;font:700 17px/1.25 var(--display);letter-spacing:-.015em;color:var(--ink);margin-bottom:6px}
+.moved i{display:block;font:400 20px/1 var(--lcdf);font-style:normal;color:var(--s3);margin-bottom:8px}
+@media (max-width:759px){.moved{grid-template-columns:minmax(0,1fr)}}
+.map{display:grid;gap:12px;margin:24px 0 8px}
 .map-row{display:grid;grid-template-columns:minmax(0,1fr) 28px minmax(0,1fr);gap:0;align-items:stretch}
 .map-row > div{background:var(--card);border:1px solid var(--hair-2);border-radius:12px;padding:14px 16px;font-size:15.5px;line-height:1.5;color:var(--ink-2)}
 .map-row > div b{display:block;font:700 11px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:4px}
@@ -196,8 +277,8 @@ dfn{font-style:normal;font-weight:700;color:var(--ink)}
 .map-row > div.bank b{color:var(--s3)}
 .map-row > i{align-self:center;justify-self:center;width:14px;height:14px;border-top:2.5px solid var(--ink-3);border-right:2.5px solid var(--ink-3);transform:rotate(45deg);margin-left:-6px}
 @media (max-width:640px){.map-row{grid-template-columns:minmax(0,1fr);gap:6px}.map-row > i{transform:rotate(135deg);margin:0 0 2px}}
-
-ol.take{list-style:none;counter-reset:t;margin:28px 0 0;padding:0;display:grid;max-width:760px}
+h3.sub{font:700 clamp(22px,2.8vw,30px)/1.15 var(--display);letter-spacing:-.025em;margin:56px 0 8px}
+ol.take{list-style:none;counter-reset:t;margin:20px 0 0;padding:0;display:grid;max-width:780px}
 ol.take li{counter-increment:t;display:grid;grid-template-columns:62px minmax(0,1fr);gap:14px;padding:18px 0;border-top:1px solid var(--hair-2)}
 ol.take li::before{content:counter(t,decimal-leading-zero);font:800 32px/1.05 var(--display);color:var(--accent);letter-spacing:-.04em}
 ol.take b{display:block;font:700 19px/1.3 var(--display);letter-spacing:-.015em;margin-bottom:4px}
@@ -240,8 +321,7 @@ footer p{font-size:15px;color:var(--ink-2);margin:0 0 12px;max-width:62ch}
 footer p b{color:var(--ink)}
 footer h3{font:700 11.5px var(--body);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin:0 0 8px}
 footer ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14.5px}
-@media (max-width:759px){footer .wrap{grid-template-columns:minmax(0,1fr)}}
-@media (max-width:759px){body{font-size:17px}.sec{padding-block:60px}}
+@media (max-width:759px){footer .wrap{grid-template-columns:minmax(0,1fr)}body{font-size:17px}.sec{padding-block:60px}}
 </style>
 </head>
 <body>
@@ -249,11 +329,14 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14.5
 <nav class="topbar" aria-label="Bonus track">
   <a href="../#encore"><span class="inf" aria-hidden="true">∞</span><span>Back through the door</span></a>
   <span class="lcdtag">B-SIDE · UNRELEASED</span>
-  <button class="themebtn" type="button"><svg viewBox="0 0 16 16"></svg></button>
+  <span class="tb-r">
+    <button class="soundbtn" type="button" aria-pressed="false"><svg viewBox="0 0 16 16"></svg><span class="sl">Sound off</span></button>
+    <button class="themebtn" type="button"><svg viewBox="0 0 16 16"></svg></button>
+  </span>
 </nav>
 
 <main>
-<!-- The wormhole -->
+<!-- The portal -->
 <header class="portal">
   <svg class="tunnel" viewBox="-500 -500 1000 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
     <g class="rings">
@@ -265,44 +348,284 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14.5
   </svg>
   <div class="portal-in">
     <p class="kick">You found the door behind ∞ · Bonus track</p>
-    <h1>The longest hour at the <span>voice summit.</span></h1>
-    <p class="lede">A colleague and I waited well over an hour for free merch. The merch wasn't the hold-up. The voice agent was.</p>
-    <div class="chips"><span class="chip">Not narrated yet</span><span class="chip">ElevenLabs Summit NYC · 11.11.26</span></div>
-    <a class="scrollcue" href="#line">Get in line<i aria-hidden="true"></i></a>
+    <h1>The friction in <span>frictionless.</span></h1>
+    <p class="lede">At the ElevenLabs Summit, a colleague and I spent well over an hour in a line for free merch, handed out entirely by voice agents. This isn't a complaint. It's the clearest lesson I took home: AI can add friction, even when it's built to take it away.</p>
+    <div class="ctas">
+      <button class="fallbtn" type="button" id="fallgo"><span class="pi" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M2 5.5h3l4-3.5v12l-4-3.5H2z"/><path d="M11 5a4 4 0 0 1 0 6M12.6 3.2a6.5 6.5 0 0 1 0 9.6" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/></svg></span>Fall through with sound</button>
+      <a class="quiet" href="#fall">or scroll in silence</a>
+    </div>
+    <div class="chips"><span class="chip">Voices made with ElevenLabs</span><span class="chip">Essay not narrated yet</span></div>
   </div>
 </header>
+
+<!-- The fall -->
+<section class="fall static" id="fall" aria-label="The fall: a century of talking machines">
+  <div class="fall-stage">
+    <svg class="tunnel" viewBox="-500 -500 1000 1000" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g class="rings">
+        <circle class="ring" r="60" style="--i:0"/><circle class="ring" r="60" style="--i:1"/><circle class="ring" r="60" style="--i:2"/><circle class="ring" r="60" style="--i:3"/><circle class="ring" r="60" style="--i:4"/>
+        <circle class="ring" r="60" style="--i:5"/><circle class="ring" r="60" style="--i:6"/><circle class="ring" r="60" style="--i:7"/><circle class="ring" r="60" style="--i:8"/><circle class="ring" r="60" style="--i:9"/>
+        <circle class="ring" r="60" style="--i:10"/><circle class="ring" r="60" style="--i:11"/><circle class="ring" r="60" style="--i:12"/><circle class="ring" r="60" style="--i:13"/><circle class="ring" r="60" style="--i:14"/>
+        <circle class="ring" r="60" style="--i:15"/>
+      </g>
+    </svg>
+    <div class="grain" aria-hidden="true"></div>
+    <p class="fall-h">A century of talking machines · one hour in line</p>
+    <div class="devs">
+
+      <div class="stop" data-key="narrator-in" data-side="0">
+        <div class="art" aria-hidden="true"><svg viewBox="0 0 200 200">
+          <g transform="rotate(-14 84 110)"><circle class="da" cx="84" cy="62" r="16"/><rect class="da" x="64" y="82" width="40" height="64" rx="18"/></g>
+          <g transform="rotate(12 124 118)"><circle class="d5" cx="124" cy="74" r="15"/><rect class="d5" x="105" y="93" width="38" height="60" rx="17"/></g>
+          <path class="dl" stroke-width="3" d="M40 168c20 8 40 10 60 10s40-2 60-10" opacity=".5"/>
+        </svg></div>
+        <article class="card mid">
+          <p class="c-era">Narrator · 11.11.26</p>
+          <h3 class="c-emo">Into the tunnel</h3>
+          <p class="c-q">“Two people walk into a summit about making technology effortless. They join a line for free merch. They're about to fall through a century of talking machines.”</p>
+          <button class="hear" type="button" data-key="narrator-in" aria-pressed="false"><svg viewBox="0 0 16 16"><path d="M2 5.5h3l4-3.5v12l-4-3.5H2z"/><path d="M11 5a4 4 0 0 1 0 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="hl">Hear it</span></button>
+        </article>
+      </div>
+
+      <div class="stop" data-key="phonograph" data-side="-1" data-year="1877" data-name="Phonograph">
+        <div class="art" aria-hidden="true"><svg viewBox="0 0 200 200">
+          <rect class="dk" x="28" y="138" width="104" height="40" rx="5"/>
+          <rect class="d5" x="36" y="150" width="88" height="4" rx="2"/>
+          <ellipse class="dg" cx="80" cy="136" rx="50" ry="8"/>
+          <rect class="dk" x="76" y="126" width="8" height="10" rx="2"/>
+          <path class="dl" stroke-width="5" d="M100 134v-14l10-8"/>
+          <path class="d5" d="M106 110Q127 74 128 22L194 72Q146 88 116 117Z"/>
+          <ellipse class="d5" cx="161" cy="47" rx="42" ry="13" transform="rotate(37.7 161 47)"/>
+          <ellipse class="dc" cx="161" cy="47" rx="33" ry="8" transform="rotate(37.7 161 47)"/>
+          <path class="dl" stroke-width="2" d="M118 96l34-38M126 104l40-34" opacity=".35"/>
+        </svg></div>
+        <article class="card right">
+          <p class="c-era">1877 · Phonograph</p>
+          <h3 class="c-emo">Anticipation</h3>
+          <p class="c-q">“Step right up, step right up! Free merchandise, ladies and gentlemen, just around the corner! Why, this line can't be more than a dozen souls long!”</p>
+          <p class="c-real"><b>In the line:</b> Free merch. We got in line.</p>
+          <button class="hear" type="button" data-key="phonograph" aria-pressed="false"><svg viewBox="0 0 16 16"><path d="M2 5.5h3l4-3.5v12l-4-3.5H2z"/><path d="M11 5a4 4 0 0 1 0 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="hl">Hear it</span></button>
+        </article>
+      </div>
+
+      <div class="stop" data-key="telephone" data-side="1" data-year="1910s" data-name="Telephone">
+        <div class="art" aria-hidden="true"><svg viewBox="0 0 200 200">
+          <ellipse class="dk" cx="96" cy="176" rx="42" ry="10"/>
+          <rect class="dk" x="62" y="158" width="68" height="18" rx="8"/>
+          <rect class="dk" x="88" y="62" width="16" height="100" rx="4"/>
+          <path class="d5" d="M76 36h40l-8 26H84z"/>
+          <ellipse class="dk" cx="96" cy="36" rx="22" ry="7"/>
+          <ellipse class="dc" cx="96" cy="36" rx="11" ry="3"/>
+          <path class="dl" stroke-width="5" d="M104 86h26"/>
+          <rect class="dk" x="126" y="74" width="16" height="50" rx="8"/>
+          <ellipse class="d5" cx="134" cy="124" rx="10" ry="5"/>
+          <path class="dl" stroke-width="3" d="M134 128c4 18-18 22-10 38s30 6 34 18"/>
+        </svg></div>
+        <article class="card left">
+          <p class="c-era">1910s · Candlestick telephone</p>
+          <h3 class="c-emo">Confusion</h3>
+          <p class="c-q">“Hello, operator? Yes, I'm trying to reach the front of the merchandise line. No, I can't see it from here. Could you tell me where it actually ends?”</p>
+          <p class="c-real"><b>In the line:</b> When we first walked up, we had no idea where it went or how far.</p>
+          <button class="hear" type="button" data-key="telephone" aria-pressed="false"><svg viewBox="0 0 16 16"><path d="M2 5.5h3l4-3.5v12l-4-3.5H2z"/><path d="M11 5a4 4 0 0 1 0 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="hl">Hear it</span></button>
+        </article>
+      </div>
+
+      <div class="stop" data-key="radio" data-side="-1" data-year="1940s" data-name="Radio">
+        <div class="art" aria-hidden="true"><svg viewBox="0 0 200 200">
+          <path class="dk" d="M36 184V98c0-46 28-74 64-76 36 2 64 30 64 76v86z"/>
+          <path class="dc" d="M56 128V100c0-34 18-56 44-58 26 2 44 24 44 58v28z"/>
+          <rect class="d5" x="66" y="56" width="6" height="72" rx="3"/><rect class="d5" x="82" y="46" width="6" height="82" rx="3"/><rect class="d5" x="97" y="43" width="6" height="85" rx="3"/><rect class="d5" x="112" y="46" width="6" height="82" rx="3"/><rect class="d5" x="128" y="56" width="6" height="72" rx="3"/>
+          <rect class="dc" x="54" y="138" width="92" height="20" rx="4"/>
+          <rect class="d4" x="96" y="140" width="3" height="16"/>
+          <circle class="dc" cx="66" cy="170" r="7"/><circle class="dc" cx="134" cy="170" r="7"/>
+        </svg></div>
+        <article class="card right">
+          <p class="c-era">1940s · Cathedral radio</p>
+          <h3 class="c-emo">Disbelief</h3>
+          <p class="c-q">“This just in from Lincoln Center! The merchandise line now wraps around the entire floor of David Geffen Hall. Witnesses report no end in sight!”</p>
+          <p class="c-real"><b>In the line:</b> It didn't stop. It wrapped around the entire floor.</p>
+          <button class="hear" type="button" data-key="radio" aria-pressed="false"><svg viewBox="0 0 16 16"><path d="M2 5.5h3l4-3.5v12l-4-3.5H2z"/><path d="M11 5a4 4 0 0 1 0 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="hl">Hear it</span></button>
+        </article>
+      </div>
+
+      <div class="stop" data-key="transistor" data-side="1" data-year="1960s" data-name="Transistor">
+        <div class="art" aria-hidden="true"><svg viewBox="0 0 200 200">
+          <path class="dl" stroke-width="4" d="M150 76L178 22"/><circle class="dk" cx="179" cy="20" r="5"/>
+          <rect class="dk" x="26" y="74" width="148" height="96" rx="16"/>
+          <g class="dc"><circle cx="48" cy="98" r="4"/><circle cx="62" cy="98" r="4"/><circle cx="76" cy="98" r="4"/><circle cx="90" cy="98" r="4"/><circle cx="48" cy="112" r="4"/><circle cx="62" cy="112" r="4"/><circle cx="76" cy="112" r="4"/><circle cx="90" cy="112" r="4"/><circle cx="48" cy="126" r="4"/><circle cx="62" cy="126" r="4"/><circle cx="76" cy="126" r="4"/><circle cx="90" cy="126" r="4"/><circle cx="48" cy="140" r="4"/><circle cx="62" cy="140" r="4"/><circle cx="76" cy="140" r="4"/><circle cx="90" cy="140" r="4"/></g>
+          <circle class="dc" cx="138" cy="118" r="24"/>
+          <path class="d4" d="M137 96h3v44h-3z" transform="rotate(30 138 118)"/>
+          <rect class="d1" x="26" y="158" width="148" height="3"/><rect class="d2" x="26" y="161" width="148" height="3"/><rect class="d3" x="26" y="164" width="148" height="3"/>
+        </svg></div>
+        <article class="card left">
+          <p class="c-era">1960s · Transistor radio</p>
+          <h3 class="c-emo">Patience</h3>
+          <p class="c-q">“Stay tuned, folks, it's moving! Well, it moved a little. Keep that chin up and hold your place in line, because those booths are just around the bend.”</p>
+          <p class="c-real"><b>In the line:</b> We stayed put, sure it would speed up.</p>
+          <button class="hear" type="button" data-key="transistor" aria-pressed="false"><svg viewBox="0 0 16 16"><path d="M2 5.5h3l4-3.5v12l-4-3.5H2z"/><path d="M11 5a4 4 0 0 1 0 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="hl">Hear it</span></button>
+        </article>
+      </div>
+
+      <div class="stop" data-key="walkman" data-side="-1" data-year="1980s" data-name="Cassette player">
+        <div class="art" aria-hidden="true"><svg viewBox="0 0 200 200">
+          <rect class="d4" x="34" y="58" width="20" height="12" rx="2"/><rect class="dg" x="58" y="58" width="20" height="12" rx="2"/><rect class="dg" x="82" y="58" width="20" height="12" rx="2"/><rect class="dg" x="106" y="58" width="20" height="12" rx="2"/>
+          <rect class="dk" x="24" y="66" width="128" height="120" rx="10"/>
+          <rect class="dc" x="34" y="78" width="108" height="70" rx="6"/>
+          <rect class="dg" x="40" y="84" width="96" height="58" rx="4"/>
+          <rect class="d4" x="46" y="89" width="84" height="7"/><rect class="d5" x="46" y="96" width="84" height="4"/>
+          <rect class="dc" x="66" y="108" width="44" height="20" rx="10"/>
+          <circle class="dk" cx="74" cy="118" r="7"/><circle class="dk" cx="102" cy="118" r="7"/>
+          <rect class="d1" x="34" y="158" width="108" height="3"/><rect class="d2" x="34" y="162" width="108" height="3"/><rect class="d3" x="34" y="166" width="108" height="3"/>
+          <path class="dl" stroke-width="3" d="M150 100c22 0 22-40 14-58"/>
+          <path class="dl" stroke-width="6" d="M146 34a24 24 0 0 1 46 0"/>
+          <rect class="d4" x="138" y="28" width="14" height="22" rx="6"/><rect class="d4" x="186" y="28" width="14" height="22" rx="6"/>
+        </svg></div>
+        <article class="card right">
+          <p class="c-era">1980s · Cassette player</p>
+          <h3 class="c-emo">Boredom</h3>
+          <p class="c-q">“Okay, that's side A. Flipping the tape. Still in line. Still staring at the same wall. Pretty sure I've memorized every inch of it by now.”</p>
+          <p class="c-real"><b>In the line:</b> For most of it, our view was one long wall.</p>
+          <button class="hear" type="button" data-key="walkman" aria-pressed="false"><svg viewBox="0 0 16 16"><path d="M2 5.5h3l4-3.5v12l-4-3.5H2z"/><path d="M11 5a4 4 0 0 1 0 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="hl">Hear it</span></button>
+        </article>
+      </div>
+
+      <div class="stop" data-key="answering" data-side="1" data-year="1990s" data-name="Answering machine">
+        <div class="art" aria-hidden="true"><svg viewBox="0 0 200 200">
+          <path class="dk" d="M20 146l18-56h124l18 56z"/>
+          <rect class="dk" x="20" y="146" width="160" height="20" rx="5"/>
+          <rect class="dc" x="46" y="102" width="62" height="32" rx="5"/>
+          <circle class="dk" cx="64" cy="118" r="7"/><circle class="dk" cx="90" cy="118" r="7"/>
+          <rect class="dg" x="122" y="122" width="14" height="10" rx="2"/><rect class="dg" x="140" y="122" width="14" height="10" rx="2"/><rect class="dg" x="122" y="106" width="32" height="10" rx="2"/>
+          <circle class="d4 blink" cx="160" cy="100" r="5"/>
+          <rect class="dk" x="150" y="54" width="34" height="40" rx="8" transform="rotate(-8 167 74)"/>
+        </svg></div>
+        <article class="card left">
+          <p class="c-era">1990s · Answering machine</p>
+          <h3 class="c-emo">Resignation</h3>
+          <p class="c-q">“Hi, you've reached us! We can't make it to the next session right now, because we're still in the merch line. Please leave a message after the beep.”</p>
+          <p class="c-real"><b>In the line:</b> Sessions came and went while we waited.</p>
+          <button class="hear" type="button" data-key="answering" aria-pressed="false"><svg viewBox="0 0 16 16"><path d="M2 5.5h3l4-3.5v12l-4-3.5H2z"/><path d="M11 5a4 4 0 0 1 0 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="hl">Hear it</span></button>
+        </article>
+      </div>
+
+      <div class="stop" data-key="ipod" data-side="-1" data-year="2000s" data-name="MP3 player">
+        <div class="art" aria-hidden="true"><svg viewBox="0 0 200 200">
+          <path class="dl" stroke-width="3" d="M100 180c0 10-30 6-44 0M100 180c0 8 26 10 40 4"/>
+          <rect class="d1" x="56" y="16" width="88" height="164" rx="16"/>
+          <rect class="d3" x="66" y="28" width="68" height="54" rx="5"/>
+          <rect class="dc" x="72" y="40" width="40" height="4" rx="2" opacity=".6"/><rect class="dc" x="72" y="50" width="52" height="4" rx="2" opacity=".6"/><rect class="dc" x="72" y="68" width="56" height="5" rx="2.5" opacity=".6"/>
+          <circle class="dg" cx="100" cy="130" r="34"/>
+          <circle class="d1" cx="100" cy="130" r="12"/>
+        </svg></div>
+        <article class="card right">
+          <p class="c-era">2000s · MP3 player</p>
+          <h3 class="c-emo">Lost track of time</h3>
+          <p class="c-q">“Shuffle's been going for who knows how long. Is it still morning? Did we miss a session? Honestly, I've lost track of why we're even standing here.”</p>
+          <p class="c-real"><b>In the line:</b> We had no idea how long we'd been waiting, or why.</p>
+          <button class="hear" type="button" data-key="ipod" aria-pressed="false"><svg viewBox="0 0 16 16"><path d="M2 5.5h3l4-3.5v12l-4-3.5H2z"/><path d="M11 5a4 4 0 0 1 0 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="hl">Hear it</span></button>
+        </article>
+      </div>
+
+      <div class="stop" data-key="phone" data-side="1" data-year="2010s" data-name="Smartphone">
+        <div class="art" aria-hidden="true"><svg viewBox="0 0 200 200">
+          <rect class="dk" x="58" y="12" width="84" height="176" rx="18"/>
+          <rect class="dc" x="65" y="26" width="70" height="148" rx="9"/>
+          <g class="d3"><rect x="74" y="92" width="4" height="16" rx="2"/><rect x="81" y="84" width="4" height="32" rx="2"/><rect x="88" y="76" width="4" height="48" rx="2"/><rect x="95" y="88" width="4" height="24" rx="2"/><rect x="102" y="70" width="4" height="60" rx="2"/><rect x="109" y="82" width="4" height="36" rx="2"/><rect x="116" y="90" width="4" height="20" rx="2"/><rect x="123" y="96" width="4" height="8" rx="2"/></g>
+          <circle class="d4" cx="100" cy="152" r="10"/>
+          <rect class="dg" x="80" y="38" width="40" height="5" rx="2.5"/>
+        </svg></div>
+        <article class="card left">
+          <p class="c-era">2010s · Smartphone voice memo</p>
+          <h3 class="c-emo">Hope</h3>
+          <p class="c-q">“Wait, wait, we're finally at the corner. I can see the end of the wall, and I think those are the booths! Why is everyone wearing headphones?”</p>
+          <p class="c-real"><b>In the line:</b> We rounded the corner and finally saw the booths, and the headphones.</p>
+          <button class="hear" type="button" data-key="phone" aria-pressed="false"><svg viewBox="0 0 16 16"><path d="M2 5.5h3l4-3.5v12l-4-3.5H2z"/><path d="M11 5a4 4 0 0 1 0 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="hl">Hear it</span></button>
+        </article>
+      </div>
+
+      <div class="stop" data-key="agent" data-side="-1" data-year="2026" data-name="Voice agent">
+        <div class="art" aria-hidden="true"><svg viewBox="0 0 200 200">
+          <path class="dl" stroke-width="10" d="M42 120C42 34 158 34 158 120"/>
+          <rect class="dk" x="24" y="100" width="40" height="66" rx="18"/><rect class="dk" x="136" y="100" width="40" height="66" rx="18"/>
+          <circle class="d2" cx="100" cy="134" r="28" opacity=".35"/><circle class="d3" cx="100" cy="134" r="19" opacity=".6"/><circle class="d5" cx="100" cy="134" r="10"/>
+          <rect class="d3" x="34" y="116" width="20" height="34" rx="9" opacity=".7"/><rect class="d3" x="146" y="116" width="20" height="34" rx="9" opacity=".7"/>
+        </svg></div>
+        <article class="card right">
+          <p class="c-era">2026 · Voice agent, over headphones</p>
+          <h3 class="c-emo">Realization</h3>
+          <p class="c-q">“Hi there! Great pick. Before I can hand that over, I just need you to answer three quick questions. First one: what is ASR?”</p>
+          <p class="c-real"><b>In the line:</b> Three spoken questions for every person. That's why.</p>
+          <button class="hear" type="button" data-key="agent" aria-pressed="false"><svg viewBox="0 0 16 16"><path d="M2 5.5h3l4-3.5v12l-4-3.5H2z"/><path d="M11 5a4 4 0 0 1 0 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="hl">Hear it</span></button>
+        </article>
+      </div>
+
+      <div class="stop" data-key="narrator-out" data-side="0">
+        <div class="art" aria-hidden="true"><svg viewBox="0 0 200 200">
+          <path class="dl" stroke-width="13" d="M100 98C80 66 34 66 34 98S80 130 100 98 120 66 166 98 120 130 100 98Z"/>
+          <rect class="d1" x="40" y="150" width="120" height="4"/><rect class="d2" x="40" y="155" width="120" height="4"/><rect class="d3" x="40" y="160" width="120" height="4"/><rect class="d4" x="40" y="165" width="120" height="4"/><rect class="d5" x="40" y="170" width="120" height="4"/>
+        </svg></div>
+        <article class="card mid">
+          <p class="c-era">Narrator</p>
+          <h3 class="c-emo">The twist</h3>
+          <p class="c-q">“Every machine in this tunnel was built to make talking easier. The newest one did. It also made an hour-long line. Friction doesn't disappear. It moves.”</p>
+          <button class="hear" type="button" data-key="narrator-out" aria-pressed="false"><svg viewBox="0 0 16 16"><path d="M2 5.5h3l4-3.5v12l-4-3.5H2z"/><path d="M11 5a4 4 0 0 1 0 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span class="hl">Hear it</span></button>
+        </article>
+      </div>
+
+    </div>
+    <div class="dial" aria-hidden="true"><div class="dial-in" id="dial"><b class="needle" id="needle"></b></div></div>
+  </div>
+</section>
 
 <!-- The line: scroll to wait -->
 <section class="line-sec" id="line" aria-label="Waiting in the merch line">
   <div class="stage">
     <div class="wrap stage-top">
-      <p class="stage-h">Scroll to wait in line.</p>
-      <div class="lcd" id="lcd" role="img" aria-label="Time in line"><small>Time in line</small><b id="clock">0:00:00</b></div>
+      <p class="stage-h">Now wait in it.</p>
+      <div class="lcd" id="lcd" role="img" aria-label="Time in line"><small id="lcd-l">Time in line</small><b id="clock">0:00:00</b></div>
     </div>
     <div class="wrap" style="min-height:0">
       <svg class="scene" id="scene" viewBox="0 0 1000 640" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
+        <defs>
+          <pattern id="hatch" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="14" fill="var(--hair-2)"/></pattern>
+        </defs>
+        <rect class="floor" x="20" y="20" width="960" height="600" rx="16"/>
         <g class="booths">
-          <g transform="translate(300 28)"><rect class="booth-b" x="0" y="0" width="84" height="118" rx="10"/><rect class="booth-s" x="10" y="10" width="64" height="70" rx="5"/><circle class="booth-o o1" cx="42" cy="45" r="16"/><text class="booth-l" x="42" y="104" text-anchor="middle">BOOTH 1</text></g>
-          <g transform="translate(458 28)"><rect class="booth-b" x="0" y="0" width="84" height="118" rx="10"/><rect class="booth-s" x="10" y="10" width="64" height="70" rx="5"/><circle class="booth-o b2 o2" cx="42" cy="45" r="16"/><text class="booth-l" x="42" y="104" text-anchor="middle">BOOTH 2</text></g>
-          <g transform="translate(616 28)"><rect class="booth-b" x="0" y="0" width="84" height="118" rx="10"/><rect class="booth-s" x="10" y="10" width="64" height="70" rx="5"/><circle class="booth-o b3 o3" cx="42" cy="45" r="16"/><text class="booth-l" x="42" y="104" text-anchor="middle">BOOTH 3</text></g>
-          <g class="bubble" transform="translate(712 18)"><rect x="0" y="0" width="150" height="40" rx="10"/><path d="M8 30l-14 16 26-10z"/><text x="75" y="27" text-anchor="middle">What is ASR?</text></g>
+          <g transform="translate(470 54)"><rect class="booth-b" x="0" y="0" width="76" height="98" rx="9"/><rect class="booth-s" x="9" y="9" width="58" height="56" rx="5"/><circle class="booth-o o1" cx="38" cy="37" r="14"/></g>
+          <g transform="translate(580 54)"><rect class="booth-b" x="0" y="0" width="76" height="98" rx="9"/><rect class="booth-s" x="9" y="9" width="58" height="56" rx="5"/><circle class="booth-o b2 o2" cx="38" cy="37" r="14"/></g>
+          <g transform="translate(690 54)"><rect class="booth-b" x="0" y="0" width="76" height="98" rx="9"/><rect class="booth-s" x="9" y="9" width="58" height="56" rx="5"/><circle class="booth-o b3 o3" cx="38" cy="37" r="14"/></g>
+          <g class="person" transform="translate(508 200)"><circle cx="0" cy="-30" r="8"/><rect x="-10" y="-21" width="20" height="25" rx="9"/><path class="hp" d="M-10-31a10 10 0 0 1 20 0"/></g>
+          <g class="person" transform="translate(618 200)"><circle cx="0" cy="-30" r="8"/><rect x="-10" y="-21" width="20" height="25" rx="9"/><path class="hp" d="M-10-31a10 10 0 0 1 20 0"/></g>
+          <g class="person" transform="translate(728 200)"><circle cx="0" cy="-30" r="8"/><rect x="-10" y="-21" width="20" height="25" rx="9"/><path class="hp" d="M-10-31a10 10 0 0 1 20 0"/></g>
+          <g class="bubble" transform="translate(790 70)"><rect x="0" y="0" width="150" height="38" rx="10"/><path d="M8 28l-16 14 28-8z"/><text x="75" y="26" text-anchor="middle">What is ASR?</text></g>
+          <text class="lbl" x="618" y="244" text-anchor="middle">BOOTHS · HEADPHONES ON</text>
         </g>
+        <rect class="wall" x="20" y="296" width="800" height="20"/>
+        <text class="wall-t" x="420" y="312" text-anchor="middle">THE WALL · ALMOST THE LENGTH OF THE FLOOR</text>
         <g class="band">
-          <path id="qpath" class="q1" d="M70 594H860A55 55 0 0 0 860 484H160A55 55 0 0 1 160 374H860A55 55 0 0 0 860 264H500V196"/>
-          <path class="q2" d="M70 594H860A55 55 0 0 0 860 484H160A55 55 0 0 1 160 374H860A55 55 0 0 0 860 264H500V196"/>
-          <path class="q3" d="M70 594H860A55 55 0 0 0 860 484H160A55 55 0 0 1 160 374H860A55 55 0 0 0 860 264H500V196"/>
-          <path class="q4" d="M70 594H860A55 55 0 0 0 860 484H160A55 55 0 0 1 160 374H860A55 55 0 0 0 860 264H500V196"/>
-          <path class="q5" d="M70 594H860A55 55 0 0 0 860 484H160A55 55 0 0 1 160 374H860A55 55 0 0 0 860 264H500V196"/>
+          <path id="qpath" class="q1" d="M940 572H100Q60 572 60 532V388Q60 352 96 352H846Q890 352 890 308V290Q890 252 852 252H776"/>
+          <path class="q2" d="M940 572H100Q60 572 60 532V388Q60 352 96 352H846Q890 352 890 308V290Q890 252 852 252H776"/>
+          <path class="q3" d="M940 572H100Q60 572 60 532V388Q60 352 96 352H846Q890 352 890 308V290Q890 252 852 252H776"/>
+          <path class="q4" d="M940 572H100Q60 572 60 532V388Q60 352 96 352H846Q890 352 890 308V290Q890 252 852 252H776"/>
+          <path class="q5" d="M940 572H100Q60 572 60 532V388Q60 352 96 352H846Q890 352 890 308V290Q890 252 852 252H776"/>
         </g>
         <g id="crowd"></g>
+        <g class="fog" id="fog">
+          <rect class="fill" x="22" y="22" width="956" height="274" rx="14"/>
+          <rect x="22" y="22" width="956" height="274" rx="14" fill="url(#hatch)"/>
+          <text x="500" y="168" text-anchor="middle">? ? ?  AROUND THE CORNER  ? ? ?</text>
+        </g>
+        <text class="lbl" x="964" y="606" text-anchor="end">NOT TO SCALE · FROM MEMORY</text>
+        <g id="tags"></g>
       </svg>
     </div>
     <div class="wrap capwrap" id="caps">
-      <p class="cap"><span class="n">0:00</span>The merch was free. A colleague and I got in line for it.</p>
-      <p class="cap"><span class="n">Up front</span>Three booths, each with a screen and an ElevenLabs voice agent. Nobody behind a table handing things out.</p>
-      <p class="cap"><span class="n">The catch</span>Everyone ahead of us had to tap the screen to pick something, then answer three questions out loud.</p>
-      <p class="cap"><span class="n">The hold-up</span>Question one stopped almost everyone. Every so often a staffer stepped in to help someone get past it.</p>
-      <p class="cap"><span class="n">1:00:00+</span>Well over an hour later, it was our turn.</p>
+      <p class="cap" data-at="0"><span class="n">0:00</span>We walked up to what looked like a normal line. We had no idea where it went.</p>
+      <p class="cap" data-at=".12"><span class="n">Wait…</span>It kept going. The line wrapped around the entire floor at David Geffen Hall.</p>
+      <p class="cap" data-at=".3"><span class="n">?:??:??</span>Sessions came and went. We lost track of how long we'd been waiting, and we had no idea why it was so slow.</p>
+      <p class="cap" data-at=".5"><span class="n">The wall</span>For most of it, we stared at a wall that ran almost the length of the floor.</p>
+      <p class="cap" data-at=".78"><span class="n">The corner</span>Then we turned the corner and saw the booths: people in headphones, talking to screens, ordering merch by voice.</p>
+      <p class="cap" data-at=".94"><span class="n">1:00:00+</span>That's when we figured out why it was taking so long.</p>
     </div>
   </div>
 </section>
@@ -312,12 +635,13 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14.5
   <div class="wrap">
     <p class="kick">How the booth worked</p>
     <h2>Free merch, one spoken quiz away</h2>
-    <p class="muted">There were no humans handing out merch at that point. Distribution ran entirely through three booths, each with a touchscreen and an ElevenLabs voice agent. The flow was simple on paper.</p>
+    <p class="muted">There were no humans handing out merch at that point. Distribution ran through three booths, each with a touchscreen, a pair of headphones and an ElevenLabs voice agent. The flow was simple on paper.</p>
     <ol class="steps">
-      <li><b>01</b><strong>Tap</strong>Pick what you want on the screen.</li>
-      <li><b>02</b><strong>Question one</strong>Out loud. The hard one.</li>
-      <li><b>03</b><strong>Question two</strong>Out loud. Easier. I don't remember it.</li>
-      <li><b>04</b><strong>Question three</strong>Out loud. Then the merch is yours.</li>
+      <li><b>01</b><strong>Headphones on</strong>Step up and talk to the agent.</li>
+      <li><b>02</b><strong>Tap</strong>Pick what you want on the screen.</li>
+      <li><b>03</b><strong>Question one</strong>Out loud. The hard one.</li>
+      <li><b>04</b><strong>Question two</strong>Out loud. Easier. I don't remember it.</li>
+      <li><b>05</b><strong>Question three</strong>Out loud. Then the merch is yours.</li>
     </ol>
   </div>
 </section>
@@ -329,15 +653,15 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14.5
       <p class="kick">Your turn</p>
       <h2>Step up to booth 2</h2>
       <p class="muted">This is the booth as I remember it, minus the hour. Tap your way through. The answers you pick stand in for what you'd say out loud.</p>
-      <p class="muted">Pay attention to question one. That's where the line went to die.</p>
+      <p class="muted">Pay attention to question one. That's where most of the hour went.</p>
     </div>
     <div class="kiosk">
       <div class="k-shell">
         <div class="k-top"><span>Merch · Booth 2 of 3</span><span>At the booth <b id="k-time">0:00</b></span></div>
         <div class="k-screen">
           <div class="k-orbwrap"><div class="orb" id="k-orb" aria-hidden="true"></div></div>
-          <p class="k-step" id="k-step">Tap to choose</p>
-          <p class="k-say" id="k-say" aria-live="polite">Hi there! Tap what you'd like.</p>
+          <p class="k-step" id="k-step">Booth 2</p>
+          <p class="k-say" id="k-say" aria-live="polite">Welcome!</p>
           <p class="k-note" id="k-note" hidden></p>
           <div class="k-human" id="k-human" hidden role="status"><svg viewBox="0 0 30 38" aria-hidden="true"><circle cx="15" cy="8" r="7"/><rect x="4" y="17" width="22" height="21" rx="9"/></svg><span id="k-human-t"></span></div>
           <div class="k-tiles" id="k-tiles"></div>
@@ -372,25 +696,37 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14.5
   </div>
 </section>
 
-<!-- Booth vs bank -->
-<section class="sec" id="bank">
+<!-- The argument -->
+<section class="sec" id="point">
   <div class="wrap">
-    <p class="kick">The other line of thought</p>
-    <h2>I've seen this booth before. It was a bank's phone line.</h2>
-    <p class="muted">Strip out the merch and the booth is a pattern I see in regulated industries all the time: a voice agent placed in front of something a customer wants, gated by questions that serve the business more than the customer.</p>
+    <p class="kick">The point</p>
+    <h2>AI can add friction, even when it's built to remove it.</h2>
+    <p class="muted">Every part of that booth was designed to take friction out. No staff to wait on, no forms: just talk. As far as I could tell, nothing broke. The voice agents did what they were set up to do. And it still produced a wait of well over an hour.</p>
+    <p class="muted">The friction didn't disappear. It moved, out of the conversation and into everything around it.</p>
+    <div class="moved">
+      <div><i>01</i><b>Into the queue</b>Every second the conversation added was multiplied by everyone standing behind it.</div>
+      <div><i>02</i><b>Into the unknown</b>From the line, nobody could see the booths, how long the wait was, or why. The answer was around a corner, behind a long wall.</div>
+      <div><i>03</i><b>Into people</b>Staff who weren't part of the design ended up helping anyway, one stuck question at a time.</div>
+    </div>
+
+    <h3 class="sub">Why I care about this in regulated industries</h3>
+    <p class="muted">Strip out the merch and the booth is a pattern I see in financial services all the time: a voice agent placed in front of something a customer wants, with questions that serve the process more than the person.</p>
     <div class="map" role="list">
       <div class="map-row" role="listitem"><div><b>At the booth</b>Question one asked for jargon I hadn't heard on stage all day.</div><i aria-hidden="true"></i><div class="bank"><b>On a bank's phone line</b>Security questions customers can't answer, like the exact amount of a recent deposit. They fail, call back or give up.</div></div>
       <div class="map-row" role="listitem"><div><b>At the booth</b>Staff stood nearby and helped people get past the question.</div><i aria-hidden="true"></i><div class="bank"><b>On a bank's phone line</b>Reps coaching callers through verification. If people routinely need help to pass a check, the check isn't working.</div></div>
-      <div class="map-row" role="listitem"><div><b>At the booth</b>Question three had one obvious answer: the host.</div><i aria-hidden="true"></i><div class="bank"><b>On a bank's phone line</b>Surveys built to flatter. You get a score, not a signal.</div></div>
+      <div class="map-row" role="listitem"><div><b>At the booth</b>Nobody in line could see what was coming or why it was slow.</div><i aria-hidden="true"></i><div class="bank"><b>On a bank's phone line</b>Hold queues with no position, no estimate and no reason. The wait feels longer than it is.</div></div>
       <div class="map-row" role="listitem"><div><b>At the booth</b>Three self-serve booths and no one at a table.</div><i aria-hidden="true"></i><div class="bank"><b>On a bank's phone line</b>A contact center scored on containment. The dashboard says “automated.” The customer says “an hour.”</div></div>
     </div>
-    <h2 style="margin-top:56px">What I'd tell anyone putting a voice agent at the front door</h2>
+
+    <h3 class="sub">Design for the whole journey, not just the conversation</h3>
+    <p class="muted">As more of these agents end up at the front door, the job changes. It's no longer just making one conversation smooth. It's deciding where friction belongs across the whole experience.</p>
     <ol class="take">
+      <li><div><b>Design the journey, not just the dialogue.</b><span>The conversation was smooth. The hour around it wasn't. Map the line, the wait, the signage and the fallback, not only the script.</span></div></li>
+      <li><div><b>Make the wait visible.</b><span>We couldn't see the booths, the time or the reason. Telling people what's ahead, and why, changes how a wait feels.</span></div></li>
       <li><div><b>Ask only what the moment needs.</b><span>The booth needed to know which item you wanted. Everything after that felt like a quiz.</span></div></li>
       <li><div><b>Speak your customer's language, not your roadmap's.</b><span>“ASR” is how builders talk. Customers say “it didn't hear me.”</span></div></li>
       <li><div><b>Design the human in.</b><span>The staff ended up in the loop anyway. Make the hand-off official, quick and logged, so it's a feature instead of a workaround.</span></div></li>
-      <li><div><b>Measure the line, not the bot.</b><span>Every second a voice flow adds gets multiplied by everyone waiting behind it. Containment rate won't show you that. Wait time will.</span></div></li>
-      <li><div><b>Friction should protect someone.</b><span>Banks add friction on purpose: fraud checks, step-up verification, cooling-off periods. Good friction protects a customer. This friction protected free merch.</span></div></li>
+      <li><div><b>Put friction only where it protects someone.</b><span>Banks add friction on purpose: fraud checks, step-up verification, cooling-off periods. Good friction protects a customer. Accidental friction just slows everyone down.</span></div></li>
     </ol>
   </div>
 </section>
@@ -427,9 +763,9 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14.5
 <section class="sec outro">
   <div class="wrap narrow">
     <p class="kick">The kicker</p>
-    <h2>The tech worked. The questions didn't.</h2>
-    <p class="muted" style="margin-inline:auto">The summit was incredibly well run, which is exactly why this line stuck with me. The voice agent did its job. Someone just decided to put a quiz between people and the thing they came for, and to ask the hardest question first.</p>
-    <p class="muted" style="margin-inline:auto">Question three asked which company has the best voice models. Maybe the one asking does. But the best model in the world can't rescue a question nobody should have been asked.</p>
+    <h2>Friction doesn't disappear. It moves.</h2>
+    <p class="muted" style="margin-inline:auto">The summit was incredibly well run, and the technology worked. That's exactly why this hour stuck with me. Nothing failed. The friction came from choices made around the technology: what to ask, in what order, and what the people waiting could see.</p>
+    <p class="muted" style="margin-inline:auto">As voice becomes the interface for more of what we do, the work isn't only removing friction from one conversation. It's deciding where friction belongs across the whole experience, and putting it only where it protects someone.</p>
     <p style="margin-top:40px"><a class="door" href="../#encore" aria-label="Back through the door to the hidden track">∞</a></p>
     <div class="links"><a href="../#encore">Back to the hidden track</a><a href="../">Start the album over</a></div>
   </div>
@@ -440,8 +776,9 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14.5
   <div class="stripes" aria-hidden="true"><i class="f1"></i><i class="f2"></i><i class="f3"></i><i class="f4"></i><i class="f5"></i></div>
   <div class="wrap">
     <div>
-      <p><b>About this bonus track.</b> Written by Carson Boykin after the ElevenLabs Summit NYC on November 11, 2026. It isn't narrated yet.</p>
-      <p><b>From memory.</b> I don't have photos from the merch booths, so the line, the booths and the booth screen are illustrations recreated from my memory. The booth's lines are paraphrased, and its replies to wrong answers, the booth timer and the toy model's inputs are illustrative.</p>
+      <p><b>About this bonus track.</b> Written by Carson Boykin after the ElevenLabs Summit NYC on November 11, 2026. The essay isn't narrated yet.</p>
+      <p><b>The voices.</b> Each machine's voice was made with ElevenLabs Voice Design from a generic description (no real person's voice), then given an era-appropriate sound with simple audio filters. The narrator is the album's Wildlife Narrator voice. The lines are written for effect; the “In the line” notes are what actually happened.</p>
+      <p><b>From memory.</b> I don't have photos from the merch line, so the floor plan, booths and booth screen are illustrations recreated from memory and not to scale. The booth's lines are paraphrased, and its replies to wrong answers, the booth timer and the toy model's inputs are illustrative.</p>
     </div>
     <div>
       <h3>Background</h3>
@@ -458,68 +795,208 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14.5
   "use strict";
   var $ = function(s, r){ return (r || document).querySelector(s); };
   var $$ = function(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)");
   var pad = function(n){ return (n < 10 ? "0" : "") + n; };
+  var clamp = function(v, a, b){ return Math.max(a, Math.min(b, v)); };
   var NS = "http://www.w3.org/2000/svg";
   function mmss(s){ s = Math.max(0, Math.round(s)); return Math.floor(s / 60) + ":" + pad(s % 60); }
   function hms(s){ s = Math.max(0, Math.floor(s)); return Math.floor(s / 3600) + ":" + pad(Math.floor(s / 60) % 60) + ":" + pad(s % 60); }
 
+  /* ───────────── Sound: one audio element, voices from ElevenLabs ───────────── */
+  var aud = new Audio(), soundOn = false, playingKey = null, unlocked = false;
+  aud.preload = "none";
+  var actx = null, analyser = null, buf = null, lvl = 0, loopOn = false;
+  var SPK_ON = '<path d="M2 5.5h3l4-3.5v12l-4-3.5H2z"/><path d="M11 5a4 4 0 0 1 0 6M12.6 3.2a6.5 6.5 0 0 1 0 9.6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+  var SPK_OFF = '<path d="M2 5.5h3l4-3.5v12l-4-3.5H2z"/><path d="M11 5.5l4 5M15 5.5l-4 5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>';
+  function ensureAnalyser(){
+    if (actx){ if (actx.state === "suspended") actx.resume(); return; }
+    var AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC || location.protocol === "file:") return;
+    try {
+      actx = new AC(); analyser = actx.createAnalyser(); analyser.fftSize = 512; buf = new Uint8Array(analyser.fftSize);
+      actx.createMediaElementSource(aud).connect(analyser); analyser.connect(actx.destination);
+    } catch (e) { actx = null; analyser = null; }
+  }
+  function level(){
+    var target = 0;
+    if (playingKey && !aud.paused){
+      if (analyser){
+        analyser.getByteTimeDomainData(buf);
+        var sum = 0; for (var i = 0; i < buf.length; i++){ var v = (buf[i] - 128) / 128; sum += v * v; }
+        target = Math.min(1, Math.sqrt(sum / buf.length) * 4.2);
+      } else { var t = Date.now(); target = .35 + .25 * Math.sin(t / 140) * Math.sin(t / 370); }
+    }
+    lvl += (target - lvl) * (target > lvl ? .45 : .12);
+    var el = playingKey && $('.stop[data-key="' + playingKey + '"] .art');
+    $$(".art").forEach(function(a){ a.style.setProperty("--lvl", a === el ? lvl.toFixed(3) : "0"); });
+    if (playingKey || lvl > .01) requestAnimationFrame(level); else loopOn = false;
+  }
+  function kick(){ if (!loopOn){ loopOn = true; requestAnimationFrame(level); } }
+  function setPlaying(key){
+    playingKey = key;
+    $$(".stop").forEach(function(s){ s.classList.toggle("speaking", s.dataset.key === key); });
+    $$(".hear").forEach(function(b){
+      var on = b.dataset.key === key;
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+      b.querySelector(".hl").textContent = on ? "Playing" : "Hear it";
+    });
+  }
+  function play(key){
+    ensureAnalyser();
+    aud.src = "audio/" + key + ".mp3";
+    try { aud.currentTime = 0; } catch (e) {}
+    setPlaying(key); kick();
+    var pr = aud.play();
+    if (pr && pr.catch) pr.catch(function(e){ if (!e || e.name !== "AbortError") setPlaying(null); });
+  }
+  function stop(){ aud.pause(); setPlaying(null); }
+  aud.addEventListener("ended", function(){ setPlaying(null); });
+  // iOS only lets an audio element play from scroll once a tap has started it
+  function unlock(){
+    if (unlocked) return; unlocked = true;
+    aud.muted = true; aud.src = "audio/narrator-in.mp3";
+    var pr = aud.play();
+    var done = function(){ if (!playingKey) aud.pause(); aud.muted = false; };
+    if (pr && pr.then) pr.then(done, done); else done();
+  }
+  function setSound(on){
+    soundOn = on;
+    $$(".soundbtn").forEach(function(b){
+      b.setAttribute("aria-pressed", on ? "true" : "false");
+      b.setAttribute("aria-label", on ? "Turn sound off" : "Turn sound on");
+      b.querySelector("svg").innerHTML = on ? SPK_ON : SPK_OFF;
+      b.querySelector(".sl").textContent = on ? "Sound on" : "Sound off";
+    });
+    if (on){ unlock(); if (holdKey && holdKey !== playingKey) play(holdKey); }
+    else stop();
+  }
+  $$(".soundbtn").forEach(function(b){ b.addEventListener("click", function(){ setSound(!soundOn); }); });
+  $$(".hear").forEach(function(b){ b.addEventListener("click", function(){
+    if (playingKey === b.dataset.key){ stop(); return; }
+    unlocked = true; play(b.dataset.key);
+  }); });
+  $("#fallgo").addEventListener("click", function(){
+    setSound(true);
+    var top = fall.getBoundingClientRect().top + window.scrollY + (fallOn ? (fall.offsetHeight - window.innerHeight) * .03 : 0);
+    window.scrollTo({ top: top, behavior: reduce.matches ? "auto" : "smooth" });
+  });
+
+  /* ───────────── The fall ───────────── */
+  var fall = $("#fall"), fstage = $(".fall-stage", fall), stops = $$(".stop", fall), N = stops.length, holdKey = null, lastHold = -1;
+  var machines = stops.filter(function(s){ return s.hasAttribute("data-year"); });
+  var dial = $("#dial"), needle = $("#needle"), dialLabels = [];
+  machines.forEach(function(s, k){
+    var x = (k / (machines.length - 1) * 100) + "%";
+    var tick = document.createElement("i"); tick.style.left = x; dial.appendChild(tick);
+    var lab = document.createElement("span"); lab.style.left = x; lab.textContent = s.dataset.year; dial.appendChild(lab); dialLabels.push(lab);
+  });
+  var fallOn = false;
+  function setupFall(){
+    fallOn = !reduce.matches;
+    fall.classList.toggle("static", !fallOn);
+    fall.style.setProperty("--n", N);
+    machines.forEach(function(m, k){ $(".art", m).style.setProperty("--age", (1 - k / (machines.length - 1)).toFixed(2)); });
+    if (!fallOn) stops.forEach(function(s){ var a = $(".art", s); a.style.transform = ""; a.style.opacity = ""; $(".card", s).classList.remove("on"); });
+  }
+  function drawFall(){
+    if (!fallOn) return;
+    var r = fall.getBoundingClientRect(), vh = window.innerHeight, span = Math.max(1, r.height - vh);
+    var p = clamp(-r.top / span, 0, 1), f = p * (N - .35) - .12;
+    var W = fstage.clientWidth, H = fstage.clientHeight, mobile = W < 760, hold = -1;
+    stops.forEach(function(s, j){
+      var u = f - j, art = $(".art", s), side = +s.dataset.side;
+      var tx = mobile ? 0 : side * W * .25, ty = mobile ? 0 : (side ? -H * .03 : -H * .1);
+      var sc, op, k, m;
+      if (u < -.7 || u > 1){ art.style.opacity = "0"; art.style.transform = "scale(.01)"; return; }
+      if (u < 0){ k = (u + .7) / .7; m = k * k; sc = .05 + .95 * m; op = Math.min(1, k * 1.6); tx *= m; ty *= m; }
+      else if (u <= .6){ sc = 1; op = 1; hold = j; }
+      else { k = (u - .6) / .4; sc = 1 + k * k * 3.2; op = 1 - k; tx *= 1 + k * 1.6; ty *= 1 + k * 1.6; }
+      art.style.opacity = op.toFixed(3);
+      art.style.transform = "translate(" + tx.toFixed(1) + "px," + ty.toFixed(1) + "px) scale(" + sc.toFixed(3) + ")";
+    });
+    if (hold !== lastHold){
+      lastHold = hold;
+      stops.forEach(function(s, j){ $(".card", s).classList.toggle("on", j === hold); });
+      holdKey = hold >= 0 ? stops[hold].dataset.key : null;
+      if (soundOn && holdKey && holdKey !== playingKey) play(holdKey);
+    }
+    var mi = clamp((f - 1) / (machines.length - 1), 0, 1);
+    needle.style.left = (mi * 100) + "%";
+    fstage.style.setProperty("--past", (1 - mi).toFixed(3));
+    var near = Math.round(mi * (machines.length - 1));
+    dialLabels.forEach(function(l, k){ l.classList.toggle("on", k === near); });
+  }
+
   /* ───────────── The line ───────────── */
-  var sec = $("#line"), path = $("#qpath"), crowd = $("#crowd"), clock = $("#clock"), lcd = $("#lcd"), caps = $$("#caps .cap");
-  var L = path.getTotalLength(), GAP = 48, START = 46, AHEAD = Math.floor((L - START) / GAP), BEHIND = 30;
+  var line = $("#line"), scene = $("#scene"), path = $("#qpath"), crowd = $("#crowd"), fog = $("#fog");
+  var clock = $("#clock"), lcd = $("#lcd"), lcdL = $("#lcd-l"), caps = $$("#caps .cap");
+  var L = path.getTotalLength(), GAP = 44, TAIL = 40, FRONT = L - 12, cornerS = L;
+  for (var s0 = 0; s0 < L; s0 += 4){ if (path.getPointAtLength(s0).y < 296){ cornerS = s0; break; } }
   function person(cls){
     var g = document.createElementNS(NS, "g"); g.setAttribute("class", "person " + (cls || ""));
-    var h = document.createElementNS(NS, "circle"); h.setAttribute("cx", "0"); h.setAttribute("cy", "-33"); h.setAttribute("r", "8.5");
-    var b = document.createElementNS(NS, "rect"); b.setAttribute("x", "-10.5"); b.setAttribute("y", "-23"); b.setAttribute("width", "21"); b.setAttribute("height", "27"); b.setAttribute("rx", "9");
+    var h = document.createElementNS(NS, "circle"); h.setAttribute("cx", "0"); h.setAttribute("cy", "-30"); h.setAttribute("r", "8");
+    var b = document.createElementNS(NS, "rect"); b.setAttribute("x", "-10"); b.setAttribute("y", "-21"); b.setAttribute("width", "20"); b.setAttribute("height", "25"); b.setAttribute("rx", "9");
     g.appendChild(h); g.appendChild(b); crowd.appendChild(g); return g;
   }
   var ahead = [], behind = [], i;
+  var AHEAD = Math.ceil((FRONT - TAIL) / GAP) + 1, BEHIND = AHEAD;
   for (i = 0; i < BEHIND; i++) behind.push(person());
   for (i = 0; i < AHEAD; i++) ahead.push(person());
   var pal = person("pal"), you = person("you");
-  var youTag = document.createElementNS(NS, "text"); youTag.setAttribute("class", "tag"); youTag.setAttribute("text-anchor", "middle"); youTag.textContent = "US"; crowd.appendChild(youTag);
-
+  var youTag = document.createElementNS(NS, "text"); youTag.setAttribute("class", "tag"); youTag.setAttribute("text-anchor", "middle"); youTag.textContent = "US"; $("#tags").appendChild(youTag);
   function place(g, s){
-    if (s < 0 || s > L + 12){ g.style.display = "none"; return; }
+    if (s < 0 || s > FRONT + 14){ g.style.display = "none"; return; }
     g.style.display = "";
-    var p = path.getPointAtLength(Math.min(L, s));
-    g.setAttribute("transform", "translate(" + p.x.toFixed(1) + " " + p.y.toFixed(1) + ")");
-    g.style.opacity = s > L - 6 ? Math.max(0, (L + 12 - s) / 18).toFixed(2) : "";
+    var pt = path.getPointAtLength(Math.min(FRONT, s));
+    g.setAttribute("transform", "translate(" + pt.x.toFixed(1) + " " + pt.y.toFixed(1) + ")");
+    g.style.opacity = s > FRONT - 6 ? Math.max(0, (FRONT + 14 - s) / 20).toFixed(2) : "";
   }
   // a queue moves in shuffles: wait, step forward, wait
   function stepped(p, n){
-    var t = p * n, k = Math.floor(t), f = t - k;
-    f = Math.min(1, Math.max(0, (f - .55) / .45)); f = f * f * (3 - 2 * f);
-    return Math.min(1, (k + f) / n);
+    var t = p * n, k = Math.floor(t), fr = t - k;
+    fr = clamp((fr - .55) / .45, 0, 1); fr = fr * fr * (3 - 2 * fr);
+    return Math.min(1, (k + fr) / n);
   }
-  var raf = 0;
+  var ZOOM = [600, 380, 400, 256], FULL = [0, 0, 1000, 640], CORNER_P = .78;
   function drawLine(){
-    raf = 0;
-    var r = sec.getBoundingClientRect(), span = Math.max(1, r.height - window.innerHeight);
-    var p = Math.min(1, Math.max(0, -r.top / span));
-    var q = stepped(p, 18), sYou = START + (L - START - 20) * q;
-    place(you, sYou); place(pal, sYou - GAP * .62);
-    var pt = path.getPointAtLength(Math.max(0, Math.min(L, sYou - GAP * .3)));
-    youTag.setAttribute("x", pt.x.toFixed(1)); youTag.setAttribute("y", (pt.y - 50).toFixed(1));
+    var r = line.getBoundingClientRect(), span = Math.max(1, r.height - window.innerHeight);
+    var p = clamp(-r.top / span, 0, 1);
+    // the camera starts on the tail of the line and pulls back to show the whole floor
+    var z = clamp((p - .06) / .18, 0, 1); z = z * z * (3 - 2 * z);
+    scene.setAttribute("viewBox", ZOOM.map(function(v, k){ return (v + (FULL[k] - v) * z).toFixed(1); }).join(" "));
+    var sYou = p < CORNER_P ? TAIL + (cornerS + 30 - TAIL) * stepped(p / CORNER_P, 18)
+                            : cornerS + 30 + (FRONT - cornerS - 30) * stepped(clamp((p - CORNER_P) / (.97 - CORNER_P), 0, 1), 3);
+    place(you, sYou); place(pal, sYou - GAP * .55);
+    var pt = path.getPointAtLength(clamp(sYou - GAP * .28, 0, L));
+    var under = pt.y > 330 && pt.y < 380;   // on the row beside the wall, put the tag under us
+    youTag.setAttribute("x", pt.x.toFixed(1)); youTag.setAttribute("y", (under ? pt.y + 30 : pt.y - 48).toFixed(1));
     for (var k = 0; k < ahead.length; k++) place(ahead[k], sYou + (k + 1) * GAP);
-    var joined = Math.floor(p * BEHIND * 1.1);
-    for (k = 0; k < behind.length; k++) place(behind[k], k < joined ? sYou - GAP * .62 - (k + 1) * GAP : -1);
-    var over = p > .985;
-    clock.textContent = over ? "1:00:00+" : hms(p * 3600);
-    lcd.classList.toggle("over", over);
-    lcd.setAttribute("aria-label", "Time in line: " + (over ? "over an hour" : Math.floor(p * 60) + " minutes"));
-    var ci = Math.min(caps.length - 1, Math.floor(p * caps.length * 1.02));
+    var joined = Math.floor(p * BEHIND * 1.2);
+    for (k = 0; k < behind.length; k++) place(behind[k], k < joined ? sYou - GAP * .55 - (k + 1) * GAP : -1);
+    fog.style.opacity = (1 - clamp((sYou - cornerS + 10) / 50, 0, 1)).toFixed(2);
+    // the clock: we knew the time at first, then lost track, then found out
+    var lost = p >= .3 && p < CORNER_P, over = p > .985;
+    clock.textContent = over ? "1:00:00+" : (lost ? "?:??:??" : hms(p * 3600));
+    lcdL.textContent = lost ? "Time in line · lost track" : "Time in line";
+    lcd.classList.toggle("over", over); lcd.classList.toggle("lost", lost);
+    lcd.setAttribute("aria-label", "Time in line: " + (over ? "over an hour" : lost ? "lost track" : Math.floor(p * 60) + " minutes"));
+    var ci = 0; caps.forEach(function(c, j){ if (p >= parseFloat(c.dataset.at)) ci = j; });
     caps.forEach(function(c, j){ c.classList.toggle("on", j === ci); });
   }
-  function onScroll(){ if (!raf) raf = requestAnimationFrame(drawLine); }
+
+  var raf = 0;
+  function frame(){ raf = 0; drawFall(); drawLine(); }
+  function onScroll(){ if (!raf) raf = requestAnimationFrame(frame); }
   window.addEventListener("scroll", onScroll, { passive: true });
   window.addEventListener("resize", onScroll);
-  drawLine();
+  if (reduce.addEventListener) reduce.addEventListener("change", function(){ setupFall(); onScroll(); });
+  setupFall(); frame();
 
   /* ───────────── The booth ───────────── */
   var K = {}, kTime = $("#k-time"), kSay = $("#k-say"), kStep = $("#k-step"), kNote = $("#k-note"), kOrb = $("#k-orb");
   var kTiles = $("#k-tiles"), kOpts = $("#k-opts"), kHuman = $("#k-human"), kDone = $("#k-done");
   function clear(el){ while (el.firstChild) el.removeChild(el.firstChild); }
-  function add(s){ K.t += s; kTime.textContent = mmss(K.t); }
+  function add(sec){ K.t += sec; kTime.textContent = mmss(K.t); }
   function talk(){ kOrb.classList.remove("talk"); void kOrb.offsetWidth; kOrb.classList.add("talk"); }
   function say(step, text, note){
     kStep.textContent = step; clear(kSay);
@@ -531,25 +1008,30 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14.5
     clear(kOpts); clear(kTiles);
     list.forEach(function(o){
       var b = document.createElement("button");
-      b.type = "button"; b.className = "k-opt mic" + (o.cls ? " " + o.cls : "");
-      b.textContent = o.label; b.setAttribute("aria-label", "Say: " + o.plain);
+      b.type = "button"; b.className = "k-opt " + (o.icon || "mic") + (o.cls ? " " + o.cls : "");
+      b.textContent = o.label; b.setAttribute("aria-label", o.icon === "phones" ? o.plain : "Say: " + o.plain);
       b.addEventListener("click", o.go); kOpts.appendChild(b);
     });
   }
   function focusFirst(){ var b = $("#k-opts button, #k-tiles button"); if (b && K.kbd) b.focus({ preventScroll: true }); }
-
   function start(){
     K = { t: 0, tries: 0, helped: 0, kbd: K.kbd };
     kTime.textContent = "0:00"; kHuman.hidden = true; kDone.hidden = true;
+    say("Booth 2", "Welcome! Put on the headphones to get started.");
+    options([{ label: "Put on the headphones", plain: "Put on the headphones", icon: "phones", go: function(){ add(8); pick(); } }]);
+    focusFirst();
+  }
+  function pick(){
     say("Tap to choose", "Hi there! Tap what you'd like.");
     clear(kOpts); clear(kTiles);
     ["This one", "That one", "The other one"].forEach(function(name){
       var b = document.createElement("button"), art = document.createElement("span"), t = document.createElement("span");
-      b.type = "button"; b.className = "k-tile"; art.className = "art"; art.setAttribute("aria-hidden", "true"); t.textContent = name;
+      b.type = "button"; b.className = "k-tile"; art.className = "art2"; art.setAttribute("aria-hidden", "true"); t.textContent = name;
       b.appendChild(art); b.appendChild(t);
       b.addEventListener("click", function(){ add(10); q1("Great pick. Answer three quick questions and it's yours. First: what is ASR?"); });
       kTiles.appendChild(b);
     });
+    focusFirst();
   }
   function q1(line){
     say("Question 1 of 3", line);
@@ -572,11 +1054,11 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14.5
   }
   function q2(){
     kHuman.hidden = true;
-    var red = document.createElement("span"), sr = document.createElement("span");
+    var red = document.createElement("span"), sr = document.createElement("span"), wrap = document.createElement("span");
     red.className = "redact"; red.setAttribute("aria-hidden", "true");
-    [3.2, 1.6, 2.4, 4.4, 2].forEach(function(w){ var i = document.createElement("i"); i.style.width = w + "ch"; red.appendChild(i); });
-    sr.textContent = "Question two, which I don't remember."; sr.style.cssText = "position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)";
-    var wrap = document.createElement("span"); wrap.appendChild(red); wrap.appendChild(sr);
+    [3.2, 1.6, 2.4, 4.4, 2].forEach(function(w){ var b = document.createElement("i"); b.style.width = w + "ch"; red.appendChild(b); });
+    sr.className = "sr"; sr.textContent = "Question two, which I don't remember.";
+    wrap.appendChild(red); wrap.appendChild(sr);
     say("Question 2 of 3", wrap, "I honestly don't remember question two. It was easier.");
     options([{ label: "“[Answers it easily]”", plain: "the answer to question two", go: function(){ add(20); q3("Correct! Last one: which company has the best voice models?"); } }]);
     focusFirst();
@@ -634,6 +1116,7 @@ footer ul{list-style:none;margin:0;padding:0;display:grid;gap:6px;font-size:14.5
     paintTheme();
   }); });
   paintTheme();
+  setSound(false);
 })();
 </script>
 </body>
