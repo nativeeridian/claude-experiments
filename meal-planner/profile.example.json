@@ -1,0 +1,25 @@
+{
+  "people": [
+    {
+      "id": "me",
+      "name": "Me",
+      "diet": "omnivore",
+      "goals": "Endurance and strength training 5-6 days a week."
+    },
+    {
+      "id": "partner",
+      "name": "Partner",
+      "diet": "lacto-ovo vegetarian",
+      "goals": "Health and fitness; targets not set yet."
+    }
+  ],
+  "cooking_minutes": {
+    "monday": 45,
+    "tuesday": 45,
+    "wednesday": 45,
+    "thursday": 45,
+    "friday": 75,
+    "saturday": 75,
+    "sunday": 75
+  }
+}
