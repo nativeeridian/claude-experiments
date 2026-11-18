@@ -1,5 +1,8 @@
 """Terminal chat.
 
+    uv run meal-agent            chat with Claude (needs ANTHROPIC_API_KEY)
+    uv run meal-agent --demo     scripted replies, no key needed
+
 Commands:
   /trace    what happened in the last turn: model calls, stop reasons, tokens, tool calls
   /tools    the tool definitions exactly as Claude sees them
@@ -8,6 +11,7 @@ Commands:
   /quit     leave
 """
 
+import argparse
 import asyncio
 import json
 import os
@@ -21,12 +25,8 @@ from rich.markdown import Markdown
 from rich.table import Table
 
 from meal_agent.config import PROJECT_ROOT, Settings
-from meal_agent.harness.client import AnthropicModelClient
-from meal_agent.harness.loop import run_turn
-from meal_agent.harness.prompts import load_system_prompt
-from meal_agent.harness.tools import ToolCall, ToolRegistry
-from meal_agent.harness.trace import Tracer, TracingModelClient
-from meal_agent.tools.basics import register_basic_tools
+from meal_agent.harness.session import ChatSession, make_model_client
+from meal_agent.harness.tools import ToolCall
 
 STOP_NOTES = {
     "max_tokens": "The answer was cut off (max_tokens).",
@@ -43,8 +43,8 @@ def show_tool_call(console: Console, call: ToolCall) -> None:
         console.print(f"  [dim]→ {call.name}({args})  {call.duration_ms:.0f} ms[/]")
 
 
-def show_trace(console: Console, tracer: Tracer) -> None:
-    turn = tracer.last_turn
+def show_trace(console: Console, session: ChatSession) -> None:
+    turn = session.tracer.last_turn
     if not turn.model_calls:
         console.print("[dim]No turn recorded yet.[/]")
         return
@@ -64,7 +64,7 @@ def show_trace(console: Console, tracer: Tracer) -> None:
     console.print(table)
     for call in turn.tool_calls:
         show_tool_call(console, call)
-    console.print(f"[dim]Full requests and responses: {tracer.path}[/]")
+    console.print(f"[dim]Full requests and responses: {session.tracer.path}[/]")
 
 
 def show_history(console: Console, messages: list[dict[str, Any]]) -> None:
@@ -77,19 +77,15 @@ def show_history(console: Console, messages: list[dict[str, Any]]) -> None:
         console.print(f"[dim]{i:>3}[/] [bold]{message['role']:<9}[/] {summary}")
 
 
-async def chat(settings: Settings) -> None:
+async def chat(session: ChatSession, *, label: str) -> None:
     console = Console()
-    system = load_system_prompt()  # frozen for the whole session
 
-    registry = ToolRegistry()
-    register_basic_tools(registry, settings)
-    tracer = Tracer.for_new_session(settings.data_dir / "traces")
-    registry.add_listener(tracer.record_tool_call)
-    registry.add_listener(lambda call: show_tool_call(console, call))
-    client = TracingModelClient(AnthropicModelClient(settings), tracer)
+    def on_event(event: str, data: Any) -> None:
+        if event == "tool_call":
+            show_tool_call(console, data)
 
-    messages: list[dict[str, Any]] = []
-    console.print(f"[bold]Meal planner[/] · {settings.model} · /trace /tools /history /quit\n")
+    session.tracer.add_listener(on_event)
+    console.print(f"[bold]Meal planner[/] · {label} · /trace /tools /history /quit\n")
 
     while True:
         try:
@@ -101,45 +97,29 @@ async def chat(settings: Settings) -> None:
         if user_text in ("/quit", "/exit"):
             break
         if user_text == "/trace":
-            show_trace(console, tracer)
+            show_trace(console, session)
             continue
         if user_text == "/tools":
-            console.print_json(json.dumps(registry.definitions()))
+            console.print_json(json.dumps(session.registry.definitions()))
             continue
         if user_text == "/history":
-            show_history(console, messages)
+            show_history(console, session.messages)
             continue
         if user_text == "/system":
-            console.print(system)
+            console.print(session.system)
             continue
 
-        turn_start = len(messages)
-        messages.append({"role": "user", "content": user_text})
-        tracer.start_turn(user_text)
         try:
             with console.status("thinking…"):
-                result = await run_turn(
-                    client,
-                    registry,
-                    messages,
-                    system=system,
-                    max_iterations=settings.max_iterations,
-                )
-        except NotImplementedError as e:
-            del messages[turn_start:]
-            console.print(f"[yellow]{e}[/]")
-            continue
+                result = await session.send(user_text)
         except anthropic.APIError as e:
-            # Dropping the unfinished tail is safe: what's left is a prefix the API has
-            # already seen, so it's not an edit of history.
-            del messages[turn_start:]
             console.print(f"[red]API error:[/] {e}")
             continue
 
         console.print(Markdown(result.text or "_(no text)_"))
         if result.stop_reason in STOP_NOTES:
             console.print(f"[yellow]{STOP_NOTES[result.stop_reason]}[/]")
-        turn = tracer.last_turn
+        turn = session.tracer.last_turn
         console.print(
             f"[dim]{result.iterations} model call(s) · "
             f"{turn.input_tokens:,} in / {turn.output_tokens:,} out tokens[/]\n"
@@ -147,10 +127,20 @@ async def chat(settings: Settings) -> None:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(prog="meal-agent", description="Terminal meal-planning chat")
+    parser.add_argument("--demo", action="store_true", help="scripted replies, no API key needed")
+    args = parser.parse_args()
+
     load_dotenv(PROJECT_ROOT / ".env")
-    if not os.environ.get("ANTHROPIC_API_KEY"):
-        sys.exit("ANTHROPIC_API_KEY is not set. Put it in meal-planner/.env (see .env.example).")
-    asyncio.run(chat(Settings.from_env()))
+    if not args.demo and not os.environ.get("ANTHROPIC_API_KEY"):
+        sys.exit(
+            "ANTHROPIC_API_KEY is not set. Put it in meal-planner/.env (see .env.example), "
+            "or try `uv run meal-agent --demo`."
+        )
+    settings = Settings.from_env()
+    session = ChatSession(settings, make_model_client(settings, demo=args.demo))
+    label = "demo (scripted replies)" if args.demo else settings.model
+    asyncio.run(chat(session, label=label))
 
 
 if __name__ == "__main__":

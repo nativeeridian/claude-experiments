@@ -13,6 +13,15 @@ from meal_agent.harness.tools import NoArgs, ToolRegistry
 EXAMPLE_PROFILE = PROJECT_ROOT / "profile.example.json"
 
 
+def load_profile(settings: Settings) -> dict:
+    """The personal profile if one exists, otherwise the example, with a note of which."""
+    path = settings.data_dir / "profile.json"
+    source = "data/profile.json"
+    if not path.exists():
+        path, source = EXAMPLE_PROFILE, "profile.example.json (no personal profile yet)"
+    return {"source": source, **json.loads(path.read_text(encoding="utf-8"))}
+
+
 def register_basic_tools(registry: ToolRegistry, settings: Settings) -> None:
     @registry.tool()
     async def get_today(args: NoArgs) -> dict:
@@ -29,9 +38,4 @@ def register_basic_tools(registry: ToolRegistry, settings: Settings) -> None:
     async def read_profile(args: NoArgs) -> dict:
         """Returns the household profile: each person's diet and goals, and the hands-on cooking
         minutes available on each day of the week."""
-        path = settings.data_dir / "profile.json"
-        source = "data/profile.json"
-        if not path.exists():
-            path, source = EXAMPLE_PROFILE, "profile.example.json (no personal profile yet)"
-        profile = json.loads(path.read_text(encoding="utf-8"))
-        return {"source": source, **profile}
+        return load_profile(settings)

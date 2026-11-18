@@ -17,7 +17,10 @@ A chat agent that plans a two-person household's weekly dinners and leftover lun
 3. **Store the key.** From this directory, run `cp .env.example .env` and put your key in `.env`. Git ignores `.env`; never commit the key.
 4. **Install dependencies:** `uv sync`
 5. **Run the tests:** `uv run pytest`. No API key is needed, because a scripted fake stands in for the model.
-6. **Chat:** `uv run meal-agent`
+6. **Chat in the browser:** run `uv run meal-agent-web` and open http://127.0.0.1:8000. You'll see the chat plus Trace, Transcript, Profile and Tools panels.
+7. **Or chat in the terminal:** `uv run meal-agent`
+
+Add `--demo` to either command to try it with scripted replies and no API key. The loop, tools, transcript and trace still run for real; only Claude's replies are canned.
 
 The warm-up exercise needs the key exported in your shell. Run `export ANTHROPIC_API_KEY=...` first (Windows PowerShell: `$env:ANTHROPIC_API_KEY="..."`), then:
 
@@ -29,7 +32,8 @@ uv run --with anthropic python exercises/01_first_call.py
 
 | Path | What's there |
 |---|---|
-| `src/meal_agent/harness/` | The harness: client, loop, tools registry, tracing, system prompt |
+| `src/meal_agent/harness/` | The harness: client, loop, tool registry, tracing, session, system prompt |
+| `src/meal_agent/web/` | Local web chat: FastAPI server and one page |
 | `src/meal_agent/tools/` | Domain tools the agent can call |
 | `tests/` | Tests, with a scripted fake model client |
 | `docs/notes/` | One design note per stage |

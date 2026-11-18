@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meal planner</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 16%22%3E%3Ccircle cx=%228%22 cy=%228%22 r=%227%22 fill=%22%232f6f4f%22/%3E%3C/svg%3E">
+<style>
+  :root {
+    --bg: #f7f6f3; --surface: #ffffff; --surface-2: #f0eee9; --border: #e2dfd8;
+    --text: #1f1d1a; --muted: #6b665d; --accent: #2f6f4f; --accent-soft: #e3efe8;
+    --user: #2f6f4f; --user-text: #ffffff; --error: #b3261e; --error-soft: #fbe9e7;
+    --warn: #8a5a00; --warn-soft: #fff4dc; --code: #f3f1ec;
+    --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #161513; --surface: #1f1e1b; --surface-2: #282622; --border: #36332e;
+      --text: #ece9e3; --muted: #a29d93; --accent: #7cc49f; --accent-soft: #23352b;
+      --user: #2f6f4f; --user-text: #f2fbf6; --error: #ff8a80; --error-soft: #3a1f1c;
+      --warn: #ffcc66; --warn-soft: #3a3020; --code: #262420;
+    }
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; }
+  body {
+    background: var(--bg); color: var(--text);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+    display: flex; flex-direction: column;
+  }
+  header {
+    display: flex; align-items: center; gap: 10px; padding: 10px 16px;
+    border-bottom: 1px solid var(--border); background: var(--surface);
+  }
+  header h1 { font-size: 16px; margin: 0 6px 0 0; white-space: nowrap; }
+  header button { white-space: nowrap; }
+  .badge {
+    font-size: 12px; padding: 2px 8px; border-radius: 999px;
+    background: var(--surface-2); color: var(--muted); border: 1px solid var(--border);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;
+  }
+  .badge.demo { background: var(--warn-soft); color: var(--warn); border-color: transparent; }
+  header .spacer { flex: 1; }
+  button {
+    font: inherit; cursor: pointer; border-radius: 8px; border: 1px solid var(--border);
+    background: var(--surface); color: var(--text); padding: 6px 12px;
+  }
+  button:hover { background: var(--surface-2); }
+  button.primary { background: var(--accent); color: var(--surface); border-color: var(--accent); }
+  button:disabled { opacity: .5; cursor: default; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  main {
+    flex: 1; min-height: 0; display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(340px, 44%);
+  }
+  @media (max-width: 900px) {
+    main { grid-template-columns: 1fr; grid-template-rows: minmax(60vh, 1fr) auto; overflow: auto; }
+    #side { border-left: none; border-top: 1px solid var(--border); max-height: 70vh; }
+  }
+
+  /* Chat */
+  #chat { display: flex; flex-direction: column; min-height: 0; }
+  #log { flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+  .turn { display: flex; flex-direction: column; gap: 8px; }
+  .bubble { max-width: min(680px, 92%); padding: 10px 14px; border-radius: 14px; }
+  .bubble.user {
+    align-self: flex-end; background: var(--user); color: var(--user-text);
+    border-bottom-right-radius: 4px; white-space: pre-wrap;
+  }
+  .bubble.assistant {
+    align-self: flex-start; background: var(--surface); border: 1px solid var(--border);
+    border-bottom-left-radius: 4px;
+  }
+  .bubble.assistant > :first-child { margin-top: 0; }
+  .bubble.assistant > :last-child { margin-bottom: 0; }
+  .bubble p { margin: 0 0 8px; }
+  .bubble ul, .bubble ol { margin: 0 0 8px; padding-left: 20px; }
+  .bubble code { font-family: var(--mono); font-size: 13px; background: var(--code); padding: 1px 4px; border-radius: 4px; }
+  .narration { color: var(--muted); font-style: italic; font-size: 14px; margin: 0 0 6px; }
+  .chips { display: flex; flex-direction: column; gap: 4px; margin: 0 0 8px; }
+  details.chip {
+    font-family: var(--mono); font-size: 12.5px; border-radius: 8px;
+    background: var(--accent-soft); border: 1px solid transparent;
+  }
+  details.chip.error { background: var(--error-soft); color: var(--error); }
+  details.chip summary { cursor: pointer; padding: 4px 8px; list-style: none; display: flex; gap: 8px; }
+  details.chip summary::-webkit-details-marker { display: none; }
+  details.chip summary .ms { margin-left: auto; color: var(--muted); }
+  details.chip pre { margin: 0; padding: 6px 8px 8px; white-space: pre-wrap; word-break: break-word; max-height: 240px; overflow: auto; }
+  .meta { font-size: 12px; color: var(--muted); align-self: flex-start; padding-left: 4px; }
+  .note { font-size: 13px; color: var(--warn); background: var(--warn-soft); padding: 6px 10px; border-radius: 8px; align-self: flex-start; }
+  .note.error { color: var(--error); background: var(--error-soft); }
+  .pending { color: var(--muted); font-size: 14px; }
+  .pending::after { content: "…"; animation: dots 1.2s steps(4, end) infinite; display: inline-block; width: 1.2em; overflow: hidden; vertical-align: bottom; }
+  @keyframes dots { from { width: 0; } to { width: 1.2em; } }
+
+  .empty { margin: auto; text-align: center; color: var(--muted); max-width: 420px; }
+  .empty h2 { color: var(--text); font-size: 18px; margin: 0 0 6px; }
+  .suggestions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 14px; }
+
+  form#composer { display: flex; gap: 8px; padding: 12px 16px; border-top: 1px solid var(--border); background: var(--surface); }
+  textarea {
+    flex: 1; resize: none; font: inherit; color: var(--text); background: var(--bg);
+    border: 1px solid var(--border); border-radius: 10px; padding: 8px 12px; min-height: 42px; max-height: 160px;
+  }
+
+  /* Side panel */
+  #side { border-left: 1px solid var(--border); background: var(--surface); display: flex; flex-direction: column; min-height: 0; }
+  [role=tablist] { display: flex; gap: 2px; padding: 8px 8px 0; border-bottom: 1px solid var(--border); }
+  [role=tab] { border: none; border-bottom: 2px solid transparent; border-radius: 0; background: none; color: var(--muted); padding: 8px 12px; }
+  [role=tab][aria-selected=true] { color: var(--text); border-bottom-color: var(--accent); }
+  .panel { flex: 1; overflow: auto; padding: 14px 16px; }
+  .panel[hidden] { display: none; }
+  .hint { color: var(--muted); font-size: 13px; margin: 0 0 12px; }
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 14px; }
+  .stat { background: var(--surface-2); border-radius: 8px; padding: 8px 10px; }
+  .stat b { display: block; font-size: 18px; }
+  .stat span { font-size: 12px; color: var(--muted); }
+  .card { border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; margin-bottom: 10px; }
+  .card h3 { font-size: 14px; margin: 0 0 8px; }
+  .card.failed { border-color: var(--error); }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 4px 6px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  th { color: var(--muted); font-weight: 500; }
+  td.num, th.num { text-align: right; }
+  .mono { font-family: var(--mono); font-size: 12.5px; }
+  pre.json { font-family: var(--mono); font-size: 12px; background: var(--code); border-radius: 8px; padding: 8px 10px; margin: 6px 0 0; white-space: pre-wrap; word-break: break-word; }
+  details.msg { border: 1px solid var(--border); border-radius: 8px; margin-bottom: 6px; }
+  details.msg summary { cursor: pointer; padding: 6px 10px; font-size: 13px; display: flex; gap: 8px; align-items: center; }
+  details.msg .role { font-weight: 600; min-width: 70px; }
+  details.msg .new { font-size: 11px; color: var(--accent); border: 1px solid var(--accent); border-radius: 999px; padding: 0 6px; }
+  details.msg pre.json { margin: 0 8px 8px; }
+  .person { display: flex; justify-content: space-between; gap: 8px; }
+  .diet { font-size: 12px; color: var(--accent); background: var(--accent-soft); border-radius: 999px; padding: 1px 8px; white-space: nowrap; }
+  .bar-row { display: grid; grid-template-columns: 130px 1fr 56px; gap: 8px; align-items: center; font-size: 13px; padding: 3px 0; }
+  .bar-row.today { font-weight: 600; }
+  .bar { height: 8px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+  .bar i { display: block; height: 100%; background: var(--accent); border-radius: 4px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Meal planner</h1>
+  <span class="badge" id="label">…</span>
+  <span class="badge demo" id="demo-badge" title="Replies are scripted, not Claude. The loop, tools, transcript and trace are real." hidden>Demo mode</span>
+  <span class="spacer"></span>
+  <button id="reset" type="button">New chat</button>
+</header>
+
+<main>
+  <section id="chat" aria-label="Chat">
+    <div id="log" aria-live="polite"></div>
+    <form id="composer">
+      <textarea id="input" rows="1" placeholder="Message the meal planner…" aria-label="Message"></textarea>
+      <button class="primary" id="send" type="submit">Send</button>
+    </form>
+  </section>
+
+  <aside id="side" aria-label="Inspector">
+    <div role="tablist">
+      <button role="tab" aria-selected="true" aria-controls="p-trace" id="t-trace">Trace</button>
+      <button role="tab" aria-selected="false" aria-controls="p-transcript" id="t-transcript">Transcript</button>
+      <button role="tab" aria-selected="false" aria-controls="p-profile" id="t-profile">Profile</button>
+      <button role="tab" aria-selected="false" aria-controls="p-tools" id="t-tools">Tools</button>
+    </div>
+    <div class="panel" role="tabpanel" id="p-trace"></div>
+    <div class="panel" role="tabpanel" id="p-transcript" hidden></div>
+    <div class="panel" role="tabpanel" id="p-profile" hidden></div>
+    <div class="panel" role="tabpanel" id="p-tools" hidden></div>
+  </aside>
+</main>
+
+<script>
+const $ = (sel) => document.querySelector(sel);
+const log = $("#log"), input = $("#input"), sendBtn = $("#send");
+let state = null;
+let busy = false;
+
+const STOP_NOTES = {
+  max_tokens: "The answer was cut off (max_tokens).",
+  refusal: "The model declined this request.",
+  max_iterations: "Stopped at the iteration cap before the model finished. See the Trace tab.",
+};
+
+// ---------- helpers ----------
+function el(tag, attrs = {}, ...children) {
+  const node = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === "class") node.className = v;
+    else if (k === "text") node.textContent = v;
+    else if (k === "html") node.innerHTML = v;
+    else node.setAttribute(k, v);
+  }
+  for (const child of children) if (child != null) node.append(child);
+  return node;
+}
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const fmt = (n) => Number(n || 0).toLocaleString();
+const pretty = (v) => JSON.stringify(v, null, 2);
+
+// Minimal, escape-first Markdown: paragraphs, lists, headings, code, bold, italics.
+function md(src) {
+  const inline = (s) => esc(s)
+    .replace(/`([^`]+)`/g, "<code>$1</code>")
+    .replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
+    .replace(/(^|[^*])\*([^*\s][^*]*)\*/g, "$1<em>$2</em>");
+  const out = []; let list = null; let para = []; let code = null;
+  const flushPara = () => { if (para.length) { out.push(`<p>${inline(para.join(" "))}</p>`); para = []; } };
+  const flushList = () => { if (list) { out.push(`<${list.tag}>${list.items.map((i) => `<li>${inline(i)}</li>`).join("")}</${list.tag}>`); list = null; } };
+  for (const line of src.split("\n")) {
+    if (code !== null) {
+      if (line.startsWith("```")) { out.push(`<pre class="json">${esc(code.join("\n"))}</pre>`); code = null; }
+      else code.push(line);
+      continue;
+    }
+    if (line.startsWith("```")) { flushPara(); flushList(); code = []; continue; }
+    const h = line.match(/^(#{1,3})\s+(.*)/);
+    const ul = line.match(/^\s*[-*]\s+(.*)/);
+    const ol = line.match(/^\s*\d+[.)]\s+(.*)/);
+    if (h) { flushPara(); flushList(); out.push(`<p><strong>${inline(h[2])}</strong></p>`); }
+    else if (ul || ol) {
+      flushPara();
+      const tag = ul ? "ul" : "ol";
+      if (!list || list.tag !== tag) { flushList(); list = { tag, items: [] }; }
+      list.items.push((ul || ol)[1]);
+    }
+    else if (!line.trim()) { flushPara(); flushList(); }
+    else { flushList(); para.push(line.trim()); }
+  }
+  if (code !== null) out.push(`<pre class="json">${esc(code.join("\n"))}</pre>`);
+  flushPara(); flushList();
+  return out.join("");
+}
+
+function toolChip(call) {
+  const args = call.input && Object.keys(call.input).length ? JSON.stringify(call.input) : "";
+  const icon = call.is_error ? "✗" : "→";
+  let body = call.content ?? "";
+  try { body = pretty(JSON.parse(body)); } catch { /* plain text result */ }
+  return el("details", { class: "chip" + (call.is_error ? " error" : "") },
+    el("summary", {},
+      el("span", { text: `${icon} ${call.name}(${args})` }),
+      call.duration_ms != null ? el("span", { class: "ms", text: `${call.duration_ms} ms` }) : null),
+    el("pre", { text: body }));
+}
+
+// ---------- chat rendering ----------
+function emptyState() {
+  const suggestions = ["What should I cook tonight?", "What day is it, and how much time do I have?"];
+  if (state?.demo) suggestions.push("Show me what a tool error looks like");
+  const box = el("div", { class: "empty" },
+    el("h2", { text: "What are we cooking?" }),
+    el("div", { text: state?.demo
+      ? "Demo mode: replies are scripted, but the loop, tools, transcript and trace are real."
+      : "Ask for tonight's dinner or plan the week. Tool calls show up as they happen." }),
+    el("div", { class: "suggestions" },
+      ...suggestions.map((s) => { const b = el("button", { type: "button", text: s }); b.onclick = () => send(s); return b; })));
+  return box;
+}
+
+// Rebuild the chat from the transcript. One "turn" = a user text message plus everything after it.
+function renderChat() {
+  log.replaceChildren();
+  const messages = state.messages;
+  if (!messages.length) { log.append(emptyState()); return; }
+  const turns = state.turns.filter((t) => !t.failed);
+  const results = {};
+  for (const m of messages) if (Array.isArray(m.content)) for (const b of m.content)
+    if (b.type === "tool_result") results[b.tool_use_id] = b;
+
+  let turnIndex = -1, current = null;
+  const finish = () => { if (current) log.append(renderTurn(current, turns[turnIndex])); };
+  for (const m of messages) {
+    if (m.role === "user" && typeof m.content === "string") {
+      finish(); turnIndex++; current = { user: m.content, assistant: [] };
+    } else if (m.role === "assistant" && current) {
+      current.assistant.push(m.content);
+    }
+  }
+  finish();
+  // Tool chips were rendered as placeholders; fill each in with its matching tool_result.
+  log.querySelectorAll("[data-tool-id]").forEach((node) => {
+    const r = results[node.dataset.toolId] || { content: "(no result recorded)", is_error: true };
+    node.replaceWith(toolChip({ ...JSON.parse(node.dataset.call), content: r.content, is_error: r.is_error }));
+  });
+  log.scrollTop = log.scrollHeight;
+}
+
+function renderTurn(turn, stats) {
+  const wrap = el("div", { class: "turn" }, el("div", { class: "bubble user", text: turn.user }));
+  const bubble = el("div", { class: "bubble assistant" });
+  const chips = el("div", { class: "chips" });
+  const durations = {};
+  (stats?.tool_calls || []).forEach((c, i) => { durations[i] = c.duration_ms; });
+  let toolIndex = 0, finalText = "";
+  turn.assistant.forEach((content, i) => {
+    const isLast = i === turn.assistant.length - 1;
+    for (const b of content) {
+      if (b.type === "text" && !isLast && b.text.trim()) chips.append(el("p", { class: "narration", text: b.text }));
+      if (b.type === "text" && isLast) finalText += b.text;
+      if (b.type === "tool_use") {
+        const call = { name: b.name, input: b.input, duration_ms: durations[toolIndex++] };
+        chips.append(el("span", { "data-tool-id": b.id, "data-call": JSON.stringify(call) }));
+      }
+    }
+  });
+  if (chips.childNodes.length) bubble.append(chips);
+  bubble.append(el("div", { html: md(finalText || "_(no text)_") }));
+  wrap.append(bubble);
+  if (stats) {
+    wrap.append(el("div", { class: "meta",
+      text: `${stats.model_calls.length} model call(s) · ${fmt(stats.input_tokens)} in / ${fmt(stats.output_tokens)} out tokens` }));
+    const stop = stats.model_calls.at(-1)?.stop_reason;
+    const capped = stats.model_calls.length && stop === "tool_use";
+    const note = capped ? STOP_NOTES.max_iterations : STOP_NOTES[stop];
+    if (note) wrap.append(el("div", { class: "note", text: note }));
+  }
+  return wrap;
+}
+
+// ---------- sending a message (streams server-sent events) ----------
+async function send(text) {
+  text = text.trim();
+  if (!text || busy) return;
+  setBusy(true);
+  if (!state.messages.length) log.replaceChildren();
+
+  const live = el("div", { class: "turn" }, el("div", { class: "bubble user", text }));
+  const bubble = el("div", { class: "bubble assistant" });
+  const chips = el("div", { class: "chips" });
+  const status = el("div", { class: "pending", text: "Thinking" });
+  bubble.append(chips, status);
+  live.append(bubble);
+  log.append(live);
+  log.scrollTop = log.scrollHeight;
+  let calls = 0;
+
+  try {
+    const res = await fetch("/api/chat", {
+      method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ message: text }),
+    });
+    if (!res.ok) throw new Error((await res.json()).detail || res.statusText);
+    const reader = res.body.getReader(), decoder = new TextDecoder();
+    let buffer = "";
+    for (;;) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      let cut;
+      while ((cut = buffer.indexOf("\n\n")) >= 0) {
+        const chunk = buffer.slice(0, cut); buffer = buffer.slice(cut + 2);
+        const event = chunk.match(/^event: (.*)$/m)?.[1];
+        const data = JSON.parse(chunk.match(/^data: (.*)$/m)?.[1] ?? "null");
+        if (event === "model_call") { calls++; status.textContent = `Model call ${calls} done (${data.stop_reason}), continuing`; }
+        if (event === "tool_call") { chips.append(toolChip(data)); log.scrollTop = log.scrollHeight; }
+        if (event === "error") throw new Error(data.message);
+      }
+    }
+    await refresh();
+  } catch (err) {
+    status.remove();
+    live.append(el("div", { class: "note error", text: `Error: ${err.message}` }));
+    await refresh(false);
+  } finally {
+    setBusy(false);
+    input.focus();
+  }
+}
+
+function setBusy(value) {
+  busy = value;
+  sendBtn.disabled = value;
+  $("#reset").disabled = value;
+}
+
+// ---------- side panels ----------
+function renderTrace() {
+  const panel = $("#p-trace");
+  const turns = state.turns;
+  const totals = turns.reduce((a, t) => ({
+    calls: a.calls + t.model_calls.length, tools: a.tools + t.tool_calls.length,
+    input: a.input + t.input_tokens, output: a.output + t.output_tokens }), { calls: 0, tools: 0, input: 0, output: 0 });
+  panel.replaceChildren(
+    el("p", { class: "hint", text: "Every model call and tool call, newest turn first. Watch input tokens grow: each call resends the whole conversation." }),
+    el("div", { class: "stats" },
+      ...[["model calls", totals.calls], ["tool calls", totals.tools], ["input tokens", totals.input], ["output tokens", totals.output]]
+        .map(([label, n]) => el("div", { class: "stat" }, el("b", { text: fmt(n) }), el("span", { text: label })))));
+  if (!turns.length) panel.append(el("p", { class: "hint", text: "No turns yet." }));
+  [...turns].reverse().forEach((turn, i) => {
+    const card = el("div", { class: "card" + (turn.failed ? " failed" : "") },
+      el("h3", { text: `Turn ${turns.length - i}${turn.failed ? " (failed, rolled back)" : ""}: ${turn.user_text}` }));
+    const table = el("table", {}, el("tr", { html: '<th>#</th><th>stop_reason</th><th>blocks</th><th class="num">in</th><th class="num">out</th><th class="num">cache</th><th class="num">ms</th>' }));
+    turn.model_calls.forEach((c, n) => table.append(el("tr", { html:
+      `<td>${n + 1}</td><td class="mono">${esc(c.stop_reason)}</td><td>${esc(c.blocks.join(", "))}</td>` +
+      `<td class="num">${fmt(c.input_tokens)}</td><td class="num">${fmt(c.output_tokens)}</td>` +
+      `<td class="num">${fmt(c.cache_read_tokens)}</td><td class="num">${Math.round(c.duration_ms)}</td>` })));
+    card.append(table);
+    if (turn.tool_calls.length) card.append(el("div", { class: "chips", style: "margin-top:8px" }, ...turn.tool_calls.map(toolChip)));
+    panel.append(card);
+  });
+  panel.append(el("p", { class: "hint mono", text: `Raw JSONL: ${state.trace_file}` }));
+}
+
+function renderTranscript() {
+  const panel = $("#p-transcript");
+  const size = JSON.stringify(state.messages).length;
+  // Messages added by the latest turn start at its user text message.
+  const lastTurnStart = state.messages.findLastIndex((m) => m.role === "user" && typeof m.content === "string");
+  panel.replaceChildren(
+    el("p", { class: "hint", html: `This is exactly what the next request sends as <code>messages</code>: ` +
+      `<b>${state.messages.length}</b> messages, about <b>${fmt(Math.round(size / 1024))} KB</b>. ` +
+      `The API keeps nothing between calls, so all of it is resent every time.` }),
+    el("details", { class: "msg" }, el("summary", {}, el("span", { class: "role", text: "system" }), el("span", { text: "sent separately, frozen for the session" })),
+      el("pre", { class: "json", text: state.system })));
+  state.messages.forEach((m, i) => {
+    const blocks = typeof m.content === "string" ? "text" : m.content.map((b) => b.type).join(", ");
+    panel.append(el("details", { class: "msg" },
+      el("summary", {}, el("span", { class: "mono", text: `#${i}` }), el("span", { class: "role", text: m.role }),
+        el("span", { text: blocks }), i >= lastTurnStart ? el("span", { class: "new", text: "new" }) : null),
+      el("pre", { class: "json", text: pretty(m) })));
+  });
+}
+
+function renderProfile() {
+  const panel = $("#p-profile");
+  const p = state.profile;
+  const today = new Date().toLocaleDateString("en-US", { weekday: "long" }).toLowerCase();
+  panel.replaceChildren(el("p", { class: "hint", html: `What <code>read_profile</code> returns. Source: <code>${esc(p.source)}</code>` }));
+  for (const person of p.people || []) {
+    panel.append(el("div", { class: "card" },
+      el("div", { class: "person" }, el("h3", { text: person.name }), el("span", { class: "diet", text: person.diet })),
+      el("div", { class: "hint", style: "margin:0", text: person.goals || "" })));
+  }
+  const minutes = p.cooking_minutes || {};
+  const card = el("div", { class: "card" }, el("h3", { text: "Hands-on cooking time" }));
+  for (const [day, mins] of Object.entries(minutes)) {
+    card.append(el("div", { class: "bar-row" + (day === today ? " today" : "") },
+      el("span", { text: day[0].toUpperCase() + day.slice(1) + (day === today ? " (today)" : "") }),
+      el("div", { class: "bar" }, el("i", { style: `width:${Math.min(100, (mins / 90) * 100)}%` })),
+      el("span", { class: "mono", text: `${mins} min` })));
+  }
+  panel.append(card, el("details", { class: "msg" }, el("summary", { text: "Raw JSON" }), el("pre", { class: "json", text: pretty(p) })));
+}
+
+function renderTools() {
+  const panel = $("#p-tools");
+  panel.replaceChildren(el("p", { class: "hint", text: "Tool definitions exactly as Claude receives them. The description is the only thing telling Claude when to use a tool." }));
+  for (const t of state.tools) panel.append(el("div", { class: "card" },
+    el("h3", { class: "mono", text: t.name }), el("div", { text: t.description }),
+    el("pre", { class: "json", text: pretty(t.input_schema) })));
+}
+
+async function refresh(rerenderChat = true) {
+  state = await (await fetch("/api/state")).json();
+  $("#label").textContent = state.label;
+  $("#label").hidden = state.demo;
+  $("#demo-badge").hidden = !state.demo;
+  if (rerenderChat) renderChat();
+  renderTrace(); renderTranscript(); renderProfile(); renderTools();
+}
+
+// ---------- wiring ----------
+for (const tab of document.querySelectorAll("[role=tab]")) {
+  tab.onclick = () => {
+    for (const t of document.querySelectorAll("[role=tab]")) {
+      t.setAttribute("aria-selected", String(t === tab));
+      document.getElementById(t.getAttribute("aria-controls")).hidden = t !== tab;
+    }
+  };
+}
+$("#composer").onsubmit = (e) => { e.preventDefault(); const text = input.value; input.value = ""; send(text); };
+input.addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); $("#composer").requestSubmit(); }
+});
+input.addEventListener("input", () => { input.style.height = "auto"; input.style.height = `${input.scrollHeight}px`; });
+$("#reset").onclick = async () => {
+  await fetch("/api/reset", { method: "POST" });
+  await refresh();
+};
+refresh();
+</script>
+</body>
+</html>

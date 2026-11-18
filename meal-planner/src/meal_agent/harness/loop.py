@@ -1,12 +1,8 @@
 """The agent loop.
 
-YOUR TURN: implement `run_turn` below. `tests/test_loop.py` defines what "done" means:
-
-    uv run pytest tests/test_loop.py -v
-
-Everything around the loop already exists: the client that calls Claude (`client.py`), the
-tool registry (`tools.py`), tracing (`trace.py`) and the chat UI (`cli.py`). The loop only
-connects them.
+Call the model, run whatever tools it asks for, send the results back, and repeat until it
+stops asking. `tests/test_loop.py` is the contract; `docs/notes/01-agent-loop.md` walks through
+this file line by line.
 """
 
 from dataclasses import dataclass
@@ -33,37 +29,45 @@ async def run_turn(
 ) -> TurnResult:
     """Run one user turn until Claude stops asking for tools.
 
-    `messages` is the whole conversation so far. It already ends with the user's new message.
-
-    The contract:
-
-    1. Call `await client.create(system=system, messages=messages,
-       tools=registry.definitions())`.
-
-    2. Append the response as an assistant turn, with its content exactly as received:
-       `{"role": "assistant", "content": response.content}`. That includes thinking blocks.
-       Never edit, reorder or remove anything already in `messages`. The history is append-only.
-       One exception: if `response.content` is empty (possible on a refusal), append nothing,
-       because the API rejects messages with empty content.
-
-    3. If `response.stop_reason == "tool_use"`, run every block whose `type == "tool_use"`
-       through `await registry.dispatch(block.name, block.input)`. Then append ONE user message
-       whose content is a list of tool_result blocks, in the same order as the tool_use blocks:
-
-           {"type": "tool_result", "tool_use_id": block.id,
-            "content": outcome.content, "is_error": outcome.is_error}
-
-       Then go back to step 1.
-
-    4. Any other stop_reason ends the turn. Return a TurnResult with the joined text of that
-       response's `text` blocks, its stop_reason, and the number of model calls made.
-
-    5. Never make more than `max_iterations` model calls. If the cap is reached while Claude
-       still wants tools, still run them and append their results, because every tool_use
-       needs a matching tool_result. Then return with stop_reason "max_iterations" and the
-       text of the last response.
+    `messages` is the whole conversation so far and already ends with the user's new message.
+    Every response and every batch of tool results is appended to it. Nothing already in it is
+    ever changed.
     """
-    raise NotImplementedError(
-        "Your turn: implement run_turn in src/meal_agent/harness/loop.py "
-        "(see its docstring and tests/test_loop.py)."
-    )
+    if max_iterations < 1:
+        raise ValueError("max_iterations must be at least 1")
+
+    for iteration in range(1, max_iterations + 1):
+        # The API keeps no state between calls, so every call sends the whole conversation.
+        response = await client.create(
+            system=system, messages=messages, tools=registry.definitions()
+        )
+
+        # Record the reply exactly as received, thinking blocks included. An empty reply
+        # (possible on a refusal) is skipped because the API rejects empty messages.
+        if response.content:
+            messages.append({"role": "assistant", "content": response.content})
+        text = "".join(block.text for block in response.content if block.type == "text")
+
+        # Anything other than a tool request ends the turn.
+        if response.stop_reason != "tool_use":
+            return TurnResult(text, response.stop_reason, iteration)
+
+        # Run each requested tool, in order, and answer all of them in ONE user message.
+        # Each result names the tool_use it answers by id.
+        results = []
+        for block in response.content:
+            if block.type == "tool_use":
+                outcome = await registry.dispatch(block.name, block.input)
+                results.append(
+                    {
+                        "type": "tool_result",
+                        "tool_use_id": block.id,
+                        "content": outcome.content,
+                        "is_error": outcome.is_error,
+                    }
+                )
+        messages.append({"role": "user", "content": results})
+
+    # The cap was reached while Claude still wanted tools. The last results are already
+    # appended, so every tool_use has its tool_result and the next turn can continue.
+    return TurnResult(text, "max_iterations", max_iterations)
